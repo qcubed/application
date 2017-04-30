@@ -1,0 +1,159 @@
+<?php
+/**
+ * The QAjaxAction responds to events with ajax calls, which refresh a portion of a web page without reloading
+ * the entire page. They generally are faster than server requests and give a better user experience.
+ *
+ * The QAjaxAction will associate a callback (strMethodName) with an event as part of an AddAction call. The callback will be
+ * a method in the current QForm object. To associate a method that is part of a QControl, or any kind of a callback,
+ * use a QAjaxControlAction.
+ *
+ * The wait icon is a spinning gif file that can be overlayed on top of the control to show that the control is in
+ * a "loading" state. TODO: Convert this to a FontAwesome animated icon.
+ *
+ * mixCausesValidationOverride allows you to selectively say whether this action causes a validation, and on what subset of controls.
+ *
+ * strJsReturnParam is a javascript string that specifies what the action parameter will be, if you don't want the default.
+ *
+ * blnAsync lets you respond to the event asynchronously. Use care when setting this to true. Normally, qcubed will
+ * put events in a queue and wait for each event to return a result before executing the next event. Most of the time,
+ * the user experience is fine with this. However, there are times when events might be firing quickly and you do
+ * not want to wait. However, your QFormState handler must be able to handle asynchronous events.
+ * The default QFormStateHandler cannot do this, so you will need to use a different one.
+ *
+ * @property-read           $MethodName               Name of the (event-handler) method to be called
+ *              the event handler - function containing the actual code for the Ajax action
+ * @property-read QWaitIcon $WaitIconControl          the waiting icon control for this Ajax Action
+ * @property-read mixed     $CausesValidationOverride what kind of validation over-ride is to be implemented
+ *              on this action.(See the QCausesValidation class and QFormBase class to understand in greater depth)
+ * @property-read string    JsReturnParam             The line of javascript which would set the 'strParameter' value on the
+ *              client-side when the action occurs!
+ *              (see /assets/_core/php/examples/other_controls/js_return_param_example.php for example)
+ * @property-read string    Id                        The Ajax Action ID for this action.
+ * @package     Actions
+ */
+class QAjaxAction extends QAction {
+    /** @var string Ajax Action ID */
+    protected $strId;
+    /** @var string The event handler function name */
+    protected $strMethodName;
+    /** @var QWaitIcon Wait Icon to be used for this particular action */
+    protected $objWaitIconControl;
+
+    protected $blnAsync = false;
+    /**
+     * @var mixed what kind of validation over-ride is to be implemented
+     *              (See the QCausesValidation class and QFormBase class to understand in greater depth)
+     */
+    protected $mixCausesValidationOverride;
+    /**
+     * @var string the line of javascript which would set the 'strParameter' value on the
+     *              client-side when the action occurs!
+     */
+    protected $strJsReturnParam;
+
+    /**
+     * AjaxAction constructor.
+     * @param string           $strMethodName               Name of the event handler function to be called
+     * @param string|QWaitIcon $objWaitIconControl          Wait Icon for the action
+     * @param null|mixed       $mixCausesValidationOverride what kind of validation over-ride is to be implemented
+     * @param string           $strJsReturnParam            the line of javascript which would set the 'strParameter' value on the
+     *                                                      client-side when the action occurs!
+     * @param boolean  		   $blnAsync            		True to have the events for this action fire asynchronously.
+     * 														Be careful when setting this to true. See class description.
+     */
+    public function __construct($strMethodName = null, $objWaitIconControl = 'default',
+        $mixCausesValidationOverride = null, $strJsReturnParam = "", $blnAsync = false) {
+        $this->strId = null;
+        $this->strMethodName = $strMethodName;
+        $this->objWaitIconControl = $objWaitIconControl;
+        $this->mixCausesValidationOverride = $mixCausesValidationOverride;
+        $this->strJsReturnParam = $strJsReturnParam;
+        $this->blnAsync = $blnAsync;
+    }
+
+    public function __clone() {
+        $this->strId = null; //we are a fresh clone, lets reset the id and get our own later (in RenderScript)
+    }
+
+    /**
+     * PHP Magic function to get the property values of a class object
+     *
+     * @param string $strName Name of the property
+     *
+     * @return mixed|null|string
+     * @throws QCallerException
+     */
+    public function __get($strName) {
+        switch ($strName) {
+            case 'MethodName':
+                return $this->strMethodName;
+            case 'WaitIconControl':
+                return $this->objWaitIconControl;
+            case 'CausesValidationOverride':
+                return $this->mixCausesValidationOverride;
+            case 'JsReturnParam':
+                return $this->strJsReturnParam;
+            case 'Id':
+                return $this->strId;
+            default:
+                try {
+                    return parent::__get($strName);
+                } catch (QCallerException $objExc) {
+                    $objExc->IncrementOffset();
+                    throw $objExc;
+                }
+        }
+    }
+
+    /**
+     * Returns the control's ActionParameter in string format
+     *
+     * @param QControl $objControl
+     *
+     * @return string
+     */
+    protected function getActionParameter($objControl) {
+        if ($objActionParameter = $this->strJsReturnParam) {
+            return $objActionParameter;
+        }
+        if ($objActionParameter = $this->objEvent->JsReturnParam) {
+            return $objActionParameter;
+        }
+        $objActionParameter = $objControl->ActionParameter;
+        if ($objActionParameter instanceof QJsClosure) {
+            return '(' . $objActionParameter->toJsObject() . ').call(this)';
+        }
+
+        return "'" . addslashes($objActionParameter) . "'";
+    }
+
+    /**
+     * Returns the RenderScript script for the action.
+     * The returned script is to be executed on the client side when the action is executed
+     * (in this case qc.pA function is executed)
+     *
+     * @param QControl $objControl
+     *
+     * @return string
+     */
+    public function RenderScript(QControl $objControl) {
+        $strWaitIconControlId = null;
+        if ($this->strId == null) {
+            $this->strId = $objControl->Form->GenerateAjaxActionId();
+        }
+
+        if ((gettype($this->objWaitIconControl) == 'string') && ($this->objWaitIconControl == 'default')) {
+            if ($objControl->Form->DefaultWaitIcon) {
+                $strWaitIconControlId = $objControl->Form->DefaultWaitIcon->ControlId;
+            }
+        } else {
+            if ($this->objWaitIconControl) {
+                $strWaitIconControlId = $this->objWaitIconControl->ControlId;
+            }
+        }
+
+        return sprintf("qc.pA('%s', '%s', '%s#%s', %s, '%s', %s);",
+            $objControl->Form->FormId, $objControl->ControlId, addslashes(get_class($this->objEvent)), $this->strId,
+            $this->getActionParameter($objControl), $strWaitIconControlId, $this->blnAsync ? 'true' : 'false');
+    }
+}
