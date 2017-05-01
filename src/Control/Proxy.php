@@ -19,7 +19,7 @@ use QCubed\QString;
  * Class QControlProxy is used to 'proxy' the actions for another control
  * @was QControlProxy
  */
-class Proxy extends QControl
+class Proxy extends ProjectControl
 {
     /** @var bool Overriding parent class */
     protected $blnActionsMustTerminate = true;

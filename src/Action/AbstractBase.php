@@ -156,8 +156,8 @@ abstract class AbstractBase extends \QCubed\AbstractBase
      *
      * @param string $strName Name of the property
      *
-     * @return mixed|null|string
-     * @throws QCallerException
+     * @return mixed
+     * @throws Caller
      */
     public function __get($strName)
     {

@@ -21,17 +21,23 @@ abstract class Html {
     const IS_VOID = true;
 
     // Common URL Protocols
-    /** HTTP Protocol */
     const HTTP = 'http://';
-    /** HTTPS Protocol */
     const HTTPS = 'https://';
-    /** FTP Protocol */
     const FTP = 'ftp://';
-    /** SFTP Protocol */
     const SFTP = 'sftp://';
-    /** SMB Protocol */
     const SMB = 'smb://';
 
+    // Font Families
+    const FONT_FAMILY_ARIAL = 'Arial, Helvetica, sans-serif';
+    const FONT_FAMILY_HELVETICA = 'Helvetica, Arial, sans-serif';
+    const FONT_FAMILY_TAHOMA = 'Tahoma, Arial, Helvetica, sans-serif';
+    const FONT_FAMILY_TREBUCHET_MS = "'Trebuchet MS', Arial, Helvetica, sans-serif";
+    const FONT_FAMILY_VERDANA = 'Verdana, Arial, Helvetica, sans-serif';
+    const FONT_FAMILY_TIMES_NEW_ROMAN = "'Times New Roman', Times, serif";
+    const FONT_FAMILY_GEORGIA = "Georgia, 'Times New Roman', Times, serif";
+    const FONT_FAMILY_LUCIDA_CONSOLE = "'Lucida Console', 'Courier New', Courier, monospaced";
+    const FONT_FAMILY_COURIER_NEW = "'Courier New', Courier, monospaced";
+    const FONT_FAMILY_COURIER = 'Courier, monospaced';
 
     /**
      * This faux constructor method throws a caller exception.
