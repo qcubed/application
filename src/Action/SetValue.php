@@ -9,11 +9,18 @@
 
 namespace QCubed\Action;
 
+use QCubed\Project\Control\ControlBase as QControl;
+
 /**
+ * Class SetValue
+ *
  * Sets the javascript value of a control in the form. The value has to be known ahead of time. Useful for
  * automatically clearing a text field when it receives focus, for example.
+ *
+ * @was QSetValueAction
+ * @package QCubed\Action
  */
-class QSetValueAction extends AbstractBase {
+class SetValue extends AbstractBase {
     protected $strControlId = null;
     protected $strValue = "";
 
@@ -26,7 +33,7 @@ class QSetValueAction extends AbstractBase {
      * @param QControl $objControl
      * @return mixed|string
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl) {
         return sprintf("jQuery('#%s').val('%s');", $this->strControlId, $this->strValue);
     }
 }

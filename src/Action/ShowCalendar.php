@@ -9,24 +9,32 @@
 
 namespace QCubed\Action;
 
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\Calendar;
 
 /**
- * Shows a Calendar Control
+ * Class ShowCalendar
  *
- * @package Actions
+ * Shows a Calendar Control. Probably should be deprecated in favor of calendar plugins from css and javascript frameworks.
+ *
+ * @was QShowCalendarAction
+ * @package QCubed\Action
  */
-class QShowCalendarAction extends AbstractBase {
+class ShowCalendar extends AbstractBase
+{
     /** @var null|string Control ID of the calendar */
     protected $strControlId = null;
 
     /**
      * @param QCalendar $calControl
      *
-     * @throws \QCubed\Exception\Caller
+     * @throws Caller
      */
-    public function __construct($calControl) {
-        if (!($calControl instanceof QCalendar)) {
-            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QCalendar');
+    public function __construct($calControl)
+    {
+        if (!($calControl instanceof Calendar)) {
+            throw new Caller('First parameter of constructor is expecting an object of type QCalendar');
         }
         $this->strControlId = $calControl->ControlId;
     }
@@ -37,7 +45,8 @@ class QShowCalendarAction extends AbstractBase {
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function RenderScript(QControl $objControl) {
+    public function RenderScript(QControl $objControl)
+    {
         return sprintf("qc.getC('%s').showCalendar();", $this->strControlId);
     }
 }

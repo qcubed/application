@@ -9,13 +9,20 @@
 
 namespace QCubed\Action;
 
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+
 /**
+ * Class JavaScript
+ *
  * Client-side action - no postbacks of any kind are performed.
  * All handling activity happens in Javascript.
  *
- * @package Actions
+ * @was QJavaScriptAction
+ * @package QCubed\Action
  */
-class QJavaScriptAction extends AbstractBase {
+class JavaScript extends AbstractBase
+{
     /** @var string JS to be run on the client side */
     protected $strJavaScript;
 
@@ -23,9 +30,10 @@ class QJavaScriptAction extends AbstractBase {
      * The constructor
      * @param string $strJavaScript JS which is to be executed on the client side
      */
-    public function __construct($strJavaScript) {
+    public function __construct($strJavaScript)
+    {
         $this->strJavaScript = trim($strJavaScript);
-        if (QString::LastCharacter($this->strJavaScript) == ';') {
+        if (QString::lastCharacter($this->strJavaScript) == ';') {
             $this->strJavaScript = substr($this->strJavaScript, 0, strlen($this->strJavaScript) - 1);
         }
     }
@@ -34,19 +42,19 @@ class QJavaScriptAction extends AbstractBase {
      * PHP Magic function to get the property values of a class object
      *
      * @param string $strName Name of the property
-     *
      * @return mixed|null|string
-     * @throws \QCubed\Exception\Caller
+     * @throws Caller
      */
-    public function __get($strName) {
+    public function __get($strName)
+    {
         switch ($strName) {
             case 'JavaScript':
                 return $this->strJavaScript;
             default:
                 try {
                     return parent::__get($strName);
-                } catch (\QCubed\Exception\Caller $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
@@ -54,11 +62,12 @@ class QJavaScriptAction extends AbstractBase {
 
     /**
      * Returns the JS which will be executed on the client side
-     * @param QControl $objControl
      *
+     * @param QControl $objControl
      * @return string
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return sprintf('%s;', $this->strJavaScript);
     }
 }

@@ -9,11 +9,18 @@
 
 namespace QCubed\Action;
 
+use QCubed\Project\Control\ControlBase as QControl;
+
 /**
+ * Class SelectControl
+ *
  * Selects contents inside a QTextBox on the client-side/browser
- * @package Actions
+ *
+ * @was QSelectControlAction
+ * @package QCubed\Action
  */
-class QSelectControlAction extends AbstractBase {
+class SelectControl extends AbstractBase
+{
     /** @var null|string Control ID of the QTextBox which is to be selected */
     protected $strControlId = null;
 
@@ -24,7 +31,8 @@ class QSelectControlAction extends AbstractBase {
      *
      * @throws \QCubed\Exception\Caller
      */
-    public function __construct($objControl) {
+    public function __construct($objControl)
+    {
         if (!($objControl instanceof QTextBox)) {
             throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QTextBox');
         }
@@ -39,7 +47,8 @@ class QSelectControlAction extends AbstractBase {
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return sprintf("qc.getW('%s').select();", $this->strControlId);
     }
 }

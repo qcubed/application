@@ -9,13 +9,19 @@
 
 namespace QCubed\Action;
 
+use QCubed\Project\Control\ControlBase as QControl;
+
 /**
+ * Class Redirect
+ *
  * Client-side action - no postbacks of any kind are performed.
  * All handling activity happens in Javascript.
  *
- * @package Actions
+ * @was QRedirectAction
+ * @package QCubed\Action
  */
-class QRedirectAction extends AbstractBase {
+class Redirect extends AbstractBase
+{
     /** @var string JS to be run on the client side */
     protected $strJavaScript;
 
@@ -27,7 +33,8 @@ class QRedirectAction extends AbstractBase {
      *
      * @param string $strUrl
      */
-    public function __construct($strUrl) {
+    public function __construct($strUrl)
+    {
         $this->strJavaScript = sprintf("document.location.href ='%s'", trim($strUrl));
     }
 
@@ -39,7 +46,8 @@ class QRedirectAction extends AbstractBase {
      * @return mixed|null|string
      * @throws \QCubed\Exception\Caller
      */
-    public function __get($strName) {
+    public function __get($strName)
+    {
         switch ($strName) {
             case 'JavaScript':
                 return $this->strJavaScript;
@@ -47,7 +55,7 @@ class QRedirectAction extends AbstractBase {
                 try {
                     return parent::__get($strName);
                 } catch (\QCubed\Exception\Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
@@ -59,7 +67,8 @@ class QRedirectAction extends AbstractBase {
      *
      * @return string
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return sprintf('%s;', $this->strJavaScript);
     }
 }

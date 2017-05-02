@@ -54,7 +54,7 @@ class CssAction extends AbstractBase
      *
      * @return string JavaScript to be executed on the client side for setting the CSS
      */
-    public function RenderScript(QControl $objControl)
+    public function renderScript(QControl $objControl)
     {
         if ($this->strControlId == null) {
             $this->strControlId = $objControl->ControlId;

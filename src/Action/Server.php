@@ -9,16 +9,25 @@
 
 namespace QCubed\Action;
 
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Js;
+
 /**
+ * Class Server
+ *
  * Server actions are handled through a full-page postback.
  *
  * @package                                        Actions
  * @property-read string $MethodName               Name of the associated action handling method
- * @property-read mixed  $CausesValidationOverride An override for CausesValidation property (if supplied)
+ * @property-read mixed $CausesValidationOverride An override for CausesValidation property (if supplied)
  * @property-read string $JsReturnParam            The parameter to be returned
  *                                                 (overrides the Control's ActionParameter)
+ * @was QServerAction
+ * @package QCubed\Action
  */
-class QServerAction extends AbstractBase {
+class Server extends AbstractBase
+{
     /** @var string Name of the method in the form to be called */
     protected $strMethodName;
     /**
@@ -26,19 +35,25 @@ class QServerAction extends AbstractBase {
      *            It is set in the constructor via the corresponding argument
      */
     protected $mixCausesValidationOverride;
-    /** @var string An over-ride for the Control's ActionParameter */
+    /** @var string An override for the Control's ActionParameter */
     protected $strJsReturnParam;
 
     /**
-     * @param string $strMethodName                The method name which is to be assigned as the event handler
-     *                                             (for the event being created)
-     * @param string $mixCausesValidationOverride  A constant from QCausesValidation
+     * Server constructor.
+     *
+     *
+     * @param string $strMethodName The method name which is to be assigned as the event handler
+     *                                             (for the event being created). If blank, the whole page will just refresh.
+     * @param string $mixCausesValidationOverride A constant from CausesValidation
      *                                             (or $this or an array of QControls)
-     * @param string $strJsReturnParam             The parameter to be returned when this event occurs
+     * @param string $strJsReturnParam The parameter to be returned when this event occurs
      *                                             (this is an override for the control's ActionParameter)
      */
-    public function __construct($strMethodName = null, $mixCausesValidationOverride = null,
-        $strJsReturnParam = '') {
+    public function __construct(
+        $strMethodName = null,
+        $mixCausesValidationOverride = null,
+        $strJsReturnParam = ''
+    ) {
         $this->strMethodName = $strMethodName;
         $this->mixCausesValidationOverride = $mixCausesValidationOverride;
         $this->strJsReturnParam = $strJsReturnParam;
@@ -50,9 +65,10 @@ class QServerAction extends AbstractBase {
      * @param string $strName Name of the property
      *
      * @return mixed|null|string
-     * @throws \QCubed\Exception\Caller
+     * @throws Caller
      */
-    public function __get($strName) {
+    public function __get($strName)
+    {
         switch ($strName) {
             case 'MethodName':
                 return $this->strMethodName;
@@ -63,8 +79,8 @@ class QServerAction extends AbstractBase {
             default:
                 try {
                     return parent::__get($strName);
-                } catch (\QCubed\Exception\Caller $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
@@ -73,11 +89,12 @@ class QServerAction extends AbstractBase {
     /**
      * Determines the ActionParameter associated with the action and returns it
      *
-     * @param QControlBase $objControl
+     * @param QControl $objControl
      *
      * @return string The action parameter
      */
-    protected function getActionParameter($objControl) {
+    protected function getActionParameter($objControl)
+    {
         if ($objActionParameter = $this->strJsReturnParam) {
             return $objActionParameter;
         }
@@ -85,7 +102,7 @@ class QServerAction extends AbstractBase {
             return $objActionParameter;
         }
         $objActionParameter = $objControl->ActionParameter;
-        if ($objActionParameter instanceof \QCubed\Js\Closure) {
+        if ($objActionParameter instanceof Js\Closure) {
             return '(' . $objActionParameter->toJsObject() . ').call(this)';
         }
 
@@ -100,8 +117,10 @@ class QServerAction extends AbstractBase {
      *
      * @return string
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return sprintf("qc.pB('%s', '%s', '%s', %s);",
-            $objControl->Form->FormId, $objControl->ControlId, get_class($this->objEvent), $this->getActionParameter($objControl));
+            $objControl->Form->FormId, $objControl->ControlId, get_class($this->objEvent),
+            $this->getActionParameter($objControl));
     }
 }

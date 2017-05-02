@@ -48,7 +48,7 @@ class FocusControl extends AbstractBase
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function RenderScript(QControl $objControl)
+    public function renderScript(QControl $objControl)
     {
         // for firefox focus is special when in a blur or in a focusout event
         // http://stackoverflow.com/questions/7046798/jquery-focus-fails-on-firefox/7046837#7046837

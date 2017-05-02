@@ -46,7 +46,7 @@ class HideCalendar extends AbstractBase
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function RenderScript(QControl $objControl)
+    public function renderScript(QControl $objControl)
     {
         return sprintf("qc.getC('%s').hideCalendar();", $this->strControlId);
     }

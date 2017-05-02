@@ -56,7 +56,7 @@ class Confirm extends AbstractBase
                 try {
                     return parent::__get($strName);
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
@@ -68,7 +68,7 @@ class Confirm extends AbstractBase
      *
      * @return string The JS to be executed
      */
-    public function RenderScript(QControl $objControl)
+    public function renderScript(QControl $objControl)
     {
         $strMessage = Js\Helper::toJsObject($this->strMessage);
 

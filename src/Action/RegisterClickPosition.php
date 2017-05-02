@@ -9,13 +9,18 @@
 
 namespace QCubed\Action;
 
+use QCubed\Project\Control\ControlBase as QControl;
 
 /**
+ * Class RegisterClickPosition
+ *
  * Registers the click position on a control
  *
- * @package Actions
+ * @was QRegisterClickPositionAction
+ * @package QCubed\Action
  */
-class QRegisterClickPositionAction extends AbstractBase {
+class RegisterClickPosition extends AbstractBase
+{
     /** @var null|string Control ID of the control on which the click position has to be registered */
     protected $strControlId = null;
 
@@ -26,7 +31,8 @@ class QRegisterClickPositionAction extends AbstractBase {
      *
      * @return string
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return sprintf("qc.getW('%s').registerClickPosition(event);", $objControl->ControlId);
     }
 }

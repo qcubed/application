@@ -9,22 +9,30 @@
 
 namespace QCubed\Action;
 
+use QCubed\Project\Control\ControlBase as QControl;
+
 /**
+ * Class ToggleCssClass
+ *
  * Toggles the given class on the objects identified by the given jQuery selector. If no selector given, then
  * the trigger control is toggled.
  *
- * @package Actions
+ * @was QToggleCssClassAction
+ * @package QCubed\Action
  */
-class QToggleCssClassAction extends AbstractBase {
+class ToggleCssClass extends AbstractBase
+{
     protected $strCssClass;
     protected $strTargetSelector;
 
-    public function __construct($strCssClass, $strTargetSelector = null) {
+    public function __construct($strCssClass, $strTargetSelector = null)
+    {
         $this->strCssClass = $strCssClass;
         $this->strTargetSelector = $strTargetSelector;
     }
 
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         // Specified a Temporary Css Class to use?
         if ($this->strTargetSelector) {
             $strSelector = $this->strTargetSelector;

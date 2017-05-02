@@ -9,14 +9,19 @@
 
 namespace QCubed\Action;
 
+use QCubed\Project\Control\ControlBase as QControl;
 
 /**
+ * Class StopPropagation
+ *
  * Prevents the event from bubbling up the DOM tree, preventing any parent
  * handlers from being notified of the event.
  *
- * @package Actions
+ * @was QStopPropagationAction
+ * @package QCubed\Action
  */
-class QStopPropagationAction extends AbstractBase {
+class StopPropagation extends AbstractBase
+{
     /**
      * Returns the JavaScript to be executed on the client side
      *
@@ -24,8 +29,8 @@ class QStopPropagationAction extends AbstractBase {
      *
      * @return string Client side JS
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return 'event.stopPropagation();';
     }
 }
-

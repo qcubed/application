@@ -9,13 +9,21 @@
 
 namespace QCubed\Action;
 
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Type;
+
 /**
+ * Class ToggleEnable
+ *
  * Toggle the 'enabled' status of a control
  * NOTE: It does not change the Enabled property on the server side
  *
- * @package Actions
+ * @was QToggleEnableAction
+ * @package QCubed\Action
  */
-class QToggleEnableAction extends AbstractBase {
+class ToggleEnable extends AbstractBase
+{
     /** @var null|string Control ID of the control to be Enabled/Disabled */
     protected $strControlId = null;
     /** @var boolean|null Enforce the Enabling or Disabling action */
@@ -23,19 +31,20 @@ class QToggleEnableAction extends AbstractBase {
 
     /**
      * @param QControl|QControlBase $objControl
-     * @param boolean               $blnEnabled
+     * @param boolean $blnEnabled
      *
-     * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
+     * @throws Exception|Caller|\QCubed\Exception\InvalidCast
      */
-    public function __construct($objControl, $blnEnabled = null) {
+    public function __construct($objControl, $blnEnabled = null)
+    {
         if (!($objControl instanceof QControl)) {
-            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QControl');
+            throw new Caller('First parameter of constructor is expecting an object of type QControl');
         }
 
         $this->strControlId = $objControl->ControlId;
 
         if (!is_null($blnEnabled)) {
-            $this->blnEnabled = \QCubed\Type::Cast($blnEnabled, \QCubed\Type::BOOLEAN);
+            $this->blnEnabled = Type::cast($blnEnabled, Type::BOOLEAN);
         }
     }
 
@@ -46,7 +55,8 @@ class QToggleEnableAction extends AbstractBase {
      *
      * @return string Client side JS
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         if ($this->blnEnabled === true) {
             $strEnableOrDisable = 'enable';
         } else {
@@ -60,4 +70,3 @@ class QToggleEnableAction extends AbstractBase {
         return sprintf("qc.getW('%s').toggleEnabled('%s');", $this->strControlId, $strEnableOrDisable);
     }
 }
-

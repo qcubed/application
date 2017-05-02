@@ -9,7 +9,11 @@
 
 namespace QCubed\Action;
 
+use QCubed\Project\Control\ControlBase as QControl;
+
 /**
+ * Class Terminate
+ *
  * Prevents the default action on an event.
  *
  * E.g. If you have a click action added to a label whose text is a link, clicking it will take the action
@@ -17,9 +21,11 @@ namespace QCubed\Action;
  * handlers and that will make sure that action handlers are triggered but the browser does not navigate
  * the user to the link pointed by the label
  *
- * @package Actions
+ * @was QTerminateAction
+ * @package QCubed\Action
  */
-class QTerminateAction extends AbstractBase {
+class Terminate extends AbstractBase
+{
     /**
      * Returns the JS for the browser
      *
@@ -27,7 +33,8 @@ class QTerminateAction extends AbstractBase {
      *
      * @return string JS to prevent the default action
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return 'event.preventDefault();';
     }
 }

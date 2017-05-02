@@ -9,13 +9,20 @@
 
 namespace QCubed\Action;
 
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Type;
 
 /**
+ * Class ToggleDisplay
+ *
  * Toggle the Disaply of a control
  *
- * @package Actions
+ * @was QToggleDisplayAction
+ * @package QCubed\Action
  */
-class QToggleDisplayAction extends AbstractBase {
+class ToggleDisplay extends AbstractBase
+{
     /** @var string Control ID of the control */
     protected $strControlId = null;
     /** @var boolean|null Enforce 'show' or 'hide' action */
@@ -23,19 +30,20 @@ class QToggleDisplayAction extends AbstractBase {
 
     /**
      * @param QControl|QControlBase $objControl
-     * @param bool                  $blnDisplay
+     * @param bool $blnDisplay
      *
-     * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
+     * @throws Exception|Caller|\QCubed\Exception\InvalidCast
      */
-    public function __construct($objControl, $blnDisplay = null) {
+    public function __construct($objControl, $blnDisplay = null)
+    {
         if (!($objControl instanceof QControl)) {
-            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QControl');
+            throw new Caller('First parameter of constructor is expecting an object of type QControl');
         }
 
         $this->strControlId = $objControl->ControlId;
 
         if (!is_null($blnDisplay)) {
-            $this->blnDisplay = \QCubed\Type::Cast($blnDisplay, \QCubed\Type::BOOLEAN);
+            $this->blnDisplay = Type::cast($blnDisplay, Type::BOOLEAN);
         }
     }
 
@@ -46,7 +54,8 @@ class QToggleDisplayAction extends AbstractBase {
      *
      * @return string Returns the JavaScript to be executed on the client side
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         if ($this->blnDisplay === true) {
             $strShowOrHide = 'show';
         } else {
@@ -61,4 +70,3 @@ class QToggleDisplayAction extends AbstractBase {
             $this->strControlId, $strShowOrHide);
     }
 }
-

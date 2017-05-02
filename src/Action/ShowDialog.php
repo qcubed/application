@@ -9,13 +9,21 @@
 
 namespace QCubed\Action;
 
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+
 /**
- * Shows a QDialog
+ * Class ShowDialog
+ *
+ * Shows a Dialog
  * This is the JQuery UI alternative to show dialog
  *
- * @package Actions
+ * @deprecated Create dialogs on the fly
+ * @was QShowDialog
+ * @package QCubed\Action
  */
-class QShowDialog extends AbstractBase {
+class ShowDialog extends AbstractBase
+{
     /** @var null|string The JS to show the dialog */
     protected $strJavaScript = null;
 
@@ -24,11 +32,12 @@ class QShowDialog extends AbstractBase {
      *
      * @param QDialog $objControl
      *
-     * @throws \QCubed\Exception\Caller
+     * @throws Caller
      */
-    public function __construct($objControl) {
+    public function __construct($objControl)
+    {
         if (!($objControl instanceof QDialog)) {
-            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QDialog');
+            throw new Caller('First parameter of constructor is expecting an object of type QDialog');
         }
 
         $strControlId = $objControl->getJqControlId();
@@ -42,8 +51,8 @@ class QShowDialog extends AbstractBase {
      *
      * @return null|string JS that will be run on the client side
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         return $this->strJavaScript;
     }
 }
-
