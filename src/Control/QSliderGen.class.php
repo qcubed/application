@@ -375,7 +375,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -391,40 +391,40 @@
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Max':
 					try {
-						$this->intMax = QType::Cast($mixValue, QType::Integer);
+						$this->intMax = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'max', $this->intMax);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Min':
 					try {
-						$this->intMin = QType::Cast($mixValue, QType::Integer);
+						$this->intMin = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'min', $this->intMin);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Orientation':
 					try {
-						$this->strOrientation = QType::Cast($mixValue, QType::String);
+						$this->strOrientation = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'orientation', $this->strOrientation);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -436,30 +436,30 @@
 
 				case 'Step':
 					try {
-						$this->intStep = QType::Cast($mixValue, QType::Integer);
+						$this->intStep = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'step', $this->intStep);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Value':
 					try {
-						$this->intValue = QType::Cast($mixValue, QType::Integer);
+						$this->intValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'value', $this->intValue);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Values':
 					try {
-						$this->arrValues = QType::Cast($mixValue, QType::ArrayType);
+						$this->arrValues = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'values', $this->arrValues);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -474,7 +474,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -488,13 +488,13 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the slider if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Max', 'The maximum value of the slider.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Min', 'The minimum value of the slider.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Orientation', 'Determines whether the slider handles move horizontally (min on left,max on right) or vertically (min on bottom, max on top). Possiblevalues: \"horizontal\", \"vertical\".', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Step', 'Determines the size or amount of each interval or step the slidertakes between the min and max. The full specified value range of theslider (max - min) should be evenly divisible by the step.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Value', 'Determines the value of the slider, if theres only one handle. Ifthere is more than one handle, determines the value of the firsthandle.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Values', 'This option can be used to specify multiple handles. If the rangeoption is set to true, the length of values should be 2.', QType::ArrayType),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the slider if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Max', 'The maximum value of the slider.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Min', 'The minimum value of the slider.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Orientation', 'Determines whether the slider handles move horizontally (min on left,max on right) or vertically (min on bottom, max on top). Possiblevalues: \"horizontal\", \"vertical\".', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Step', 'Determines the size or amount of each interval or step the slidertakes between the min and max. The full specified value range of theslider (max - min) should be evenly divisible by the step.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Value', 'Determines the value of the slider, if theres only one handle. Ifthere is more than one handle, determines the value of the firsthandle.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Values', 'This option can be used to specify multiple handles. If the rangeoption is set to true, the length of values should be 2.', \QCubed\Type::ARRAY_TYPE),
 			));
 		}
 	}

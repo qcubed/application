@@ -412,7 +412,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -428,40 +428,40 @@
 
 				case 'AutoFocus':
 					try {
-						$this->blnAutoFocus = QType::Cast($mixValue, QType::Boolean);
+						$this->blnAutoFocus = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'autoFocus', $this->blnAutoFocus);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Delay':
 					try {
-						$this->intDelay = QType::Cast($mixValue, QType::Integer);
+						$this->intDelay = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'delay', $this->intDelay);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'MinLength':
 					try {
-						$this->intMinLength = QType::Cast($mixValue, QType::Integer);
+						$this->intMinLength = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'minLength', $this->intMinLength);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -486,7 +486,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -500,10 +500,10 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'AutoFocus', 'If set to true the first item will automatically be focused when themenu is shown.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Delay', 'The delay in milliseconds between when a keystroke occurs and when asearch is performed. A zero-delay makes sense for local data (moreresponsive), but can produce a lot of load for remote data, whilebeing less responsive.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the autocomplete if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'MinLength', 'The minimum number of characters a user must type before a search isperformed. Zero is useful for local data with just a few items, but ahigher value should be used when a single character search could matcha few thousand items.', QType::Integer),
+				new QModelConnectorParam (get_called_class(), 'AutoFocus', 'If set to true the first item will automatically be focused when themenu is shown.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Delay', 'The delay in milliseconds between when a keystroke occurs and when asearch is performed. A zero-delay makes sense for local data (moreresponsive), but can produce a lot of load for remote data, whilebeing less responsive.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the autocomplete if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'MinLength', 'The minimum number of characters a user must type before a search isperformed. Zero is useful for local data with just a few items, but ahigher value should be used when a single character search could matcha few thousand items.', \QCubed\Type::INTEGER),
 			));
 		}
 	}

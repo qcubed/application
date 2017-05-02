@@ -1,9 +1,22 @@
 <?php
 /**
- * Focus event: keyboard focus entering the control.
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
  */
-class QFocusEvent extends QEvent {
-    /** Event Name */
-    const EventName = 'focus';
-}
 
+namespace QCubed\Event;
+
+/**
+ * Class Focus
+ *
+ * @was QFocusEvent
+ * @package QCubed\Event
+ */
+class Focus extends AbstractBase
+{
+    /** Event Name */
+    const EVENT_NAME = 'focus';
+}

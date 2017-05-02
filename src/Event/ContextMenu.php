@@ -1,7 +1,24 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
 
-/** Override right clicks */
-class QContextMenuEvent extends QEvent {
+namespace QCubed\Event;
+
+/**
+ * Class ContextMenu
+ *
+ * Detects right clicks
+ *
+ * @was QContextMenuEvent
+ * @package QCubed\Event
+ */
+class ContextMenu extends AbstractBase
+{
     /** Event Name */
-    const EventName = 'contextmenu';
+    const EVENT_NAME = 'contextmenu';
 }

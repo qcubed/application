@@ -1,10 +1,29 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+use QCubed\Exception\Caller;
+use QCubed\Js;
+use QCubed\Project\Control\ControlBase as QControl;
+
+
+/**
+ * Class Alert
+ *
  * Displays an alert to the user
  *
- * @package Actions
+ * @was QAlertAction
+ * @package QCubed\Action
  */
-class QAlertAction extends QAction {
+class Alert extends AbstractBase
+{
     /** @var string Message to be shown as the alert */
     protected $strMessage;
 
@@ -13,7 +32,8 @@ class QAlertAction extends QAction {
      *
      * @param string $strMessage Message to be shown as the alert
      */
-    public function __construct($strMessage) {
+    public function __construct($strMessage)
+    {
         $this->strMessage = $strMessage;
     }
 
@@ -23,17 +43,18 @@ class QAlertAction extends QAction {
      * @param string $strName Name of the property
      *
      * @return mixed|null|string
-     * @throws QCallerException
+     * @throws Caller
      */
-    public function __get($strName) {
+    public function __get($strName)
+    {
         switch ($strName) {
             case 'Message':
                 return $this->strMessage;
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
@@ -46,8 +67,9 @@ class QAlertAction extends QAction {
      *
      * @return string
      */
-    public function RenderScript(QControl $objControl) {
-        $strMessage = JavaScriptHelper::toJsObject($this->strMessage);
+    public function renderScript(QControl $objControl)
+    {
+        $strMessage = Js\Helper::toJsObject($this->strMessage);
 
         return sprintf("alert(%s);", $strMessage);
     }

@@ -42,7 +42,7 @@
 		 *                              allows you to override item styles.  It is either a string formatted as Property=Value
 		 *                              or an array of the format array(property => value)
 		 *
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 * @return QListItem
 		 */
 		public function __construct($strName, $strValue = null, $blnSelected = false, $strItemGroup = null, $mixOverrideParameters = null) {
@@ -53,7 +53,7 @@
 			// Override parameters get applied here
 			$strOverrideArray = func_get_args();
 			if (count($strOverrideArray) > 4)	{
-				throw new QCallerException ("Please provide either a string, or an array, but not multiple parameters");
+				throw new \QCubed\Exception\Caller ("Please provide either a string, or an array, but not multiple parameters");
 			}
 			if ($mixOverrideParameters) {
 				$this->GetStyle()->OverrideAttributes($mixOverrideParameters);
@@ -78,7 +78,7 @@
 			if ($this->strItemGroup) {
 				$a['category'] = $this->strItemGroup;
 			}
-			return JavaScriptHelper::toJsObject($a);
+			return \QCubed\Js\Helper::toJsObject($a);
 		}
 
 		/**
@@ -113,7 +113,7 @@
 		 * @param string $strName
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -124,7 +124,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -140,38 +140,38 @@
 		 * @param string $mixValue
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "Selected":
 					try {
-						$this->blnSelected = QType::Cast($mixValue, QType::Boolean);
+						$this->blnSelected = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ItemGroup":
 					try {
-						$this->strItemGroup = QType::Cast($mixValue, QType::String);
+						$this->strItemGroup = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Label":
 					try {
-						$this->strLabel = QType::Cast($mixValue, QType::String);
+						$this->strLabel = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

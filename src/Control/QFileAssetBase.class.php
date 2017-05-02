@@ -91,9 +91,9 @@
 				if ($this->blnRequired && !$this->strFile) {
 					$blnToReturn = false;
 					if ($this->strName)
-						$this->ValidationError = $this->strName . QApplication::Translate(' is required');
+						$this->ValidationError = $this->strName . t(' is required');
 					else
-						$this->ValidationError = $this->strName . QApplication::Translate('Required');
+						$this->ValidationError = $this->strName . t('Required');
 				}
 			}
 
@@ -185,7 +185,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -233,7 +233,7 @@
 				$this->imgFileIcon->ImagePath = $this->strIconFilePathArray['blank'];
 			} else if (!is_file($strFile)) {
 				// Invalid File Selected -- Throw Exception
-				throw new QCallerException('File Not Found: ' . $strFile);
+				throw new \QCubed\Exception\Caller('File Not Found: ' . $strFile);
 			} else {
 				// Valid File Selected
 				$this->strFile = realpath($strFile);
@@ -271,7 +271,7 @@
 						'image/png' => 'png',
 						'image/x-png' => 'png',
 						'image/gif' => 'gif');
-					$this->strUnacceptableMessage = QApplication::Translate('Must be a JPG, PNG or GIF');
+					$this->strUnacceptableMessage = t('Must be a JPG, PNG or GIF');
 					break;
 				case QFileAssetType::Pdf:
 					$this->intFileAssetType = $intFileAssetType;
@@ -279,7 +279,7 @@
 						'application/pdf' => 'pdf',
 						'application/octet-stream' => 'pdf'
 						);
-					$this->strUnacceptableMessage = QApplication::Translate('Must be a PDF');
+					$this->strUnacceptableMessage = t('Must be a PDF');
 					break;
 				case QFileAssetType::Document:
 					$this->intFileAssetType = $intFileAssetType;
@@ -292,10 +292,10 @@
 						'image/png' => 'png',
 						'image/x-png' => 'png',
 						'image/gif' => 'gif');
-					$this->strUnacceptableMessage = QApplication::Translate('Must be a valid document (Image, PDF, etc.)');
+					$this->strUnacceptableMessage = t('Must be a valid document (Image, PDF, etc.)');
 					break;
 				default:
-					throw new QCallerException('FileAssetType must be a valid QFileAssetType constant value');
+					throw new \QCubed\Exception\Caller('FileAssetType must be a valid QFileAssetType constant value');
 					break;
 			}
 
@@ -309,7 +309,7 @@
 				case 'File':
 					try {
 						return $this->SetFile($mixValue);
-					} catch (QCallerException $objExc) {						
+					} catch (\QCubed\Exception\Caller $objExc) {						
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -319,7 +319,7 @@
 						$this->dlgFileAsset->CssClass = $mixValue;
 						$this->SetupUpdateActions();
 						return $this->dlgFileAsset->CssClass;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -329,7 +329,7 @@
 						$this->dlgFileAsset->Width = $mixValue;
 						$this->SetupUpdateActions();
 						return $this->dlgFileAsset->Width;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -339,7 +339,7 @@
 						$this->dlgFileAsset->Height = $mixValue;
 						$this->SetupUpdateActions();
 						return $this->dlgFileAsset->Height;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -347,7 +347,7 @@
 				case 'UploadText':
 					try {
 						return ($this->dlgFileAsset->btnUpload->Text = $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -355,7 +355,7 @@
 				case 'CancelText':
 					try {
 						return ($this->dlgFileAsset->btnCancel->Text = $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -363,7 +363,7 @@
 				case 'DialogBoxHtml':
 					try {
 						return ($this->dlgFileAsset->lblMessage->Text = $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -371,31 +371,31 @@
 				case 'FileAssetType':
 					try {
 						return $this->SetFileAssetType($mixValue);
-					} catch (QCallerException $objExc) {						
+					} catch (\QCubed\Exception\Caller $objExc) {						
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'UnacceptableMessage':
 					try {
-						return ($this->strUnacceptableMessage = QType::Cast($mixValue, QType::String));
-					} catch (QCallerException $objExc) {
+						return ($this->strUnacceptableMessage = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'TemporaryUploadPath':
 					try {
-						return ($this->strTemporaryUploadPath = QType::Cast($mixValue, QType::String));
-					} catch (QCallerException $objExc) {
+						return ($this->strTemporaryUploadPath = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'ClickToView':
 					try {
-						return ($this->blnClickToView = QType::Cast($mixValue, QType::Boolean));
-					} catch (QCallerException $objExc) {
+						return ($this->blnClickToView = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN));
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -403,7 +403,7 @@
 				default:
 					try {
 						return parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

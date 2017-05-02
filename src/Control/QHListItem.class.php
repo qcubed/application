@@ -37,7 +37,7 @@
 		 * @param string|null  $strValue     is any text that represents the value of the ListItem (e.g. maybe a DB Id)
 		 * @param string|null $strAnchor 	is an href anchor that will be associated with item
 		 *
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __construct($strName, $strValue = null, $strAnchor = null) {
 			parent::__construct ($strName, $strValue);
@@ -51,8 +51,8 @@
 		 * @param null|string $strAnchor
 		 */
 		public function AddItem($mixListItemOrName, $strValue = null, $strAnchor = null) {
-			if (gettype($mixListItemOrName) == QType::Object) {
-				$objListItem = QType::Cast($mixListItemOrName, "QHListItem");
+			if (gettype($mixListItemOrName) == \QCubed\Type::OBJECT) {
+				$objListItem = \QCubed\Type::Cast($mixListItemOrName, "QHListItem");
 			}
 			else {
 				$objListItem = new QHListItem($mixListItemOrName, $strValue, $strAnchor);
@@ -96,7 +96,7 @@
 		 * @param string $strName
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -106,7 +106,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -122,23 +122,23 @@
 		 * @param string $mixValue
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "Anchor":
 					try {
-						$this->strAnchor = QType::Cast($mixValue, QType::String);
+						$this->strAnchor = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Tag":
 					try {
-						$this->strTag = QType::Cast($mixValue, QType::String);
+						$this->strTag = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -146,7 +146,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

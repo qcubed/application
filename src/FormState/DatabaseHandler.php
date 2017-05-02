@@ -44,7 +44,7 @@ use QCubed\Database;
  * @package QCubed\FormState
  * @was QDbBackedFormStateHandler
  */
-class DbHandler extends AbstractBase
+class DatabaseHandler extends AbstractBase
 {
 
     /**

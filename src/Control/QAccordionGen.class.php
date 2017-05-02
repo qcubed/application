@@ -317,7 +317,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -338,30 +338,30 @@
 
 				case 'Collapsible':
 					try {
-						$this->blnCollapsible = QType::Cast($mixValue, QType::Boolean);
+						$this->blnCollapsible = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'collapsible', $this->blnCollapsible);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Event':
 					try {
-						$this->strEvent = QType::Cast($mixValue, QType::String);
+						$this->strEvent = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'event', $this->strEvent);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -373,10 +373,10 @@
 
 				case 'HeightStyle':
 					try {
-						$this->strHeightStyle = QType::Cast($mixValue, QType::String);
+						$this->strHeightStyle = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'heightStyle', $this->strHeightStyle);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -396,7 +396,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -410,10 +410,10 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Collapsible', 'Whether all the sections can be closed at once. Allows collapsing theactive section.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the accordion if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Event', 'The event that accordion headers will react to in order to activatethe associated panel. Multiple events can be specified, separated by aspace.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the accordion and each panel. Possible values: 	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the accordionsparent height.	* \"content\": Each panel will be only as tall as its content.', QType::String),
+				new QModelConnectorParam (get_called_class(), 'Collapsible', 'Whether all the sections can be closed at once. Allows collapsing theactive section.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the accordion if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Event', 'The event that accordion headers will react to in order to activatethe associated panel. Multiple events can be specified, separated by aspace.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the accordion and each panel. Possible values: 	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the accordionsparent height.	* \"content\": Each panel will be only as tall as its content.', \QCubed\Type::STRING),
 			));
 		}
 	}

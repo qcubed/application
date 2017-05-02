@@ -71,7 +71,7 @@
 
 		protected function GetControlHtml() {
 			if (!$this->strFontNames)
-//				throw new QCallerException('Must specify a FontNames value before rendering this QImageLabel');
+//				throw new \QCubed\Exception\Caller('Must specify a FontNames value before rendering this QImageLabel');
 				return;
 
 			$strSerialized = $this->Serialize();
@@ -93,9 +93,9 @@
 				$this->strCachedImageFilePath = $strPath;
 			} else {
 				if (strlen($strSerialized) > 255/* safe max filename size */) {
-					throw new QCallerException(
+					throw new \QCubed\Exception\Caller(
 						sprintf(
-							QApplication::Translate(
+							t(
 								"The filename size exceeded for the serialized QImageLabel control." .
 								" The size is %s. The maximum value is 255. Try to set the CacheFolder property to solve the problem."
 							)
@@ -154,7 +154,7 @@
 			if (file_exists($this->strFontNames))
 				$strFontPath = $this->strFontNames;
 			else
-				throw new QCallerException('Cannot find font file: ' . $this->strFontNames);
+				throw new \QCubed\Exception\Caller('Cannot find font file: ' . $this->strFontNames);
 
 			// Figure Out Font Type
 			$strFontExtension = substr($this->strFontNames, strlen($this->strFontNames) - 3);
@@ -186,7 +186,7 @@
 					$intYCoordinate2 = $objBox[3];
 					break;
 				default:
-					throw new QCallerException('Cannot Determine Font Type: ' . $this->strFontNames);
+					throw new \QCubed\Exception\Caller('Cannot Determine Font Type: ' . $this->strFontNames);
 			}
 
 			$intBoxWidth = $intXCoordinate2 - $intXCoordinate1;
@@ -372,7 +372,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -391,36 +391,36 @@
 				// APPEARANCE
 				case "Text":
 					try {
-						$this->strText = QType::Cast($mixValue, QType::String);
+						$this->strText = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "XCoordinate":
 					try {
-						$this->intXCoordinate = QType::Cast($mixValue, QType::Integer);
+						$this->intXCoordinate = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "YCoordinate":
 					try {
-						$this->intYCoordinate = QType::Cast($mixValue, QType::Integer);
+						$this->intYCoordinate = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "BackgroundTransparent":
 					try {
-						$this->blnBackgroundTransparent = QType::Cast($mixValue, QType::Boolean);
+						$this->blnBackgroundTransparent = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -429,27 +429,27 @@
 				// BEHAVIOR
 				case "ImageType":
 					try {
-						$this->strImageType = QType::Cast($mixValue, QType::String);
+						$this->strImageType = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Quality":
 					try {
-						$this->intQuality = QType::Cast($mixValue, QType::Integer);
+						$this->intQuality = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "SmoothFont":
 					try {
-						$this->blnSmoothFont = QType::Cast($mixValue, QType::Boolean);
+						$this->blnSmoothFont = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -459,63 +459,63 @@
 				// LAYOUT
 				case "HorizontalAlign":
 					try {
-						$this->strHorizontalAlign = QType::Cast($mixValue, QType::String);
+						$this->strHorizontalAlign = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "VerticalAlign":
 					try {
-						$this->strVerticalAlign = QType::Cast($mixValue, QType::String);
+						$this->strVerticalAlign = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "PaddingWidth":
 					try {
-						$this->intPaddingWidth = QType::Cast($mixValue, QType::Integer);
+						$this->intPaddingWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "PaddingHeight":
 					try {
-						$this->intPaddingHeight = QType::Cast($mixValue, QType::Integer);
+						$this->intPaddingHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Space":
 					try {
-						$this->intSpace = QType::Cast($mixValue, QType::Integer);
+						$this->intSpace = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Tightness":
 					try {
-						$this->intTightness = QType::Cast($mixValue, QType::Integer);
+						$this->intTightness = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Angle":
 					try {
-						$this->intAngle = QType::Cast($mixValue, QType::Integer);
+						$this->intAngle = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -523,9 +523,9 @@
 
 				case "CacheFolder":
 					try {
-						$this->strCacheFolder = QType::Cast($mixValue, QType::String);
+						$this->strCacheFolder = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -534,14 +534,14 @@
 				// OVERRIDDEN SETTERS
 				case "ForeColor":
 					try {
-						$mixValue = strtolower(QType::Cast($mixValue, QType::String));
-					} catch (QInvalidCastException $objExc) {
+						$mixValue = strtolower(\QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 					if (strlen($mixValue) != 6)
-						throw new QInvalidCastException('ForeColor must be a 6-digit hexadecimal value');
+						throw new \QCubed\Exception\InvalidCast('ForeColor must be a 6-digit hexadecimal value');
 
 					// Verify ControlId is only Hexadecimal Digits
 					$strMatches = array();
@@ -550,20 +550,20 @@
 					if (count($strMatches) && ($strMatches[0] == $mixValue))
 						return ($this->strForeColor = $mixValue);
 					else
-						throw new QInvalidCastException('ForeColor must be a 6-digit hexadecimal value');
+						throw new \QCubed\Exception\InvalidCast('ForeColor must be a 6-digit hexadecimal value');
 
 					break;
 					
 				case "BackColor":
 					try {
-						$mixValue = strtolower(QType::Cast($mixValue, QType::String));
-					} catch (QInvalidCastException $objExc) {
+						$mixValue = strtolower(\QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 					if (strlen($mixValue) != 6)
-						throw new QInvalidCastException('BackColor must be a 6-digit hexadecimal value');
+						throw new \QCubed\Exception\InvalidCast('BackColor must be a 6-digit hexadecimal value');
 
 					// Verify ControlId is only Hexadecimal Digits
 					$strMatches = array();
@@ -572,41 +572,41 @@
 					if (count($strMatches) && ($strMatches[0] == $mixValue))
 						return ($this->strBackColor = $mixValue);
 					else
-						throw new QInvalidCastException('BackColor must be a 6-digit hexadecimal value');
+						throw new \QCubed\Exception\InvalidCast('BackColor must be a 6-digit hexadecimal value');
 
 					break;
 
 				case "FontSize":
 					try {
-						$this->strFontSize = QType::Cast($mixValue, QType::Integer);
+						$this->strFontSize = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Width":
 					try {
-						$this->strWidth = QType::Cast($mixValue, QType::Integer);
+						$this->strWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Height":
 					try {
-						$this->strHeight = QType::Cast($mixValue, QType::Integer);
+						$this->strHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "FontNames":
 					try {
-						$mixValue = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -617,7 +617,7 @@
 					else if (file_exists(sprintf('%s/fonts/%s', __QCUBED_CORE__, $mixValue)))
 						$strFontPath = sprintf('%s/fonts/%s', __QCUBED_CORE__, $mixValue);
 					else
-						throw new QCallerException('Cannot find font file: ' . $mixValue);
+						throw new \QCubed\Exception\Caller('Cannot find font file: ' . $mixValue);
 
 					$this->strFontNames = $strFontPath;
 
@@ -632,20 +632,20 @@
 						case 'pfb':
 							$strFontPath = substr($strFontPath, 0, strlen($strFontPath) - 3) . 'afm';
 							if (!file_exists($strFontPath))
-								throw new QCallerException('Cannot find accompanying Font Metrics file: ' .
+								throw new \QCubed\Exception\Caller('Cannot find accompanying Font Metrics file: ' .
 									substr($mixValue, 0, strlen($mixValue) - 3) . 'afm');
 							break;
 						case 'afm':
-							throw new QCallerException('AFM is only a Font Metrics file.  You must provide a PFB file for PostScript Type 1 Typefaces: ' . $mixValue);
+							throw new \QCubed\Exception\Caller('AFM is only a Font Metrics file.  You must provide a PFB file for PostScript Type 1 Typefaces: ' . $mixValue);
 						default:
-							throw new QCallerException('Cannot Determine Font Type: ' . $mixValue);
+							throw new \QCubed\Exception\Caller('Cannot Determine Font Type: ' . $mixValue);
 					}
 					break;
 
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

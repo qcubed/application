@@ -1,5 +1,15 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Prevents the default action on an event.
  *
  * E.g. If you have a click action added to a label whose text is a link, clicking it will take the action
@@ -9,7 +19,7 @@
  *
  * @package Actions
  */
-class QTerminateAction extends QAction {
+class QTerminateAction extends AbstractBase {
     /**
      * Returns the JS for the browser
      *

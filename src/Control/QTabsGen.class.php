@@ -442,7 +442,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -458,10 +458,10 @@
 
 				case 'Collapsible':
 					try {
-						$this->blnCollapsible = QType::Cast($mixValue, QType::Boolean);
+						$this->blnCollapsible = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'collapsible', $this->blnCollapsible);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -473,20 +473,20 @@
 
 				case 'Event':
 					try {
-						$this->strEvent = QType::Cast($mixValue, QType::String);
+						$this->strEvent = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'event', $this->strEvent);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'HeightStyle':
 					try {
-						$this->strHeightStyle = QType::Cast($mixValue, QType::String);
+						$this->strHeightStyle = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'heightStyle', $this->strHeightStyle);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -511,7 +511,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -525,9 +525,9 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Collapsible', 'When set to true, the active panel can be closed.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Event', 'The type of event that the tabs should react to in order to activatethe tab. To activate on hover, use \"mouseover\".', QType::String),
-				new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the tabs widget and each panel. Possiblevalues: 	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the tabs parentheight.	* \"content\": Each panel will be only as tall as its content.', QType::String),
+				new QModelConnectorParam (get_called_class(), 'Collapsible', 'When set to true, the active panel can be closed.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Event', 'The type of event that the tabs should react to in order to activatethe tab. To activate on hover, use \"mouseover\".', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the tabs widget and each panel. Possiblevalues: 	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the tabs parentheight.	* \"content\": Each panel will be only as tall as its content.', \QCubed\Type::STRING),
 			));
 		}
 	}

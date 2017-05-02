@@ -9,6 +9,8 @@
 
 namespace QCubed\Watcher;
 
+use QCubed\Exception\Caller;
+
 /**
  * Class QWatcherBase
  *
@@ -23,6 +25,7 @@ namespace QCubed\Watcher;
  * See QWatcher to select the caching mechanism you would like to use.
  *
  * @package QCubed\Watcher
+ * @was QWatcherBase
  */
 abstract class AbstractBase extends \QCubed\AbstractBase
 {
@@ -49,9 +52,11 @@ abstract class AbstractBase extends \QCubed\AbstractBase
      * Also, override this if you have multiple instances of QCubed running on the same PHP process, with possibly the same
      * table names.
      *
+     * @param string $strDbName
+     * @param string $strTableName
      * @return string
      */
-    protected static function GetKey($strDbName, $strTableName)
+    protected static function getKey($strDbName, $strTableName)
     {
         return $strDbName . ':' . $strTableName;
     }
@@ -59,23 +64,24 @@ abstract class AbstractBase extends \QCubed\AbstractBase
     /**
      * Call from control to watch a node. Watches all tables associated with the node.
      *
-     * @param QQTableNode $objNode
+     * @param \QCubed\Query\Node\AbstractBase $objNode
+     * @throws Caller
      */
-    public function Watch(QQTableNode $objNode)
+    public function watch(\QCubed\Query\Node\AbstractBase $objNode)
     {
         $strClassName = $objNode->_ClassName;
 
         if (!$strClassName::$blnWatchChanges) {
-            throw new QCallerException ($strClassName . ':$blnWatchChanges is false. To be able to watch this table, you should set it to true in your ' . $strClassName . '.class.php file.');
+            throw new Caller ($strClassName . ':$blnWatchChanges is false. To be able to watch this table, you should set it to true in your ' . $strClassName . '.class.php file.');
         }
 
         if ($strClassName) {
-            $objDatabase = $strClassName::GetDatabase();
-            $this->RegisterTable($objDatabase->Database, $objNode->_TableName);
+            $objDatabase = $strClassName::getDatabase();
+            $this->registerTable($objDatabase->Database, $objNode->_TableName);
         }
         $objParentNode = $objNode->_ParentNode;
         if ($objParentNode) {
-            $this->Watch($objParentNode);
+            $this->watch($objParentNode);
         }
     }
 
@@ -83,11 +89,12 @@ abstract class AbstractBase extends \QCubed\AbstractBase
      *
      * Internal function to watch a single table.
      *
+     * @param string $strDbName
      * @param string $strTableName
      */
-    protected function RegisterTable($strDbName, $strTableName)
+    protected function registerTable($strDbName, $strTableName)
     {
-        $key = static::GetKey($strDbName, $strTableName);
+        $key = static::getKey($strDbName, $strTableName);
         if (empty($this->strWatchedKeys[$key])) {
             $this->strWatchedKeys[$key] = true;
         }
@@ -98,22 +105,22 @@ abstract class AbstractBase extends \QCubed\AbstractBase
      * to the current state of the database.
      *
      */
-    abstract public function MakeCurrent();
+    abstract public function makeCurrent();
 
     /**
      * QControlBase uses this from IsModified to detect if it should redraw.
      * Returns false if the database has been changed since the last draw.
      * @return bool
      */
-    abstract public function IsCurrent();
+    abstract public function isCurrent();
 
     /**
      * Model Save() calls this to indicate that a table has changed.
      *
+     * @param string $strDbName
      * @param string $strTableName
-     * @throws QCallerException
      */
-    static public function MarkTableModified($strDbName, $strTableName)
+    static public function markTableModified($strDbName, $strTableName)
     {
         self::$blnWatcherChanged = true;
     }
@@ -124,10 +131,9 @@ abstract class AbstractBase extends \QCubed\AbstractBase
      * ajax entry. So really, we are just detecting if any operation we have currently done has changed a watcher, so
      * that the form can broadcast that fact to other browser windows that might be looking.
      *
-     * @param QWatcher[]|null $objWatchers
      * @return bool
      */
-    static public function WatchersChanged()
+    static public function watchersChanged()
     {
         $blnChanged = self::$blnWatcherChanged;
         self::$blnWatcherChanged = false;

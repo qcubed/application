@@ -1,409 +1,216 @@
-array(3) {
-  'const' =>
-  array(102) {
-    'QFontFamily::Arial' =>
-    string(31) "\QCubed\Html::FONT_FAMILY_ARIAL"
-    'QFontFamily::Helvetica' =>
-    string(35) "\QCubed\Html::FONT_FAMILY_HELVETICA"
-    'QFontFamily::Tahoma' =>
-    string(32) "\QCubed\Html::FONT_FAMILY_TAHOMA"
-    'QFontFamily::TrebuchetMs' =>
-    string(38) "\QCubed\Html::FONT_FAMILY_TREBUCHET_MS"
-    'QFontFamily::Verdana' =>
-    string(33) "\QCubed\Html::FONT_FAMILY_VERDANA"
-    'QFontFamily::TimesNewRoman' =>
-    string(41) "\QCubed\Html::FONT_FAMILY_TIMES_NEW_ROMAN"
-    'QFontFamily::Georgia' =>
-    string(33) "\QCubed\Html::FONT_FAMILY_GEORGIA"
-    'QFontFamily::LucidaConsole' =>
-    string(40) "\QCubed\Html::FONT_FAMILY_LUCIDA_CONSOLE"
-    'QFontFamily::CourierNew' =>
-    string(44) "\QCubed\Html::FONT_FAMILY_LUCIDA_COURIER_NEW"
-    'QFontFamily::Courier' =>
-    string(40) "\QCubed\Html::FONT_FAMILY_LUCIDA_COURIER"
-    'QCubed\Cryptography::IvRandom' =>
-    string(30) "QCubed\Cryptography::IV_RANDOM"
-    'QCubed\DateTimeSpan::SecondsPerYear' =>
-    string(37) "QCubed\DateTimeSpan::SECONDS_PER_YEAR"
-    'QCubed\DateTimeSpan::SecondsPerMonth' =>
-    string(38) "QCubed\DateTimeSpan::SECONDS_PER_MONTH"
-    'QCubed\DateTimeSpan::SecondsPerDay' =>
-    string(36) "QCubed\DateTimeSpan::SECONDS_PER_DAY"
-    'QCubed\DateTimeSpan::SecondsPerHour' =>
-    string(37) "QCubed\DateTimeSpan::SECONDS_PER_HOUR"
-    'QCubed\DateTimeSpan::SecondsPerMinute' =>
-    string(39) "QCubed\DateTimeSpan::SECONDS_PER_MINUTE"
-    'QCubed\Js\Helper::JsonObjectType' =>
-    string(34) "QCubed\Js\Helper::JSON_OBJECT_TYPE"
-    'QCubed\QCubed::JsonObjectType' =>
-    string(31) "QCubed\QCubed::JSON_OBJECT_TYPE"
-    'QCubed\QCubed::NamedValueDelimiter' =>
-    string(36) "QCubed\QCubed::NAMED_VALUE_DELIMITER"
-    'QCubed\QDateTime::Now' =>
-    string(21) "QCubed\QDateTime::NOW"
-    'QCubed\QDateTime::FormatIso' =>
-    string(28) "QCubed\QDateTime::FORMAT_ISO"
-    'QCubed\QDateTime::FormatIsoCompressed' =>
-    string(39) "QCubed\QDateTime::FORMAT_ISO_COMPRESSED"
-    'QCubed\QDateTime::FormatDisplayDate' =>
-    string(37) "QCubed\QDateTime::FORMAT_DISPLAY_DATE"
-    'QCubed\QDateTime::FormatDisplayDateFull' =>
-    string(42) "QCubed\QDateTime::FORMAT_DISPLAY_DATE_FULL"
-    'QCubed\QDateTime::FormatDisplayDateTime' =>
-    string(42) "QCubed\QDateTime::FORMAT_DISPLAY_DATE_TIME"
-    'QCubed\QDateTime::FormatDisplayDateTimeFull' =>
-    string(47) "QCubed\QDateTime::FORMAT_DISPLAY_DATE_TIME_FULL"
-    'QCubed\QDateTime::FormatDisplayTime' =>
-    string(37) "QCubed\QDateTime::FORMAT_DISPLAY_TIME"
-    'QCubed\QDateTime::FormatRfc822' =>
-    string(32) "QCubed\QDateTime::FORMAT_RFC_822"
-    'QCubed\QDateTime::FormatRfc5322' =>
-    string(33) "QCubed\QDateTime::FORMAT_RFC_5322"
-    'QCubed\QDateTime::FormatSoap' =>
-    string(29) "QCubed\QDateTime::FORMAT_SOAP"
-    'QCubed\QDateTime::UnknownType' =>
-    string(30) "QCubed\QDateTime::UNKNOWN_TYPE"
-    'QCubed\QDateTime::DateOnlyType' =>
-    string(32) "QCubed\QDateTime::DATE_ONLY_TYPE"
-    'QCubed\QDateTime::TimeOnlyType' =>
-    string(32) "QCubed\QDateTime::TIME_ONLY_TYPE"
-    'QCubed\QDateTime::DateAndTimeType' =>
-    string(36) "QCubed\QDateTime::DATE_AND_TIME_TYPE"
-    'QCubed\QDateTime::Atom' =>
-    string(22) "QCubed\QDateTime::ATOM"
-    'QCubed\QDateTime::Cookie' =>
-    string(24) "QCubed\QDateTime::COOKIE"
-    'QCubed\QDateTime::Iso8601' =>
-    string(25) "QCubed\QDateTime::ISO8601"
-    'QCubed\QDateTime::Rfc822' =>
-    string(24) "QCubed\QDateTime::RFC822"
-    'QCubed\QDateTime::Rfc850' =>
-    string(24) "QCubed\QDateTime::RFC850"
-    'QCubed\QDateTime::Rfc1036' =>
-    string(25) "QCubed\QDateTime::RFC1036"
-    'QCubed\QDateTime::Rfc1123' =>
-    string(25) "QCubed\QDateTime::RFC1123"
-    'QCubed\QDateTime::Rfc2822' =>
-    string(25) "QCubed\QDateTime::RFC2822"
-    'QCubed\QDateTime::Rfc3339' =>
-    string(25) "QCubed\QDateTime::RFC3339"
-    'QCubed\QDateTime::Rss' =>
-    string(21) "QCubed\QDateTime::RSS"
-    'QCubed\QDateTime::W3c' =>
-    string(21) "QCubed\QDateTime::W3C"
-    'QCubed\Test\HtmlReporter::EventTestStart' =>
-    string(42) "QCubed\Test\HtmlReporter::EVENT_TEST_START"
-    'QCubed\Test\HtmlReporter::EventTestEnd' =>
-    string(40) "QCubed\Test\HtmlReporter::EVENT_TEST_END"
-    'QCubed\Test\HtmlReporter::EventTestsuiteStart' =>
-    string(47) "QCubed\Test\HtmlReporter::EVENT_TESTSUITE_START"
-    'QCubed\Test\HtmlReporter::EventTestsuiteEnd' =>
-    string(45) "QCubed\Test\HtmlReporter::EVENT_TESTSUITE_END"
-    'QCubed\Test\HtmlReporter::ColorNever' =>
-    string(37) "QCubed\Test\HtmlReporter::COLOR_NEVER"
-    'QCubed\Test\HtmlReporter::ColorAuto' =>
-    string(36) "QCubed\Test\HtmlReporter::COLOR_AUTO"
-    'QCubed\Test\HtmlReporter::ColorAlways' =>
-    string(38) "QCubed\Test\HtmlReporter::COLOR_ALWAYS"
-    'QCubed\Test\HtmlReporter::ColorDefault' =>
-    string(39) "QCubed\Test\HtmlReporter::COLOR_DEFAULT"
-    'QCubed\Type::String' =>
-    string(19) "QCubed\Type::STRING"
-    'QCubed\Type::Integer' =>
-    string(20) "QCubed\Type::INTEGER"
-    'QCubed\Type::Float' =>
-    string(18) "QCubed\Type::FLOAT"
-    'QCubed\Type::Boolean' =>
-    string(20) "QCubed\Type::BOOLEAN"
-    'QCubed\Type::Object' =>
-    string(19) "QCubed\Type::OBJECT"
-    'QCubed\Type::ArrayType' =>
-    string(23) "QCubed\Type::ARRAY_TYPE"
-    'QCubed\Type::DateTime' =>
-    string(22) "QCubed\Type::DATE_TIME"
-    'QCubed\Type::Resource' =>
-    string(21) "QCubed\Type::RESOURCE"
-    'QCubed\Type::CallableType' =>
-    string(26) "QCubed\Type::CALLABLE_TYPE"
-    'QCubed\Type::Association' =>
-    string(24) "QCubed\Type::ASSOCIATION"
-    'QCubed\Type::ReverseReference' =>
-    string(30) "QCubed\Type::REVERSE_REFERENCE"
-    'QCubed\Type::NoOp' =>
-    string(18) "QCubed\Type::NO_OP"
-    'QCubed\Type::CheckOnly' =>
-    string(23) "QCubed\Type::CHECK_ONLY"
-    'QCubed\Type::CastOnly' =>
-    string(22) "QCubed\Type::CAST_ONLY"
-    'QCubed\Type::CheckAndCast' =>
-    string(27) "QCubed\Type::CHECK_AND_CAST"
-    'QCubed\Codegen\AbstractBase::PhpReservedWords' =>
-    string(47) "QCubed\Codegen\AbstractBase::PHP_RESERVED_WORDS"
-    'QCubed\Codegen\AbstractBase::DebugMode' =>
-    string(39) "QCubed\Codegen\AbstractBase::DEBUG_MODE"
-    'QCubed\Codegen\ControlCategoryType::Blob' =>
-    string(40) "QCubed\Codegen\ControlCategoryType::BLOB"
-    'QCubed\Codegen\ControlCategoryType::Text' =>
-    string(40) "QCubed\Codegen\ControlCategoryType::TEXT"
-    'QCubed\Codegen\ControlCategoryType::Char' =>
-    string(40) "QCubed\Codegen\ControlCategoryType::CHAR"
-    'QCubed\Codegen\ControlCategoryType::Integer' =>
-    string(43) "QCubed\Codegen\ControlCategoryType::INTEGER"
-    'QCubed\Codegen\ControlCategoryType::DateTime' =>
-    string(45) "QCubed\Codegen\ControlCategoryType::DATE_TIME"
-    'QCubed\Codegen\ControlCategoryType::Date' =>
-    string(40) "QCubed\Codegen\ControlCategoryType::DATE"
-    'QCubed\Codegen\ControlCategoryType::Time' =>
-    string(40) "QCubed\Codegen\ControlCategoryType::TIME"
-    'QCubed\Codegen\ControlCategoryType::Float' =>
-    string(41) "QCubed\Codegen\ControlCategoryType::FLOAT"
-    'QCubed\Codegen\ControlCategoryType::Boolean' =>
-    string(43) "QCubed\Codegen\ControlCategoryType::BOOLEAN"
-    'QCubed\Codegen\ControlCategoryType::SingleSelect' =>
-    string(49) "QCubed\Codegen\ControlCategoryType::SINGLE_SELECT"
-    'QCubed\Codegen\ControlCategoryType::MultiSelect' =>
-    string(48) "QCubed\Codegen\ControlCategoryType::MULTI_SELECT"
-    'QCubed\Codegen\ControlCategoryType::Table' =>
-    string(41) "QCubed\Codegen\ControlCategoryType::TABLE"
-    'QCubed\Codegen\DatabaseCodeGen::PhpReservedWords' =>
-    string(50) "QCubed\Codegen\DatabaseCodeGen::PHP_RESERVED_WORDS"
-    'QCubed\Codegen\DatabaseCodeGen::DebugMode' =>
-    string(42) "QCubed\Codegen\DatabaseCodeGen::DEBUG_MODE"
-    'QCubed\Codegen\OptionFile::TableOptionsFieldName' =>
-    string(51) "QCubed\Codegen\OptionFile::TABLE_OPTIONS_FIELD_NAME"
-    'QCubed\Codegen\RestServiceCodeGen::PhpReservedWords' =>
-    string(53) "QCubed\Codegen\RestServiceCodeGen::PHP_RESERVED_WORDS"
-    'QCubed\Codegen\RestServiceCodeGen::DebugMode' =>
-    string(45) "QCubed\Codegen\RestServiceCodeGen::DEBUG_MODE"
-    'QCubed\Database\AbstractBase::Adapter' =>
-    string(37) "QCubed\Database\AbstractBase::ADAPTER"
-    'QCubed\Database\FieldType::Blob' =>
-    string(31) "QCubed\Database\FieldType::BLOB"
-    'QCubed\Database\FieldType::VarChar' =>
-    string(35) "QCubed\Database\FieldType::VAR_CHAR"
-    'QCubed\Database\FieldType::Char' =>
-    string(31) "QCubed\Database\FieldType::CHAR"
-    'QCubed\Database\FieldType::Integer' =>
-    string(34) "QCubed\Database\FieldType::INTEGER"
-    'QCubed\Database\FieldType::DateTime' =>
-    string(36) "QCubed\Database\FieldType::DATE_TIME"
-    'QCubed\Database\FieldType::Date' =>
-    string(31) "QCubed\Database\FieldType::DATE"
-    'QCubed\Database\FieldType::Time' =>
-    string(31) "QCubed\Database\FieldType::TIME"
-    'QCubed\Database\FieldType::Float' =>
-    string(32) "QCubed\Database\FieldType::FLOAT"
-    'QCubed\Database\FieldType::Bit' =>
-    string(30) "QCubed\Database\FieldType::BIT"
-    'QCubed\Database\FieldType::Json' =>
-    string(31) "QCubed\Database\FieldType::JSON"
-    'QCubed\Database\Mysqli5\MysqliDatabase::Adapter' =>
-    string(47) "QCubed\Database\Mysqli5\MysqliDatabase::ADAPTER"
-    'QCubed\Database\Mysqli5\Database::Adapter' =>
-    string(41) "QCubed\Database\Mysqli5\Database::ADAPTER"
-    'QCubed\Database\PostgreSql\Database::Adapter' =>
-    string(44) "QCubed\Database\PostgreSql\Database::ADAPTER"
-    'QCubed\Query\Node\NamedValue::DelimiterCode' =>
-    string(44) "QCubed\Query\Node\NamedValue::DELIMITER_CODE"
-  }
-  'class' =>
-  array(96) {
-    'QBaseClass' =>
-    string(20) "\QCubed\AbstractBase"
-    'QDateTimeSpan' =>
-    string(20) "\QCubed\DateTimeSpan"
-    'QCallerException' =>
-    string(24) "\QCubed\Exception\Caller"
-    'QCryptographyException' =>
-    string(30) "\QCubed\Exception\Cryptography"
-    'QIndexOutOfRangeException' =>
-    string(33) "\QCubed\Exception\IndexOutOfRange"
-    'QInvalidArgumentException' =>
-    string(33) "\QCubed\Exception\InvalidArgument"
-    'QInvalidCastException' =>
-    string(29) "\QCubed\Exception\InvalidCast"
-    'QUndefinedMethodException' =>
-    string(33) "\QCubed\Exception\UndefinedMethod"
-    'QUndefinedPropertyException' =>
-    string(35) "\QCubed\Exception\UndefinedProperty"
-    'QFile' =>
-    string(12) "\QCubed\File"
-    'QFolder' =>
-    string(14) "\QCubed\Folder"
-    'QJsClosure' =>
-    string(18) "\QCubed\Js\Closure"
-    'QJsFunction' =>
-    string(15) "\QCubed\Js\Func"
-    'JavaScriptHelper' =>
-    string(17) "\QCubed\Js\Helper"
-    'QJsNoQuoteKey' =>
-    string(21) "\QCubed\Js\NoQuoteKey"
-    'QJsParameterList' =>
-    string(24) "\QCubed\Js\ParameterList"
-    'QJsVarName' =>
-    string(18) "\QCubed\Js\VarName"
-    'QDateTime' =>
-    string(17) "\QCubed\QDateTime"
-    'QTimer' =>
-    string(13) "\QCubed\Timer"
-    'QType' =>
-    string(12) "\QCubed\Type"
-    'QDatabaseCodeGen' =>
-    string(31) "\QCubed\Codegen\DatabaseCodeGen"
-    'QReference' =>
-    string(25) "\QCubed\Codegen\Reference"
-    'QDatabaseBase' =>
-    string(29) "\QCubed\Database\AbstractBase"
-    'QDatabaseFieldBase' =>
-    string(30) "\QCubed\Database\AbstractField"
-    'QDatabaseResultBase' =>
-    string(31) "\QCubed\Database\AbstractResult"
-    'QDatabaseRowBase' =>
-    string(28) "\QCubed\Database\AbstractRow"
-    'QDatabaseException' =>
-    string(39) "\QCubed\Database\Exception\AbstractBase"
-    'QDatabaseForeignKey' =>
-    string(27) "\QCubed\Database\ForeignKey"
-    'QDatabaseIndex' =>
-    string(22) "\QCubed\Database\Index"
-    'QMySqliDatabase' =>
-    string(39) "\QCubed\Database\Mysqli5\MysqliDatabase"
-    'QMySqli5Database' =>
-    string(33) "\QCubed\Database\Mysqli5\Database"
-    'QMySqliDatabaseField' =>
-    string(36) "\QCubed\Database\Mysqli5\MysqliField"
-    'QMySqli5DatabaseField' =>
-    string(30) "\QCubed\Database\Mysqli5\Field"
-    'QMySqliDatabaseException' =>
-    string(40) "\QCubed\Database\Mysqli5\MysqliException"
-    'QMySqliDatabaseResult' =>
-    string(37) "\QCubed\Database\Mysqli5\MysqliResult"
-    'QMySqliDatabaseRow' =>
-    string(34) "\QCubed\Database\Mysqli5\MysqliRow"
-    'QMySqli5DatabaseResult' =>
-    string(31) "\QCubed\Database\Mysqli5\Result"
-    'QPostgreSqlDatabase' =>
-    string(36) "\QCubed\Database\PostgreSql\Database"
-    'QPostgreSqlDatabaseException' =>
-    string(37) "\QCubed\Database\PostgreSql\Exception"
-    'QPostgreSqlDatabaseField' =>
-    string(33) "\QCubed\Database\PostgreSql\Field"
-    'QPostgreSqlDatabaseResult' =>
-    string(34) "\QCubed\Database\PostgreSql\Result"
-    'QPostgreSqlDatabaseRow' =>
-    string(31) "\QCubed\Database\PostgreSql\Row"
-    'QQueryBuilder' =>
-    string(21) "\QCubed\Query\Builder"
-    'QQAggregationClause' =>
-    string(40) "\QCubed\Query\Clause\AbstractAggregation"
-    'QQAverage' =>
-    string(28) "\QCubed\Query\Clause\Average"
-    'QQCount' =>
-    string(26) "\QCubed\Query\Clause\Count"
-    'QQDistinct' =>
-    string(29) "\QCubed\Query\Clause\Distinct"
-    'QQExpand' =>
-    string(27) "\QCubed\Query\Clause\Expand"
-    'QQExpandAsArray' =>
-    string(34) "\QCubed\Query\Clause\ExpandAsArray"
-    'QQExpandVirtualNode' =>
-    string(38) "\QCubed\Query\Clause\ExpandVirtualNode"
-    'QQGroupBy' =>
-    string(28) "\QCubed\Query\Clause\GroupBy"
-    'QQHavingClause' =>
-    string(27) "\QCubed\Query\Clause\Having"
-    'QQLimitInfo' =>
-    string(26) "\QCubed\Query\Clause\Limit"
-    'QQMaximum' =>
-    string(28) "\QCubed\Query\Clause\Maximum"
-    'QQMinimum' =>
-    string(28) "\QCubed\Query\Clause\Minimum"
-    'QQOrderBy' =>
-    string(28) "\QCubed\Query\Clause\OrderBy"
-    'QQSum' =>
-    string(24) "\QCubed\Query\Clause\Sum"
-    'QQCondition' =>
-    string(36) "\QCubed\Query\Condition\AbstractBase"
-    'QQConditionComparison' =>
-    string(42) "\QCubed\Query\Condition\AbstractComparison"
-    'QQConditionLogical' =>
-    string(39) "\QCubed\Query\Condition\AbstractLogical"
-    'QQConditionAll' =>
-    string(27) "\QCubed\Query\Condition\All"
-    'QQConditionAnd' =>
-    string(36) "\QCubed\Query\Condition\AndCondition"
-    'QQConditionBetween' =>
-    string(31) "\QCubed\Query\Condition\Between"
-    'QQConditionEqual' =>
-    string(29) "\QCubed\Query\Condition\Equal"
-    'QQConditionExists' =>
-    string(30) "\QCubed\Query\Condition\Exists"
-    'QQConditionGreaterOrEqual' =>
-    string(38) "\QCubed\Query\Condition\GreaterOrEqual"
-    'QQConditionGreaterThan' =>
-    string(35) "\QCubed\Query\Condition\GreaterThan"
-    'QQConditionIn' =>
-    string(26) "\QCubed\Query\Condition\In"
-    'QQConditionIsNotNull' =>
-    string(33) "\QCubed\Query\Condition\IsNotNull"
-    'QQConditionIsNull' =>
-    string(30) "\QCubed\Query\Condition\IsNull"
-    'QQConditionLessOrEqual' =>
-    string(35) "\QCubed\Query\Condition\LessOrEqual"
-    'QQConditionLessThan' =>
-    string(32) "\QCubed\Query\Condition\LessThan"
-    'QQConditionLike' =>
-    string(28) "\QCubed\Query\Condition\Like"
-    'QQConditionNone' =>
-    string(28) "\QCubed\Query\Condition\None"
-    'QQConditionNot' =>
-    string(27) "\QCubed\Query\Condition\Not"
-    'QQConditionNotBetween' =>
-    string(34) "\QCubed\Query\Condition\NotBetween"
-    'QQConditionNotEqual' =>
-    string(32) "\QCubed\Query\Condition\NotEqual"
-    'QQConditionNotExists' =>
-    string(33) "\QCubed\Query\Condition\NotExists"
-    'QQConditionNotIn' =>
-    string(29) "\QCubed\Query\Condition\NotIn"
-    'QQConditionNotLike' =>
-    string(31) "\QCubed\Query\Condition\NotLike"
-    'QQConditionOr' =>
-    string(35) "\QCubed\Query\Condition\OrCondition"
-    'QQNode' =>
-    string(31) "\QCubed\Query\Node\AbstractBase"
-    'QQColumnNode' =>
-    string(25) "\QCubed\Query\Node\Column"
-    'QQSubQueryNode' =>
-    string(35) "\QCubed\Query\Node\AbstractSubQuery"
-    'QQNoParentNode' =>
-    string(35) "\QCubed\Query\Node\AbstractNoParent"
-    'QQAssociationNode' =>
-    string(30) "\QCubed\Query\Node\Association"
-    'QQFunctionNode' =>
-    string(31) "\QCubed\Query\Node\FunctionNode"
-    'QQMathNode' =>
-    string(23) "\QCubed\Query\Node\Math"
-    'QQNamedValue' =>
-    string(29) "\QCubed\Query\Node\NamedValue"
-    'QQTableNode' =>
-    string(24) "\QCubed\Query\Node\Table"
-    'QQReverseReferenceNode' =>
-    string(35) "\QCubed\Query\Node\ReverseReference"
-    'QQSubQueryCountNode' =>
-    string(32) "\QCubed\Query\Node\SubQueryCount"
-    'QQSubQuerySqlNode' =>
-    string(30) "\QCubed\Query\Node\SubQuerySql"
-    'QQVirtualNode' =>
-    string(26) "\QCubed\Query\Node\Virtual"
-    'QPartialQueryBuilder' =>
-    string(28) "\QCubed\Query\PartialBuilder"
-    'QQ' =>
-    string(16) "\QCubed\Query\QQ"
-  }
-  'func' =>
-  array(1) {
-    'QApplication::Translate' =>
-    string(1) "t"
-  }
-}
+<?php
+return array (
+  'const' => 
+  array (
+    'QFontFamily::Arial' => '\\QCubed\\Html::FONT_FAMILY_ARIAL',
+    'QFontFamily::Helvetica' => '\\QCubed\\Html::FONT_FAMILY_HELVETICA',
+    'QFontFamily::Tahoma' => '\\QCubed\\Html::FONT_FAMILY_TAHOMA',
+    'QFontFamily::TrebuchetMs' => '\\QCubed\\Html::FONT_FAMILY_TREBUCHET_MS',
+    'QFontFamily::Verdana' => '\\QCubed\\Html::FONT_FAMILY_VERDANA',
+    'QFontFamily::TimesNewRoman' => '\\QCubed\\Html::FONT_FAMILY_TIMES_NEW_ROMAN',
+    'QFontFamily::Georgia' => '\\QCubed\\Html::FONT_FAMILY_GEORGIA',
+    'QFontFamily::LucidaConsole' => '\\QCubed\\Html::FONT_FAMILY_LUCIDA_CONSOLE',
+    'QFontFamily::CourierNew' => '\\QCubed\\Html::FONT_FAMILY_LUCIDA_COURIER_NEW',
+    'QFontFamily::Courier' => '\\QCubed\\Html::FONT_FAMILY_LUCIDA_COURIER',
+    'QCubed\\Cryptography::IvRandom' => 'QCubed\\Cryptography::IV_RANDOM',
+    'QCubed\\DateTimeSpan::SecondsPerYear' => 'QCubed\\DateTimeSpan::SECONDS_PER_YEAR',
+    'QCubed\\DateTimeSpan::SecondsPerMonth' => 'QCubed\\DateTimeSpan::SECONDS_PER_MONTH',
+    'QCubed\\DateTimeSpan::SecondsPerDay' => 'QCubed\\DateTimeSpan::SECONDS_PER_DAY',
+    'QCubed\\DateTimeSpan::SecondsPerHour' => 'QCubed\\DateTimeSpan::SECONDS_PER_HOUR',
+    'QCubed\\DateTimeSpan::SecondsPerMinute' => 'QCubed\\DateTimeSpan::SECONDS_PER_MINUTE',
+    'QCubed\\Js\\Helper::JsonObjectType' => 'QCubed\\Js\\Helper::JSON_OBJECT_TYPE',
+    'QCubed\\QCubed::JsonObjectType' => 'QCubed\\QCubed::JSON_OBJECT_TYPE',
+    'QCubed\\QCubed::NamedValueDelimiter' => 'QCubed\\QCubed::NAMED_VALUE_DELIMITER',
+    'QCubed\\QDateTime::Now' => 'QCubed\\QDateTime::NOW',
+    'QCubed\\QDateTime::FormatIso' => 'QCubed\\QDateTime::FORMAT_ISO',
+    'QCubed\\QDateTime::FormatIsoCompressed' => 'QCubed\\QDateTime::FORMAT_ISO_COMPRESSED',
+    'QCubed\\QDateTime::FormatDisplayDate' => 'QCubed\\QDateTime::FORMAT_DISPLAY_DATE',
+    'QCubed\\QDateTime::FormatDisplayDateFull' => 'QCubed\\QDateTime::FORMAT_DISPLAY_DATE_FULL',
+    'QCubed\\QDateTime::FormatDisplayDateTime' => 'QCubed\\QDateTime::FORMAT_DISPLAY_DATE_TIME',
+    'QCubed\\QDateTime::FormatDisplayDateTimeFull' => 'QCubed\\QDateTime::FORMAT_DISPLAY_DATE_TIME_FULL',
+    'QCubed\\QDateTime::FormatDisplayTime' => 'QCubed\\QDateTime::FORMAT_DISPLAY_TIME',
+    'QCubed\\QDateTime::FormatRfc822' => 'QCubed\\QDateTime::FORMAT_RFC_822',
+    'QCubed\\QDateTime::FormatRfc5322' => 'QCubed\\QDateTime::FORMAT_RFC_5322',
+    'QCubed\\QDateTime::FormatSoap' => 'QCubed\\QDateTime::FORMAT_SOAP',
+    'QCubed\\QDateTime::UnknownType' => 'QCubed\\QDateTime::UNKNOWN_TYPE',
+    'QCubed\\QDateTime::DateOnlyType' => 'QCubed\\QDateTime::DATE_ONLY_TYPE',
+    'QCubed\\QDateTime::TimeOnlyType' => 'QCubed\\QDateTime::TIME_ONLY_TYPE',
+    'QCubed\\QDateTime::DateAndTimeType' => 'QCubed\\QDateTime::DATE_AND_TIME_TYPE',
+    'QCubed\\QDateTime::Atom' => 'QCubed\\QDateTime::ATOM',
+    'QCubed\\QDateTime::Cookie' => 'QCubed\\QDateTime::COOKIE',
+    'QCubed\\QDateTime::Iso8601' => 'QCubed\\QDateTime::ISO8601',
+    'QCubed\\QDateTime::Rfc822' => 'QCubed\\QDateTime::RFC822',
+    'QCubed\\QDateTime::Rfc850' => 'QCubed\\QDateTime::RFC850',
+    'QCubed\\QDateTime::Rfc1036' => 'QCubed\\QDateTime::RFC1036',
+    'QCubed\\QDateTime::Rfc1123' => 'QCubed\\QDateTime::RFC1123',
+    'QCubed\\QDateTime::Rfc2822' => 'QCubed\\QDateTime::RFC2822',
+    'QCubed\\QDateTime::Rfc3339' => 'QCubed\\QDateTime::RFC3339',
+    'QCubed\\QDateTime::Rss' => 'QCubed\\QDateTime::RSS',
+    'QCubed\\QDateTime::W3c' => 'QCubed\\QDateTime::W3C',
+    'QCubed\\Test\\HtmlReporter::EventTestStart' => 'QCubed\\Test\\HtmlReporter::EVENT_TEST_START',
+    'QCubed\\Test\\HtmlReporter::EventTestEnd' => 'QCubed\\Test\\HtmlReporter::EVENT_TEST_END',
+    'QCubed\\Test\\HtmlReporter::EventTestsuiteStart' => 'QCubed\\Test\\HtmlReporter::EVENT_TESTSUITE_START',
+    'QCubed\\Test\\HtmlReporter::EventTestsuiteEnd' => 'QCubed\\Test\\HtmlReporter::EVENT_TESTSUITE_END',
+    'QCubed\\Test\\HtmlReporter::ColorNever' => 'QCubed\\Test\\HtmlReporter::COLOR_NEVER',
+    'QCubed\\Test\\HtmlReporter::ColorAuto' => 'QCubed\\Test\\HtmlReporter::COLOR_AUTO',
+    'QCubed\\Test\\HtmlReporter::ColorAlways' => 'QCubed\\Test\\HtmlReporter::COLOR_ALWAYS',
+    'QCubed\\Test\\HtmlReporter::ColorDefault' => 'QCubed\\Test\\HtmlReporter::COLOR_DEFAULT',
+    'QCubed\\Type::String' => 'QCubed\\Type::STRING',
+    'QCubed\\Type::Integer' => 'QCubed\\Type::INTEGER',
+    'QCubed\\Type::Float' => 'QCubed\\Type::FLOAT',
+    'QCubed\\Type::Boolean' => 'QCubed\\Type::BOOLEAN',
+    'QCubed\\Type::Object' => 'QCubed\\Type::OBJECT',
+    'QCubed\\Type::ArrayType' => 'QCubed\\Type::ARRAY_TYPE',
+    'QCubed\\Type::DateTime' => 'QCubed\\Type::DATE_TIME',
+    'QCubed\\Type::Resource' => 'QCubed\\Type::RESOURCE',
+    'QCubed\\Type::CallableType' => 'QCubed\\Type::CALLABLE_TYPE',
+    'QCubed\\Type::Association' => 'QCubed\\Type::ASSOCIATION',
+    'QCubed\\Type::ReverseReference' => 'QCubed\\Type::REVERSE_REFERENCE',
+    'QCubed\\Type::NoOp' => 'QCubed\\Type::NO_OP',
+    'QCubed\\Type::CheckOnly' => 'QCubed\\Type::CHECK_ONLY',
+    'QCubed\\Type::CastOnly' => 'QCubed\\Type::CAST_ONLY',
+    'QCubed\\Type::CheckAndCast' => 'QCubed\\Type::CHECK_AND_CAST',
+    'QCubed\\Codegen\\AbstractBase::PhpReservedWords' => 'QCubed\\Codegen\\AbstractBase::PHP_RESERVED_WORDS',
+    'QCubed\\Codegen\\AbstractBase::DebugMode' => 'QCubed\\Codegen\\AbstractBase::DEBUG_MODE',
+    'QCubed\\Codegen\\ControlCategoryType::Blob' => 'QCubed\\Codegen\\ControlCategoryType::BLOB',
+    'QCubed\\Codegen\\ControlCategoryType::Text' => 'QCubed\\Codegen\\ControlCategoryType::TEXT',
+    'QCubed\\Codegen\\ControlCategoryType::Char' => 'QCubed\\Codegen\\ControlCategoryType::CHAR',
+    'QCubed\\Codegen\\ControlCategoryType::Integer' => 'QCubed\\Codegen\\ControlCategoryType::INTEGER',
+    'QCubed\\Codegen\\ControlCategoryType::DateTime' => 'QCubed\\Codegen\\ControlCategoryType::DATE_TIME',
+    'QCubed\\Codegen\\ControlCategoryType::Date' => 'QCubed\\Codegen\\ControlCategoryType::DATE',
+    'QCubed\\Codegen\\ControlCategoryType::Time' => 'QCubed\\Codegen\\ControlCategoryType::TIME',
+    'QCubed\\Codegen\\ControlCategoryType::Float' => 'QCubed\\Codegen\\ControlCategoryType::FLOAT',
+    'QCubed\\Codegen\\ControlCategoryType::Boolean' => 'QCubed\\Codegen\\ControlCategoryType::BOOLEAN',
+    'QCubed\\Codegen\\ControlCategoryType::SingleSelect' => 'QCubed\\Codegen\\ControlCategoryType::SINGLE_SELECT',
+    'QCubed\\Codegen\\ControlCategoryType::MultiSelect' => 'QCubed\\Codegen\\ControlCategoryType::MULTI_SELECT',
+    'QCubed\\Codegen\\ControlCategoryType::Table' => 'QCubed\\Codegen\\ControlCategoryType::TABLE',
+    'QCubed\\Codegen\\DatabaseCodeGen::PhpReservedWords' => 'QCubed\\Codegen\\DatabaseCodeGen::PHP_RESERVED_WORDS',
+    'QCubed\\Codegen\\DatabaseCodeGen::DebugMode' => 'QCubed\\Codegen\\DatabaseCodeGen::DEBUG_MODE',
+    'QCubed\\Codegen\\OptionFile::TableOptionsFieldName' => 'QCubed\\Codegen\\OptionFile::TABLE_OPTIONS_FIELD_NAME',
+    'QCubed\\Codegen\\RestServiceCodeGen::PhpReservedWords' => 'QCubed\\Codegen\\RestServiceCodeGen::PHP_RESERVED_WORDS',
+    'QCubed\\Codegen\\RestServiceCodeGen::DebugMode' => 'QCubed\\Codegen\\RestServiceCodeGen::DEBUG_MODE',
+    'QCubed\\Database\\AbstractBase::Adapter' => 'QCubed\\Database\\AbstractBase::ADAPTER',
+    'QCubed\\Database\\FieldType::Blob' => 'QCubed\\Database\\FieldType::BLOB',
+    'QCubed\\Database\\FieldType::VarChar' => 'QCubed\\Database\\FieldType::VAR_CHAR',
+    'QCubed\\Database\\FieldType::Char' => 'QCubed\\Database\\FieldType::CHAR',
+    'QCubed\\Database\\FieldType::Integer' => 'QCubed\\Database\\FieldType::INTEGER',
+    'QCubed\\Database\\FieldType::DateTime' => 'QCubed\\Database\\FieldType::DATE_TIME',
+    'QCubed\\Database\\FieldType::Date' => 'QCubed\\Database\\FieldType::DATE',
+    'QCubed\\Database\\FieldType::Time' => 'QCubed\\Database\\FieldType::TIME',
+    'QCubed\\Database\\FieldType::Float' => 'QCubed\\Database\\FieldType::FLOAT',
+    'QCubed\\Database\\FieldType::Bit' => 'QCubed\\Database\\FieldType::BIT',
+    'QCubed\\Database\\FieldType::Json' => 'QCubed\\Database\\FieldType::JSON',
+    'QCubed\\Database\\Mysqli5\\MysqliDatabase::Adapter' => 'QCubed\\Database\\Mysqli5\\MysqliDatabase::ADAPTER',
+    'QCubed\\Database\\Mysqli5\\Database::Adapter' => 'QCubed\\Database\\Mysqli5\\Database::ADAPTER',
+    'QCubed\\Database\\PostgreSql\\Database::Adapter' => 'QCubed\\Database\\PostgreSql\\Database::ADAPTER',
+    'QCubed\\Query\\Node\\NamedValue::DelimiterCode' => 'QCubed\\Query\\Node\\NamedValue::DELIMITER_CODE',
+  ),
+  'class' => 
+  array (
+    'QBaseClass' => '\\QCubed\\AbstractBase',
+    'QCryptography' => '\\QCubed\\Cryptography',
+    'QDateTimeSpan' => '\\QCubed\\DateTimeSpan',
+    'QCallerException' => '\\QCubed\\Exception\\Caller',
+    'QCryptographyException' => '\\QCubed\\Exception\\Cryptography',
+    'QIndexOutOfRangeException' => '\\QCubed\\Exception\\IndexOutOfRange',
+    'QInvalidArgumentException' => '\\QCubed\\Exception\\InvalidArgument',
+    'QInvalidCastException' => '\\QCubed\\Exception\\InvalidCast',
+    'QUndefinedMethodException' => '\\QCubed\\Exception\\UndefinedMethod',
+    'QUndefinedPropertyException' => '\\QCubed\\Exception\\UndefinedProperty',
+    'QFile' => '\\QCubed\\File',
+    'QFolder' => '\\QCubed\\Folder',
+    'QJsClosure' => '\\QCubed\\Js\\Closure',
+    'QJsFunction' => '\\QCubed\\Js\\Func',
+    'JavaScriptHelper' => '\\QCubed\\Js\\Helper',
+    'QJsNoQuoteKey' => '\\QCubed\\Js\\NoQuoteKey',
+    'QJsParameterList' => '\\QCubed\\Js\\ParameterList',
+    'QJsVarName' => '\\QCubed\\Js\\VarName',
+    'QDateTime' => '\\QCubed\\QDateTime',
+    'QTimer' => '\\QCubed\\Timer',
+    'QType' => '\\QCubed\\Type',
+    'QDatabaseCodeGen' => '\\QCubed\\Codegen\\DatabaseCodeGen',
+    'QReference' => '\\QCubed\\Codegen\\Reference',
+    'QDatabaseBase' => '\\QCubed\\Database\\AbstractBase',
+    'QDatabaseFieldBase' => '\\QCubed\\Database\\AbstractField',
+    'QDatabaseResultBase' => '\\QCubed\\Database\\AbstractResult',
+    'QDatabaseRowBase' => '\\QCubed\\Database\\AbstractRow',
+    'QDatabaseException' => '\\QCubed\\Database\\Exception\\AbstractBase',
+    'QDatabaseForeignKey' => '\\QCubed\\Database\\ForeignKey',
+    'QDatabaseIndex' => '\\QCubed\\Database\\Index',
+    'QMySqliDatabase' => '\\QCubed\\Database\\Mysqli5\\MysqliDatabase',
+    'QMySqli5Database' => '\\QCubed\\Database\\Mysqli5\\Database',
+    'QMySqliDatabaseField' => '\\QCubed\\Database\\Mysqli5\\MysqliField',
+    'QMySqli5DatabaseField' => '\\QCubed\\Database\\Mysqli5\\Field',
+    'QMySqliDatabaseException' => '\\QCubed\\Database\\Mysqli5\\MysqliException',
+    'QMySqliDatabaseResult' => '\\QCubed\\Database\\Mysqli5\\MysqliResult',
+    'QMySqliDatabaseRow' => '\\QCubed\\Database\\Mysqli5\\MysqliRow',
+    'QMySqli5DatabaseResult' => '\\QCubed\\Database\\Mysqli5\\Result',
+    'QPostgreSqlDatabase' => '\\QCubed\\Database\\PostgreSql\\Database',
+    'QPostgreSqlDatabaseException' => '\\QCubed\\Database\\PostgreSql\\Exception',
+    'QPostgreSqlDatabaseField' => '\\QCubed\\Database\\PostgreSql\\Field',
+    'QPostgreSqlDatabaseResult' => '\\QCubed\\Database\\PostgreSql\\Result',
+    'QPostgreSqlDatabaseRow' => '\\QCubed\\Database\\PostgreSql\\Row',
+    'QQueryBuilder' => '\\QCubed\\Query\\Builder',
+    'QQAggregationClause' => '\\QCubed\\Query\\Clause\\AbstractAggregation',
+    'QQAverage' => '\\QCubed\\Query\\Clause\\Average',
+    'QQCount' => '\\QCubed\\Query\\Clause\\Count',
+    'QQDistinct' => '\\QCubed\\Query\\Clause\\Distinct',
+    'QQExpand' => '\\QCubed\\Query\\Clause\\Expand',
+    'QQExpandAsArray' => '\\QCubed\\Query\\Clause\\ExpandAsArray',
+    'QQExpandVirtualNode' => '\\QCubed\\Query\\Clause\\ExpandVirtualNode',
+    'QQGroupBy' => '\\QCubed\\Query\\Clause\\GroupBy',
+    'QQHavingClause' => '\\QCubed\\Query\\Clause\\Having',
+    'QQLimitInfo' => '\\QCubed\\Query\\Clause\\Limit',
+    'QQMaximum' => '\\QCubed\\Query\\Clause\\Maximum',
+    'QQMinimum' => '\\QCubed\\Query\\Clause\\Minimum',
+    'QQOrderBy' => '\\QCubed\\Query\\Clause\\OrderBy',
+    'QQSum' => '\\QCubed\\Query\\Clause\\Sum',
+    'QQCondition' => '\\QCubed\\Query\\Condition\\AbstractBase',
+    'QQConditionComparison' => '\\QCubed\\Query\\Condition\\AbstractComparison',
+    'QQConditionLogical' => '\\QCubed\\Query\\Condition\\AbstractLogical',
+    'QQConditionAll' => '\\QCubed\\Query\\Condition\\All',
+    'QQConditionAnd' => '\\QCubed\\Query\\Condition\\AndCondition',
+    'QQConditionBetween' => '\\QCubed\\Query\\Condition\\Between',
+    'QQConditionEqual' => '\\QCubed\\Query\\Condition\\Equal',
+    'QQConditionExists' => '\\QCubed\\Query\\Condition\\Exists',
+    'QQConditionGreaterOrEqual' => '\\QCubed\\Query\\Condition\\GreaterOrEqual',
+    'QQConditionGreaterThan' => '\\QCubed\\Query\\Condition\\GreaterThan',
+    'QQConditionIn' => '\\QCubed\\Query\\Condition\\In',
+    'QQConditionIsNotNull' => '\\QCubed\\Query\\Condition\\IsNotNull',
+    'QQConditionIsNull' => '\\QCubed\\Query\\Condition\\IsNull',
+    'QQConditionLessOrEqual' => '\\QCubed\\Query\\Condition\\LessOrEqual',
+    'QQConditionLessThan' => '\\QCubed\\Query\\Condition\\LessThan',
+    'QQConditionLike' => '\\QCubed\\Query\\Condition\\Like',
+    'QQConditionNone' => '\\QCubed\\Query\\Condition\\None',
+    'QQConditionNot' => '\\QCubed\\Query\\Condition\\Not',
+    'QQConditionNotBetween' => '\\QCubed\\Query\\Condition\\NotBetween',
+    'QQConditionNotEqual' => '\\QCubed\\Query\\Condition\\NotEqual',
+    'QQConditionNotExists' => '\\QCubed\\Query\\Condition\\NotExists',
+    'QQConditionNotIn' => '\\QCubed\\Query\\Condition\\NotIn',
+    'QQConditionNotLike' => '\\QCubed\\Query\\Condition\\NotLike',
+    'QQConditionOr' => '\\QCubed\\Query\\Condition\\OrCondition',
+    'QQNode' => '\\QCubed\\Query\\Node\\AbstractBase',
+    'QQColumnNode' => '\\QCubed\\Query\\Node\\Column',
+    'QQSubQueryNode' => '\\QCubed\\Query\\Node\\AbstractSubQuery',
+    'QQNoParentNode' => '\\QCubed\\Query\\Node\\AbstractNoParent',
+    'QQAssociationNode' => '\\QCubed\\Query\\Node\\Association',
+    'QQFunctionNode' => '\\QCubed\\Query\\Node\\FunctionNode',
+    'QQMathNode' => '\\QCubed\\Query\\Node\\Math',
+    'QQNamedValue' => '\\QCubed\\Query\\Node\\NamedValue',
+    'QQTableNode' => '\\QCubed\\Query\\Node\\Table',
+    'QQReverseReferenceNode' => '\\QCubed\\Query\\Node\\ReverseReference',
+    'QQSubQueryCountNode' => '\\QCubed\\Query\\Node\\SubQueryCount',
+    'QQSubQuerySqlNode' => '\\QCubed\\Query\\Node\\SubQuerySql',
+    'QQVirtualNode' => '\\QCubed\\Query\\Node\\Virtual',
+    'QPartialQueryBuilder' => '\\QCubed\\Query\\PartialBuilder',
+    'QQ' => '\\QCubed\\Query\\QQ',
+  ),
+  'func' => 
+  array (
+    'QApplication::Translate' => 't',
+  ),
+  'regex' => 
+  array (
+    'QApplication::\\$Database\\s*\\[(\\S+?)\\]' => '\\QCubed\\Database\\Service::getDatabase($1)',
+  ),
+);

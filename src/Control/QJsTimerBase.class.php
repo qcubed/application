@@ -65,13 +65,13 @@
 		 * @param boolean $blnStartNow starts the timer automatically after adding the first action
 		 * @param string $strTimerId
 		 *
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 * @return QJsTimer
 		 */
 		public function __construct($objParentObject, $intTime = 0, $blnPeriodic = true, $blnStartNow = true, $strTimerId = null) {
 			try {
 				parent::__construct($objParentObject, $strTimerId);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -104,7 +104,7 @@
 		 * @param int $intTime (optional)
 		 *              sets the interval/delay, after that the timer executes the registered actions
 		 *              if no parameter is given the time stored in $intDeltaTime is used
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 * @return void
 		 */
 		public function Start($intTime = null) {
@@ -114,7 +114,7 @@
 			}
 			$event = $this->getEvent();
 			if (!$event) {
-				throw new QCallerException("Can't start the timer: add an Event/Action first!");
+				throw new \QCubed\Exception\Caller("Can't start the timer: add an Event/Action first!");
 			}
 
 			// Is the timer periodic or runs only once?
@@ -135,7 +135,7 @@
 		public function Stop() {
 			$event = $this->getEvent();
 			if (!$event) {
-				throw new QCallerException('Can\'t stop the timer: no Event/Action present!');
+				throw new \QCubed\Exception\Caller('Can\'t stop the timer: no Event/Action present!');
 			}
 			// Is timer periodic or one-time?
 			if ($this->blnPeriodic) {
@@ -156,15 +156,15 @@
 		 * @param QAction $objAction Only a QTimerExpiredEvent can be added,
 		 *                                         but multiple Actions using the same event are possible!
 		 *
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 * @return void
 		 */
 		public function AddAction($objEvent, $objAction) {
 			if (!($objEvent instanceof QTimerExpiredEvent)) {
-				throw new QCallerException('First parameter of QJsTimer::AddAction is expecting an object of type QTimerExpiredEvent');
+				throw new \QCubed\Exception\Caller('First parameter of QJsTimer::AddAction is expecting an object of type QTimerExpiredEvent');
 			}
 			if (!($objAction instanceof QAction)) {
-				throw new QCallerException('Second parameter of AddAction is expecting an object of type QAction');
+				throw new \QCubed\Exception\Caller('Second parameter of AddAction is expecting an object of type QAction');
 			}
 
 			$strEventName = $objEvent->EventName;
@@ -276,7 +276,7 @@
 		 * @param string $strName Name of the properties
 		 *
 		 * @return array|bool|int|mixed|null|QControl|QForm|string
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -293,7 +293,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -306,23 +306,23 @@
 		 * @param string $mixValue Value of the property
 		 *
 		 * @return mixed
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "DeltaTime":
 					try {
-						$this->intDeltaTime = QType::Cast($mixValue, QType::Integer);
+						$this->intDeltaTime = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 					break;
 				case 'Periodic':
 					try {
-						$newMode = QType::Cast($mixValue, QType::Boolean);
+						$newMode = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						if ($this->blnPeriodic != $newMode) {
 							if ($this->intState === QJsTimer::Started) {
 								$this->Stop();
@@ -332,15 +332,15 @@
 								$this->blnPeriodic = $newMode;
 							}
 						}
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 					break;
 				case 'RestartOnServerAction':
 					try {
-						$this->blnRestartOnServerAction = QType::Cast($mixValue, QType::Boolean);
-					} catch (QInvalidCastException $objExc) {
+						$this->blnRestartOnServerAction = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -351,7 +351,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -364,20 +364,20 @@
 		 * @param bool $blnDisplayOutput useless in this case
 		 *
 		 * @return string|void
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function Render($blnDisplayOutput = true) {
-			throw new QCallerException('Do not render QJsTimer!');
+			throw new \QCubed\Exception\Caller('Do not render QJsTimer!');
 		}
 
 		/**
 		 * Add a child control to the current control (useless because QJsTimer cannot have children)
 		 * @param QControl $objControl
 		 *
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function  AddChildControl(QControl $objControl) {
-			throw new QCallerException('Do not add child-controls to an instance of QJsTimer!');
+			throw new \QCubed\Exception\Caller('Do not add child-controls to an instance of QJsTimer!');
 		}
 
 		/**

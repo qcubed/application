@@ -1,7 +1,22 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
 
-/** When the down arrow key is pressed while the element is in focus */
-class QDownArrowKeyEvent extends QKeyDownEvent {
+namespace QCubed\Event;
+
+/**
+ * Class DownArrowKey
+ *
+ * @was QDownArrowKeyEvent
+ * @package QCubed\Event
+ */
+class DownArrowKey extends KeyDown
+{
     /** @var string Condition JS */
     protected $strCondition = 'event.keyCode == 40';
 }

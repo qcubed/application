@@ -74,7 +74,7 @@ class QDataRepeater extends QPaginatedControl {
 	 *
 	 * @param $objItem
 	 * @return string
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	protected function GetItemHtml($objItem) {
 		if ($this->strTemplate) {
@@ -84,7 +84,7 @@ class QDataRepeater extends QPaginatedControl {
 		}
 
 		if (!$this->strItemTagName) {
-			throw new QCallerException ("You must specify an item tag name before rendering the list.");
+			throw new \QCubed\Exception\Caller ("You must specify an item tag name before rendering the list.");
 		}
 
 		$strToReturn = QHtml::RenderTag($this->strItemTagName, $this->GetItemAttributes($objItem), $this->GetItemInnerHtml($objItem));
@@ -187,7 +187,7 @@ class QDataRepeater extends QPaginatedControl {
 	 * @param string $strName Name of the property
 	 *
 	 * @return int|mixed|string
-	 * @throws Exception|QCallerException
+	 * @throws Exception|\QCubed\Exception\Caller
 	 */
 	public function __get($strName) {
 		switch ($strName) {
@@ -200,7 +200,7 @@ class QDataRepeater extends QPaginatedControl {
 			default:
 				try {
 					return parent::__get($strName);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -217,7 +217,7 @@ class QDataRepeater extends QPaginatedControl {
 	 * @param string $mixValue Property value
 	 *
 	 * @return mixed|void
-	 * @throws Exception|QCallerException|QInvalidCastException
+	 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 	 */
 	public function __set($strName, $mixValue) {
 		switch ($strName) {
@@ -227,15 +227,15 @@ class QDataRepeater extends QPaginatedControl {
 					$this->blnModified = true;
 					if ($mixValue) {
 						if (file_exists($strPath = $this->GetTemplatePath($mixValue))) {
-							$this->strTemplate = QType::Cast($strPath, QType::String);
+							$this->strTemplate = \QCubed\Type::Cast($strPath, \QCubed\Type::STRING);
 						} else {
-							throw new QCallerException('Could not find template file: ' . $mixValue);
+							throw new \QCubed\Exception\Caller('Could not find template file: ' . $mixValue);
 						}
 					} else {
 						$this->strTemplate = null;
 					}
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -243,9 +243,9 @@ class QDataRepeater extends QPaginatedControl {
 			case "TagName":
 				try {
 					$this->blnModified = true;
-					$this->strTagName = QType::Cast($mixValue, QType::String);
+					$this->strTagName = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -253,9 +253,9 @@ class QDataRepeater extends QPaginatedControl {
 			case 'ItemTagName':
 				try {
 					$this->blnModified = true;
-					$this->strItemTagName = QType::Cast($mixValue, QType::String);
+					$this->strItemTagName = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -263,8 +263,8 @@ class QDataRepeater extends QPaginatedControl {
 			case 'ItemHtmlCallback':
 				try {
 					$this->blnModified = true;
-					$this->itemHtmlCallback = QType::Cast($mixValue, QType::CallableType);
-				} catch (QInvalidCastException $objExc) {
+					$this->itemHtmlCallback = \QCubed\Type::Cast($mixValue, \QCubed\Type::CALLABLE_TYPE);
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -272,18 +272,18 @@ class QDataRepeater extends QPaginatedControl {
 
 			case 'ItemAttributesCallback':	// callback should return an array of key/value items
 				$this->blnModified = true;
-				$this->itemAttributesCallback = QType::Cast($mixValue, QType::CallableType);;
+				$this->itemAttributesCallback = \QCubed\Type::Cast($mixValue, \QCubed\Type::CALLABLE_TYPE);;
 				break;
 
 			case 'ItemInnerHtmlCallback':
 				$this->blnModified = true;
-				$this->itemInnerHtmlCallback = QType::Cast($mixValue, QType::CallableType);;
+				$this->itemInnerHtmlCallback = \QCubed\Type::Cast($mixValue, \QCubed\Type::CALLABLE_TYPE);;
 				break;
 
 			default:
 				try {
 					parent::__set($strName, $mixValue);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}

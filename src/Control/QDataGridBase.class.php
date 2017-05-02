@@ -72,7 +72,7 @@ class QDataGridBase extends QHtmlTable
 
 			$this->AddActions();
 
-		} catch (QCallerException  $objExc) {
+		} catch (\QCubed\Exception\Caller  $objExc) {
 			$objExc->IncrementOffset();
 			throw $objExc;
 		}
@@ -89,7 +89,7 @@ class QDataGridBase extends QHtmlTable
 	/**
 	 * Renders the given paginator in a span in the caption. If a caption already exists, it will add the caption.
 	 * @return string
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	protected function RenderPaginator () {
 		$objPaginator = $this->objPaginator;
@@ -122,7 +122,7 @@ class QDataGridBase extends QHtmlTable
 	 *
 	 * @param int $intColumnIndex
 	 * @param QAbstractHtmlTableColumn $objColumn
-	 * @throws QInvalidCastException
+	 * @throws \QCubed\Exception\InvalidCast
 	 */
 	public function AddColumnAt($intColumnIndex, QAbstractHtmlTableColumn $objColumn) {
 		parent::AddColumnAt($intColumnIndex, $objColumn);
@@ -190,12 +190,12 @@ class QDataGridBase extends QHtmlTable
 	 * @param string $strFormId
 	 * @param string $strControlId
 	 * @param mixed $mixParameter
-	 * @throws QCallerException
-	 * @throws QInvalidCastException
+	 * @throws \QCubed\Exception\Caller
+	 * @throws \QCubed\Exception\InvalidCast
 	 */
 	protected function SortClick($strFormId, $strControlId, $mixParameter) {
 
-		$intColumnIndex = QType::Cast($mixParameter, QType::Integer);
+		$intColumnIndex = \QCubed\Type::Cast($mixParameter, \QCubed\Type::INTEGER);
 		$objColumn = $this->GetColumn ($intColumnIndex, true);
 
 		if (!$objColumn) return;
@@ -423,7 +423,7 @@ class QDataGridBase extends QHtmlTable
 	/**
 	 * @param string $strName
 	 * @return bool|int|Keeps|mixed|null
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	public function __get($strName) {
 		switch ($strName) {
@@ -440,7 +440,7 @@ class QDataGridBase extends QHtmlTable
 			default:
 				try {
 					return parent::__get($strName);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -450,23 +450,23 @@ class QDataGridBase extends QHtmlTable
 	/**
 	 * @param string $strName
 	 * @param string $mixValue
-	 * @throws QCallerException
-	 * @throws QInvalidCastException
+	 * @throws \QCubed\Exception\Caller
+	 * @throws \QCubed\Exception\InvalidCast
 	 */
 	public function __set($strName, $mixValue) {
 		switch ($strName) {
 			case "SortColumnId":
 				try {
-					$this->strSortColumnId = QType::Cast($mixValue, QType::String);
+					$this->strSortColumnId = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
 
 			case "SortColumnIndex":
 				try {
-					$intIndex = QType::Cast($mixValue, QType::Integer);
+					$intIndex = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 					if ($intIndex < 0) {
 						$intIndex = 0;
 					}
@@ -481,7 +481,7 @@ class QDataGridBase extends QHtmlTable
 					if ($objColumn && $objColumn->OrderByClause) {
 						$this->strSortColumnId = $objColumn->Id;
 					}
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -489,12 +489,12 @@ class QDataGridBase extends QHtmlTable
 
 			case "SortDirection":
 				try {
-					$this->intSortDirection = QType::Cast($mixValue, QType::Integer);
+					$this->intSortDirection = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 					if ($this->intSortDirection != self::SortDescending) {
 						$this->intSortDirection = self::SortAscending;	// make sure its only one of two values
 					}
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -502,11 +502,11 @@ class QDataGridBase extends QHtmlTable
 			case "SortInfo":	// restore the SortInfo obtained from the getter
 				try {
 					if (isset($mixValue['id']) && isset($mixValue['dir'])) {
-						$this->intSortDirection = QType::Cast($mixValue['dir'], QType::Integer);
-						$this->strSortColumnId = QType::Cast($mixValue['id'], QType::String);
+						$this->intSortDirection = \QCubed\Type::Cast($mixValue['dir'], \QCubed\Type::INTEGER);
+						$this->strSortColumnId = \QCubed\Type::Cast($mixValue['id'], \QCubed\Type::STRING);
 					}
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -515,7 +515,7 @@ class QDataGridBase extends QHtmlTable
 				try {
 					parent::__set($strName, $mixValue);
 					break;
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}

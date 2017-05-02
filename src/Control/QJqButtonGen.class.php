@@ -219,7 +219,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -230,10 +230,10 @@
 			switch ($strName) {
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -245,20 +245,20 @@
 
 				case 'Label':
 					try {
-						$this->strLabel = QType::Cast($mixValue, QType::String);
+						$this->strLabel = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'label', $this->strLabel);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'JqText':
 					try {
-						$this->blnJqText = QType::Cast($mixValue, QType::Boolean);
+						$this->blnJqText = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'text', $this->blnJqText);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -273,7 +273,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -287,9 +287,9 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the button if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Label', 'Text to show in the button. When not specified (null), the elementsHTML content is used, or its value attribute if the element is aninput element of type submit or reset, or the HTML content of theassociated label element if the element is an input of type radio orcheckbox.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'JqText', 'Whether to show the label. When set to false no text will bedisplayed, but the icons option must be enabled, otherwise the textoption will be ignored.', QType::Boolean),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the button if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Label', 'Text to show in the button. When not specified (null), the elementsHTML content is used, or its value attribute if the element is aninput element of type submit or reset, or the HTML content of theassociated label element if the element is an input of type radio orcheckbox.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'JqText', 'Whether to show the label. When set to false no text will bedisplayed, but the icons option must be enabled, otherwise the textoption will be ignored.', \QCubed\Type::BOOLEAN),
 			));
 		}
 	}

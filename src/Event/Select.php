@@ -1,6 +1,22 @@
 <?php
-/** When the control/element is selected */
-class QSelectEvent extends QEvent {
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Event;
+
+/**
+ * Class Select
+ *
+ * @was QSelectEvent
+ * @package QCubed\Event
+ */
+class Select extends AbstractBase
+{
     /** Event Name */
-    const EventName = 'select';
+    const EVENT_NAME = 'select';
 }

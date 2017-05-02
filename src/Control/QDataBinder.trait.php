@@ -39,7 +39,7 @@ trait QDataBinder {
 	/**
 	 * Bind the data by calling the data binder. Will pass the current control as the parameter to the data binder.
 	 * @throws Exception
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	public function CallDataBinder() {
 		if ($this->objDataBinder) {
@@ -56,7 +56,7 @@ trait QDataBinder {
 			else {
 				try {
 					call_user_func($this->objDataBinder);	// calling databinder on self, so do not pass the control as param
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}

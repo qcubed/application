@@ -45,7 +45,7 @@ class QFieldset extends QBlockControl {
 			default:
 				try {
 					return parent::__get($strName);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -62,9 +62,9 @@ class QFieldset extends QBlockControl {
 			// APPEARANCE
 			case "Legend":
 				try {
-					$this->strLegend = QType::Cast($mixValue, QType::String);
+					$this->strLegend = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -72,7 +72,7 @@ class QFieldset extends QBlockControl {
 			default:
 				try {
 					parent::__set($strName, $mixValue);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}

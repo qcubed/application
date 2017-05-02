@@ -112,7 +112,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -131,9 +131,9 @@
 						if ($mixValue instanceof QImageBase)
 							$this->mixImageStandard = $mixValue;
 						else
-							$this->mixImageStandard = QType::Cast($mixValue, QType::String);
+							$this->mixImageStandard = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -142,18 +142,18 @@
 						if ($mixValue instanceof QImageBase)
 							$this->mixImageHover = $mixValue;
 						else
-							$this->mixImageHover = QType::Cast($mixValue, QType::String);
+							$this->mixImageHover = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "LinkUrl":
 					try {
-						$this->strLinkUrl = QType::Cast($mixValue, QType::String);
+						$this->strLinkUrl = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -161,7 +161,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

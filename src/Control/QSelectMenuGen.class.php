@@ -307,7 +307,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -323,10 +323,10 @@
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -343,10 +343,10 @@
 
 				case 'Width':
 					try {
-						$this->intWidth = QType::Cast($mixValue, QType::Integer);
+						$this->intWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'width', $this->intWidth);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -361,7 +361,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -375,8 +375,8 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectmenu if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Width', 'The width of the menu, in pixels. When the value is null, the width ofthe native select is used.', QType::Integer),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectmenu if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Width', 'The width of the menu, in pixels. When the value is null, the width ofthe native select is used.', \QCubed\Type::INTEGER),
 			));
 		}
 	}

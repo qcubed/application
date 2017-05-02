@@ -20,7 +20,7 @@
 	 * @property-read QTagStyler		$HeaderCellStyler		The tag styler for the header cells in the column
 	 * @property-read QTagStyler		$ColStyler		The tag styler for the col tag in the column
 	 */
-	abstract class QAbstractHtmlTableColumn extends QBaseClass {
+	abstract class QAbstractHtmlTableColumn extends \QCubed\AbstractBase {
 		/** @var string */
 		protected $strName;
 		/** @var string */
@@ -276,7 +276,7 @@
 		 *
 		 * @return bool|int|mixed|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -318,7 +318,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -333,95 +333,95 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "Name":
 					try {
-						$this->strName = QType::Cast($mixValue, QType::String);
+						$this->strName = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "CssClass":
 					try {
-						$this->strCssClass = QType::Cast($mixValue, QType::String);
+						$this->strCssClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HeaderCssClass":
 					try {
-						$this->strHeaderCssClass = QType::Cast($mixValue, QType::String);
+						$this->strHeaderCssClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HtmlEntities":
 					try {
-						$this->blnHtmlEntities = QType::Cast($mixValue, QType::Boolean);
+						$this->blnHtmlEntities = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 					
 				case "RenderAsHeader":
 					try {
-						$this->blnRenderAsHeader = QType::Cast($mixValue, QType::Boolean);
+						$this->blnRenderAsHeader = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 					
 				case "Span":
 					try {
-						$this->intSpan = QType::Cast($mixValue, QType::Integer);
+						$this->intSpan = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						if ($this->intSpan < 1) {
 							throw new Exception("Span must be 1 or greater.");
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Id":
 					try {
-						$this->strId = QType::Cast($mixValue, QType::String);
+						$this->strId = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Visible":
 					try {
-						$this->blnVisible = QType::Cast($mixValue, QType::Boolean);
+						$this->blnVisible = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "CellParamsCallback":
-					$this->cellParamsCallback = QType::Cast($mixValue, QType::CallableType);
+					$this->cellParamsCallback = \QCubed\Type::Cast($mixValue, \QCubed\Type::CALLABLE_TYPE);
 					break;
 
 				case "_ParentTable":
 					try {
-						$this->objParentTable = QType::Cast($mixValue, 'QHtmlTableBase');
+						$this->objParentTable = \QCubed\Type::Cast($mixValue, 'QHtmlTableBase');
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -430,7 +430,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -443,16 +443,16 @@
 	 * Supports post processing of cell contents for further formatting, and OrderBy clauses.
 	 *
 	 * @property mixed          $OrderByClause        order by info for sorting the column in ascending order. Used by subclasses.
-	 *    Most often this is a QQ::Clause, but can be any data needed.
+	 *    Most often this is a \QCubed\Query\QQ::Clause, but can be any data needed.
 	 * @property mixed          $ReverseOrderByClause order by info for sorting the column in descending order.
 	 * @property string         $Format               the default format to use for FetchCellValueFormatted(). Used by QDataTables plugin.
-	 *    For date columns it should be a format accepted by QDateTime::qFormat()
+	 *    For date columns it should be a format accepted by \QCubed\QDateTime::qFormat()
 	 * @property-write string   $PostMethod           after the cell object is retrieved, call this method on the obtained object
 	 * @property-write callback $PostCallback         after the cell object is retrieved, call this callback on the obtained object.
 	 *    If $PostMethod is also set, this will be called after that method call.
 	 */
 	abstract class QAbstractHtmlTableDataColumn extends QAbstractHtmlTableColumn {
-		/** @var mixed Order By information. Can be a QQ::Clause, or any kind of object depending on your need */
+		/** @var mixed Order By information. Can be a \QCubed\Query\QQ::Clause, or any kind of object depending on your need */
 		protected $objOrderByClause = null;
 		/** @var mixed */
 		protected $objReverseOrderByClause = null;
@@ -490,7 +490,7 @@
 				return '';
 			}
 
-			if ($cellValue instanceof QDateTime) {
+			if ($cellValue instanceof \QCubed\QDateTime) {
 				return $cellValue->qFormat($this->strFormat);
 			}
 			if (is_object($cellValue)) {
@@ -534,7 +534,7 @@
 		 *
 		 * @return bool|int|mixed|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -548,7 +548,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -563,8 +563,8 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
@@ -572,7 +572,7 @@
 					try {
 						$this->objOrderByClause = $mixValue;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -581,25 +581,25 @@
 					try {
 						$this->objReverseOrderByClause = $mixValue;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Format":
 					try {
-						$this->strFormat = QType::Cast($mixValue, QType::String);
+						$this->strFormat = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "PostMethod":
 					try {
-						$this->strPostMethod = QType::Cast($mixValue, QType::String);
+						$this->strPostMethod = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -612,7 +612,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -639,7 +639,7 @@
 		 * @param string      $strName     name of the column
 		 * @param string|null $strProperty the property name to use when accessing the DataSource row object.
 		 *                                 Can be null, in which case object will have the ->__toString() function called on it.
-		 * @param QQNode      $objBaseNode if not null, the OrderBy and ReverseOrderBy clauses will be created using the property path and the given database node
+		 * @param \QCubed\Query\Node\AbstractBase      $objBaseNode if not null, the OrderBy and ReverseOrderBy clauses will be created using the property path and the given database node
 		 */
 		public function __construct($strName, $strProperty, $objBaseNode = null) {
 			parent::__construct($strName);
@@ -650,8 +650,8 @@
 					$objBaseNode = $objBaseNode->$strProperty;
 				}
 
-				$this->OrderByClause = QQ::OrderBy($objBaseNode);
-				$this->ReverseOrderByClause = QQ::OrderBy($objBaseNode, 'desc');
+				$this->OrderByClause = \QCubed\Query\QQ::OrderBy($objBaseNode);
+				$this->ReverseOrderByClause = \QCubed\Query\QQ::OrderBy($objBaseNode, 'desc');
 			}
 		}
 
@@ -673,7 +673,7 @@
 		 *
 		 * @return bool|int|mixed|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -684,7 +684,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -699,26 +699,26 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "Property":
 					try {
-						$this->strProperty = QType::Cast($mixValue, QType::String);
+						$this->strProperty = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->strPropertiesArray = $this->strProperty ? explode('->', $this->strProperty) : array();
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "NullSafe":
 					try {
-						$this->blnNullSafe = QType::Cast($mixValue, QType::Boolean);
+						$this->blnNullSafe = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -727,7 +727,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -738,34 +738,34 @@
 	/**
 	 * Class QHtmlTableNodeColumn
 	 *
-	 * A table column that displays the content of a database column represented by a QQNode object.
+	 * A table column that displays the content of a database column represented by a \QCubed\Query\Node\AbstractBase object.
 	 * The $objNodes can be a single node, or an array of nodes. If an array of nodes, the first
 	 * node will be the display node, and the rest of the nodes will be used for sorting.
 	 */
 	class QHtmlTableNodeColumn extends QHtmlTablePropertyColumn {
 		public function __construct($strName, $objNodes) {
-			if ($objNodes instanceof QQNode) {
+			if ($objNodes instanceof \QCubed\Query\Node\AbstractBase) {
 				$objNodes = [$objNodes];
 			}
-			elseif (empty($objNodes) || !is_array($objNodes) || !$objNodes[0] instanceof QQNode) {
-				throw new QCallerException('Pass either a QQNode or an array of QQNodes only');
+			elseif (empty($objNodes) || !is_array($objNodes) || !$objNodes[0] instanceof \QCubed\Query\Node\AbstractBase) {
+				throw new \QCubed\Exception\Caller('Pass either a \QCubed\Query\Node\AbstractBase or an array of QQNodes only');
 			}
 
 			$objNode = $objNodes[0]; // First node is the data node, the rest are for sorting.
 
 			if (!$objNode->_ParentNode) {
-				throw new QCallerException('First QQNode cannot be a Top Level Node');
+				throw new \QCubed\Exception\Caller('First \QCubed\Query\Node\AbstractBase cannot be a Top Level Node');
 			}
-			if (($objNode instanceof QQReverseReferenceNode) && !$objNode->IsUnique()) {
-				throw new QCallerException('Content QQNode cannot go through any "To Many" association nodes.');
+			if (($objNode instanceof \QCubed\Query\Node\ReverseReference) && !$objNode->IsUnique()) {
+				throw new \QCubed\Exception\Caller('Content \QCubed\Query\Node\AbstractBase cannot go through any "To Many" association nodes.');
 			}
 
 			$properties = array($objNode->_PropertyName);
 			while ($objNode = $objNode->_ParentNode) {
-				if (!($objNode instanceof QQNode))
-					throw new QCallerException('QQNode cannot go through any "To Many" association nodes.');
-				if (($objNode instanceof QQReverseReferenceNode) && !$objNode->IsUnique())
-					throw new QCallerException('QQNode cannot go through any "To Many" association nodes.');
+				if (!($objNode instanceof \QCubed\Query\Node\AbstractBase))
+					throw new \QCubed\Exception\Caller('\QCubed\Query\Node\AbstractBase cannot go through any "To Many" association nodes.');
+				if (($objNode instanceof \QCubed\Query\Node\ReverseReference) && !$objNode->IsUnique())
+					throw new \QCubed\Exception\Caller('\QCubed\Query\Node\AbstractBase cannot go through any "To Many" association nodes.');
 				if ($strPropName = $objNode->_PropertyName) {
 					$properties[] = $strPropName;
 				}
@@ -776,7 +776,7 @@
 
 			// build sort nodes
 			foreach ($objNodes as $objNode) {
-				if ($objNode instanceof QQReverseReferenceNode) {
+				if ($objNode instanceof \QCubed\Query\Node\ReverseReference) {
 					$objNode = $objNode->_PrimaryKeyNode;
 				}
 				$objSortNodes[] = $objNode;
@@ -784,8 +784,8 @@
 				$objReverseNodes[] = false;
 			}
 
-			$this->OrderByClause = QQ::OrderBy($objSortNodes);
-			$this->ReverseOrderByClause = QQ::OrderBy($objReverseNodes);
+			$this->OrderByClause = \QCubed\Query\QQ::OrderBy($objSortNodes);
+			$this->ReverseOrderByClause = \QCubed\Query\QQ::OrderBy($objReverseNodes);
 		}
 	}
 
@@ -823,7 +823,7 @@
 		 *
 		 * @return bool|int|mixed|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -832,7 +832,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -847,7 +847,7 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
@@ -859,7 +859,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -932,7 +932,7 @@
 		 *
 		 * @return bool|callable|int|mixed|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -941,7 +941,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -956,20 +956,20 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "Callable":
-					$this->callback = QType::Cast($mixValue, QType::CallableType);
+					$this->callback = \QCubed\Type::Cast($mixValue, \QCubed\Type::CALLABLE_TYPE);
 					break;
 
 				default:
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -992,8 +992,8 @@
 				$this->strAttribute = $strAttribute;
 			}
 
-			$this->OrderByClause = QQ::OrderBy(QQ::Virtual($strAttribute));
-			$this->ReverseOrderByClause = QQ::OrderBy(QQ::Virtual($strAttribute), false);
+			$this->OrderByClause = \QCubed\Query\QQ::OrderBy(\QCubed\Query\QQ::Virtual($strAttribute));
+			$this->ReverseOrderByClause = \QCubed\Query\QQ::OrderBy(\QCubed\Query\QQ::Virtual($strAttribute), false);
 
 		}
 		
@@ -1008,7 +1008,7 @@
 		 *
 		 * @return bool|int|mixed|null|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -1017,7 +1017,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1032,20 +1032,20 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "Attribute":
-					$this->strAttribute = QType::Cast ($mixValue, QType::String);
+					$this->strAttribute = \QCubed\Type::Cast ($mixValue, \QCubed\Type::STRING);
 					break;
 
 				default:
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1228,7 +1228,7 @@
 		 *
 		 * @return bool|int|mixed|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -1237,7 +1237,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1252,16 +1252,16 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "ShowCheckAll":
 					try {
-						$this->blnShowCheckAll = QType::Cast($mixValue, QType::Boolean);
+						$this->blnShowCheckAll = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1270,7 +1270,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1368,15 +1368,15 @@
 		 * QHtmlTableLinkColumn constructor.
 		 *
 		 * @param string $strName Column name to be displayed in the table header.
-		 * @param null|string|array|QQNode $mixText The text to display as the label of the anchor, a callable callback to get the text,
-		 *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same, or a QQNode representing the property.
+		 * @param null|string|array|\QCubed\Query\Node\AbstractBase $mixText The text to display as the label of the anchor, a callable callback to get the text,
+		 *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same, or a \QCubed\Query\Node\AbstractBase representing the property.
 		 *   Depends on what type of row item is passed.
 		 * @param null|string|array|QControlProxy $mixDestination The text representing the destination of the anchor, a callable callback to get the destination,
 		 *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same,
 		 *   or a QControlProxy. Depends on what type of row item is passed.
 		 * @param null|string|array $getVars An array of key=>value pairs to use as the GET variables in the link URL,
 		 *   or in the case of a QControlProxy, possibly a string to represent the action parameter. In either case, each item
-		 *   can be a property chain, an array index list, a QQNode, or a callable callback as specified above. If the destination is a
+		 *   can be a property chain, an array index list, a \QCubed\Query\Node\AbstractBase, or a callable callback as specified above. If the destination is a
 		 *   QControlProxy, this would be what to use as the action parameter.
 		 * @param null|array $tagAttributes An array of key=>value pairs to use as additional attributes in the tag.
 		 *   For example, could be used to add a class or an id to each tag.
@@ -1460,14 +1460,14 @@
 					return $item; // We have no idea what this is, so return the item for possible further processing
 				}
 			}
-			elseif ($mixSpec instanceof QQNode) {
+			elseif ($mixSpec instanceof \QCubed\Query\Node\AbstractBase) {
 				$properties = array($mixSpec->_PropertyName);
 				$objNode = $mixSpec;
 				while ($objNode = $objNode->_ParentNode) {
-					if (!($objNode instanceof QQNode))
-						throw new QCallerException('QQNode cannot go through any "To Many" association nodes.');
-					if (($objNode instanceof QQReverseReferenceNode) && !$objNode->IsUnique())
-						throw new QCallerException('QQNode cannot go through any "To Many" association nodes.');
+					if (!($objNode instanceof \QCubed\Query\Node\AbstractBase))
+						throw new \QCubed\Exception\Caller('\QCubed\Query\Node\AbstractBase cannot go through any "To Many" association nodes.');
+					if (($objNode instanceof \QCubed\Query\Node\ReverseReference) && !$objNode->IsUnique())
+						throw new \QCubed\Exception\Caller('\QCubed\Query\Node\AbstractBase cannot go through any "To Many" association nodes.');
 					if ($strPropName = $objNode->_PropertyName) {
 						$properties[] = $strPropName;
 					}
@@ -1522,7 +1522,7 @@
 						}
 					}
 				}
-				elseif ($this->getVars instanceof QQNode) {
+				elseif ($this->getVars instanceof \QCubed\Query\Node\AbstractBase) {
 					$getVars = static::GetObjectValue($this->getVars, $item);
 				}
 				else {
@@ -1585,7 +1585,7 @@
 		 *
 		 * @return bool|int|mixed|QHtmlTableBase|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -1594,7 +1594,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1609,16 +1609,16 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "AsButton":
 					try {
-						$this->blnAsButton = QType::Cast($mixValue, QType::Boolean);
+						$this->blnAsButton = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1649,14 +1649,14 @@
 								$this->getVars[$key] = self::SplitSpec($val);
 							}
 						}
-						elseif ($mixValue instanceof QQNode) {
+						elseif ($mixValue instanceof \QCubed\Query\Node\AbstractBase) {
 							$this->getVars = $mixValue;
 						}
 						else {
 							throw new Exception ("Invalid type");
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1676,7 +1676,7 @@
 							throw new Exception ("Invalid type");
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -1685,7 +1685,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

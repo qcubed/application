@@ -11,6 +11,7 @@ $files = [
     __DIR__ . '/manualChanges.regex.php',
     $dirQCubed . '/common/tools/common.regex.php',
     $dirQCubed . '/orm/tools/orm.regex.php',
+    $dirQCubed . '/orm/tools/manual.regex.php',
 
 ];
 
@@ -18,7 +19,8 @@ $files = [
 $aNew = [
     'const'=>[],
     'class'=>[],
-    'func'=>[]
+    'func'=>[],
+    'regex'=>[]
 ];
 foreach ($files as $file) {
     $a = include($file);
@@ -27,4 +29,11 @@ foreach ($files as $file) {
     }
 }
 
-return var_dump($aNew);
+echo '<?php' . "\n" .
+    "return ";
+
+var_export($aNew);
+
+echo  ";";
+
+

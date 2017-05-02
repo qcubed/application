@@ -14,8 +14,10 @@ use QCubed\Type;
 
 /**
  * Class AbstractBase
+ *
  * Events are used in conjunction with actions to respond to user actions, like clicking, typing, etc.,
  * or even programmable timer events.
+ *
  * @property-read string $EventName the javascript event name that will be fired
  * @property-read string $Condition a javascript condition that is tested before the event is sent
  * @property-read integer $Delay ms delay before action is fired
@@ -23,6 +25,7 @@ use QCubed\Type;
  * @property-read string $Selector a jquery selector, causes the event to apply to child items matching the selector, and then get sent up the chain to this object
  * @property-read boolean $Block indicates that other events after this event will be thrown away until the browser receives a response from this event.
  * @package QCubed\Event
+ * @was QEvent
  */
 abstract class AbstractBase extends \QCubed\AbstractBase
 {
@@ -53,7 +56,7 @@ abstract class AbstractBase extends \QCubed\AbstractBase
                 if ($this->strCondition) {
                     $this->strCondition = sprintf('(%s) && (%s)', $this->strCondition, $strCondition);
                 } else {
-                    $this->strCondition = Type::Cast($strCondition, Type::STRING);
+                    $this->strCondition = Type::cast($strCondition, Type::STRING);
                 }
             }
             if ($strSelector) {
@@ -77,7 +80,7 @@ abstract class AbstractBase extends \QCubed\AbstractBase
     {
         switch ($strName) {
             case 'EventName':
-                $strEvent = constant(get_class($this) . '::EventName');
+                $strEvent = constant(get_class($this) . '::EVENT_NAME');
                 if ($this->strSelector) {
                     $strEvent .= '","' . addslashes($this->strSelector);
                 }
@@ -87,7 +90,7 @@ abstract class AbstractBase extends \QCubed\AbstractBase
             case 'Delay':
                 return $this->intDelay;
             case 'JsReturnParam':
-                $strConst = get_class($this) . '::JsReturnParam';
+                $strConst = get_class($this) . '::JS_RETURN_PARAM';
                 return defined($strConst) ? constant($strConst) : '';
             case 'Selector':
                 return $this->strSelector;

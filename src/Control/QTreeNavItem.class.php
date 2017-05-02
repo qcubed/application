@@ -18,7 +18,7 @@
 	 * @property string $ParentItemId
 	 * @property boolean $HasChildren
 	 */
-	class QTreeNavItem extends QBaseClass {
+	class QTreeNavItem extends \QCubed\AbstractBase {
 		///////////////////////////
 		// Private Member Variables
 		///////////////////////////
@@ -38,7 +38,7 @@
 		/////////////////////////
 		public function __construct($strName, $strValue, $blnExpanded, $objParentObject, $strItemId = null) {
 			if (strpos($strItemId, '_') !== false)
-				throw new QCallerException('Invalid Item Id: ' . $strItemId);
+				throw new \QCubed\Exception\Caller('Invalid Item Id: ' . $strItemId);
 
 			$this->strName = $strName;
 			$this->strValue = $strValue;
@@ -83,7 +83,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -97,41 +97,41 @@
 			switch ($strName) {
 				case "Name":
 					try {
-						$this->strName = QType::Cast($mixValue, QType::String);
+						$this->strName = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Value":
 					try {
-						$this->strValue = QType::Cast($mixValue, QType::String);
+						$this->strValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Selected":
 					try {
-						$this->blnSelected = QType::Cast($mixValue, QType::Boolean);
+						$this->blnSelected = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Expanded":
 					try {
-						$this->blnExpanded = QType::Cast($mixValue, QType::Boolean);
+						$this->blnExpanded = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "HasChildren":
 					try {
-						$this->blnHasChildren = QType::Cast($mixValue, QType::Boolean);
+						$this->blnHasChildren = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -139,7 +139,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

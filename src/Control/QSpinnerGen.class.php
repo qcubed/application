@@ -428,7 +428,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -439,20 +439,20 @@
 			switch ($strName) {
 				case 'Culture':
 					try {
-						$this->strCulture = QType::Cast($mixValue, QType::String);
+						$this->strCulture = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'culture', $this->strCulture);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -479,20 +479,20 @@
 
 				case 'NumberFormat':
 					try {
-						$this->strNumberFormat = QType::Cast($mixValue, QType::String);
+						$this->strNumberFormat = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'numberFormat', $this->strNumberFormat);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Page':
 					try {
-						$this->intPage = QType::Cast($mixValue, QType::Integer);
+						$this->intPage = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'page', $this->intPage);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -512,7 +512,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -526,10 +526,10 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Culture', 'Sets the culture to use for parsing and formatting the value. If null,the currently set culture in Globalize is used, see Globalize docs foravailable cultures. Only relevant if the numberFormat option is set.Requires Globalize to be included.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the spinner if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'NumberFormat', 'Format of numbers passed to Globalize, if available. Most common are\"n\" for a decimal number and \"C\" for a currency value. Also see theculture option.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Page', 'The number of steps to take when paging via the pageUp/pageDownmethods.', QType::Integer),
+				new QModelConnectorParam (get_called_class(), 'Culture', 'Sets the culture to use for parsing and formatting the value. If null,the currently set culture in Globalize is used, see Globalize docs foravailable cultures. Only relevant if the numberFormat option is set.Requires Globalize to be included.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the spinner if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'NumberFormat', 'Format of numbers passed to Globalize, if available. Most common are\"n\" for a decimal number and \"C\" for a currency value. Also see theculture option.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Page', 'The number of steps to take when paging via the pageUp/pageDownmethods.', \QCubed\Type::INTEGER),
 			));
 		}
 	}

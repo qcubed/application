@@ -9,9 +9,10 @@
 
 namespace QCubed\Action;
 
-use \QControl;
 use \QCubed\Exception\Caller;
 use QCubed\Type;
+use QCubed\Project\Control\ControlBase as QControl;
+
 
 /**
  * Base class for all other Actions.

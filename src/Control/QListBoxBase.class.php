@@ -39,8 +39,8 @@
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
 
-			$this->strLabelForRequired = QApplication::Translate('%s is required');
-			$this->strLabelForRequiredUnnamed = QApplication::Translate('Required');
+			$this->strLabelForRequired = t('%s is required');
+			$this->strLabelForRequiredUnnamed = t('Required');
 			$this->objItemStyle = new QListItemStyle();
 		}
 
@@ -228,7 +228,7 @@
 		 * @param string $strName
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -243,7 +243,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -259,32 +259,32 @@
 		 * @param string $mixValue
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				// APPEARANCE
 				case "Rows":
 					try {
-						$this->SetHtmlAttribute('size', QType::Cast($mixValue, QType::Integer));
+						$this->SetHtmlAttribute('size', \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER));
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "LabelForRequired":
 					try {
-						$this->strLabelForRequired = QType::Cast($mixValue, QType::String);
+						$this->strLabelForRequired = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "LabelForRequiredUnnamed":
 					try {
-						$this->strLabelForRequiredUnnamed = QType::Cast($mixValue, QType::String);
+						$this->strLabelForRequiredUnnamed = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -292,13 +292,13 @@
 				// BEHAVIOR
 				case "SelectionMode":
 					try {
-						if (QType::Cast($mixValue, QType::String) == QSelectionMode::Multiple) {
+						if (\QCubed\Type::Cast($mixValue, \QCubed\Type::STRING) == QSelectionMode::Multiple) {
 							$this->SetHtmlAttribute('multiple', 'multiple');
 						} else {
 							$this->RemoveHtmlAttribute('multiple');
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -306,7 +306,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -321,7 +321,7 @@
 		 */
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Rows', 'Height of field for multirow field', QType::Integer),
+				new QModelConnectorParam (get_called_class(), 'Rows', 'Height of field for multirow field', \QCubed\Type::INTEGER),
 				new QModelConnectorParam (get_called_class(), 'SelectionMode', 'Single or multiple selections', QModelConnectorParam::SelectionList,
 					array (null=>'Default',
 						'QSelectionMode::Single'=>'Single',

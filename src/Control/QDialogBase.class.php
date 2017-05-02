@@ -8,18 +8,6 @@
 	 *
 	 */
 	 
-	/**
-	 * Special event to handle button clicks. 
-	 * 
-	 * Add an action to this event to get a button click.
-	 * The action parameter will be the id of the button that was clicked.
-	 * @usage 	$dlg->AddAction(new QDialog_ButtonEvent(), new QAjaxAction($this, 'ButtonClick'));
-	 */
-	class QDialog_ButtonEvent extends QEvent {
-		/** Event Name */
-		const EventName = 'QDialog_Button';
-		const JsReturnParam = 'ui'; // ends up being the button id
-	}
 
 
 	/**
@@ -217,18 +205,18 @@
 				$strHideCloseButtonScript = '';
 			}
 
-			$jqOptions['open'] = new QJsClosure (
+			$jqOptions['open'] = new \QCubed\Js\Closure (
 				sprintf ('qcubed.recordControlModification("%s", "_IsOpen", true);
 				%s', $controlId, $strHideCloseButtonScript)
 				, ['event', 'ui']);
-			$jqOptions['close'] = new QJsClosure (sprintf (
+			$jqOptions['close'] = new \QCubed\Js\Closure (sprintf (
 				'qcubed.recordControlModification("%s", "_IsOpen", false);
 			    ', $controlId), ['event', 'ui']);
 			$jqOptions['appendTo'] = "#{$strFormId}";
 
 			// By doing the styling at creation time, we ensure that it gets done only once.
 			if ($strCreateJs = $this->StylingJs()) {
-				$jqOptions['create'] =  new QJsClosure($strCreateJs);
+				$jqOptions['create'] =  new \QCubed\Js\Closure($strCreateJs);
 			}
 			return $jqOptions;
 		}
@@ -273,7 +261,7 @@
 				', $controlId, $strButtonId, $controlId);
 
 			$btnOptions = array ('text'=>$strButtonName,
-				'click'=>new QJsNoQuoteKey(new QJsClosure($strJS, array ('event'))),
+				'click'=>new \QCubed\Js\NoQuoteKey(new \QCubed\Js\Closure($strJS, array ('event'))),
 				'data-btnid'=>$strButtonId);
 
 			if ($options) {
@@ -343,7 +331,7 @@
 		 */
 		public function SetButtonStyle ($strButtonId, $styles) {
 			QApplication::ExecuteJavaScript(
-				sprintf ('$j("#%s").next().find("button[data-btnid=\'%s\']").css(%s)', $this->getJqControlId(), $strButtonId, JavaScriptHelper::toJsObject($styles))
+				sprintf ('$j("#%s").next().find("button[data-btnid=\'%s\']").css(%s)', $this->getJqControlId(), $strButtonId, \QCubed\Js\Helper::toJsObject($styles))
 			);
 		}
 
@@ -355,7 +343,7 @@
 		 */
 		public function AddCloseButton ($strButtonName) {
 			// This is an alternate button format supported by jQuery UI.
-			$this->mixButtons[$strButtonName] = new QJsClosure('$j(this).dialog("close")');
+			$this->mixButtons[$strButtonName] = new \QCubed\Js\Closure('$j(this).dialog("close")');
 		}
 
 		/**
@@ -453,14 +441,14 @@
 		 * @param string $strName
 		 * @param string $mixValue
 		 *
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case '_ClickedButton': // Internal only. Do not use. Used by JS above to keep track of clicked button.
 					try {
-						$this->strClickedButtonId = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$this->strClickedButtonId = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -468,9 +456,9 @@
 
 				case '_IsOpen': // Internal only, to detect when dialog has been opened or closed.
                     try {
-                        $this->blnIsOpen = QType::Cast($mixValue, QType::Boolean);
+                        $this->blnIsOpen = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
                         $this->blnAutoOpen = $this->blnIsOpen;  // in case it gets redrawn
-                    } catch (QInvalidCastException $objExc) {
+                    } catch (\QCubed\Exception\InvalidCast $objExc) {
                         $objExc->IncrementOffset();
                         throw $objExc;
                     }
@@ -480,11 +468,11 @@
 				// escape key as well
 				case 'HasCloseButton':
 					try {
-						$this->blnHasCloseButton = QType::Cast($mixValue, QType::Boolean);
+						$this->blnHasCloseButton = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->blnCloseOnEscape = $this->blnHasCloseButton;
 						$this->blnModified = true;	// redraw
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -500,7 +488,7 @@
 							parent::__set($strName, $mixValue);
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -516,16 +504,16 @@
 							parent::__set($strName, $mixValue);
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'DialogState':
 					try {
-						$this->strDialogState = QType::Cast($mixValue, QType::String);
+						$this->strDialogState = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -534,7 +522,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -547,7 +535,7 @@
 		 * @param string $strName
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -558,7 +546,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}

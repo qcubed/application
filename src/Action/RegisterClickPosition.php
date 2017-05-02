@@ -1,11 +1,21 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
 
 /**
  * Registers the click position on a control
  *
  * @package Actions
  */
-class QRegisterClickPositionAction extends QAction {
+class QRegisterClickPositionAction extends AbstractBase {
     /** @var null|string Control ID of the control on which the click position has to be registered */
     protected $strControlId = null;
 

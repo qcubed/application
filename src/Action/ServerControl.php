@@ -1,5 +1,15 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Server control action is identical to server action, except
  * the handler for it is defined NOT in the form, but in a control.
  *

@@ -1,5 +1,15 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Event;
+
+/**
  * Class QCellClickEvent
  * An event to detect clicking on a table cell.
  * Lots of things can be determined using this event by changing the JsReturnParam values. When this event fires,
@@ -31,32 +41,35 @@
  * new QAjaxAction ('yourFunction', null, 'this.cellIndex')
  *
  * will return the column index into the strParameter, instead of the default.
+ *
+ * @was QCellClickEvent
+ * @package QCubed\Event
  */
-class QCellClickEvent extends QClickEvent {
+class CellClick extends Click
+{
     // Shortcuts to specify common return parameters
-    const RowIndex = '$j(this).parent()[0].rowIndex';
-    const ColumnIndex = 'this.cellIndex';
-    const CellId = 'this.id';
-    const RowId = '$j(this).parent().attr("id")';
-    const RowValue = '$j(this).parent().data("value")';
-    const ColId = '$j(this).parent().closest("table").find("thead").find("th")[this.cellIndex].id';
+    const ROW_INDEX = '$j(this).parent()[0].rowIndex';
+    const COLUMN_INDEX = 'this.cellIndex';
+    const CELL_ID = 'this.id';
+    const ROW_ID = '$j(this).parent().attr("id")';
+    const ROW_VALUE = '$j(this).parent().data("value")';
+    const COL_ID = '$j(this).parent().closest("table").find("thead").find("th")[this.cellIndex].id';
 
     protected $strReturnParam;
 
-    public function __construct($intDelay = 0, $strCondition = null, $mixReturnParams = null, $blnBlockOtherEvents = false) {
+    public function __construct($intDelay = 0, $strCondition = null, $mixReturnParams = null, $blnBlockOtherEvents = false)
+    {
         parent::__construct($intDelay, $strCondition, 'th,td', $blnBlockOtherEvents);
 
         if (!$mixReturnParams) {
             $this->strReturnParam = '{"row": $j(this).parent()[0].rowIndex, "col": this.cellIndex}'; // default returns the row and colum indexes of the cell clicked
-        }
-        else if (is_array($mixReturnParams)) {
-            $combined = array_map(function($key, $val) {
+        } elseif (is_array($mixReturnParams)) {
+            $combined = array_map(function ($key, $val) {
                 return '"' . $key . '":' . $val;
             }, array_keys($mixReturnParams), array_values($mixReturnParams));
 
             $this->strReturnParam = '{' . implode(',', $combined) . '}';
-        }
-        elseif (is_string($mixReturnParams)) {
+        } elseif (is_string($mixReturnParams)) {
             $this->strReturnParam = $mixReturnParams;
         }
     }
@@ -66,8 +79,9 @@ class QCellClickEvent extends QClickEvent {
      * @param $strKey
      * @return string
      */
-    public static function RowDataValue($strKey) {
-        return 	'$j(this).parent().data("' . $strKey . '")';
+    public static function rowDataValue($strKey)
+    {
+        return    '$j(this).parent().data("' . $strKey . '")';
     }
 
     /**
@@ -76,21 +90,23 @@ class QCellClickEvent extends QClickEvent {
      * @param $strKey
      * @return string
      */
-    public static function CellDataValue($strKey) {
-        return 	'$j(this).data("' . $strKey . '")';
+    public static function cellDataValue($strKey)
+    {
+        return    '$j(this).data("' . $strKey . '")';
     }
 
 
-    public function __get($strName) {
-        switch($strName) {
+    public function __get($strName)
+    {
+        switch ($strName) {
             case 'JsReturnParam':
                 return $this->strReturnParam;
 
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (\QCubed\Exception\Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
 

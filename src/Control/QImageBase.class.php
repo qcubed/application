@@ -51,7 +51,7 @@
 		 * @param null|string                        $strControlId
 		 *
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __construct($objParentObject, $strControlId = null) {
 			if ($objParentObject)
@@ -122,13 +122,13 @@
 		 *
 		 * @return string HTML for the control
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		protected function GetControlHtml() {
 			try {
 				// Figure Out the Path
 				$strPath = $this->RenderAsImgSrc(false);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -380,7 +380,7 @@
 		 *
 		 * @return int|mixed|null|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -394,7 +394,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -412,8 +412,8 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -421,45 +421,45 @@
 			switch ($strName) {
 				case "CacheFolder":
 					try {
-						$this->strCacheFolder = QType::Cast($mixValue, QType::String);
+						$this->strCacheFolder = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "CacheFilename":
 					try {
-						$this->strCacheFilename = QType::Cast($mixValue, QType::String);
+						$this->strCacheFilename = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "AlternateText":
 					try {
-						$this->strAlternateText = QType::Cast($mixValue, QType::String);
+						$this->strAlternateText = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "ImageType":
 					try {
-						$this->strImageType = QType::Cast($mixValue, QType::String);
+						$this->strImageType = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "JpegQuality":
 					try {
-						$this->intJpegQuality = QType::Cast($mixValue, QType::Integer);
+						$this->intJpegQuality = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -467,7 +467,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

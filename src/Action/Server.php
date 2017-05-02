@@ -1,5 +1,15 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Server actions are handled through a full-page postback.
  *
  * @package                                        Actions
@@ -8,7 +18,7 @@
  * @property-read string $JsReturnParam            The parameter to be returned
  *                                                 (overrides the Control's ActionParameter)
  */
-class QServerAction extends QAction {
+class QServerAction extends AbstractBase {
     /** @var string Name of the method in the form to be called */
     protected $strMethodName;
     /**
@@ -40,7 +50,7 @@ class QServerAction extends QAction {
      * @param string $strName Name of the property
      *
      * @return mixed|null|string
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     public function __get($strName) {
         switch ($strName) {
@@ -53,7 +63,7 @@ class QServerAction extends QAction {
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
+                } catch (\QCubed\Exception\Caller $objExc) {
                     $objExc->IncrementOffset();
                     throw $objExc;
                 }
@@ -75,7 +85,7 @@ class QServerAction extends QAction {
             return $objActionParameter;
         }
         $objActionParameter = $objControl->ActionParameter;
-        if ($objActionParameter instanceof QJsClosure) {
+        if ($objActionParameter instanceof \QCubed\Js\Closure) {
             return '(' . $objActionParameter->toJsObject() . ').call(this)';
         }
 

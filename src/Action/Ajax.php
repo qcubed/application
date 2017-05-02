@@ -1,5 +1,21 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+use QCubed\Exception\Caller;
+use QCubed\Js\Closure;
+use QCubed\Project\Control\ControlBase as QControl;
+
+/**
+ * Class Ajax
+ *
  * The QAjaxAction responds to events with ajax calls, which refresh a portion of a web page without reloading
  * the entire page. They generally are faster than server requests and give a better user experience.
  *
@@ -30,8 +46,11 @@
  *              (see /assets/_core/php/examples/other_controls/js_return_param_example.php for example)
  * @property-read string    Id                        The Ajax Action ID for this action.
  * @package     Actions
+ * @was QAjaxAction
+ * @package QCubed\Action
  */
-class QAjaxAction extends QAction {
+class Ajax extends AbstractBase
+{
     /** @var string Ajax Action ID */
     protected $strId;
     /** @var string The event handler function name */
@@ -62,7 +81,8 @@ class QAjaxAction extends QAction {
      * 														Be careful when setting this to true. See class description.
      */
     public function __construct($strMethodName = null, $objWaitIconControl = 'default',
-        $mixCausesValidationOverride = null, $strJsReturnParam = "", $blnAsync = false) {
+        $mixCausesValidationOverride = null, $strJsReturnParam = "", $blnAsync = false)
+    {
         $this->strId = null;
         $this->strMethodName = $strMethodName;
         $this->objWaitIconControl = $objWaitIconControl;
@@ -71,7 +91,8 @@ class QAjaxAction extends QAction {
         $this->blnAsync = $blnAsync;
     }
 
-    public function __clone() {
+    public function __clone()
+    {
         $this->strId = null; //we are a fresh clone, lets reset the id and get our own later (in RenderScript)
     }
 
@@ -81,9 +102,10 @@ class QAjaxAction extends QAction {
      * @param string $strName Name of the property
      *
      * @return mixed|null|string
-     * @throws QCallerException
+     * @throws Caller
      */
-    public function __get($strName) {
+    public function __get($strName)
+    {
         switch ($strName) {
             case 'MethodName':
                 return $this->strMethodName;
@@ -98,8 +120,8 @@ class QAjaxAction extends QAction {
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
@@ -112,7 +134,8 @@ class QAjaxAction extends QAction {
      *
      * @return string
      */
-    protected function getActionParameter($objControl) {
+    protected function getActionParameter($objControl)
+    {
         if ($objActionParameter = $this->strJsReturnParam) {
             return $objActionParameter;
         }
@@ -120,7 +143,7 @@ class QAjaxAction extends QAction {
             return $objActionParameter;
         }
         $objActionParameter = $objControl->ActionParameter;
-        if ($objActionParameter instanceof QJsClosure) {
+        if ($objActionParameter instanceof Closure) {
             return '(' . $objActionParameter->toJsObject() . ').call(this)';
         }
 
@@ -136,10 +159,11 @@ class QAjaxAction extends QAction {
      *
      * @return string
      */
-    public function RenderScript(QControl $objControl) {
+    public function renderScript(QControl $objControl)
+    {
         $strWaitIconControlId = null;
         if ($this->strId == null) {
-            $this->strId = $objControl->Form->GenerateAjaxActionId();
+            $this->strId = $objControl->Form->generateAjaxActionId();
         }
 
         if ((gettype($this->objWaitIconControl) == 'string') && ($this->objWaitIconControl == 'default')) {

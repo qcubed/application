@@ -16,7 +16,7 @@
 	 *
 	 * @property string    $DateFormat             The format to use for displaying the date
 	 * @property string    $DateTimeFormat         Alias for DateFormat
-	 * @property QDateTime $DateTime               The date to set the field to
+	 * @property \QCubed\QDateTime $DateTime               The date to set the field to
 	 * @property mixed     $Minimum                Alias for MinDate
 	 * @property mixed     $Maximum                Alias for MaxDate
 	 * @property string    $Text                   Textual date to set it to
@@ -28,7 +28,7 @@
 	class QDatepickerBoxBase extends QDatepickerBoxGen {
 		/** @var string Format for the datetime to pick */
 		protected $strDateTimeFormat = "MM/DD/YYYY"; // matches default of JQuery UI control
-		/** @var QDateTime variable to store the picked value */
+		/** @var \QCubed\QDateTime variable to store the picked value */
 		protected $dttDateTime;
 		/** @var  string */
 		protected $strMinDateErrorMsg;
@@ -39,7 +39,7 @@
 			// Check to see if this Control's Value was passed in via the POST data
 			if (array_key_exists($this->strControlId, $_POST)) {
 				parent::ParsePostData();
-				$this->dttDateTime = new QDateTime($this->strText, null, QDateTime::DateOnlyType);
+				$this->dttDateTime = new \QCubed\QDateTime($this->strText, null, \QCubed\QDateTime::DATE_ONLY_TYPE);
 				if ($this->dttDateTime->IsNull()) {
 					$this->dttDateTime = null;
 				}
@@ -56,9 +56,9 @@
 			}
 
 			if ($this->strText != '') {
-				$dttDateTime = new QDateTime($this->strText, null, QDateTime::DateOnlyType);
+				$dttDateTime = new \QCubed\QDateTime($this->strText, null, \QCubed\QDateTime::DATE_ONLY_TYPE);
 				if ($dttDateTime->IsDateNull()) {
-					$this->ValidationError = QApplication::Translate("Invalid date");
+					$this->ValidationError = t("Invalid date");
 					return false;
 				}
 				if (!is_null($this->Minimum)) {
@@ -66,7 +66,7 @@
 						if ($this->strMinDateErrorMsg) {
 							$this->ValidationError = $this->strMinDateErrorMsg;
 						} else {
-							$this->ValidationError = QApplication::Translate("Date is earlier than minimum allowed");
+							$this->ValidationError = t("Date is earlier than minimum allowed");
 						}
 						return false;
 					}
@@ -77,7 +77,7 @@
 						if ($this->strMaxDateErrorMsg) {
 							$this->ValidationError = $this->strMaxDateErrorMsg;
 						} else {
-							$this->ValidationError = QApplication::Translate("Date is later than maximum allowed");
+							$this->ValidationError = t("Date is later than maximum allowed");
 						}
 						return false;
 					}
@@ -95,7 +95,7 @@
 		 * @param string $strName
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -113,7 +113,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -129,7 +129,7 @@
 		 * @param string $strName  Property name
 		 * @param string $mixValue Property value to be set
 		 *
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
@@ -142,8 +142,8 @@
 								break;
 							}
 						}
-						parent::__set('MaxDate', new QDateTime ($mixValue, null, QDateTime::DateOnlyType));
-					} catch (QInvalidCastException $objExc) {
+						parent::__set('MaxDate', new \QCubed\QDateTime ($mixValue, null, \QCubed\QDateTime::DATE_ONLY_TYPE));
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -158,8 +158,8 @@
 								break;
 							}
 						}
-						parent::__set('MinDate', new QDateTime ($mixValue, null, QDateTime::DateOnlyType));
-					} catch (QInvalidCastException $objExc) {
+						parent::__set('MinDate', new \QCubed\QDateTime ($mixValue, null, \QCubed\QDateTime::DATE_ONLY_TYPE));
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -167,7 +167,7 @@
 
 				case 'DateTime':
 					try {
-						$this->dttDateTime = new QDateTime($mixValue, null, QDateTime::DateOnlyType);
+						$this->dttDateTime = new \QCubed\QDateTime($mixValue, null, \QCubed\QDateTime::DATE_ONLY_TYPE);
 						if ($this->dttDateTime && $this->dttDateTime->IsNull()) {
 							$this->dttDateTime = null;
 							$this->blnModified = true;
@@ -177,7 +177,7 @@
 						} else {
 							parent::__set('Text', $this->dttDateTime->qFormat($this->strDateTimeFormat));
 						}
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -189,7 +189,7 @@
 						$this->strDateTimeFormat = QCalendar::qcFrmt($this->JqDateFormat);
 						// trigger an update to reformat the text with the new format
 						$this->DateTime = $this->dttDateTime;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -198,11 +198,11 @@
 				case 'DateTimeFormat':
 				case 'DateFormat':
 					try {
-						$this->strDateTimeFormat = QType::Cast($mixValue, QType::String);
+						$this->strDateTimeFormat = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						parent::__set('JqDateFormat', QCalendar::jqFrmt($this->strDateTimeFormat));
 						// trigger an update to reformat the text with the new format
 						$this->DateTime = $this->dttDateTime;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -210,21 +210,21 @@
 
 				case 'Text':
 					parent::__set($strName, $mixValue);
-					$this->dttDateTime = new QDateTime($this->strText, null, QDateTime::DateOnlyType);
+					$this->dttDateTime = new \QCubed\QDateTime($this->strText, null, \QCubed\QDateTime::DATE_ONLY_TYPE);
 					break;
 
 				case 'MinDateErrorMsg':
-					$this->strMinDateErrorMsg = QType::Cast($mixValue, QType::String);
+					$this->strMinDateErrorMsg = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
 
 				case 'MaxDateErrorMsg':
-					$this->strMaxDateErrorMsg = QType::Cast($mixValue, QType::String);
+					$this->strMaxDateErrorMsg = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
 
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -237,7 +237,7 @@
 		 */
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'DateFormat', 'How to format the date. Default: MM/DD/YY', QType::String)
+				new QModelConnectorParam (get_called_class(), 'DateFormat', 'How to format the date. Default: MM/DD/YY', \QCubed\Type::STRING)
 			));
 		}
 

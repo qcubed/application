@@ -27,7 +27,7 @@
      * 
 	 * @property string $DateFormat			The format to use for displaying the date in the field
 	 * @property string $DateTimeFormat		Alias for DateFormat
-	 * @property QDateTime $DateTime		The date to set the field to
+	 * @property \QCubed\QDateTime $DateTime		The date to set the field to
 	 * @property mixed $Minimum				Alias for MinDate
 	 * @property mixed $Maximum				Alias for MaxDate
 	 * @property string $Text				Textual date to set it to
@@ -38,14 +38,14 @@
 	class QDatepickerBase extends QDatepickerGen {
 		/** @var string Default datetime format for the picker */
 		protected $strDateTimeFormat = "MM/DD/YYYY";	// same as default for JQuery UI control
-		/** @var QDateTime variable to hold the date time to be selected (or already selected) */
+		/** @var \QCubed\QDateTime variable to hold the date time to be selected (or already selected) */
 		protected $dttDateTime;	// default to no selection
 
 		/**
 		 * @param QControl|QControlBase|QForm $objParentObject
 		 * @param null|string                 $strControlId
 		 *
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct ($objParentObject, $strControlId);
@@ -70,7 +70,7 @@
 		 *
 		 * @return mixed|null|string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -84,7 +84,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -100,7 +100,7 @@
 		 * @param string $mixValue Property value
 		 *
 		 * @return mixed|void
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
@@ -111,9 +111,9 @@
 							parent::__set($strName, $mixValue);
 							break;
 						}
-						$mixValue = new QDateTime($mixValue);
+						$mixValue = new \QCubed\QDateTime($mixValue);
 					}
-					parent::__set('MaxDate', QType::Cast($mixValue, QType::DateTime));
+					parent::__set('MaxDate', \QCubed\Type::Cast($mixValue, \QCubed\Type::DATE_TIME));
 					break;
 
 				case 'MinDate':
@@ -123,17 +123,17 @@
 							parent::__set($strName, $mixValue);
 							break;
 						}
-						$mixValue = new QDateTime($mixValue);
+						$mixValue = new \QCubed\QDateTime($mixValue);
 					}
-					parent::__set('MinDate', QType::Cast($mixValue, QType::DateTime));
+					parent::__set('MinDate', \QCubed\Type::Cast($mixValue, \QCubed\Type::DATE_TIME));
 					break;
 
 				case 'DateTime':
 					try {
-						$this->dttDateTime = new QDateTime($mixValue, null, QDateTime::DateOnlyType);
+						$this->dttDateTime = new \QCubed\QDateTime($mixValue, null, \QCubed\QDateTime::DATE_ONLY_TYPE);
 						parent::SetDate($this->dttDateTime);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -145,7 +145,7 @@
 						// trigger an update to reformat the text with the new format
 						$this->DateTime = $this->dttDateTime;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -153,12 +153,12 @@
 				case 'DateTimeFormat':
 				case 'DateFormat':
 					try {
-						$this->strDateTimeFormat = QType::Cast($mixValue, QType::String);
+						$this->strDateTimeFormat = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						parent::__set('JqDateFormat', QCalendar::jqFrmt($this->strDateTimeFormat));
 						// trigger an update to reformat the text with the new format
 						$this->DateTime = $this->dttDateTime;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -168,7 +168,7 @@
 					break;
 
 				case '_Text':	// Internal only. Do not use. Called by JS above to keep track of user selection.
-					$this->dttDateTime = new QDateTime($mixValue);
+					$this->dttDateTime = new \QCubed\QDateTime($mixValue);
 					break;
 					
 				case 'OnSelect':
@@ -181,7 +181,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

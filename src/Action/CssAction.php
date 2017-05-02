@@ -1,10 +1,26 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+use QCubed\Project\Control\ControlBase as QControl;
+
+/**
+ * Class CssAction
+ *
  * Sets the CSS class of a control on the client side (does not update the server side)
  *
- * @package Actions
+ * @was QCssAction
+ * @package QCubed\Action
  */
-class QCssAction extends QAction {
+class CssAction extends AbstractBase
+{
     /** @var string CSS property to be set */
     protected $strCssProperty = null;
     /** @var string Value to which the CSS property should be set */
@@ -18,11 +34,12 @@ class QCssAction extends QAction {
     /**
      * Constructor
      *
-     * @param string        $strCssProperty
-     * @param string        $strCssValue
+     * @param string $strCssProperty
+     * @param string $strCssValue
      * @param null|QControl $objControl
      */
-    public function __construct($strCssProperty, $strCssValue, $objControl = null) {
+    public function __construct($strCssProperty, $strCssValue, $objControl = null)
+    {
         $this->strCssProperty = $strCssProperty;
         $this->strCssValue = $strCssValue;
         if ($objControl) {
@@ -37,7 +54,8 @@ class QCssAction extends QAction {
      *
      * @return string JavaScript to be executed on the client side for setting the CSS
      */
-    public function RenderScript(QControl $objControl) {
+    public function RenderScript(QControl $objControl)
+    {
         if ($this->strControlId == null) {
             $this->strControlId = $objControl->ControlId;
         }

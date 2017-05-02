@@ -34,11 +34,11 @@
 		//////////
 
 		public function AddItem($mixListItemOrName, $strValue = null, $blnSelected = null, $strItemGroup = null, $mixOverrideParameters = null) {
-			if (gettype($mixListItemOrName) == QType::Object) {
-				$objListItem = QType::Cast($mixListItemOrName, "QListItem");
+			if (gettype($mixListItemOrName) == \QCubed\Type::OBJECT) {
+				$objListItem = \QCubed\Type::Cast($mixListItemOrName, "QListItem");
 			}
 			elseif ($mixOverrideParameters) {
-				// The OverrideParameters can only be included if they are not null, because OverrideAttributes in QBaseClass can't except a NULL Value
+				// The OverrideParameters can only be included if they are not null, because OverrideAttributes in \QCubed\AbstractBase can't except a NULL Value
 				$objListItem = new QListItem($mixListItemOrName, $strValue, $blnSelected, $strItemGroup, $mixOverrideParameters);
 			}
 			else {
@@ -57,12 +57,12 @@
 		 * @param string $strItemGroup          allows you to apply grouping (<optgroup> tag)
 		 * @param string $mixOverrideParameters OverrideParameters for ListItemStyle
 		 *
-		 * @throws Exception|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 */
 		public function AddItems(array $mixItemArray, $mixSelectedValues = null, $strItemGroup = null, $mixOverrideParameters = null) {
 			try {
-				$mixItemArray = QType::Cast($mixItemArray, QType::ArrayType);
-			} catch (QInvalidCastException $objExc) {
+				$mixItemArray = \QCubed\Type::Cast($mixItemArray, \QCubed\Type::ARRAY_TYPE);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -210,8 +210,8 @@
 		 *
 		 * @return null|QListItem
 		 * @throws Exception
-		 * @throws QIndexOutOfRangeException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\IndexOutOfRange
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function GetFirstSelectedItem() {
 			$intCount = $this->GetItemCount();
@@ -229,8 +229,8 @@
 		 *
 		 * @return QListItem[]
 		 * @throws Exception
-		 * @throws QIndexOutOfRangeException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\IndexOutOfRange
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function GetSelectedItems() {
 			$aResult = array();
@@ -268,7 +268,7 @@
 		 * @param string $strName Property Name
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -337,7 +337,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -354,14 +354,14 @@
 		 * @param string $mixValue Propety Value
 		 *
 		 * @return mixed|void
-		 * @throws QIndexOutOfRangeException|Exception|QCallerException|QInvalidCastException
+		 * @throws \QCubed\Exception\IndexOutOfRange|Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "SelectedIndex":
 					try {
-						$mixValue = QType::Cast($mixValue, QType::Integer);
-					} catch (QInvalidCastException $objExc) {
+						$mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -369,7 +369,7 @@
 					$itemCount = $this->GetItemCount();
 					if (($mixValue < -1) ||	// special case to unselect all
 						($mixValue > ($itemCount - 1)))
-						throw new QIndexOutOfRangeException($mixValue, "SelectedIndex");
+						throw new \QCubed\Exception\IndexOutOfRange($mixValue, "SelectedIndex");
 
 					$this->SetSelectedItemsByIndex(array($mixValue));
 					return $mixValue;
@@ -385,8 +385,8 @@
 
 				case "SelectedNames":
 					try {
-						$mixValue = QType::Cast($mixValue, QType::ArrayType);
-					} catch (QInvalidCastException $objExc) {
+						$mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -395,8 +395,8 @@
 
 				case "SelectedValues":
 					try {
-						$mixValues = QType::Cast($mixValue, QType::ArrayType);
-					} catch (QInvalidCastException $objExc) {
+						$mixValues = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -406,8 +406,8 @@
 				case "ItemStyle":
 					try {
 						$this->blnModified = true;
-						$this->objItemStyle = QType::Cast($mixValue, "QListItemStyle");
-					} catch (QInvalidCastException $objExc) {
+						$this->objItemStyle = \QCubed\Type::Cast($mixValue, "QListItemStyle");
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -418,7 +418,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -433,7 +433,7 @@
 		 */
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'NoAutoLoad', 'Prevent automatically populating a list type control. Set this if you are doing more complex list loading.', QType::Boolean)
+				new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'NoAutoLoad', 'Prevent automatically populating a list type control. Set this if you are doing more complex list loading.', \QCubed\Type::BOOLEAN)
 			));
 		}
 	}

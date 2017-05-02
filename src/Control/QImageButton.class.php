@@ -104,7 +104,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -121,17 +121,17 @@
 				// APPEARANCE
 				case "AlternateText":
 					try {
-						$this->strAlternateText = QType::Cast($mixValue, QType::String);
+						$this->strAlternateText = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ImageUrl":
 					try {
-						$this->strImageUrl = QType::Cast($mixValue, QType::String);
+						$this->strImageUrl = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -139,9 +139,9 @@
 				// BEHAVIOR
 				case "PrimaryButton":
 					try {
-						$this->blnPrimaryButton = QType::Cast($mixValue, QType::Boolean);
+						$this->blnPrimaryButton = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -149,7 +149,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

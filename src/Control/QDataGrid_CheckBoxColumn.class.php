@@ -74,7 +74,7 @@ class QDataGrid_CheckBoxColumn extends QHtmlTableCheckBoxColumn {
 	 * @param $strParameter
 	 */
 	public function Click($strParameter) {
-		$blnChecked = QType::Cast($strParameter['checked'], QType::Boolean);
+		$blnChecked = \QCubed\Type::Cast($strParameter['checked'], \QCubed\Type::BOOLEAN);
 
 		$idItems = explode('_', $strParameter['id']);
 		$strItemId = end($idItems);

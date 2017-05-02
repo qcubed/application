@@ -1,8 +1,18 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * @package Actions
  */
-class QResetTimerAction extends QAction {
+class QResetTimerAction extends AbstractBase {
     /**
      * Returns the JavaScript to be executed on the client side (to clear the timeout on the control)
      *

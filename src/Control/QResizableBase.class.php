@@ -51,7 +51,7 @@
 			switch ($strName) {
 				case '_ResizeData': // Internal only. Do not use. Called by qcubed.resizable to keep track of changes.
 					try {
-						$data = QType::Cast($mixValue, QType::ArrayType);
+						$data = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
 						$this->aryOriginalSize = $data['originalSize'];
 						$this->aryNewSize = $data['size'];
 
@@ -59,7 +59,7 @@
 						$this->Width = $this->aryNewSize['width'];
 						$this->Height = $this->aryNewSize['height'];
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -68,7 +68,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -95,7 +95,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}

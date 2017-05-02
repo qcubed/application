@@ -9,6 +9,10 @@
 
 namespace QCubed\Control;
 
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Control\FormBase as QForm;
+
 /**
  * Class AbstractFormBase
  *
@@ -332,13 +336,15 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * @param string|null $strAlternateHtmlFile location of the alternate HTML template file.
      * @param string|null $strFormId The html id to use for the form. If null, $strFormClass will be used.
      *
-     * @throws QCallerException
+     * @throws Caller
      * @throws QInvalidFormStateException
      * @throws Exception
      */
     public static function run($strFormClass, $strAlternateHtmlFile = null, $strFormId = null)
     {
         // See if we can get a Form Class out of PostData
+
+        /** @var \QCubed\Project\Control\FormBase $objClass */
         $objClass = null;
         if ($strFormId === null) {
             $strFormId = $strFormClass;
@@ -517,7 +523,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             // Setup HTML Include File Path, based on passed-in strAlternateHtmlFile (if any)
             try {
                 $objClass->HtmlIncludeFilePath = $strAlternateHtmlFile;
-            } catch (QCallerException $objExc) {
+            } catch (Caller $objExc) {
                 $objExc->incrementOffset();
                 throw $objExc;
             }
@@ -577,13 +583,13 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
                 // Ensure that RenderEnd() was called during the Render process
                 switch ($objClass->intFormStatus) {
                     case QFormBase::FORM_STATUS_UNRENDERED:
-                        throw new QCallerException('$this->renderBegin() is never called in the HTML Include file');
+                        throw new Caller('$this->renderBegin() is never called in the HTML Include file');
                     case QFormBase::FORM_STATUS_RENDER_BEGUN:
-                        throw new QCallerException('$this->renderEnd() is never called in the HTML Include file');
+                        throw new Caller('$this->renderEnd() is never called in the HTML Include file');
                     case QFormBase::FORM_STATUS_RENDER_ENDED:
                         break;
                     default:
-                        throw new QCallerException('FormStatus is in an unknown status');
+                        throw new Caller('FormStatus is in an unknown status');
                 }
                 break;
 
@@ -698,7 +704,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
     {
         try {
             call_user_func($callable, $objPaginatedControl);
-        } catch (QCallerException $objExc) {
+        } catch (Caller $objExc) {
             throw new QDataBindException($objExc);
         }
     }
@@ -900,7 +906,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             // For the QSessionFormStateHandler the __PHP_Incomplete_Class occurs sometimes
             // for the result of the unserialize call.
             $objForm = unserialize($strSerializedForm);
-            $objForm = QType::cast($objForm, 'QForm');
+            $objForm = \QCubed\Type::cast($objForm, 'QForm');
 
             // Reset the links from Control->Form
             if ($objForm->objControlArray) {
@@ -922,17 +928,17 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * Add a QControl to the current QForm.
      * @param QControl|QControlBase $objControl
      *
-     * @throws QCallerException
+     * @throws Caller
      */
     public function addControl(QControl $objControl)
     {
         $strControlId = $objControl->ControlId;
         $objControl->markAsModified(); // make sure new controls get drawn
         if (array_key_exists($strControlId, $this->objControlArray)) {
-            throw new QCallerException(sprintf('A control already exists in the form with the ID: %s', $strControlId));
+            throw new Caller(sprintf('A control already exists in the form with the ID: %s', $strControlId));
         }
         if (array_key_exists($strControlId, $this->objGroupingArray)) {
-            throw new QCallerException(sprintf('A Grouping already exists in the form with the ID: %s', $strControlId));
+            throw new Caller(sprintf('A Grouping already exists in the form with the ID: %s', $strControlId));
         }
         $this->objControlArray[$strControlId] = $objControl;
     }
@@ -1029,12 +1035,12 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * @param string $strName Name of the attribute
      * @param string $strValue Value of the attribute
      *
-     * @throws QCallerException
+     * @throws Caller
      */
     public function setCustomAttribute($strName, $strValue)
     {
         if ($strName == "method" || $strName == "action") {
-            throw new QCallerException(sprintf("Custom Attribute not supported through SetCustomAttribute(): %s",
+            throw new Caller(sprintf("Custom Attribute not supported through SetCustomAttribute(): %s",
                 $strName));
         }
 
@@ -1052,7 +1058,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * @param string $strName Name of the Custom Attribute
      *
      * @return mixed
-     * @throws QCallerException
+     * @throws Caller
      */
     public function getCustomAttribute($strName)
     {
@@ -1061,7 +1067,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
         ) {
             return $this->strCustomAttributeArray[$strName];
         } else {
-            throw new QCallerException(sprintf("Custom Attribute does not exist in Form: %s", $strName));
+            throw new Caller(sprintf("Custom Attribute does not exist in Form: %s", $strName));
         }
     }
 
@@ -1073,7 +1079,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             $this->strCustomAttributeArray[$strName] = null;
             unset($this->strCustomAttributeArray[$strName]);
         } else {
-            throw new QCallerException(sprintf("Custom Attribute does not exist in Form: %s", $strName));
+            throw new Caller(sprintf("Custom Attribute does not exist in Form: %s", $strName));
         }
     }
 
@@ -1082,11 +1088,11 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
     {
         $strGroupingId = $objGrouping->GroupingId;
         if (array_key_exists($strGroupingId, $this->objGroupingArray)) {
-            throw new QCallerException(sprintf('A Grouping already exists in the form with the ID: %s',
+            throw new Caller(sprintf('A Grouping already exists in the form with the ID: %s',
                 $strGroupingId));
         }
         if (array_key_exists($strGroupingId, $this->objControlArray)) {
-            throw new QCallerException(sprintf('A Control already exists in the form with the ID: %s', $strGroupingId));
+            throw new Caller(sprintf('A Control already exists in the form with the ID: %s', $strGroupingId));
         }
         $this->objGroupingArray[$strGroupingId] = $objGrouping;
     }
@@ -1122,7 +1128,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      *
      * @param QForm|QControl|QFormBase $objParentObject The object whose child controls are to be searched for
      *
-     * @throws QCallerException
+     * @throws Caller
      * @return QControl[]
      */
     public function getChildControls($objParentObject)
@@ -1153,7 +1159,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
                                 }*/
 
             } else {
-                throw new QCallerException('ParentObject must be either a QForm or QControl object');
+                throw new Caller('ParentObject must be either a QForm or QControl object');
             }
         }
     }
@@ -1247,7 +1253,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      *
      * @param null|string $strControlIdOverride If supplied, the control with the supplied ID is selected
      *
-     * @throws Exception|QCallerException
+     * @throws Exception|Caller
      */
     protected function triggerActions($strControlIdOverride = null)
     {
@@ -1528,7 +1534,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * @param bool $blnDisplayOutput Whether the output is to be printed (true) or simply returned (false)
      *
      * @return null|string
-     * @throws QCallerException
+     * @throws Caller
      */
     public function renderBegin($blnDisplayOutput = true)
     {
@@ -1538,10 +1544,10 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
                 break;
             case QFormBase::FORM_STATUS_RENDER_BEGUN:
             case QFormBase::FORM_STATUS_RENDER_ENDED:
-                throw new QCallerException('$this->renderBegin() has already been called');
+                throw new Caller('$this->renderBegin() has already been called');
                 break;
             default:
-                throw new QCallerException('FormStatus is in an unknown status');
+                throw new Caller('FormStatus is in an unknown status');
         }
 
         // Update FormStatus and Clear Included JS/CSS list
@@ -1793,21 +1799,21 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * @param bool $blnDisplayOutput should the output be returned or directly printed to screen.
      *
      * @return null|string
-     * @throws QCallerException
+     * @throws Caller
      */
     public function renderEnd($blnDisplayOutput = true)
     {
         // Ensure that RenderEnd() has not yet been called
         switch ($this->intFormStatus) {
             case QFormBase::FORM_STATUS_UNRENDERED:
-                throw new QCallerException('$this->renderBegin() was never called');
+                throw new Caller('$this->renderBegin() was never called');
             case QFormBase::FORM_STATUS_RENDER_BEGUN:
                 break;
             case QFormBase::FORM_STATUS_RENDER_ENDED:
-                throw new QCallerException('$this->renderEnd() has already been called');
+                throw new Caller('$this->renderEnd() has already been called');
                 break;
             default:
-                throw new QCallerException('FormStatus is in an unknown status');
+                throw new Caller('FormStatus is in an unknown status');
         }
 
         $strHtml = '';    // This will be the final output
@@ -1841,7 +1847,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
                 /* Note: GetEndScript may cause the control to register additional commands, or even add javascripts, so those should be handled after this. */
                 if ($strControlScript = $objControl->getEndScript()) {
-                    $strControlScript = JavaScriptHelper::terminateScript($strControlScript);
+                    $strControlScript = \QCubed\Js\Helper::terminateScript($strControlScript);
 
                     // Add comments for developer version of output
                     if (!QApplication::$Minimize) {
@@ -1872,7 +1878,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
         foreach ($this->objGroupingArray as $objGrouping) {
             $strGroupingScript = $objGrouping->render();
             if (strlen($strGroupingScript) > 0) {
-                $strGroupingScript = JavaScriptHelper::terminateScript($strGroupingScript);
+                $strGroupingScript = \QCubed\Js\Helper::terminateScript($strGroupingScript);
                 $strEventScripts .= $strGroupingScript;
             }
         }
@@ -1884,7 +1890,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
         // Register controls
         if ($strControlIdToRegister) {
-            $strEndScript .= sprintf("qc.regCA(%s); \n", JavaScriptHelper::toJsObject($strControlIdToRegister));
+            $strEndScript .= sprintf("qc.regCA(%s); \n", \QCubed\Js\Helper::toJsObject($strControlIdToRegister));
         }
 
         // Design mode event
@@ -1993,7 +1999,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * @param string $strName Name of the propery
      *
      * @return int|mixed|null|string
-     * @throws QCallerException
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -2014,7 +2020,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2030,7 +2036,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
      * @param string $mixValue Value of the property
      *
      * @return mixed|string
-     * @throws QCallerException
+     * @throws Caller
      */
     public function __set($strName, $mixValue)
     {
@@ -2054,14 +2060,14 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
                     $this->strHtmlIncludeFilePath = $strPath;
                     return $strPath;
                 } else {
-                    throw new QCallerException('Accompanying HTML Include File does not exist: "' . $mixValue . '"');
+                    throw new Caller('Accompanying HTML Include File does not exist: "' . $mixValue . '"');
                 }
                 break;
 
             case "CssClass":
                 try {
-                    return ($this->strCssClass = QType::cast($mixValue, QType::String));
-                } catch (QCallerException $objExc) {
+                    return ($this->strCssClass = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING));
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2069,7 +2075,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             default:
                 try {
                     return parent::__set($strName, $mixValue);
-                } catch (QCallerException $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }

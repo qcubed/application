@@ -48,13 +48,13 @@
 		 * @param integer   	$intIndex    index at which the item should be inserted
 		 * @param QListItemBase $objListItem the ListItem which shall be inserted
 		 *
-		 * @throws QIndexOutOfRangeException
-		 * @throws Exception|QInvalidCastException
+		 * @throws \QCubed\Exception\IndexOutOfRange
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 */
 		public function AddItemAt($intIndex, QListItemBase $objListItem) {
 			try {
-				$intIndex = QType::Cast($intIndex, QType::Integer);
-			} catch (QInvalidCastException $objExc) {
+				$intIndex = \QCubed\Type::Cast($intIndex, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -65,7 +65,7 @@
 					$this->objListItemArray[$intCount] = $this->objListItemArray[$intCount - 1];
 				}
 			} else {
-				throw new QIndexOutOfRangeException($intIndex, "AddItemAt()");
+				throw new \QCubed\Exception\IndexOutOfRange($intIndex, "AddItemAt()");
 			}
 
 			$this->objListItemArray[$intIndex] = $objListItem;
@@ -99,17 +99,17 @@
 		 *
 		 * @param QListItemBase[]  $objListItemArray          Array of QListItems or key=>val pairs.
 		 *
-		 * @throws Exception|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 */
 		public function AddListItems(array $objListItemArray) {
 			try {
-				$objListItemArray = QType::Cast($objListItemArray, QType::ArrayType);
+				$objListItemArray = \QCubed\Type::Cast($objListItemArray, \QCubed\Type::ARRAY_TYPE);
 				if ($objListItemArray) {
 					if (!reset($objListItemArray) instanceof QListItemBase) {
-						throw new QCallerException ('Not an array of QListItemBase types');
+						throw new \QCubed\Exception\Caller ('Not an array of QListItemBase types');
 					}
 				}
-			} catch (QInvalidCastException $objExc) {
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -128,20 +128,20 @@
 		 *
 		 * @param integer $intIndex
 		 *
-		 * @throws QIndexOutOfRangeException
-		 * @throws Exception|QInvalidCastException
+		 * @throws \QCubed\Exception\IndexOutOfRange
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 * @return QListItem
 		 */
 		public function GetItem($intIndex) {
 			try {
-				$intIndex = QType::Cast($intIndex, QType::Integer);
-			} catch (QInvalidCastException $objExc) {
+				$intIndex = \QCubed\Type::Cast($intIndex, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
 			if (($intIndex < 0) ||
 				($intIndex >= count($this->objListItemArray)))
-				throw new QIndexOutOfRangeException($intIndex, "GetItem()");
+				throw new \QCubed\Exception\IndexOutOfRange($intIndex, "GetItem()");
 
 			return $this->objListItemArray[$intIndex];
 		}
@@ -170,19 +170,19 @@
 		 *
 		 * @param integer $intIndex
 		 *
-		 * @throws QIndexOutOfRangeException
-		 * @throws Exception|QInvalidCastException
+		 * @throws \QCubed\Exception\IndexOutOfRange
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 */
 		public function RemoveItem($intIndex) {
 			try {
-				$intIndex = QType::Cast($intIndex, QType::Integer);
-			} catch (QInvalidCastException $objExc) {
+				$intIndex = \QCubed\Type::Cast($intIndex, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
 			if (($intIndex < 0) ||
 				($intIndex > (count($this->objListItemArray) - 1)))
-				throw new QIndexOutOfRangeException($intIndex, "RemoveItem()");
+				throw new \QCubed\Exception\IndexOutOfRange($intIndex, "RemoveItem()");
 			for ($intCount = $intIndex; $intCount < count($this->objListItemArray) - 1; $intCount++) {
 				$this->objListItemArray[$intCount] = $this->objListItemArray[$intCount + 1];
 			}
@@ -199,12 +199,12 @@
 		 * @param integer   $intIndex
 		 * @param QListItem $objListItem
 		 *
-		 * @throws Exception|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 */
 		public function ReplaceItem($intIndex, QListItem $objListItem) {
 			try {
-				$intIndex = QType::Cast($intIndex, QType::Integer);
-			} catch (QInvalidCastException $objExc) {
+				$intIndex = \QCubed\Type::Cast($intIndex, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}

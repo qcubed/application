@@ -276,7 +276,7 @@
 		public function Validate() {
 			if ($this->blnRequired) {
 				if ($this->SelectedIndex == -1) {
-					$this->ValidationError = QApplication::Translate($this->strName) . ' ' . QApplication::Translate('is required');
+					$this->ValidationError = t($this->strName) . ' ' . t('is required');
 					return false;
 				}
 			}
@@ -320,7 +320,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -335,24 +335,24 @@
 				// APPEARANCE
 				case "TextAlign":
 					try {
-						if ($this->strTextAlign !== ($mixValue = QType::Cast($mixValue, QType::String))) {
+						if ($this->strTextAlign !== ($mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING))) {
 							$this->blnModified = true;
 							$this->strTextAlign = $mixValue;
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HtmlEntities":
 					try {
-						if ($this->blnHtmlEntities !== ($mixValue = QType::Cast($mixValue, QType::Boolean))) {
+						if ($this->blnHtmlEntities !== ($mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN))) {
 							$this->blnModified = true;
 							$this->blnHtmlEntities = $mixValue;
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -360,55 +360,55 @@
 				// LAYOUT
 				case "CellPadding":
 					try {
-						if ($this->intCellPadding !== ($mixValue = QType::Cast($mixValue, QType::Integer))) {
+						if ($this->intCellPadding !== ($mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER))) {
 							$this->blnModified = true;
 							$this->intCellPadding = $mixValue;
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "CellSpacing":
 					try {
-						if ($this->intCellSpacing !== ($mixValue = QType::Cast($mixValue, QType::Integer))) {
+						if ($this->intCellSpacing !== ($mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER))) {
 							$this->blnModified = true;
 							$this->intCellSpacing = $mixValue;
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "RepeatColumns":
 					try {
-						if ($this->intRepeatColumns !== ($mixValue = QType::Cast($mixValue, QType::Integer))) {
+						if ($this->intRepeatColumns !== ($mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER))) {
 							$this->blnModified = true;
 							$this->intRepeatColumns = $mixValue;
 						}
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 					if ($this->intRepeatColumns < 1)
-						throw new QCallerException("RepeatColumns must be greater than 0");
+						throw new \QCubed\Exception\Caller("RepeatColumns must be greater than 0");
 					break;
 				case "RepeatDirection":
 					try {
-						if ($this->strRepeatDirection !== ($mixValue = QType::Cast($mixValue, QType::String))) {
+						if ($this->strRepeatDirection !== ($mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING))) {
 							$this->blnModified = true;
 							$this->strRepeatDirection = $mixValue;
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ItemStyle":
 					try {
 						$this->blnModified = true;
-						$this->objItemStyle = QType::Cast($mixValue, "QTagStyler");
-					} catch (QInvalidCastException $objExc) {
+						$this->objItemStyle = \QCubed\Type::Cast($mixValue, "QTagStyler");
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -416,11 +416,11 @@
 
 				case "ButtonMode":
 					try {
-						if ($this->intButtonMode !== ($mixValue = QType::Cast($mixValue, QType::Integer))) {
+						if ($this->intButtonMode !== ($mixValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER))) {
 							$this->blnModified = true;
 							$this->intButtonMode = $mixValue;
 						}
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -432,10 +432,10 @@
 							$this->strMaxHeight = null;
 						}
 						else {
-							$this->strMaxHeight = QType::Cast($mixValue, QType::String);
+							$this->strMaxHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						}
 						$this->blnModified = true;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -445,7 +445,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -464,8 +464,8 @@
 						'QTextAlign::Left'=>'Left',
 						'QTextAlign::Right'=>'Right'
 					)),
-				new QModelConnectorParam (get_called_class(), 'HtmlEntities', 'Set to false to have the browser interpret the labels as HTML', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'RepeatColumns', 'The number of columns of checkboxes to display', QType::Integer),
+				new QModelConnectorParam (get_called_class(), 'HtmlEntities', 'Set to false to have the browser interpret the labels as HTML', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'RepeatColumns', 'The number of columns of checkboxes to display', \QCubed\Type::INTEGER),
 				new QModelConnectorParam (get_called_class(), 'RepeatDirection', 'Whether to repeat horizontally or vertically', QModelConnectorParam::SelectionList,
 					array (null=>'Default',
 						'QRepeatDirection::Horizontal'=>'Horizontal',
@@ -476,7 +476,7 @@
 						'QCheckBoxList::ButtonModeJq'=>'JQuery UI Buttons',
 						'QCheckBoxList::ButtonModeSet'=>'JQuery UI Buttonset'
 					)),
-				new QModelConnectorParam (get_called_class(), 'MaxHeight', 'If set, will wrap it in a scrollable pane with the given max height', QType::Integer)
+				new QModelConnectorParam (get_called_class(), 'MaxHeight', 'If set, will wrap it in a scrollable pane with the given max height', \QCubed\Type::INTEGER)
 			));
 		}
 

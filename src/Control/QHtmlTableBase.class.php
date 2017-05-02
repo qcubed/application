@@ -23,7 +23,7 @@
 	 * @property boolean        $HideIfEmpty          true to completely hide the table if there is no data, vs. drawing the table with no rows.
 	 * @property-write callable $RowParamsCallback    Set to a callback function to fetch custom attributes for row tags.
 	 * @property-read integer 	$CurrentRowIndex      The visual index of the row currently being drawn.
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 *
 	 */
 	abstract class QHtmlTableBase extends QPaginatedControl {
@@ -65,12 +65,12 @@
 		 * @param null                        $strControlId
 		 *
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __construct($objParentObject, $strControlId = null)	{
 			try {
 				parent::__construct($objParentObject, $strControlId);
-			} catch (QCallerException  $objExc) {
+			} catch (\QCubed\Exception\Caller  $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -128,7 +128,7 @@
 		 * @param int $intColumnIndex
 		 * @return QHtmlTableNodeColumn
 		 * @throws Exception
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function CreateNodeColumn($strName, $objNodes, $intColumnIndex = -1) {
 			$objColumn = new QHtmlTableNodeColumn($strName, $objNodes);
@@ -185,7 +185,7 @@
 		 * @param bool $blnAsButton Only used if this is drawing a QControlProxy. Will draw the proxy as a button.
 		 * @param int $intColumnIndex
 		 * @return QHtmlTableLinkColumn
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function CreateLinkColumn ($strName,
 										  $mixText,
@@ -257,12 +257,12 @@
 		 * @param integer                    $intColumnIndex column position. -1 to add to the end.
 		 * @param QAbstractHtmlTableColumn $objColumn
 		 *
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function AddColumnAt($intColumnIndex, QAbstractHtmlTableColumn $objColumn) {
 			try {
-				$intColumnIndex = QType::Cast($intColumnIndex, QType::Integer);
-			} catch (QInvalidCastException $objExc) {
+				$intColumnIndex = \QCubed\Type::Cast($intColumnIndex, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -286,18 +286,18 @@
 		 * @param int $intColumnIndex 0-based index of the column to remove
 		 *
 		 * @return QAbstractHtmlTableColumn the removed column
-		 * @throws QIndexOutOfRangeException|QInvalidCastException
+		 * @throws \QCubed\Exception\IndexOutOfRange|\QCubed\Exception\InvalidCast
 		 */
 		public function RemoveColumn($intColumnIndex) {
 			$this->blnModified = true;
 			try {
-				$intColumnIndex = QType::Cast($intColumnIndex, QType::Integer);
-			} catch (QInvalidCastException $objExc) {
+				$intColumnIndex = \QCubed\Type::Cast($intColumnIndex, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
 			if ($intColumnIndex < 0 || $intColumnIndex > count($this->objColumnArray)) {
-				throw new QIndexOutOfRangeException($intColumnIndex, "RemoveColumn()");
+				throw new \QCubed\Exception\IndexOutOfRange($intColumnIndex, "RemoveColumn()");
 			}
 
 			$col = $this->objColumnArray[$intColumnIndex];
@@ -541,14 +541,14 @@
 		 *
 		 * @return string
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		protected function GetDataGridRowHtml($objObject, $intCurrentRowIndex) {
 			$strCells = '';
 			foreach ($this->objColumnArray as $objColumn) {
 				try {
 					$strCells .= $objColumn->RenderCell($objObject);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -750,7 +750,7 @@
 		 *
 		 * @return bool|int|mixed|null
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -780,7 +780,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -795,97 +795,97 @@
 		 *
 		 * @return mixed|void
 		 * @throws Exception
-		 * @throws QCallerException
-		 * @throws QInvalidCastException
+		 * @throws \QCubed\Exception\Caller
+		 * @throws \QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "RowCssClass":
 					try {
-						$this->strRowCssClass = QType::Cast($mixValue, QType::String);
+						$this->strRowCssClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "AlternateRowCssClass":
 					try {
-						$this->strAlternateRowCssClass = QType::Cast($mixValue, QType::String);
+						$this->strAlternateRowCssClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HeaderRowCssClass":
 					try {
-						$this->strHeaderRowCssClass = QType::Cast($mixValue, QType::String);
+						$this->strHeaderRowCssClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "ShowHeader":
 					try {
-						$this->blnShowHeader = QType::Cast($mixValue, QType::Boolean);
+						$this->blnShowHeader = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "ShowFooter":
 					try {
-						$this->blnShowFooter = QType::Cast($mixValue, QType::Boolean);
+						$this->blnShowFooter = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "RenderColumnTags":
 					try {
-						$this->blnRenderColumnTags = QType::Cast($mixValue, QType::Boolean);
+						$this->blnRenderColumnTags = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Caption":
 					try {
-						$this->strCaption = QType::Cast($mixValue, QType::String);
+						$this->strCaption = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HeaderRowCount":
 					try {
-						$this->intHeaderRowCount = QType::Cast($mixValue, QType::Integer);
+						$this->intHeaderRowCount = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HideIfEmpty":
 					try {
-						$this->blnHideIfEmpty = QType::Cast($mixValue, QType::Boolean);
+						$this->blnHideIfEmpty = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "RowParamsCallback":
 					try {
-						$this->rowParamsCallback = QType::Cast($mixValue, QType::CallableType);
+						$this->rowParamsCallback = \QCubed\Type::Cast($mixValue, \QCubed\Type::CALLABLE_TYPE);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -895,7 +895,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -909,14 +909,14 @@
 		 */
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'RowCssClass', 'Css class given to each row', QType::String),
-				new QModelConnectorParam (get_called_class(), 'AlternateRowCssClass', 'Css class given to every other row', QType::String),
-				new QModelConnectorParam (get_called_class(), 'HeaderRowCssClass', 'Css class given to the header rows', QType::String),
-				new QModelConnectorParam (get_called_class(), 'ShowHeader', 'Whether or not to show the header. Default is true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'ShowFooter', 'Whether or not to show the footer. Default is false.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'RenderColumnTags', 'Whether or not to render html column tags for the columns. Column tags are only needed in special situations. Default is false.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Caption', 'Text to print in the caption tag of the table.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'HideIfEmpty', 'Whether to draw nothing if there is no data, or draw the table tags with no cells instead. Default is to drag the table tags.', QType::Boolean)
+				new QModelConnectorParam (get_called_class(), 'RowCssClass', 'Css class given to each row', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'AlternateRowCssClass', 'Css class given to every other row', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'HeaderRowCssClass', 'Css class given to the header rows', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'ShowHeader', 'Whether or not to show the header. Default is true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'ShowFooter', 'Whether or not to show the footer. Default is false.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'RenderColumnTags', 'Whether or not to render html column tags for the columns. Column tags are only needed in special situations. Default is false.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Caption', 'Text to print in the caption tag of the table.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'HideIfEmpty', 'Whether to draw nothing if there is no data, or draw the table tags with no cells instead. Default is to drag the table tags.', \QCubed\Type::BOOLEAN)
 			));
 		}
 	}

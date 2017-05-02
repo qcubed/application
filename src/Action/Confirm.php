@@ -1,13 +1,32 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+use QCubed\Exception\Caller;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Js;
+
+/**
+ * Class Confirm
+ *
  * This action works as a if-else stopper for another action.
  * This action should be added to a control with the same event type before another action of that event type
  * Doing so brings up a JavaScript Confirmation box in front of the user.
  * If the user clicks on 'OK', then the next next action is executed (and any actions after that as well)
  * If the user clicks on 'Cancel', then next/rest of the action(s) are not executed
- * @package Actions
+ *
+ * @was QConfirmAction
+ * @package QCubed\Action
  */
-class QConfirmAction extends QAction {
+class Confirm extends AbstractBase
+{
     /** @var string Message to be shown to the user on the confirmation prompt */
     protected $strMessage;
 
@@ -15,7 +34,8 @@ class QConfirmAction extends QAction {
      * Constructor of the function
      * @param string $strMessage Message which is to be set as the confirmation prompt message
      */
-    public function __construct($strMessage) {
+    public function __construct($strMessage)
+    {
         $this->strMessage = $strMessage;
     }
 
@@ -25,16 +45,17 @@ class QConfirmAction extends QAction {
      * @param string $strName Name of the property
      *
      * @return mixed|null|string
-     * @throws QCallerException
+     * @throws Caller
      */
-    public function __get($strName) {
+    public function __get($strName)
+    {
         switch ($strName) {
             case 'Message':
                 return $this->strMessage;
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->IncrementOffset();
                     throw $objExc;
                 }
@@ -47,10 +68,10 @@ class QConfirmAction extends QAction {
      *
      * @return string The JS to be executed
      */
-    public function RenderScript(QControl $objControl) {
-        $strMessage = JavaScriptHelper::toJsObject($this->strMessage);
+    public function RenderScript(QControl $objControl)
+    {
+        $strMessage = Js\Helper::toJsObject($this->strMessage);
 
         return sprintf("if (!confirm(%s)) return false;", $strMessage);
     }
 }
-

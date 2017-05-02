@@ -52,14 +52,14 @@
 		 * @param string $strName Name of the property
 		 * @param string $mixValue Value of the property
 		 *
-		 * @throws QCallerException|QInvalidCastException
+		 * @throws \QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case '_DroppedId': // Internal only. Do not use. Used by JS above to track user actions.
 					try {
-						$this->strDroppedId = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$this->strDroppedId = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -68,7 +68,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -82,7 +82,7 @@
 		 * @param string $strName Property Name
 		 *
 		 * @return mixed
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -91,7 +91,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}

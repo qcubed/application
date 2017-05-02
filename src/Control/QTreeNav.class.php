@@ -50,8 +50,8 @@
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
 
-			$this->strLabelForRequired = QApplication::Translate('%s is required');
-			$this->strLabelForRequiredUnnamed = QApplication::Translate('Required');
+			$this->strLabelForRequired = t('%s is required');
+			$this->strLabelForRequiredUnnamed = t('Required');
 		}
 
 		public function SetLoader($strFuncName, $objParent)
@@ -102,7 +102,7 @@
 						$strItemId,
 						$this->intIndentWidth,
 						$this->strItemCssStyle,
-						QApplication::Translate('Loading')
+						t('Loading')
 					);
 
 					$strCommand = sprintf('onclick="treenavToggleImage(\'%s\'); qc.pA(\'%s\', \'%s\', \'QTreeNav_Expand\', \'%s\')"',
@@ -158,7 +158,7 @@
 
 		public function AddItem(QTreeNavItem $objItem) {
 			if (array_key_exists($objItem->ItemId, $this->objItemArray))
-				throw new QCallerException('Item Id already exists in QTreeNav ' . $this->strControlId . ': ' . $objItem->ItemId, 2);
+				throw new \QCubed\Exception\Caller('Item Id already exists in QTreeNav ' . $this->strControlId . ': ' . $objItem->ItemId, 2);
 			$this->objItemArray[$objItem->ItemId] = $objItem;
 		}
 
@@ -274,7 +274,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -288,65 +288,65 @@
 			switch ($strName) {
 				case "ItemCssStyle":
 					try {
-						$this->strItemCssStyle = QType::Cast($mixValue, QType::String);
+						$this->strItemCssStyle = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ItemSelectedCssStyle":
 					try {
-						$this->strItemSelectedCssStyle = QType::Cast($mixValue, QType::String);
+						$this->strItemSelectedCssStyle = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ItemHoverCssStyle":
 					try {
-						$this->strItemHoverCssStyle = QType::Cast($mixValue, QType::String);
+						$this->strItemHoverCssStyle = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "IndentWidth":
 					try {
-						$this->intIndentWidth = QType::Cast($mixValue, QType::Integer);
+						$this->intIndentWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ItemHeight":
 					try {
-						$this->intItemHeight = QType::Cast($mixValue, QType::Integer);
+						$this->intItemHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ItemWidth":
 					try {
-						$this->intItemWidth = QType::Cast($mixValue, QType::Integer);
+						$this->intItemWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ExpandOnSelect":
 					try {
-						$this->blnExpandOnSelect = QType::Cast($mixValue, QType::Boolean);
+						$this->blnExpandOnSelect = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "SelectedItem":
 					try {
-						$objItem = QType::Cast($mixValue, "QTreeNavItem");
-					} catch (QInvalidCastException $objExc) {
+						$objItem = \QCubed\Type::Cast($mixValue, "QTreeNavItem");
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -391,7 +391,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

@@ -31,8 +31,8 @@
 		 */
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
-			$this->strLabelForInvalid = QApplication::Translate('Invalid Float');
-			$this->strDataType = QType::Float;
+			$this->strLabelForInvalid = t('Invalid Float');
+			$this->strDataType = \QCubed\Type::FLOAT;
 		}
 
 		public function __get($strName) {
@@ -47,7 +47,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

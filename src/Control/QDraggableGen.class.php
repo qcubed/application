@@ -509,7 +509,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -520,10 +520,10 @@
 			switch ($strName) {
 				case 'AddClasses':
 					try {
-						$this->blnAddClasses = QType::Cast($mixValue, QType::Boolean);
+						$this->blnAddClasses = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'addClasses', $this->blnAddClasses);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -535,10 +535,10 @@
 
 				case 'Axis':
 					try {
-						$this->strAxis = QType::Cast($mixValue, QType::String);
+						$this->strAxis = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'axis', $this->strAxis);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -560,10 +560,10 @@
 
 				case 'Cursor':
 					try {
-						$this->strCursor = QType::Cast($mixValue, QType::String);
+						$this->strCursor = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'cursor', $this->strCursor);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -575,40 +575,40 @@
 
 				case 'Delay':
 					try {
-						$this->intDelay = QType::Cast($mixValue, QType::Integer);
+						$this->intDelay = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'delay', $this->intDelay);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Distance':
 					try {
-						$this->intDistance = QType::Cast($mixValue, QType::Integer);
+						$this->intDistance = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'distance', $this->intDistance);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Grid':
 					try {
-						$this->arrGrid = QType::Cast($mixValue, QType::ArrayType);
+						$this->arrGrid = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'grid', $this->arrGrid);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -630,20 +630,20 @@
 
 				case 'Opacity':
 					try {
-						$this->intOpacity = QType::Cast($mixValue, QType::Integer);
+						$this->intOpacity = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'opacity', $this->intOpacity);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'RefreshPositions':
 					try {
-						$this->blnRefreshPositions = QType::Cast($mixValue, QType::Boolean);
+						$this->blnRefreshPositions = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'refreshPositions', $this->blnRefreshPositions);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -655,50 +655,50 @@
 
 				case 'RevertDuration':
 					try {
-						$this->intRevertDuration = QType::Cast($mixValue, QType::Integer);
+						$this->intRevertDuration = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'revertDuration', $this->intRevertDuration);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Scope':
 					try {
-						$this->strScope = QType::Cast($mixValue, QType::String);
+						$this->strScope = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'scope', $this->strScope);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Scroll':
 					try {
-						$this->blnScroll = QType::Cast($mixValue, QType::Boolean);
+						$this->blnScroll = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'scroll', $this->blnScroll);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'ScrollSensitivity':
 					try {
-						$this->intScrollSensitivity = QType::Cast($mixValue, QType::Integer);
+						$this->intScrollSensitivity = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'scrollSensitivity', $this->intScrollSensitivity);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'ScrollSpeed':
 					try {
-						$this->intScrollSpeed = QType::Cast($mixValue, QType::Integer);
+						$this->intScrollSpeed = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'scrollSpeed', $this->intScrollSpeed);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -710,20 +710,20 @@
 
 				case 'SnapMode':
 					try {
-						$this->strSnapMode = QType::Cast($mixValue, QType::String);
+						$this->strSnapMode = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'snapMode', $this->strSnapMode);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'SnapTolerance':
 					try {
-						$this->intSnapTolerance = QType::Cast($mixValue, QType::Integer);
+						$this->intSnapTolerance = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'snapTolerance', $this->intSnapTolerance);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -735,10 +735,10 @@
 
 				case 'ZIndex':
 					try {
-						$this->intZIndex = QType::Cast($mixValue, QType::Integer);
+						$this->intZIndex = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'zIndex', $this->intZIndex);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -753,7 +753,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -767,23 +767,23 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'AddClasses', 'If set to false, will prevent the ui-draggable class from being added.This may be desired as a performance optimization when calling.draggable() on hundreds of elements.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Axis', 'Constrains dragging to either the horizontal (x) or vertical (y) axis.Possible values: \"x\", \"y\".', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Cursor', 'The CSS cursor during the drag operation.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Delay', 'Time in milliseconds after mousedown until dragging should start. Thisoption can be used to prevent unwanted drags when clicking on anelement.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the draggable if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Distance', 'Distance in pixels after mousedown the mouse must move before draggingshould start. This option can be used to prevent unwanted drags whenclicking on an element.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Grid', 'Snaps the dragging helper to a grid, every x and y pixels. The arraymust be of the form [ x, y ].', QType::ArrayType),
-				new QModelConnectorParam (get_called_class(), 'Opacity', 'Opacity for the helper while being dragged.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'RefreshPositions', 'If set to true, all droppable positions are calculated on everymousemove. _Caution: This solves issues on highly dynamic pages, butdramatically decreases performance._', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'RevertDuration', 'The duration of the revert animation, in milliseconds. Ignored if therevert option is false.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Scope', 'Used to group sets of draggable and droppable items, in addition todroppables accept option. A draggable with the same scope value as adroppable will be accepted by the droppable.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Scroll', 'If set to true, container auto-scrolls while dragging.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'ScrollSensitivity', 'Distance in pixels from the edge of the viewport after which theviewport should scroll. Distance is relative to pointer, not thedraggable. Ignored if the scroll option is false.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'ScrollSpeed', 'The speed at which the window should scroll once the mouse pointergets within the scrollSensitivity distance. Ignored if the scrolloption is false.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'SnapMode', 'Determines which edges of snap elements the draggable will snap to.Ignored if the snap option is false. Possible values: \"inner\",\"outer\", \"both\".', QType::String),
-				new QModelConnectorParam (get_called_class(), 'SnapTolerance', 'The distance in pixels from the snap element edges at which snappingshould occur. Ignored if the snap option is false.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'ZIndex', 'Z-index for the helper while being dragged.', QType::Integer),
+				new QModelConnectorParam (get_called_class(), 'AddClasses', 'If set to false, will prevent the ui-draggable class from being added.This may be desired as a performance optimization when calling.draggable() on hundreds of elements.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Axis', 'Constrains dragging to either the horizontal (x) or vertical (y) axis.Possible values: \"x\", \"y\".', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Cursor', 'The CSS cursor during the drag operation.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Delay', 'Time in milliseconds after mousedown until dragging should start. Thisoption can be used to prevent unwanted drags when clicking on anelement.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the draggable if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Distance', 'Distance in pixels after mousedown the mouse must move before draggingshould start. This option can be used to prevent unwanted drags whenclicking on an element.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Grid', 'Snaps the dragging helper to a grid, every x and y pixels. The arraymust be of the form [ x, y ].', \QCubed\Type::ARRAY_TYPE),
+				new QModelConnectorParam (get_called_class(), 'Opacity', 'Opacity for the helper while being dragged.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'RefreshPositions', 'If set to true, all droppable positions are calculated on everymousemove. _Caution: This solves issues on highly dynamic pages, butdramatically decreases performance._', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'RevertDuration', 'The duration of the revert animation, in milliseconds. Ignored if therevert option is false.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Scope', 'Used to group sets of draggable and droppable items, in addition todroppables accept option. A draggable with the same scope value as adroppable will be accepted by the droppable.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Scroll', 'If set to true, container auto-scrolls while dragging.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'ScrollSensitivity', 'Distance in pixels from the edge of the viewport after which theviewport should scroll. Distance is relative to pointer, not thedraggable. Ignored if the scroll option is false.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'ScrollSpeed', 'The speed at which the window should scroll once the mouse pointergets within the scrollSensitivity distance. Ignored if the scrolloption is false.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'SnapMode', 'Determines which edges of snap elements the draggable will snap to.Ignored if the snap option is false. Possible values: \"inner\",\"outer\", \"both\".', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'SnapTolerance', 'The distance in pixels from the snap element edges at which snappingshould occur. Ignored if the snap option is false.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'ZIndex', 'Z-index for the helper while being dragged.', \QCubed\Type::INTEGER),
 			));
 		}
 	}

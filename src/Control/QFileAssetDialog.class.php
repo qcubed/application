@@ -25,7 +25,7 @@
 			//$this->blnMatteClickable = false;
             $this->AutoOpen = false;
 
-			$this->strTitle = QApplication::Translate("Upload a File");
+			$this->strTitle = t("Upload a File");
 
 			// Controls for Upload FileAsset Dialog Box
 			$this->lblMessage = new QLabel($this);

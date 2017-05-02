@@ -33,7 +33,7 @@
 		 */
 		public function toJsObject() {
 			trigger_error("QAutocompleteListItem has been deprecated. Please use QListItem", E_USER_NOTICE);
-			return JavaScriptHelper::toJsObject(array("value" => $this->Name, "id" => $this->Value));
+			return \QCubed\Js\Helper::toJsObject(array("value" => $this->Name, "id" => $this->Value));
 		}
 	}
 
@@ -102,8 +102,8 @@
 		 * will use the new filter.
 		 *
 		 * @static
-		 * @throws QCallerException
-		 * @param string|QJsClosure $filter represents a closure that will be used as the global filter function for jQuery autocomplete.
+		 * @throws \QCubed\Exception\Caller
+		 * @param string|\QCubed\Js\Closure $filter represents a closure that will be used as the global filter function for jQuery autocomplete.
 		 * The closure should take two arguments - array and term. array is the list of all available choices, term is what the user typed in the input box.
 		 * It should return an array of suggestions to show in the drop-down.
 		 * <b>Example:</b> <code>QAutocomplete::UseFilter(QAutocomplete::FILTER_STARTS_WITH)</code>
@@ -114,10 +114,10 @@
 		 */
 		static public function UseFilter($filter) {
 			if (is_string($filter)) {
-				$filter =  new QJsClosure ($filter, ['term']);
+				$filter =  new \QCubed\Js\Closure ($filter, ['term']);
 			}
-			else if (!($filter instanceof QJsClosure)) {
-				throw new QCallerException("filter must be either a string or an instance of QJsClosure");
+			else if (!($filter instanceof \QCubed\Js\Closure)) {
+				throw new \QCubed\Exception\Caller("filter must be either a string or an instance of \QCubed\Js\Closure");
 			}
 			QApplication::ExecuteJsFunction('qcubed.acUseFilter', $filter);
 		}
@@ -145,7 +145,7 @@
 			}
 			$this->AddAction(new QAutocomplete_SourceEvent(), $objAction);
 
-			$this->mixSource = new QJsVarName('qcubed.acSourceFunction');
+			$this->mixSource = new \QCubed\Js\VarName('qcubed.acSourceFunction');
 
 			$this->blnUseAjax = true;
 			$this->blnModified = true;
@@ -210,7 +210,7 @@
 		 * @param string $strName Property Name
 		 * @param string $mixValue Property Value
 		 *
-		 * @throws Exception|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
@@ -234,9 +234,9 @@
 						if ($mixValue == 'null') {
 							$this->strSelectedId = null;
 						} else {
-							$this->strSelectedId = QType::Cast($mixValue, QType::String);
+							$this->strSelectedId = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						}
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -254,7 +254,7 @@
 							}
 						}
 						parent::__set($strName, $mixValue);
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -263,7 +263,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -277,7 +277,7 @@
 		 * @param string $strName Name of the property
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -288,7 +288,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -302,7 +302,7 @@
 		 **/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'NoAutoLoad', 'Prevent automatically populating a list type control. Set this if you are doing more complex list loading.', QType::Boolean)
+				new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'NoAutoLoad', 'Prevent automatically populating a list type control. Set this if you are doing more complex list loading.', \QCubed\Type::BOOLEAN)
 			));
 		}
 

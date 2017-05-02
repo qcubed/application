@@ -55,7 +55,7 @@ class SessionHandler extends AbstractBase
             $strPriorState = $_POST['Qform__FormState'];
 
             if (!is_null(QForm::$EncryptionKey)) {
-                // Use QCryptography to Decrypt
+                // Use \QCubed\Cryptography to Decrypt
                 $objCrypto = new Cryptography(FormBase::$EncryptionKey, true);
                 $strPriorState = $objCrypto->Decrypt($strPriorState);
             }
@@ -101,7 +101,7 @@ class SessionHandler extends AbstractBase
 
         // Return StateIndex
         if (!is_null(QForm::$EncryptionKey)) {
-            // Use QCryptography to Encrypt
+            // Use \QCubed\Cryptography to Encrypt
             $objCrypto = new Cryptography(FormBase::$EncryptionKey, true);
             return $objCrypto->encrypt($strPostDataState);
         } else {
@@ -113,7 +113,7 @@ class SessionHandler extends AbstractBase
     {
         // Pull Out intStateIndex
         if (!is_null(QForm::$EncryptionKey)) {
-            // Use QCryptography to Decrypt
+            // Use \QCubed\Cryptography to Decrypt
             $objCrypto = new Cryptography(FormBase::$EncryptionKey, true);
             $strPostDataState = $objCrypto->decrypt($strPostDataState);
         }

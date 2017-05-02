@@ -39,9 +39,9 @@
 			switch ($strName) {
 				case '_SelectedItems':	// Internal only. Do not use. Used by JS above to keep track of selections.
 					try {
-						$strItems = QType::Cast($mixValue, QType::String);
+						$strItems = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->arySelectedItems = explode (",", $strItems);
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -50,7 +50,7 @@
 				case 'SelectedItems':
 					// Set the selected items to an array of object ids
 					try {
-						$aValues = QType::Cast($mixValue, QType::ArrayType);
+						$aValues = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
 						$aJqIds = array();
 						foreach ($aValues as $val) {
 							$aJqIds[] = '"#' . $val . '"';
@@ -70,7 +70,7 @@
 FUNC;
 						$this->arySelectedItems = $aValues;
 						QApplication::ExecuteJavascript ($strJS);
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -80,7 +80,7 @@ FUNC;
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -95,7 +95,7 @@ FUNC;
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}

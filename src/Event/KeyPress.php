@@ -1,7 +1,24 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
 
-/** When a keyboard key has been pressed (key went down, and went up) */
-class QKeyPressEvent extends QEvent {
+namespace QCubed\Event;
+
+/**
+ * Class KeyPress
+ *
+ * When a keyboard key has been pressed (key went down, and went up)
+ *
+ * @was QKeyPressEvent
+ * @package QCubed\Event
+ */
+class KeyPress extends AbstractBase
+{
     /** Event Name */
-    const EventName = 'keypress';
+    const EVENT_NAME = 'keypress';
 }

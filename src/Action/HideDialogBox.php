@@ -1,10 +1,20 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Hides a dialog box (QDialogBox)
  *
  * @package Actions
  */
-class QHideDialogBox extends QAction {
+class QHideDialogBox extends AbstractBase {
     /** @var null|string The JS for hiding the dialog box */
     protected $strJavaScript = null;
 
@@ -13,11 +23,11 @@ class QHideDialogBox extends QAction {
      *
      * @param QDialogBox $objControl
      *
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     public function __construct($objControl) {
         if (!($objControl instanceof QDialogBox)) {
-            throw new QCallerException('First parameter of constructor is expecting an object of type QDialogBox');
+            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QDialogBox');
         }
 
         $this->strJavaScript = $objControl->GetHideDialogJavaScript();

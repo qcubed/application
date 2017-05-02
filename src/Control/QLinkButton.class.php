@@ -59,7 +59,7 @@
 		 * @param string $strName Name of the property
 		 *
 		 * @return array|bool|int|mixed|null|QControl|QForm|string
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -69,7 +69,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -84,8 +84,8 @@
 		 * @param string $strName Name of the property
 		 * @param string $mixValue Value of the property
 		 *
-		 * @throws Exception|QCallerException
-		 * @throws Exception|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller
+		 * @throws Exception|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -94,18 +94,18 @@
 				// APPEARANCE
 				case "Text":
 					try {
-						$this->strText = QType::Cast($mixValue, QType::String);
+						$this->strText = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HtmlEntities":
 					try {
-						$this->blnHtmlEntities = QType::Cast($mixValue, QType::Boolean);
+						$this->blnHtmlEntities = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -113,7 +113,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

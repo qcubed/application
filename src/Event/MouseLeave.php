@@ -1,8 +1,24 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
 
-/** When the mouse cursor leaves the control */
-class QMouseLeaveEvent extends QEvent {
+namespace QCubed\Event;
+
+/**
+ * Class MouseLeave
+ *
+ * When the mouse cursor leaves the control
+ *
+ * @was QMouseLeaveEvent
+ * @package QCubed\Event
+ */
+class MouseLeave extends AbstractBase
+{
     /** Event Name */
-    const EventName = 'mouseleave';
+    const EVENT_NAME = 'mouseleave';
 }
-

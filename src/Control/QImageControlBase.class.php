@@ -68,7 +68,7 @@
 			
 			// Ensure that the ImagePath is Valid
 			if (!$this->strImagePath || !file_exists($this->strImagePath))
-				throw new QCallerException('ImagePath is not defined or does not exist');
+				throw new \QCubed\Exception\Caller('ImagePath is not defined or does not exist');
 
 			// Serialize and Hash Data
 			$strSerialized = $this->Serialize();
@@ -99,9 +99,9 @@
 				$this->strCachedActualFilePath = $strFilePath;
 			} else {
 				if (strlen($strSerialized) > 255/* safe max filename size */) {
-					throw new QCallerException(
+					throw new \QCubed\Exception\Caller(
 						sprintf(
-							QApplication::Translate(
+							t(
 								"The filename size exceeded for the serialized QImageControl control." .
 								" The size is %s. The maximum value is 255. Try to set the CacheFolder property to solve the problem."
 							)
@@ -127,7 +127,7 @@
 			try {
 				// Figure Out the Path
 				$strPath = $this->RenderAsImgSrc(false);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -234,7 +234,7 @@
 						$objImage = imagecreatefromgif($this->strImagePath);
 						break;
 					default:
-						throw new QCallerException('Original image is of an invalid file path');
+						throw new \QCubed\Exception\Caller('Original image is of an invalid file path');
 				}
 
 				// If No Path is Specified, then we are OUTPUTTING to the BROWSER DIRECTLY
@@ -261,7 +261,7 @@
 							imagegif($objImage);
 						break;
 					default:
-						throw new QCallerException('ImageType is not a known image type');
+						throw new \QCubed\Exception\Caller('ImageType is not a known image type');
 				}
 				
 				imagedestroy($objImage);
@@ -291,7 +291,7 @@
 
 		public function RenderImage($strPath = null) {
 			if (!$this->strImagePath)
-				throw new QCallerException('No Image Path was set');
+				throw new \QCubed\Exception\Caller('No Image Path was set');
 
 			// Flow Through if No Size Information
 			if ((!$this->strWidth) && (!$this->strHeight)) {
@@ -485,7 +485,7 @@
 					$objImage = imagecreatefromgif($this->strImagePath);
 					break;
 				default:
-					throw new QCallerException('Invalid Source Image Type');
+					throw new \QCubed\Exception\Caller('Invalid Source Image Type');
 			}
 
 			// Calculate X and Y position
@@ -522,7 +522,7 @@
 						imagepng($objFinalImage);
 					break;
 				default:
-					throw new QCallerException('Invalid Image Type');
+					throw new \QCubed\Exception\Caller('Invalid Image Type');
 			}
 
 			imagedestroy($objImage);
@@ -537,7 +537,7 @@
 		 * @param string $strName
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -558,7 +558,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -576,7 +576,7 @@
 		 * @param string $mixValue
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -585,17 +585,17 @@
 				// APPEARANCE
 				case "ScaleCanvasDown":
 					try {
-						$this->blnScaleCanvasDown = QType::Cast($mixValue, QType::Boolean);
+						$this->blnScaleCanvasDown = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ScaleImageUp":
 					try {
-						$this->blnScaleImageUp = QType::Cast($mixValue, QType::Boolean);
+						$this->blnScaleImageUp = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -604,46 +604,46 @@
 				// BEHAVIOR
 				case "ImageType":
 					try {
-						$this->strImageType = QType::Cast($mixValue, QType::String);
+						$this->strImageType = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Quality":
 					try {
-						$this->intQuality = QType::Cast($mixValue, QType::Integer);
+						$this->intQuality = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "CacheFolder":
 					try {
-						$this->strCacheFolder = QType::Cast($mixValue, QType::String);
+						$this->strCacheFolder = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "CacheFilename":
 					try {
-						$this->strCacheFilename = QType::Cast($mixValue, QType::String);
+						$this->strCacheFilename = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "ImagePath":
 					try {
-						$this->strImagePath = QType::Cast($mixValue, QType::String);
+						$this->strImagePath = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 
 						if (!$this->strImagePath || !is_file($this->strImagePath))
-							throw new QCallerException('ImagePath is not defined or does not exist');
+							throw new \QCubed\Exception\Caller('ImagePath is not defined or does not exist');
 
 						$this->strImagePath = realpath($this->strImagePath);
 
@@ -660,20 +660,20 @@
 								$this->strSourceImageType = QImageType::Gif;
 								break;
 							default:
-								throw new QCallerException('Image Type cannot be determined: ' . $mixValue);
+								throw new \QCubed\Exception\Caller('Image Type cannot be determined: ' . $mixValue);
 						}
 
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "AlternateText":
 					try {
-						$this->strAlternateText = QType::Cast($mixValue, QType::String);
+						$this->strAlternateText = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -682,14 +682,14 @@
 				// OVERRIDDEN SETTERS
 				case "BackColor":
 					try {
-						$mixValue = strtolower(QType::Cast($mixValue, QType::String));
-					} catch (QInvalidCastException $objExc) {
+						$mixValue = strtolower(\QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 					if (strlen($mixValue) != 6)
-						throw new QInvalidCastException('BackColor must be a 6-digit hexadecimal value');
+						throw new \QCubed\Exception\InvalidCast('BackColor must be a 6-digit hexadecimal value');
 
 					// Verify ControlId is only Hexadecimal Digits
 					$strMatches = array();
@@ -698,24 +698,24 @@
 					if (count($strMatches) && ($strMatches[0] == $mixValue))
 						return ($this->strBackColor = $mixValue);
 					else
-						throw new QInvalidCastException('BackColor must be a 6-digit hexadecimal value');
+						throw new \QCubed\Exception\InvalidCast('BackColor must be a 6-digit hexadecimal value');
 
 					break;
 
 				case "Width":
 					try {
-						$this->strWidth = QType::Cast($mixValue, QType::Integer);
+						$this->strWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Height":
 					try {
-						$this->strHeight = QType::Cast($mixValue, QType::Integer);
+						$this->strHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -723,7 +723,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

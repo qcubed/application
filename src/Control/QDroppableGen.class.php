@@ -347,7 +347,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -363,70 +363,70 @@
 
 				case 'ActiveClass':
 					try {
-						$this->strActiveClass = QType::Cast($mixValue, QType::String);
+						$this->strActiveClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'activeClass', $this->strActiveClass);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'AddClasses':
 					try {
-						$this->blnAddClasses = QType::Cast($mixValue, QType::Boolean);
+						$this->blnAddClasses = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'addClasses', $this->blnAddClasses);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Greedy':
 					try {
-						$this->blnGreedy = QType::Cast($mixValue, QType::Boolean);
+						$this->blnGreedy = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'greedy', $this->blnGreedy);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'HoverClass':
 					try {
-						$this->strHoverClass = QType::Cast($mixValue, QType::String);
+						$this->strHoverClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'hoverClass', $this->strHoverClass);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Scope':
 					try {
-						$this->strScope = QType::Cast($mixValue, QType::String);
+						$this->strScope = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'scope', $this->strScope);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Tolerance':
 					try {
-						$this->strTolerance = QType::Cast($mixValue, QType::String);
+						$this->strTolerance = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'tolerance', $this->strTolerance);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -441,7 +441,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -455,13 +455,13 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'ActiveClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being dragged.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'AddClasses', 'If set to false, will prevent the ui-droppable class from being added.This may be desired as a performance optimization when calling.droppable() init on hundreds of elements.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the droppable if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Greedy', 'By default, when an element is dropped on nested droppables, eachdroppable will receive the element. However, by setting this option totrue, any parent droppables will not receive the element. The dropevent will still bubble normally, but the event.target can be checkedto see which droppable received the draggable element.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'HoverClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being hovered over the droppable.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Scope', 'Used to group sets of draggable and droppable items, in addition tothe accept option. A draggable with the same scope value as adroppable will be accepted.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether a draggable ishovering over a droppable. Possible values: 	* \"fit\": Draggable overlaps the droppable entirely.	* \"intersect\": Draggable overlaps the droppable at least 50% in bothdirections.	* \"pointer\": Mouse pointer overlaps the droppable.	* \"touch\": Draggable overlaps the droppable any amount.', QType::String),
+				new QModelConnectorParam (get_called_class(), 'ActiveClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being dragged.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'AddClasses', 'If set to false, will prevent the ui-droppable class from being added.This may be desired as a performance optimization when calling.droppable() init on hundreds of elements.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the droppable if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Greedy', 'By default, when an element is dropped on nested droppables, eachdroppable will receive the element. However, by setting this option totrue, any parent droppables will not receive the element. The dropevent will still bubble normally, but the event.target can be checkedto see which droppable received the draggable element.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'HoverClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being hovered over the droppable.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Scope', 'Used to group sets of draggable and droppable items, in addition tothe accept option. A draggable with the same scope value as adroppable will be accepted.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether a draggable ishovering over a droppable. Possible values: 	* \"fit\": Draggable overlaps the droppable entirely.	* \"intersect\": Draggable overlaps the droppable at least 50% in bothdirections.	* \"pointer\": Mouse pointer overlaps the droppable.	* \"touch\": Draggable overlaps the droppable any amount.', \QCubed\Type::STRING),
 			));
 		}
 	}

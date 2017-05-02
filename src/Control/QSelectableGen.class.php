@@ -326,7 +326,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -342,10 +342,10 @@
 
 				case 'AutoRefresh':
 					try {
-						$this->blnAutoRefresh = QType::Cast($mixValue, QType::Boolean);
+						$this->blnAutoRefresh = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'autoRefresh', $this->blnAutoRefresh);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -357,30 +357,30 @@
 
 				case 'Delay':
 					try {
-						$this->intDelay = QType::Cast($mixValue, QType::Integer);
+						$this->intDelay = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'delay', $this->intDelay);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Distance':
 					try {
-						$this->intDistance = QType::Cast($mixValue, QType::Integer);
+						$this->intDistance = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'distance', $this->intDistance);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -392,10 +392,10 @@
 
 				case 'Tolerance':
 					try {
-						$this->strTolerance = QType::Cast($mixValue, QType::String);
+						$this->strTolerance = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'tolerance', $this->strTolerance);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -410,7 +410,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -424,11 +424,11 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'AutoRefresh', 'This determines whether to refresh (recalculate) the position and sizeof each selectee at the beginning of each select operation. If youhave many items, you may want to set this to false and call therefresh() method manually.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Delay', 'Time in milliseconds to define when the selecting should start. Thishelps prevent unwanted selections when clicking on an element.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectable if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Distance', 'Tolerance, in pixels, for when selecting should start. If specified,selecting will not start until the mouse has been dragged beyond thespecified distance.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether the lasso shouldselect an item. Possible values: 	* \"fit\": Lasso overlaps the item entirely.	* \"touch\": Lasso overlaps the item by any amount.', QType::String),
+				new QModelConnectorParam (get_called_class(), 'AutoRefresh', 'This determines whether to refresh (recalculate) the position and sizeof each selectee at the beginning of each select operation. If youhave many items, you may want to set this to false and call therefresh() method manually.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Delay', 'Time in milliseconds to define when the selecting should start. Thishelps prevent unwanted selections when clicking on an element.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectable if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Distance', 'Tolerance, in pixels, for when selecting should start. If specified,selecting will not start until the mouse has been dragged beyond thespecified distance.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether the lasso shouldselect an item. Possible values: 	* \"fit\": Lasso overlaps the item entirely.	* \"touch\": Lasso overlaps the item by any amount.', \QCubed\Type::STRING),
 			));
 		}
 	}

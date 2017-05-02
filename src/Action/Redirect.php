@@ -1,11 +1,21 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Client-side action - no postbacks of any kind are performed.
  * All handling activity happens in Javascript.
  *
  * @package Actions
  */
-class QRedirectAction extends QAction {
+class QRedirectAction extends AbstractBase {
     /** @var string JS to be run on the client side */
     protected $strJavaScript;
 
@@ -27,7 +37,7 @@ class QRedirectAction extends QAction {
      * @param string $strName Name of the property
      *
      * @return mixed|null|string
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     public function __get($strName) {
         switch ($strName) {
@@ -36,7 +46,7 @@ class QRedirectAction extends QAction {
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
+                } catch (\QCubed\Exception\Caller $objExc) {
                     $objExc->IncrementOffset();
                     throw $objExc;
                 }

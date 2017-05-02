@@ -38,7 +38,7 @@
 				// It was -- update this Control's value with the new value passed in via the POST arguments
 				$this->strFileName = $_FILES[$this->strControlId]['name'];
 				$this->strType = $_FILES[$this->strControlId]['type'];
-				$this->intSize = QType::Cast($_FILES[$this->strControlId]['size'], QType::Integer);
+				$this->intSize = \QCubed\Type::Cast($_FILES[$this->strControlId]['size'], \QCubed\Type::INTEGER);
 				$this->strFile = $_FILES[$this->strControlId]['tmp_name'];
 			}
 		}
@@ -78,7 +78,7 @@
 				if (strlen($this->strFileName) > 0)
 					return true;
 				else {
-					$this->ValidationError = QApplication::Translate($this->strName) . ' ' . QApplication::Translate('is required');
+					$this->ValidationError = t($this->strName) . ' ' . t('is required');
 					return false;
 				}
 			} else
@@ -94,7 +94,7 @@
 		 *
 		 * @return mixed
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -107,7 +107,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -122,7 +122,7 @@
 		 * @param string $mixValue
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -131,7 +131,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

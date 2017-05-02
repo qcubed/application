@@ -1,11 +1,21 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Shows a QDialog
  * This is the JQuery UI alternative to show dialog
  *
  * @package Actions
  */
-class QShowDialog extends QAction {
+class QShowDialog extends AbstractBase {
     /** @var null|string The JS to show the dialog */
     protected $strJavaScript = null;
 
@@ -14,11 +24,11 @@ class QShowDialog extends QAction {
      *
      * @param QDialog $objControl
      *
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     public function __construct($objControl) {
         if (!($objControl instanceof QDialog)) {
-            throw new QCallerException('First parameter of constructor is expecting an object of type QDialog');
+            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QDialog');
         }
 
         $strControlId = $objControl->getJqControlId();

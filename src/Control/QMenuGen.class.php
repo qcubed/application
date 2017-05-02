@@ -397,7 +397,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -408,10 +408,10 @@
 			switch ($strName) {
 				case 'Disabled':
 					try {
-						$this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDisabled = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -423,20 +423,20 @@
 
 				case 'Items':
 					try {
-						$this->strItems = QType::Cast($mixValue, QType::String);
+						$this->strItems = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'items', $this->strItems);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Menus':
 					try {
-						$this->strMenus = QType::Cast($mixValue, QType::String);
+						$this->strMenus = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'menus', $this->strMenus);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -448,10 +448,10 @@
 
 				case 'Role':
 					try {
-						$this->strRole = QType::Cast($mixValue, QType::String);
+						$this->strRole = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'role', $this->strRole);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -466,7 +466,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -480,10 +480,10 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the menu if set to true.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Items', 'Selector for the elements that serve as the menu items. Note: Theitems option should not be changed after initialization. (versionadded: 1.11.0)', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Menus', 'Selector for the elements that serve as the menu container, includingsub-menus. Note: The menus option should not be changed afterinitialization. Existing submenus will not be updated.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Role', 'Customize the ARIA roles used for the menu and menu items. The defaultuses \"menuitem\" for items. Setting the role option to \"listbox\" willuse \"option\" for items. If set to null, no roles will be set, which isuseful if the menu is being controlled by another element that ismaintaining focus. Note: The role option should not be changed afterinitialization. Existing (sub)menus and menu items will not beupdated.', QType::String),
+				new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the menu if set to true.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Items', 'Selector for the elements that serve as the menu items. Note: Theitems option should not be changed after initialization. (versionadded: 1.11.0)', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Menus', 'Selector for the elements that serve as the menu container, includingsub-menus. Note: The menus option should not be changed afterinitialization. Existing submenus will not be updated.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Role', 'Customize the ARIA roles used for the menu and menu items. The defaultuses \"menuitem\" for items. Setting the role option to \"listbox\" willuse \"option\" for items. If set to null, no roles will be set, which isuseful if the menu is being controlled by another element that ismaintaining focus. Note: The role option should not be changed afterinitialization. Existing (sub)menus and menu items will not beupdated.', \QCubed\Type::STRING),
 			));
 		}
 	}

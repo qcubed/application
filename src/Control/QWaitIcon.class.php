@@ -43,7 +43,7 @@
 		 * @param QControl|QControlBase|QForm $objParentObject Parent control/form of this wait icon
 		 * @param null|string                 $strControlId    Control ID to be set for the wait icon
 		 *
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
@@ -113,7 +113,7 @@
 		 * @param string $strName Property name
 		 *
 		 * @return mixed|null|string
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -129,7 +129,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -146,7 +146,7 @@
 		 * @param string $mixValue Property value
 		 *
 		 * @return mixed|void
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -155,45 +155,45 @@
 				// APPEARANCE
 				case "Text":
 					try {
-						$this->strText = QType::Cast($mixValue, QType::String);
+						$this->strText = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "TagName":
 					try {
-						$this->strTagName = QType::Cast($mixValue, QType::String);
+						$this->strTagName = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Padding":
 					try {
-						$this->strPadding = QType::Cast($mixValue, QType::String);
+						$this->strPadding = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "HorizontalAlign":
 					try {
-						$this->strHorizontalAlign = QType::Cast($mixValue, QType::String);
+						$this->strHorizontalAlign = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "VerticalAlign":
 					try {
-						$this->strVerticalAlign = QType::Cast($mixValue, QType::String);
+						$this->strVerticalAlign = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -201,7 +201,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

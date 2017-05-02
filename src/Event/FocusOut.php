@@ -1,6 +1,22 @@
 <?php
-/** added for V2 / jQuery support */
-class QFocusOutEvent extends QEvent {
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Event;
+
+/**
+ * Class FocusOut
+ *
+ * @was QFocusOutEvent
+ * @package QCubed\Event
+ */
+class FocusOut extends AbstractBase
+{
     /** Event Name */
-    const EventName = 'focusout';
+    const EVENT_NAME = 'focusout';
 }

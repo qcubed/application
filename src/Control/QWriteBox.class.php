@@ -20,7 +20,7 @@
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
 
-			$this->strInstructions = QApplication::Translate('Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  Use ** at the beginning of any line for a bulleted list.');
+			$this->strInstructions = t('Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  Use ** at the beginning of any line for a bulleted list.');
 		}
 
 		public function __get($strName) {
@@ -34,7 +34,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						return $objExc;
 					}
@@ -45,8 +45,8 @@
 			switch ($strName) {
 				case 'CodeCssClass':
 					try {
-						return ($this->strCodeCssClass = QType::Cast($mixValue, QType::String));
-					} catch (QCallerException $objExc) {
+						return ($this->strCodeCssClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						return $objExc;
 					}
@@ -54,7 +54,7 @@
 				default:
 					try {
 						return parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						return $objExc;
 					}

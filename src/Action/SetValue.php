@@ -1,9 +1,19 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Sets the javascript value of a control in the form. The value has to be known ahead of time. Useful for
  * automatically clearing a text field when it receives focus, for example.
  */
-class QSetValueAction extends QAction {
+class QSetValueAction extends AbstractBase {
     protected $strControlId = null;
     protected $strValue = "";
 

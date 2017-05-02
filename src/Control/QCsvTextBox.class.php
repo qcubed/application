@@ -34,8 +34,8 @@
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
 			// borrows too short and too long labels from super class
-			$this->strLabelForTooShort = QApplication::Translate('Enter at least %s items.');
-			$this->strLabelForTooLong = QApplication::Translate('Enter no more than %s items.');
+			$this->strLabelForTooShort = t('Enter at least %s items.');
+			$this->strLabelForTooLong = t('Enter no more than %s items.');
 		}
 
 		/**
@@ -70,7 +70,7 @@
 		 * @param string $strName Property name
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -87,7 +87,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -104,7 +104,7 @@
 		 * @param string $mixValue Value of the property
 		 *
 		 * @return mixed|void
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -113,54 +113,54 @@
 				// APPEARANCE
 				case "Delimiter":
 					try {
-						$this->strDelimiter = QType::Cast($mixValue, QType::String);
+						$this->strDelimiter = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Enclosure":
 					try {
-						$this->strEnclosure = QType::Cast($mixValue, QType::String);
+						$this->strEnclosure = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Escape":
 					try {
-						$this->strEscape = QType::Cast($mixValue, QType::String);
+						$this->strEscape = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "MinItemCount":
 					try {
-						$this->intMinItemCount = QType::Cast($mixValue, QType::Integer);
+						$this->intMinItemCount = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "MaxItemCount":
 					try {
-						$this->intMaxItemCount = QType::Cast($mixValue, QType::Integer);
+						$this->intMaxItemCount = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Value":
 					try {
-						$a =  QType::Cast($mixValue, QType::ArrayType);
+						$a =  \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
 						$temp_memory = fopen('php://memory', 'w');
 						fputcsv($temp_memory, $a, $this->strDelimiter, $this->strEnclosure);
 						rewind($temp_memory);
 						$this->strText = fgets($temp_memory);
 						fclose($temp_memory);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -168,7 +168,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -183,11 +183,11 @@
 		 */
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Delimiter', 'Default: , (comma)', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Enclosure', 'Default: " (double-quote)', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Escape', 'Default: \\ (backslash)', QType::String),
-				new QModelConnectorParam (get_called_class(), 'MinItemCount', 'Minimum number of items required.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'MaxItemCount', 'Maximum number of items allowed.', QType::Integer)
+				new QModelConnectorParam (get_called_class(), 'Delimiter', 'Default: , (comma)', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Enclosure', 'Default: " (double-quote)', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Escape', 'Default: \\ (backslash)', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'MinItemCount', 'Minimum number of items required.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'MaxItemCount', 'Maximum number of items allowed.', \QCubed\Type::INTEGER)
 			));
 		}
 

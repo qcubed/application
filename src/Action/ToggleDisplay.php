@@ -1,11 +1,21 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
 
 /**
  * Toggle the Disaply of a control
  *
  * @package Actions
  */
-class QToggleDisplayAction extends QAction {
+class QToggleDisplayAction extends AbstractBase {
     /** @var string Control ID of the control */
     protected $strControlId = null;
     /** @var boolean|null Enforce 'show' or 'hide' action */
@@ -15,17 +25,17 @@ class QToggleDisplayAction extends QAction {
      * @param QControl|QControlBase $objControl
      * @param bool                  $blnDisplay
      *
-     * @throws Exception|QCallerException|QInvalidCastException
+     * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
      */
     public function __construct($objControl, $blnDisplay = null) {
         if (!($objControl instanceof QControl)) {
-            throw new QCallerException('First parameter of constructor is expecting an object of type QControl');
+            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QControl');
         }
 
         $this->strControlId = $objControl->ControlId;
 
         if (!is_null($blnDisplay)) {
-            $this->blnDisplay = QType::Cast($blnDisplay, QType::Boolean);
+            $this->blnDisplay = \QCubed\Type::Cast($blnDisplay, \QCubed\Type::BOOLEAN);
         }
     }
 

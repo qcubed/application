@@ -12,7 +12,7 @@
 	 *
 	 * @package Controls
 	 *
-	 * @property null|QDateTime $DateTime
+	 * @property null|\QCubed\QDateTime $DateTime
 	 * @property string $DateTimePickerType
 	 * @property string $DateTimePickerFormat
 	 * @property integer $MinimumYear Minimum Year to show
@@ -67,7 +67,7 @@
 
 			$blnIsDateTimeSet = false;
 			if ($this->dttDateTime == null) {
-				$dttNewDateTime = QDateTime::Now();
+				$dttNewDateTime = \QCubed\QDateTime::Now();
 			} else {
 				$blnIsDateTimeSet = true;
 				$dttNewDateTime = $this->dttDateTime;
@@ -210,7 +210,7 @@
 			if ($this->dttDateTime) {
 				$dttDateTime = $this->dttDateTime;
 			} else {
-				$dttDateTime = new QDateTime();
+				$dttDateTime = new \QCubed\QDateTime();
 			}
 
 			$strToReturn = '';
@@ -233,7 +233,7 @@
 						$strMonthListbox .= sprintf('<option value="%s"%s>%s</option>',
 							$intMonth,
 							$strSelected,
-							QApplication::Translate(strftime("%b", mktime(0, 0, 0, $intMonth, 1, 2000))));
+							t(strftime("%b", mktime(0, 0, 0, $intMonth, 1, 2000))));
 					}
 					$strMonthListbox .= '</select>';
 
@@ -412,9 +412,9 @@
 
 				if ($blnIsNull) {
 					if ($this->strName)
-						$this->ValidationError = sprintf(QApplication::Translate('%s is required'), $this->strName);
+						$this->ValidationError = sprintf(t('%s is required'), $this->strName);
 					else
-						$this->ValidationError = QApplication::Translate('Required');
+						$this->ValidationError = t('Required');
 					return false;
 				}
 			} else {
@@ -423,7 +423,7 @@
 						($this->strDateTimePickerType == QDateTimePickerType::DateTimeSeconds )) &&
 					($this->intSelectedDay || $this->intSelectedMonth || $this->intSelectedYear) &&
 					($this->dttDateTime->IsDateNull())) {
-					$this->ValidationError = QApplication::Translate('Invalid Date');
+					$this->ValidationError = t('Invalid Date');
 					return false;
 				}
 			}
@@ -459,7 +459,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -476,8 +476,8 @@
 				// MISC
 				case "DateTime":
 					try {
-						$dttDate = QType::Cast($mixValue, QType::DateTime);
-					} catch (QInvalidCastException $objExc) {
+						$dttDate = \QCubed\Type::Cast($mixValue, \QCubed\Type::DATE_TIME);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -495,8 +495,8 @@
 
 				case "DateTimePickerType":
 					try {
-						$this->strDateTimePickerType = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$this->strDateTimePickerType = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -504,8 +504,8 @@
 
 				case "DateTimePickerFormat":
 					try {
-						$this->strDateTimePickerFormat = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$this->strDateTimePickerFormat = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -513,8 +513,8 @@
 
 				case "MinimumYear":
 					try {
-						$this->intMinimumYear = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$this->intMinimumYear = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -522,16 +522,16 @@
 
 				case "MaximumYear":
 					try {
-						$this->intMaximumYear = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$this->intMaximumYear = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 					break;
 				case "AllowBlankTime":
 					try {
-						$this->blnAllowBlankTime = QType::Cast($mixValue, QType::Boolean);
-					} catch (QInvalidCastException $objExc) {
+						$this->blnAllowBlankTime = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -539,8 +539,8 @@
 
 				case "AllowBlankDate":
 					try {
-						$this->blnAllowBlankDate = QType::Cast($mixValue, QType::Boolean);
-					} catch (QInvalidCastException $objExc) {
+						$this->blnAllowBlankDate = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -548,8 +548,8 @@
 
 				case "TimeSeparator":
 					try {
-						$this->strTimeSeparator = QType::Cast($mixValue, QType::String);
-					} catch (QInvalidCastException $objExc) {
+						$this->strTimeSeparator = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -557,8 +557,8 @@
 
 				case "SecondInterval":
 					try {
-						$this->intSecondInterval = QType::Cast($mixValue, QType::Integer);
-					} catch (QInvalidCastException $objExc) {
+						$this->intSecondInterval = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -566,8 +566,8 @@
 
 				case "MinuteInterval":
 					try {
-						$this->intMinuteInterval = QType::Cast($mixValue, QType::Integer);
-					} catch (QInvalidCastException $objExc) {
+						$this->intMinuteInterval = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -575,8 +575,8 @@
 
 				case "HourInterval":
 					try {
-						$this->intHourInterval = QType::Cast($mixValue, QType::Integer);
-					} catch (QInvalidCastException $objExc) {
+						$this->intHourInterval = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -586,7 +586,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

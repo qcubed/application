@@ -56,7 +56,7 @@
 			switch ($strName) {
 				case '_DragData': // Internal only. Do not use. Used by JS above to keep track of user selection.
 					try {
-						$data = QType::Cast($mixValue, QType::ArrayType);
+						$data = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
 						$this->aryOriginalPosition = $data['originalPosition'];
 						$this->aryNewPosition = $data['position'];
 
@@ -65,7 +65,7 @@
 						$this->objParentControl->getWrapperStyler()->Left = $this->aryNewPosition['left'];
 						break;
 						
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -94,7 +94,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -121,7 +121,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}

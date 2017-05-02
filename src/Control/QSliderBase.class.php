@@ -66,8 +66,8 @@
 			switch ($strName) {
 				case '_Value':	// Internal Only. Used by JS above. Do Not Call.
 					try {
-						$this->intValue = QType::Cast($mixValue, QType::Integer);
-					} catch (QCallerException $objExc) {
+						$this->intValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -76,10 +76,10 @@
 				case '_Values': // Internal Only. Used by JS above. Do Not Call.
 					try {
 						$aValues = explode (',', $mixValue);
-						$aValues[0] = QType::Cast( $aValues[0], QType::Integer); // important to make sure JS sends values as ints instead of strings
-						$aValues[1] = QType::Cast($aValues[1], QType::Integer); // important to make sure JS sends values as ints instead of strings
+						$aValues[0] = \QCubed\Type::Cast( $aValues[0], \QCubed\Type::INTEGER); // important to make sure JS sends values as ints instead of strings
+						$aValues[1] = \QCubed\Type::Cast($aValues[1], \QCubed\Type::INTEGER); // important to make sure JS sends values as ints instead of strings
 						$this->arrValues = $aValues;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -88,7 +88,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

@@ -56,9 +56,9 @@
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
 
-			$this->strLabelForInvalid = QApplication::Translate('Invalid Number');
-			$this->strLabelForLess = QApplication::Translate('Value must be less than %s');
-			$this->strLabelForGreater = QApplication::Translate('Value must be greater than %s');
+			$this->strLabelForInvalid = t('Invalid Number');
+			$this->strLabelForLess = t('Value must be less than %s');
+			$this->strLabelForGreater = t('Value must be greater than %s');
 		}
 
 		/**
@@ -68,8 +68,8 @@
 			if (parent::Validate()) {
 				if ($this->strText != "") {
 					try {
-						$this->strText = QType::Cast($this->strText, $this->strDataType);
-					} catch (QInvalidCastException $objExc) {
+						$this->strText = \QCubed\Type::Cast($this->strText, $this->strDataType);
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$this->ValidationError = $this->strLabelForInvalid;
 						$this->MarkAsModified();
 						return false;
@@ -82,7 +82,7 @@
 					}
 
 					if (!is_null($this->mixStep)) {
-						$newVal = QType::Cast(round(($this->strText - $this->mixMinimum) / $this->mixStep) * $this->mixStep + $this->mixMinimum, $this->strDataType);
+						$newVal = \QCubed\Type::Cast(round(($this->strText - $this->mixMinimum) / $this->mixStep) * $this->mixStep + $this->mixMinimum, $this->strDataType);
 
 						if ($newVal != $this->strText) {
 							if ($this->strLabelForNotStepAligned) {
@@ -121,7 +121,7 @@
 		 * @param string $strName Name of the property
 		 *
 		 * @return array|bool|int|mixed|null|QControl|QForm|string
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -142,7 +142,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -159,7 +159,7 @@
 		 * @param string $mixValue Property value
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -168,52 +168,52 @@
 				// MISC
 				case "Maximum":
 					try {
-						$this->mixMaximum = QType::Cast($mixValue, $this->strDataType);
+						$this->mixMaximum = \QCubed\Type::Cast($mixValue, $this->strDataType);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Minimum":
 					try {
-						$this->mixMinimum = QType::Cast($mixValue, $this->strDataType);
+						$this->mixMinimum = \QCubed\Type::Cast($mixValue, $this->strDataType);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Step":
 					try {
-						$this->mixStep = QType::Cast($mixValue, $this->strDataType);
+						$this->mixStep = \QCubed\Type::Cast($mixValue, $this->strDataType);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'LabelForGreater':
 					try {
-						$this->strLabelForGreater = QType::Cast($mixValue, QType::String);
+						$this->strLabelForGreater = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'LabelForLess':
 					try {
-						$this->strLabelForLess = QType::Cast($mixValue, QType::String);
+						$this->strLabelForLess = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'LabelForNotStepAligned':
 					try {
-						$this->strLabelForNotStepAligned = QType::Cast($mixValue, QType::String);
+						$this->strLabelForNotStepAligned = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -221,7 +221,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -236,12 +236,12 @@
 		 */
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'Maximum', 'Meximum value allowed', QType::String),// float or integer
-				new QModelConnectorParam (get_called_class(), 'Minimum', 'Meximum value allowed', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Step', 'If value must be aligned on a step, the step amount', QType::String),
-				new QModelConnectorParam (get_called_class(), 'LabelForLess', 'If value is too small, override the default error message', QType::String),
-				new QModelConnectorParam (get_called_class(), 'LabelForGreater', 'If value is too big, override the default error message', QType::String),
-				new QModelConnectorParam (get_called_class(), 'LabelForNotStepAligned', 'If value is not step aligned, override the default error message', QType::String)
+				new QModelConnectorParam (get_called_class(), 'Maximum', 'Meximum value allowed', \QCubed\Type::STRING),// float or integer
+				new QModelConnectorParam (get_called_class(), 'Minimum', 'Meximum value allowed', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Step', 'If value must be aligned on a step, the step amount', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'LabelForLess', 'If value is too small, override the default error message', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'LabelForGreater', 'If value is too big, override the default error message', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'LabelForNotStepAligned', 'If value is not step aligned, override the default error message', \QCubed\Type::STRING)
 			));
 		}
 

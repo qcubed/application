@@ -24,14 +24,14 @@ class QTag extends QHtmlAttributeManager {
 	/**
 	 * @param null|string $strTag
 	 * @param bool $blnIsVoidElement
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 
 	public function __construct($strTag = null, $blnIsVoidElement = false) {
 		if ($strTag) {
 			$this->strTag = $strTag;
 		} elseif (!isset($this->strTag)) {
-			throw new QCallerException ('Must set tag either with subclass or constructor');
+			throw new \QCubed\Exception\Caller ('Must set tag either with subclass or constructor');
 		}
 		$this->blnIsVoidElement = $blnIsVoidElement;
 	}

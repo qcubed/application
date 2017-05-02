@@ -1,6 +1,24 @@
 <?php
-/** When the mouse pointer moves within the control on the browser */
-class QMouseMoveEvent extends QEvent {
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Event;
+
+/**
+ * Class MouseMove
+ *
+ * When the mouse pointer moves within the control on the browser
+ *
+ * @was QMouseMoveEvent
+ * @package QCubed\Event
+ */
+class MouseMove extends AbstractBase
+{
     /** Event Name */
-    const EventName = 'mousemove';
+    const EVENT_NAME = 'mousemove';
 }

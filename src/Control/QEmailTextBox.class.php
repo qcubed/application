@@ -16,7 +16,7 @@
 
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
-			$this->strLabelForInvalid = QApplication::Translate('Invalid Email Address');
+			$this->strLabelForInvalid = t('Invalid Email Address');
 			$this->strTextMode = QTextMode::Email;
 		}
 	}

@@ -58,19 +58,19 @@ abstract class QPaginatorBase extends QControl {
 	 * @param null|string                     $strControlId
 	 *
 	 * @throws Exception
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	public function __construct($objParentObject, $strControlId = null) {
 		try {
 			parent::__construct($objParentObject, $strControlId);
-		} catch (QCallerException  $objExc) {
+		} catch (\QCubed\Exception\Caller  $objExc) {
 			$objExc->IncrementOffset();
 			throw $objExc;
 		}
 
 		$this->prxPagination = new QControlProxy($this);
-		$this->strLabelForPrevious = QApplication::Translate('Previous');
-		$this->strLabelForNext = QApplication::Translate('Next');
+		$this->strLabelForPrevious = t('Previous');
+		$this->strLabelForNext = t('Next');
 
 		$this->Setup();
 	}
@@ -109,7 +109,7 @@ abstract class QPaginatorBase extends QControl {
 	 * @param string $strParameter
 	 */
 	public function Page_Click($strFormId, $strControlId, $strParameter) {
-		$this->objPaginatedControl->PageNumber = QType::Cast($strParameter, QType::Integer);
+		$this->objPaginatedControl->PageNumber = \QCubed\Type::Cast($strParameter, \QCubed\Type::INTEGER);
 	}
 
 	/**
@@ -206,7 +206,7 @@ abstract class QPaginatorBase extends QControl {
 	 *
 	 * @return string HTML for the control
 	 * @throws Exception
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	public function GetControlHtml() {
 		$this->objPaginatedControl->DataBind();
@@ -357,7 +357,7 @@ abstract class QPaginatorBase extends QControl {
 	 * @return bool|float|int|mixed|string
 	 *
 	 * @throws Exception
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	public function __get($strName) {
 		switch ($strName) {
@@ -381,7 +381,7 @@ abstract class QPaginatorBase extends QControl {
 			default:
 				try {
 					return parent::__get($strName);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -401,8 +401,8 @@ abstract class QPaginatorBase extends QControl {
 	 * @return mixed|void
 	 *
 	 * @throws Exception
-	 * @throws QCallerException
-	 * @throws QInvalidCastException
+	 * @throws \QCubed\Exception\Caller
+	 * @throws \QCubed\Exception\InvalidCast
 	 */
 	public function __set($strName, $mixValue) {
 		$this->blnModified = true;
@@ -412,19 +412,19 @@ abstract class QPaginatorBase extends QControl {
 			case "ItemsPerPage":
 				try {
 					if ($mixValue > 0)
-						return ($this->intItemsPerPage = QType::Cast($mixValue, QType::Integer));
+						return ($this->intItemsPerPage = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER));
 					else
 						return ($this->intItemsPerPage = 10);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
 
 			case "PageNumber":
 				try {
-					$intNewPageNum = QType::Cast($mixValue, QType::Integer);
-				} catch (QInvalidCastException $objExc) {
+					$intNewPageNum = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -438,7 +438,7 @@ abstract class QPaginatorBase extends QControl {
 			case "TotalItemCount":
 				try {
 					if ($mixValue > 0) {
-						$this->intTotalItemCount = QType::Cast($mixValue, QType::Integer);
+						$this->intTotalItemCount = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 					}
 					else {
 						$this->intTotalItemCount = 0;
@@ -446,15 +446,15 @@ abstract class QPaginatorBase extends QControl {
 					$this->LimitPageNumber();
 					return $this->intTotalItemCount;
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
 
 			case "UseAjax":
 				try {
-					$blnToReturn = ($this->blnUseAjax = QType::Cast($mixValue, QType::Boolean));
-				} catch (QInvalidCastException $objExc) {
+					$blnToReturn = ($this->blnUseAjax = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN));
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -470,28 +470,28 @@ abstract class QPaginatorBase extends QControl {
 					//ensure we update our ajax action to use it
 					$this->Setup();
 					return $mixToReturn;
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
 
 			case 'IndexCount':
-				$this->intIndexCount = QType::Cast($mixValue, QType::Integer);
+				$this->intIndexCount = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 				if ($this->intIndexCount < 7)
-					throw new QCallerException('Paginator must have an IndexCount >= 7');
+					throw new \QCubed\Exception\Caller('Paginator must have an IndexCount >= 7');
 				return $this->intIndexCount;
 
 			case 'LabelForNext':
 				try {
-					return ($this->strLabelForNext = QType::Cast($mixValue, QType::String));
-				} catch (QCallerException $objExc) {
+					return ($this->strLabelForNext = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
 			case 'LabelForPrevious':
 				try {
-					return ($this->strLabelForPrevious = QType::Cast($mixValue, QType::String));
-				} catch (QCallerException $objExc) {
+					return ($this->strLabelForPrevious = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -499,7 +499,7 @@ abstract class QPaginatorBase extends QControl {
 			default:
 				try {
 					return (parent::__set($strName, $mixValue));
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}

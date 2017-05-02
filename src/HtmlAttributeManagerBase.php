@@ -11,6 +11,7 @@ namespace QCubed;
 
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
+use QCubed\Js;
 
 /**
  * Class QHtmlAttributeManagerBase
@@ -188,7 +189,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 	 * @param $strValue
 	 */
 	public function setDataAttribute($strName, $strValue) {
-		$strName = 'data-' . JavaScriptHelper::dataNameFromCamelCase($strName);
+		$strName = 'data-' . Js\Helper::dataNameFromCamelCase($strName);
 		$this->setHtmlAttribute($strName, $strValue);
 	}
 
@@ -202,7 +203,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 	 * @return null
 	 */
 	public function getDataAttribute($strName) {
-		$strName = 'data-' . JavaScriptHelper::dataNameFromCamelCase($strName);
+		$strName = 'data-' . Js\Helper::dataNameFromCamelCase($strName);
 		return $this->getHtmlAttribute($strName);
 	}
 
@@ -211,7 +212,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 	 * @param $strName
 	 */
 	public function removeDataAttribute($strName) {
-		$strName = 'data-' . JavaScriptHelper::dataNameFromCamelCase($strName);
+		$strName = 'data-' . Js\Helper::dataNameFromCamelCase($strName);
 		$this->removeHtmlAttribute($strName);
 	}
 
@@ -239,7 +240,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				} else {
 					$oldValue = '';
 				}
-				if (QHtml::setLength($oldValue, $strValue)) {
+				if (Html::setLength($oldValue, $strValue)) {
 					$ret = true;
 					$this->markAsModified();
 					$this->styles[$strName] = $oldValue; // oldValue was updated
@@ -367,7 +368,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 		if (is_null($strClasses)) {
 			$strClasses= '';
 		}
-		if (QHtml::addClass($strClasses, $strNewClass)) {
+		if (Html::addClass($strClasses, $strNewClass)) {
 			$this->setHtmlAttribute('class', $strClasses);
 			$ret = true;
 		}
@@ -381,7 +382,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 	public function removeCssClass($strCssClass) {
 		if (!$strCssClass) return;
 		$strClasses = $this->getHtmlAttribute('class');
-		if ($strClasses && QHtml::removeClass($strClasses, $strCssClass)) {
+		if ($strClasses && Html::removeClass($strClasses, $strCssClass)) {
 			$this->setHtmlAttribute('class', $strClasses);
 		}
 	}
@@ -397,7 +398,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 	public function removeCssClassesByPrefix($strPrefix) {
 		if (!$strPrefix) return;
 		$strClasses = $this->getHtmlAttribute('class');
-		if ($strClasses && QHtml::removeClassesByPrefix($strClasses, $strPrefix)) {
+		if ($strClasses && Html::removeClassesByPrefix($strClasses, $strPrefix)) {
 			$this->setHtmlAttribute('class', $strClasses);
 		}
 	}
@@ -438,7 +439,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 	 * @return string
 	 */
 	public function renderHtmlAttributes($attributeOverrides = null, $styleOverrides = null) {
-		return QHtml::renderHtmlAttributes($this->getHtmlAttributes($attributeOverrides, $styleOverrides));
+		return Html::renderHtmlAttributes($this->getHtmlAttributes($attributeOverrides, $styleOverrides));
 	}
 
 	/**
@@ -451,7 +452,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 		if ($styleOverrides) {
 			$styles = array_merge($styles, $styleOverrides);
 		}
-		return QHtml::renderStyles($styles);
+		return Html::renderStyles($styles);
 	}
 
 	/**
@@ -463,11 +464,12 @@ class HtmlAttributeManagerBase extends AbstractBase {
 	 * @param null|array 		$styleOverrides		key/value pairs of values for style overrides
 	 * @param null|string 		$strInnerHtml		inner html to render. Will NOT be escaped.
 	 * @param bool				$blnIsVoidElement	true if it should not have innerHtml or a closing tag.
-	 * @return string			HTML out. Attributes will be escaped as needed, but innerHtml will be raw, so be careful.
+     * @param bool              $blnNoSpace         some non-block elements render differently when there is a space between tags. This controls the space.
+     * @return string			HTML out. Attributes will be escaped as needed, but innerHtml will be raw, so be careful.
 	 */
 	protected function renderTag($strTag, $attributeOverrides = null, $styleOverrides = null, $strInnerHtml = null, $blnIsVoidElement = false, $blnNoSpace = false) {
 		$strAttributes = $this->renderHtmlAttributes($attributeOverrides, $styleOverrides);
-		return QHtml::renderTag($strTag, $strAttributes, $strInnerHtml, $blnIsVoidElement, $blnNoSpace);
+		return Html::renderTag($strTag, $strAttributes, $strInnerHtml, $blnIsVoidElement, $blnNoSpace);
 	}
 
 
@@ -549,7 +551,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 			// Styles
 			case "BackColor":
 				try {
-					$this->setCssStyle('background-color', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('background-color', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -557,7 +559,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "BorderColor":
 				try {
-					$this->setCssStyle('border-color', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('border-color', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -565,7 +567,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "BorderStyle":
 				try {
-					$this->setCssStyle('border-style', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('border-style', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -573,7 +575,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "BorderWidth":
 				try {
-					$this->setCssStyle('border-width', QType::cast($mixValue, QType::String), true);
+					$this->setCssStyle('border-width', Type::cast($mixValue, Type::STRING), true);
 					if (!$this->hasCssStyle('border-style')) {
 						$this->setCssStyle('border-style', 'solid');
 					}
@@ -584,7 +586,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "BorderCollapse":
 				try {
-					$this->setCssStyle('border-collapse', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('border-collapse', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -602,7 +604,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 					}
 				} else {
 					try {
-						$this->setCssStyle('display', QType::cast($mixValue, QType::String));
+						$this->setCssStyle('display', Type::cast($mixValue, Type::STRING));
 						break;
 					} catch (InvalidCast $objExc) {
 						$objExc->incrementOffset();
@@ -612,7 +614,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "FontBold":
 				try {
-					$this->setCssStyle('font-weight', QType::cast($mixValue, QType::Boolean) ? 'bold' : null);
+					$this->setCssStyle('font-weight', Type::cast($mixValue, Type::BOOLEAN) ? 'bold' : null);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -621,7 +623,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "FontItalic":
 				try {
-					$this->setCssStyle('font-style', QType::cast($mixValue, QType::Boolean) ? 'italic' : null);
+					$this->setCssStyle('font-style', Type::cast($mixValue, Type::BOOLEAN) ? 'italic' : null);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -630,7 +632,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "FontNames":
 				try {
-					$this->setCssStyle('font-family', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('font-family', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -639,7 +641,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "FontOverline":
 				try {
-					$this->setCssStyle('text-decoration', QType::cast($mixValue, QType::Boolean) ? 'overline' : null);
+					$this->setCssStyle('text-decoration', Type::cast($mixValue, Type::BOOLEAN) ? 'overline' : null);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -647,7 +649,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "FontStrikeout":
 				try {
-					$this->setCssStyle('text-decoration', QType::cast($mixValue, QType::Boolean) ? 'line-through' : null);
+					$this->setCssStyle('text-decoration', Type::cast($mixValue, Type::BOOLEAN) ? 'line-through' : null);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -655,7 +657,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "FontUnderline":
 				try {
-					$this->setCssStyle('text-decoration', QType::cast($mixValue, QType::Boolean) ? 'underline' : null);
+					$this->setCssStyle('text-decoration', Type::cast($mixValue, Type::BOOLEAN) ? 'underline' : null);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -663,7 +665,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "FontSize":
 				try {
-					$this->setCssStyle('font-size', QType::cast($mixValue, QType::String), true);
+					$this->setCssStyle('font-size', Type::cast($mixValue, Type::STRING), true);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -672,7 +674,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "ForeColor":
 				try {
-					$this->setCssStyle('color', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('color', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -680,9 +682,9 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "Opacity":
 				try {
-					$mixValue = QType::cast($mixValue, QType::Integer);
+					$mixValue = Type::cast($mixValue, Type::INTEGER);
 					if (($mixValue < 0) || ($mixValue > 100)) {
-						throw new QCallerException('Opacity must be an integer value between 0 and 100');
+						throw new Caller('Opacity must be an integer value between 0 and 100');
 					}
 					$this->setCssStyle('opacity', $mixValue);
 					break;
@@ -692,7 +694,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "Cursor":
 				try {
-					$this->setCssStyle('cursor', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('cursor', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -701,7 +703,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "Height":
 				try {
-					$this->setCssStyle('height', QType::cast($mixValue, QType::String), true);
+					$this->setCssStyle('height', Type::cast($mixValue, Type::STRING), true);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -710,7 +712,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "Width":
 				try {
-					$this->setCssStyle('width', QType::cast($mixValue, QType::String), true);
+					$this->setCssStyle('width', Type::cast($mixValue, Type::STRING), true);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -719,7 +721,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "Overflow":
 				try {
-					$this->setCssStyle('overflow', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('overflow', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -727,7 +729,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "Position":
 				try {
-					$this->setCssStyle('position', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('position', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -735,7 +737,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "Top":
 				try {
-					$this->setCssStyle('top', QType::cast($mixValue, QType::String), true);
+					$this->setCssStyle('top', Type::cast($mixValue, Type::STRING), true);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -743,7 +745,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "Left":
 				try {
-					$this->setCssStyle('left', QType::cast($mixValue, QType::String), true);
+					$this->setCssStyle('left', Type::cast($mixValue, Type::STRING), true);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -751,7 +753,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "HorizontalAlign":
 				try {
-					$this->setCssStyle('text-align', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('text-align', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -759,19 +761,19 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "VerticalAlign":
 				try {
-					$this->setCssStyle('vertical-align', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('vertical-align', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
 					throw $objExc;
 				}
 			case "Wrap": // Wrap is now an actual attribute. Original developer used Wrap instead of NoWrap, not anticipating future change to HTML
-				throw new QCallerException ("Wrap is deprecated. Use NoWrap instead");
+				throw new Caller ("Wrap is deprecated. Use NoWrap instead");
 				break;
 
 			case "NoWrap":
 				try {
-					$this->setCssStyle('white-space', QType::cast($mixValue, QType::Boolean) ? 'nowrap' : null);
+					$this->setCssStyle('white-space', Type::cast($mixValue, Type::BOOLEAN) ? 'nowrap' : null);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -788,7 +790,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "UnorderedListStyle":
 				try {
-					$this->setCssStyle('list-style-type', QType::cast($mixValue, QType::String));
+					$this->setCssStyle('list-style-type', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -798,7 +800,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 			// Attributes
 			case "CssClass":
 				try {
-					$strCssClass = QType::cast($mixValue, QType::String);
+					$strCssClass = Type::cast($mixValue, Type::STRING);
 					$this->setCssClass($strCssClass);
 					break;
 				} catch (InvalidCast $objExc) {
@@ -807,7 +809,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "AccessKey":
 				try {
-					$this->setHtmlAttribute('accesskey', QType::cast($mixValue, QType::String));
+					$this->setHtmlAttribute('accesskey', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -815,7 +817,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "Enabled":
 				try {
-					$this->setHtmlAttribute('disabled',  QType::cast($mixValue, QType::Boolean) ? null : 'disabled');
+					$this->setHtmlAttribute('disabled',  Type::cast($mixValue, Type::BOOLEAN) ? null : 'disabled');
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -826,7 +828,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "TabIndex":
 				try {
-					$this->setHtmlAttribute('tabindex', QType::cast($mixValue, QType::String));
+					$this->setHtmlAttribute('tabindex', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -834,7 +836,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 				}
 			case "ToolTip":
 				try {
-					$this->setHtmlAttribute('title', QType::cast($mixValue, QType::String));
+					$this->setHtmlAttribute('title', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -843,7 +845,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "Data":
 				try {
-					$dataArray = QType::cast($mixValue, QType::ArrayType);
+					$dataArray = Type::cast($mixValue, Type::ARRAY_TYPE);
 					foreach ($dataArray as $key=>$value) {
 						$this->setDataAttribute($key, $value);
 					}
@@ -855,7 +857,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "ReadOnly":
 				try {
-					$this->setHtmlAttribute('readonly',  QType::cast($mixValue, QType::Boolean) ? 'readonly' : null);
+					$this->setHtmlAttribute('readonly',  Type::cast($mixValue, Type::BOOLEAN) ? 'readonly' : null);
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -864,7 +866,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "AltText":
 				try {
-					$this->setHtmlAttribute('alt', QType::cast($mixValue, QType::String));
+					$this->setHtmlAttribute('alt', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();
@@ -873,7 +875,7 @@ class HtmlAttributeManagerBase extends AbstractBase {
 
 			case "OrderedListType":
 				try {
-					$this->setHtmlAttribute('type', QType::cast($mixValue, QType::String));
+					$this->setHtmlAttribute('type', Type::cast($mixValue, Type::STRING));
 					break;
 				} catch (InvalidCast $objExc) {
 					$objExc->incrementOffset();

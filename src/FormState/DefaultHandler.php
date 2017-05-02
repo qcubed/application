@@ -48,8 +48,8 @@ class DefaultHandler extends AbstractBase
             $strFormState = str_replace('+', '-', $strFormState);
             $strFormState = str_replace('/', '_', $strFormState);
         } else {
-            // Use QCryptography to Encrypt
-            $objCrypto = new QCryptography(QForm::$EncryptionKey, true);
+            // Use \QCubed\Cryptography to Encrypt
+            $objCrypto = new \QCubed\Cryptography(QForm::$EncryptionKey, true);
             $strFormState = $objCrypto->Encrypt($strFormState);
         }
         return $strFormState;
@@ -66,8 +66,8 @@ class DefaultHandler extends AbstractBase
 
             $strSerializedForm = base64_decode($strSerializedForm);
         } else {
-            // Use QCryptography to Decrypt
-            $objCrypto = new QCryptography(QForm::$EncryptionKey, true);
+            // Use \QCubed\Cryptography to Decrypt
+            $objCrypto = new \QCubed\Cryptography(QForm::$EncryptionKey, true);
             $strSerializedForm = $objCrypto->Decrypt($strSerializedForm);
         }
 

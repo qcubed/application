@@ -31,7 +31,7 @@
 			$jqOptions = parent::MakeJqOptions();
 
 			// TODO: Put this in the qcubed.js file, or something like it.
-			$jqOptions['create'] =  new QJsClosure('
+			$jqOptions['create'] =  new \QCubed\Js\Closure('
 					var ary = jQuery(this).sortable("toArray");
 						var str = ary.join(",");
 			 			qcubed.recordControlModification("$this->ControlId", "_ItemArray", str);
@@ -58,11 +58,11 @@ FUNC;
 			switch ($strName) {
 				case '_ItemArray': // Internal only. Do not use. Used by JS above to track selections.
 					try {
-						$data = QType::Cast($mixValue, QType::String);
+						$data = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$a = explode (",", $data);
 						$this->aryItemArray = $a;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -71,7 +71,7 @@ FUNC;
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -85,7 +85,7 @@ FUNC;
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}

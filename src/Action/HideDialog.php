@@ -1,10 +1,25 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+use QCubed\Project\ControlDialog as QDialog;
+
+/**
+ * Class HideDialog
+ *
  * Hiding a JQuery UI Dialog (QDialog)
  *
- * @package Actions
+ * @was QHideDialog
+ * @package QCubed\Action
  */
-class QHideDialog extends QAction {
+class HideDialog extends AbstractBase {
     /** @var null|string JS to be executed on the client side for closing the dialog */
     protected $strJavaScript = null;
 
@@ -13,11 +28,11 @@ class QHideDialog extends QAction {
      *
      * @param QDialog $objControl
      *
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
-    public function __construct($objControl) {
+    public function __construct(\QCubed\Control\Dialog $objControl) {
         if (!($objControl instanceof QDialog)) {
-            throw new QCallerException('First parameter of constructor is expecting an object of type QDialog');
+            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QDialog');
         }
 
         $strControlId = $objControl->getJqControlId();

@@ -16,7 +16,7 @@ abstract class QJqUiPropertyEvent extends QEvent {
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception|QCallerException
+     * @throws Exception|\QCubed\Exception\Caller
      */
     public function __get($strName) {
         switch ($strName) {
@@ -25,7 +25,7 @@ abstract class QJqUiPropertyEvent extends QEvent {
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
+                } catch (\QCubed\Exception\Caller $objExc) {
                     $objExc->IncrementOffset();
                     throw $objExc;
                 }

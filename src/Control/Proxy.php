@@ -35,7 +35,7 @@ class Proxy extends ProjectControl
      * @param null|string $strControlId Control ID for this control
      *
      * @throws Exception
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     public function __construct($objParent, $strControlId = null)
     {
@@ -44,7 +44,7 @@ class Proxy extends ProjectControl
     }
 
     /**
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     public function getControlHtml()
     {

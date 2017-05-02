@@ -53,14 +53,14 @@
 		 * @param string $strName Name of the property
 		 * @param string $mixValue Value of the property
 		 *
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case '_Value':	// Internal Only. Used by JS above. Do Not Call.
 					try {
-						$this->Value = QType::Cast($mixValue, QType::Integer);
-					} catch (QCallerException $objExc) {
+						$this->Value = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -69,7 +69,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

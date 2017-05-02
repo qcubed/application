@@ -1,15 +1,24 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: shannon
- * Date: 4/28/17
- * Time: 3:53 PM
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
  */
 
+namespace QCubed\Event;
 
-/** When the mouse cursor enters the control */
-class QMouseEnterEvent extends QEvent {
+/**
+ * Class MouseEnter
+ *
+ * When the mouse cursor enters the control
+ *
+ * @was QMouseEnterEvent
+ * @package QCubed\Event
+ */
+class MouseEnter extends AbstractBase
+{
     /** Event Name */
     const EventName = 'mouseenter';
 }
-

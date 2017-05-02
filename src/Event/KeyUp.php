@@ -1,8 +1,26 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
 
-/** When a pressed key goes up while the focus is on the control */
-class QKeyUpEvent extends QEvent {
+namespace QCubed\Event;
+
+
+/**
+ * Class KeyUp
+ *
+ * When a pressed key goes up while the focus is on the control
+ *
+ * @was QKeyUpEvent
+ * @package QCubed\Event
+ */
+class KeyUp extends AbstractBase
+{
     /** Event Name */
-    const EventName = 'keyup';
+    const EVENT_NAME = 'keyup';
 }
 

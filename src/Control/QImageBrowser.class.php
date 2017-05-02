@@ -42,29 +42,29 @@
 			// Call the Parent
 			try {
 				parent::__construct($objParentObject, $strControlId);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
 			$this->AutoRenderChildren = true;
 			
 			$this->btnFirst = new QButton($this);
-			$this->btnFirst->Text = QApplication::Translate('First');
+			$this->btnFirst->Text = t('First');
 			$this->btnFirst->Enabled = false;
 			$this->btnFirst->CssClass = 'button ib_nav_button ib_nav_button_first';
 
 			$this->btnPrev = new QButton($this);
-			$this->btnPrev->Text = QApplication::Translate('Previous');
+			$this->btnPrev->Text = t('Previous');
 			$this->btnPrev->Enabled = false;
 			$this->btnPrev->CssClass = 'button ib_nav_button ib_nav_button_prev';
 
 			$this->btnNext = new QButton($this);
-			$this->btnNext->Text = QApplication::Translate('Next');
+			$this->btnNext->Text = t('Next');
 			$this->btnNext->Enabled = false;
 			$this->btnNext->CssClass = 'button ib_nav_button ib_nav_button_next';
 
 			$this->btnLast = new QButton($this);
-			$this->btnLast->Text = QApplication::Translate('Last');
+			$this->btnLast->Text = t('Last');
 			$this->btnLast->Enabled = false;
 			$this->btnLast->CssClass = 'button ib_nav_button ib_nav_button_last';
 
@@ -77,7 +77,7 @@
 			while ( !($objImageBrowser instanceof QImageBrowserBase) ) {
 				$objImageBrowser = $objImageBrowser->ParentControl;
 				if (is_null($objImageBrowser) || $objImageBrowser instanceof QForm) {
-					throw new QCallerException("QImageBrowserNav must be inside a QImageBrowser");
+					throw new \QCubed\Exception\Caller("QImageBrowserNav must be inside a QImageBrowser");
 				}
 			}
 			if (!$arrButtons) {
@@ -113,7 +113,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -127,10 +127,10 @@
 				case "FirstButton":
 					try {
 						$this->RemoveChildControl($this->btnFirst->ControlId, true);
-						$this->btnFirst = QType::Cast($mixValue, 'QControl');
+						$this->btnFirst = \QCubed\Type::Cast($mixValue, 'QControl');
 						$this->setButtonActions(array("btnFirst_Click" => $this->btnFirst));
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -138,10 +138,10 @@
 				case "PrevButton":
 					try {
 						$this->RemoveChildControl($this->btnPrev->ControlId, true);
-						$this->btnPrev = QType::Cast($mixValue, 'QControl');
+						$this->btnPrev = \QCubed\Type::Cast($mixValue, 'QControl');
 						$this->setButtonActions(array("btnPrev_Click" => $this->btnPrev));
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -149,10 +149,10 @@
 				case "NextButton":
 					try {
 						$this->RemoveChildControl($this->btnNext->ControlId, true);
-						$this->btnNext = QType::Cast($mixValue, 'QControl');
+						$this->btnNext = \QCubed\Type::Cast($mixValue, 'QControl');
 						$this->setButtonActions(array("btnNext_Click" => $this->btnNext));
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -160,10 +160,10 @@
 				case "LastButton":
 					try {
 						$this->RemoveChildControl($this->btnLast->ControlId, true);
-						$this->btnLast = QType::Cast($mixValue, 'QControl');
+						$this->btnLast = \QCubed\Type::Cast($mixValue, 'QControl');
 						$this->setButtonActions(array("btnLast_Click" => $this->btnLast));
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -171,7 +171,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -188,7 +188,7 @@
 			// Call the Parent
 			try {
 				parent::__construct($objParentObject, $strControlId);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -203,7 +203,7 @@
 			while ( !($objImageBrowser instanceof QImageBrowserBase) ) {
 				$objImageBrowser = $objImageBrowser->ParentControl;
 				if (is_null($objImageBrowser) || $objImageBrowser instanceof QForm) {
-					throw new QCallerException("QImageBrowserThumbnails must be inside a QImageBrowser");
+					throw new \QCubed\Exception\Caller("QImageBrowserThumbnails must be inside a QImageBrowser");
 				}
 			}
 			$iEnd = $objImageBrowser->ImageCount();
@@ -225,7 +225,7 @@
 				$img->CssClass = 'ib_thm_image ib_thm_image_last';
 				$this->Text = '';
 			} else {
-				$this->Text = QApplication::Translate('No thumbnails');
+				$this->Text = t('No thumbnails');
 			}
 		}
 	}
@@ -259,7 +259,7 @@
 			// Call the Parent
 			try {
 				parent::__construct($objParentObject, $strControlId);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -288,7 +288,7 @@
 				$this->txtCaption->AddAction(new QChangeEvent(), new QAjaxControlAction($this, "txtCaption_Change"));
 
 				$this->btnSave = new QButton($this);
-				$this->btnSave->Text = QApplication::Translate('Save');
+				$this->btnSave->Text = t('Save');
 				$this->btnSave->Enabled = false;
 				$this->btnSave->AddAction(new QClickEvent(), new QAjaxControlAction($this, "btnSave_Click"));
 			}
@@ -467,7 +467,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -482,9 +482,9 @@
 					try {
 						if ($this->ibnNavigation1)
 							$this->RemoveChildControl($this->ibnNavigation1->ControlId, true);
-						$this->ibnNavigation1 = QType::Cast($mixValue, 'QImageBrowserNav');
+						$this->ibnNavigation1 = \QCubed\Type::Cast($mixValue, 'QImageBrowserNav');
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -493,9 +493,9 @@
 					try {
 						if ($this->ibnNavigation2)
 							$this->RemoveChildControl($this->ibnNavigation2->ControlId, true);
-						$this->ibnNavigation2 = QType::Cast($mixValue, 'QImageBrowserNav');
+						$this->ibnNavigation2 = \QCubed\Type::Cast($mixValue, 'QImageBrowserNav');
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -504,9 +504,9 @@
 					try {
 						if ($this->ibtThumbnails)
 							$this->RemoveChildControl($this->ibtThumbnails->ControlId, true);
-						$this->ibtThumbnails = QType::Cast($mixValue, 'QImageBrowserThumbnails');
+						$this->ibtThumbnails = \QCubed\Type::Cast($mixValue, 'QImageBrowserThumbnails');
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -515,9 +515,9 @@
 					try {
 						if ($this->txtCaption)
 							$this->RemoveChildControl($this->txtCaption->ControlId, true);
-						$this->txtCaption = QType::Cast($mixValue, 'QControl');
+						$this->txtCaption = \QCubed\Type::Cast($mixValue, 'QControl');
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -528,10 +528,10 @@
 							$this->btnSave->RemoveAllActions(QClickEvent::EventName);
 							$this->RemoveChildControl($this->btnSave->ControlId, true);
 						}
-						$this->btnSave = QType::Cast($mixValue, 'QControl');
+						$this->btnSave = \QCubed\Type::Cast($mixValue, 'QControl');
 						$this->btnSave->AddAction(new QClickEvent(), new QAjaxControlAction($this, "btnSave_Click"));
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -539,7 +539,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -563,12 +563,12 @@
 
 		public function LoadImagesFromDirectory($strDir, $strPattern) {
 			if (!is_dir($strDir)) {
-				throw new QCallerException("$strDir is not a directory"); 
+				throw new \QCubed\Exception\Caller("$strDir is not a directory"); 
 			}
 
 			$dh = opendir($strDir);
 			if ($dh === false) {
-				throw new QCallerException("Could not open directory $strDir");
+				throw new \QCubed\Exception\Caller("Could not open directory $strDir");
 			}
 			$this->arrImagePaths = array();
 			while ($strFile = readdir($dh)) {
@@ -625,7 +625,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -637,10 +637,10 @@
 			switch ($strName) {
 				case "ImagePaths":
 					try {
-						$this->arrImagePaths = QType::Cast($mixValue, QType::ArrayType);
+						$this->arrImagePaths = \QCubed\Type::Cast($mixValue, \QCubed\Type::ARRAY_TYPE);
 						$this->reload();
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -648,7 +648,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

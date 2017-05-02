@@ -1,10 +1,20 @@
 <?php
 /**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Action;
+
+/**
  * Shows a dialog box (QDialogBox)
  *
  * @package Actions
  */
-class QShowDialogBox extends QAction {
+class QShowDialogBox extends AbstractBase {
     /** @var null|string Control ID of the dialog box (QDialogBox) */
     protected $strControlId = null;
     /**
@@ -18,11 +28,11 @@ class QShowDialogBox extends QAction {
      *
      * @param QDialogBox $objControl
      *
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     public function __construct($objControl) {
         if (!($objControl instanceof QDialogBox)) {
-            throw new QCallerException('First parameter of constructor is expecting an object of type QDialogBox');
+            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QDialogBox');
         }
 
         $this->strControlId = $objControl->ControlId;

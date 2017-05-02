@@ -112,19 +112,19 @@ class AccordionBase extends QAccordionGen
      * @param string $mixValue Value of the property
      *
      * @return mixed|void
-     * @throws Exception|QInvalidCastException
+     * @throws Exception|\QCubed\Exception\InvalidCast
      */
     public function __set($strName, $mixValue)
     {
         switch ($strName) {
             case '_SelectedIndex': // Internal Only. Used by JS above. Do Not Call.
                 try {
-                    $this->mixActive = QType::cast($mixValue,
-                        QType::Integer);    // will cause ->Active getter to always return index of content item that is currently active
-                } catch (QInvalidCastException $objExc) {
+                    $this->mixActive = \QCubed\Type::cast($mixValue,
+                        \QCubed\Type::INTEGER);    // will cause ->Active getter to always return index of content item that is currently active
+                } catch (\QCubed\Exception\InvalidCast $objExc) {
                     try {
-                        $this->mixActive = QType::cast($mixValue, QType::Boolean);
-                    } catch (QInvalidCastException $objExc) {
+                        $this->mixActive = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    } catch (\QCubed\Exception\InvalidCast $objExc) {
                         $objExc->incrementOffset();
                         throw $objExc;
                     }
@@ -134,7 +134,7 @@ class AccordionBase extends QAccordionGen
             default:
                 try {
                     parent::__set($strName, $mixValue);
-                } catch (QInvalidCastException $objExc) {
+                } catch (\QCubed\Exception\InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }

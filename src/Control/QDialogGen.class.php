@@ -540,7 +540,7 @@
 				default: 
 					try { 
 						return parent::__get($strName); 
-					} catch (QCallerException $objExc) { 
+					} catch (\QCubed\Exception\Caller $objExc) { 
 						$objExc->IncrementOffset(); 
 						throw $objExc; 
 					}
@@ -556,10 +556,10 @@
 
 				case 'AutoOpen':
 					try {
-						$this->blnAutoOpen = QType::Cast($mixValue, QType::Boolean);
+						$this->blnAutoOpen = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'autoOpen', $this->blnAutoOpen);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -571,40 +571,40 @@
 
 				case 'CloseOnEscape':
 					try {
-						$this->blnCloseOnEscape = QType::Cast($mixValue, QType::Boolean);
+						$this->blnCloseOnEscape = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'closeOnEscape', $this->blnCloseOnEscape);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'CloseText':
 					try {
-						$this->strCloseText = QType::Cast($mixValue, QType::String);
+						$this->strCloseText = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'closeText', $this->strCloseText);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'DialogClass':
 					try {
-						$this->strDialogClass = QType::Cast($mixValue, QType::String);
+						$this->strDialogClass = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'dialogClass', $this->strDialogClass);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Draggable':
 					try {
-						$this->blnDraggable = QType::Cast($mixValue, QType::Boolean);
+						$this->blnDraggable = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'draggable', $this->blnDraggable);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -621,50 +621,50 @@
 
 				case 'MaxHeight':
 					try {
-						$this->intMaxHeight = QType::Cast($mixValue, QType::Integer);
+						$this->intMaxHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'maxHeight', $this->intMaxHeight);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'MaxWidth':
 					try {
-						$this->intMaxWidth = QType::Cast($mixValue, QType::Integer);
+						$this->intMaxWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'maxWidth', $this->intMaxWidth);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'MinHeight':
 					try {
-						$this->intMinHeight = QType::Cast($mixValue, QType::Integer);
+						$this->intMinHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'minHeight', $this->intMinHeight);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'MinWidth':
 					try {
-						$this->intMinWidth = QType::Cast($mixValue, QType::Integer);
+						$this->intMinWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'minWidth', $this->intMinWidth);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Modal':
 					try {
-						$this->blnModal = QType::Cast($mixValue, QType::Boolean);
+						$this->blnModal = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'modal', $this->blnModal);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -676,10 +676,10 @@
 
 				case 'Resizable':
 					try {
-						$this->blnResizable = QType::Cast($mixValue, QType::Boolean);
+						$this->blnResizable = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'resizable', $this->blnResizable);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -691,20 +691,20 @@
 
 				case 'Title':
 					try {
-						$this->strTitle = QType::Cast($mixValue, QType::String);
+						$this->strTitle = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'title', $this->strTitle);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case 'Width':
 					try {
-						$this->intWidth = QType::Cast($mixValue, QType::Integer);
+						$this->intWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						$this->AddAttributeScript($this->getJqSetupFunction(), 'option', 'width', $this->intWidth);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -714,7 +714,7 @@
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -728,19 +728,19 @@
 		**/
 		public static function GetModelConnectorParams() {
 			return array_merge(parent::GetModelConnectorParams(), array(
-				new QModelConnectorParam (get_called_class(), 'AutoOpen', 'If set to true, the dialog will automatically open uponinitialization. If false, the dialog will stay hidden until the open()method is called.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'CloseOnEscape', 'Specifies whether the dialog should close when it has focus and theuser presses the escape (ESC) key.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'CloseText', 'Specifies the text for the close button. Note that the close text isvisibly hidden when using a standard theme.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'DialogClass', 'The specified class name(s) will be added to the dialog, foradditional theming.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Draggable', 'If set to true, the dialog will be draggable by the title bar.Requires the jQuery UI Draggable widget to be included.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'MaxHeight', 'The maximum height to which the dialog can be resized, in pixels.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'MaxWidth', 'The maximum width to which the dialog can be resized, in pixels.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'MinHeight', 'The minimum height to which the dialog can be resized, in pixels.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'MinWidth', 'The minimum width to which the dialog can be resized, in pixels.', QType::Integer),
-				new QModelConnectorParam (get_called_class(), 'Modal', 'If set to true, the dialog will have modal behavior; other items onthe page will be disabled, i.e., cannot be interacted with. Modaldialogs create an overlay below the dialog but above other pageelements.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Resizable', 'If set to true, the dialog will be resizable. Requires the jQuery UIResizable widget to be included.', QType::Boolean),
-				new QModelConnectorParam (get_called_class(), 'Title', 'Specifies the title of the dialog. If the value is null, the titleattribute on the dialog source element will be used.', QType::String),
-				new QModelConnectorParam (get_called_class(), 'Width', 'The width of the dialog, in pixels.', QType::Integer),
+				new QModelConnectorParam (get_called_class(), 'AutoOpen', 'If set to true, the dialog will automatically open uponinitialization. If false, the dialog will stay hidden until the open()method is called.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'CloseOnEscape', 'Specifies whether the dialog should close when it has focus and theuser presses the escape (ESC) key.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'CloseText', 'Specifies the text for the close button. Note that the close text isvisibly hidden when using a standard theme.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'DialogClass', 'The specified class name(s) will be added to the dialog, foradditional theming.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Draggable', 'If set to true, the dialog will be draggable by the title bar.Requires the jQuery UI Draggable widget to be included.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'MaxHeight', 'The maximum height to which the dialog can be resized, in pixels.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'MaxWidth', 'The maximum width to which the dialog can be resized, in pixels.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'MinHeight', 'The minimum height to which the dialog can be resized, in pixels.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'MinWidth', 'The minimum width to which the dialog can be resized, in pixels.', \QCubed\Type::INTEGER),
+				new QModelConnectorParam (get_called_class(), 'Modal', 'If set to true, the dialog will have modal behavior; other items onthe page will be disabled, i.e., cannot be interacted with. Modaldialogs create an overlay below the dialog but above other pageelements.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Resizable', 'If set to true, the dialog will be resizable. Requires the jQuery UIResizable widget to be included.', \QCubed\Type::BOOLEAN),
+				new QModelConnectorParam (get_called_class(), 'Title', 'Specifies the title of the dialog. If the value is null, the titleattribute on the dialog source element will be used.', \QCubed\Type::STRING),
+				new QModelConnectorParam (get_called_class(), 'Width', 'The width of the dialog, in pixels.', \QCubed\Type::INTEGER),
 			));
 		}
 	}

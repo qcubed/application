@@ -29,8 +29,8 @@
 		 */
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
-			$this->strLabelForInvalid = QApplication::Translate('Invalid Integer');
-			$this->strDataType = QType::Integer;
+			$this->strLabelForInvalid = t('Invalid Integer');
+			$this->strDataType = \QCubed\Type::INTEGER;
 		}
 
 		public function __get($strName) {
@@ -45,7 +45,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

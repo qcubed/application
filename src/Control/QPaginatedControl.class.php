@@ -52,13 +52,13 @@
 		 * @param null|string                       $strControlId
 		 *
 		 * @throws Exception
-		 * @throws QCallerException
+		 * @throws \QCubed\Exception\Caller
 		 */
 		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
 
-			$this->strNoun = QApplication::Translate('item');
-			$this->strNounPlural = QApplication::Translate('items');
+			$this->strNoun = t('item');
+			$this->strNounPlural = t('items');
 		}
 
 		// PaginatedControls should (in general) never have anything that ever needs to be validated -- so this always
@@ -73,7 +73,7 @@
 			{
 				try {
 					$this->CallDataBinder();
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -92,7 +92,7 @@
 		 * @param string $strName Property name
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -126,7 +126,7 @@
 					if ($this->objPaginator) {
 //						if ($this->objPaginator->TotalItemCount > 0) {
 							$intOffset = $this->ItemsOffset;
-							return QQ::LimitInfo($this->objPaginator->ItemsPerPage, $intOffset);
+							return \QCubed\Query\QQ::LimitInfo($this->objPaginator->ItemsPerPage, $intOffset);
 //						}
 					}
 					return null;
@@ -155,7 +155,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -174,19 +174,19 @@
 				// APPEARANCE
 				case "Noun":
 					try {
-						$this->strNoun = QType::Cast($mixValue, QType::String);
+						$this->strNoun = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->blnModified = true;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "NounPlural":
 					try {
-						$this->strNounPlural = QType::Cast($mixValue, QType::String);
+						$this->strNounPlural = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						$this->blnModified = true;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -194,35 +194,35 @@
 				// BEHAVIOR
 				case "Paginator":
 					try {
-						$this->objPaginator = QType::Cast($mixValue, 'QPaginatorBase');
+						$this->objPaginator = \QCubed\Type::Cast($mixValue, 'QPaginatorBase');
 						if ($this->objPaginator) {
 							if ($this->objPaginator->Form->FormId != $this->Form->FormId)
-								throw new QCallerException('The assigned paginator must belong to the same form that this control belongs to.');
+								throw new \QCubed\Exception\Caller('The assigned paginator must belong to the same form that this control belongs to.');
 							$this->objPaginator->SetPaginatedControl($this);
 						}
 						$this->blnModified = true;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "PaginatorAlternate":
 					try {
-						$this->objPaginatorAlternate = QType::Cast($mixValue, 'QPaginatorBase');
+						$this->objPaginatorAlternate = \QCubed\Type::Cast($mixValue, 'QPaginatorBase');
 						if ($this->objPaginatorAlternate->Form->FormId != $this->Form->FormId)
-							throw new QCallerException('The assigned paginator must belong to the same form that this control belongs to.');
+							throw new \QCubed\Exception\Caller('The assigned paginator must belong to the same form that this control belongs to.');
 						$this->objPaginatorAlternate->SetPaginatedControl($this);
 						$this->blnModified = true;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "UseAjax":
 					try {
-						$this->blnUseAjax = QType::Cast($mixValue, QType::Boolean);
+						$this->blnUseAjax = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						
 						if ($this->objPaginator)
 							$this->objPaginator->UseAjax = $this->blnUseAjax;
@@ -231,14 +231,14 @@
 
 						$this->blnModified = true;
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "ItemsPerPage":
 					if ($this->objPaginator) {
 						try {
-							$intItemsPerPage = QType::Cast($mixValue, QType::Integer);
+							$intItemsPerPage = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 							$this->objPaginator->ItemsPerPage = $intItemsPerPage;
 
 							if ($this->objPaginatorAlternate) {
@@ -247,16 +247,16 @@
 
 							$this->blnModified = true;
 							break;
-						} catch (QCallerException $objExc) {
+						} catch (\QCubed\Exception\Caller $objExc) {
 							$objExc->IncrementOffset();
 							throw $objExc;
 						}
 					} else
-						throw new QCallerException('Setting ItemsPerPage requires a Paginator to be set');
+						throw new \QCubed\Exception\Caller('Setting ItemsPerPage requires a Paginator to be set');
 				case "TotalItemCount":
 					if ($this->objPaginator) {
 						try {
-							$intTotalCount = QType::Cast($mixValue, QType::Integer);
+							$intTotalCount = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 							$this->objPaginator->TotalItemCount = $intTotalCount;
 
 							if ($this->objPaginatorAlternate) {
@@ -265,12 +265,12 @@
 
 							$this->blnModified = true;
 							break;
-						} catch (QCallerException $objExc) {
+						} catch (\QCubed\Exception\Caller $objExc) {
 							$objExc->IncrementOffset();
 							throw $objExc;
 						}
 					} else
-						throw new QCallerException('Setting TotalItemCount requires a Paginator to be set');
+						throw new \QCubed\Exception\Caller('Setting TotalItemCount requires a Paginator to be set');
 
 				// MISC
 				case "DataSource": 
@@ -281,7 +281,7 @@
 				case "PageNumber":
 					if ($this->objPaginator) {
 						try {
-							$intPageNumber = QType::Cast($mixValue, QType::Integer);
+							$intPageNumber = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 							$this->objPaginator->PageNumber = $intPageNumber;
 
 							if ($this->objPaginatorAlternate) {
@@ -289,18 +289,18 @@
 							}
 							$this->blnModified = true;
 							break;
-						} catch (QCallerException $objExc) {
+						} catch (\QCubed\Exception\Caller $objExc) {
 							$objExc->IncrementOffset();
 							throw $objExc;
 						}
 					} else
-						throw new QCallerException('Setting PageNumber requires a Paginator to be set');
+						throw new \QCubed\Exception\Caller('Setting PageNumber requires a Paginator to be set');
 
 				default:
 					try {
 						parent::__set($strName, $mixValue);
 						break;
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

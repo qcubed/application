@@ -29,7 +29,7 @@ class QHListControl extends QControl {
 	protected $strItemTag = 'li';
 	/** @var null|QListItemStyle The common style for all elements in the list */
 	protected $objItemStyle = null;
-	/** @var null|QCryptography the temporary cryptography object for encrypting database values sent to the client */
+	/** @var null|\QCubed\Cryptography the temporary cryptography object for encrypting database values sent to the client */
 	protected $objCrypt = null;
 	/** @var bool Whether to encrypt values */
 	protected $blnEncryptValues = true;
@@ -42,8 +42,8 @@ class QHListControl extends QControl {
 	 * @param null|string $strAnchor
 	 */
 	public function AddItem($mixListItemOrName, $strValue = null, $strAnchor = null) {
-		if (gettype($mixListItemOrName) == QType::Object) {
-			$objListItem = QType::Cast($mixListItemOrName, "QHListItem");
+		if (gettype($mixListItemOrName) == \QCubed\Type::OBJECT) {
+			$objListItem = \QCubed\Type::Cast($mixListItemOrName, "QHListItem");
 		}
 		else {
 			$objListItem = new QHListItem($mixListItemOrName, $strValue, $strAnchor);
@@ -192,7 +192,7 @@ class QHListControl extends QControl {
 	 */
 	protected function EncryptValue($value) {
 		if (!$this->objCrypt) {
-			$this->objCrypt = new QCryptography(null, true);
+			$this->objCrypt = new \QCubed\Cryptography(null, true);
 		}
 		return $this->objCrypt->Encrypt($value);
 	}
@@ -205,7 +205,7 @@ class QHListControl extends QControl {
 	 */
 	public function DecryptValue ($strEncryptedValue) {
 		if (!$this->objCrypt) {
-			$this->objCrypt = new QCryptography(null, true);
+			$this->objCrypt = new \QCubed\Cryptography(null, true);
 		}
 		return $this->objCrypt->Decrypt($strEncryptedValue);
 	}
@@ -228,7 +228,7 @@ class QHListControl extends QControl {
 	 * @param string $strName
 	 *
 	 * @return mixed
-	 * @throws Exception|QCallerException
+	 * @throws Exception|\QCubed\Exception\Caller
 	 */
 	public function __get($strName) {
 		switch ($strName) {
@@ -239,7 +239,7 @@ class QHListControl extends QControl {
 			default:
 				try {
 					return parent::__get($strName);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -255,33 +255,33 @@ class QHListControl extends QControl {
 	 * @param string $mixValue
 	 *
 	 * @return mixed
-	 * @throws Exception|QCallerException|QInvalidCastException
+	 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 	 */
 	public function __set($strName, $mixValue) {
 		switch ($strName) {
 			// APPEARANCE
 			case "Tag":
 				try {
-					$this->strTag = QType::Cast($mixValue, QType::String);
+					$this->strTag = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
 			case "ItemTag":
 				try {
-					$this->strItemTag = QType::Cast($mixValue, QType::String);
+					$this->strItemTag = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
 
 			case "EncryptValues":
 				try {
-					$this->blnEncryptValues = QType::Cast($mixValue, QType::Boolean);
+					$this->blnEncryptValues = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 					break;
-				} catch (QInvalidCastException $objExc) {
+				} catch (\QCubed\Exception\InvalidCast $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -290,7 +290,7 @@ class QHListControl extends QControl {
 			default:
 				try {
 					parent::__set($strName, $mixValue);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}

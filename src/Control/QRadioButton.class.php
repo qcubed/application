@@ -31,7 +31,7 @@
 		 */
 		public function ParsePostData() {
 			$val = $this->objForm->CheckableControlValue($this->strControlId);
-			$val = QType::Cast($val, QType::Boolean);
+			$val = \QCubed\Type::Cast($val, \QCubed\Type::BOOLEAN);
 			$this->blnChecked = !empty($val);
 		}
 
@@ -80,7 +80,7 @@
 		 * @param string $strName Name of the property
 		 *
 		 * @return array|bool|int|mixed|null|QControl|QForm|string
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -90,7 +90,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -107,26 +107,26 @@
 		 * @param string $mixValue Value of the property
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "GroupName":
 					try {
-						$strGroupName = QType::Cast($mixValue, QType::String);
+						$strGroupName = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						if ($this->strGroupName != $strGroupName) {
 							$this->strGroupName = $strGroupName;
 							$this->blnModified = true;
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Checked":
 					try {
-						$val = QType::Cast($mixValue, QType::Boolean);
+						$val = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						if ($val != $this->blnChecked) {
 							$this->blnChecked = $val;
 							if ($this->GroupName && $val == true) {
@@ -136,7 +136,7 @@
 							}
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -144,7 +144,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

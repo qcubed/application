@@ -94,7 +94,7 @@
 		 * @param string $strName Property name
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -112,7 +112,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -126,7 +126,7 @@
 		 * @param string $mixValue Property value
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			$this->blnModified = true;
@@ -134,54 +134,54 @@
 			switch ($strName) {
 				case "Title":
 					try {
-						$this->strTitle = QType::Cast($mixValue, QType::String);
+						$this->strTitle = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 					
 				case "MatteColor":
 					try {
-						$this->strMatteColor = QType::Cast($mixValue, QType::String);
+						$this->strMatteColor = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "MatteOpacity":
 					try {
-						$this->intMatteOpacity = QType::Cast($mixValue, QType::Integer);
+						$this->intMatteOpacity = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "MatteClickable":
 					try {
-						$this->blnMatteClickable = QType::Cast($mixValue, QType::Boolean);
+						$this->blnMatteClickable = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "AnyKeyCloses":
 					try {
-						$this->blnAnyKeyCloses = QType::Cast($mixValue, QType::Boolean);
+						$this->blnAnyKeyCloses = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 
 				case "Modal":
 					try { 
-						$this->blnModal = QType::Cast($mixValue, QType::Boolean);
+						$this->blnModal = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -194,10 +194,10 @@
 							$mixValue = str_replace("px", "", strtolower($mixValue)); // Replace the text "px" (pixels) with empty string if it's there
 							
 							// for now, jQuery dialog only accepts integers as width
-							$this->strDialogWidth = QType::Cast($mixValue, QType::Integer);
+							$this->strDialogWidth = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -210,10 +210,10 @@
 							$mixValue = str_replace("px", "", strtolower($mixValue)); // Replace the text "px" (pixels) with empty string if it's there
 
 							// for now, jQuery dialog only accepts integers as height
-							$this->strHeight = QType::Cast($mixValue, QType::Integer);
+							$this->strHeight = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						}
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -221,7 +221,7 @@
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

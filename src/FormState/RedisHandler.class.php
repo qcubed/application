@@ -57,12 +57,12 @@ class RedisHandler extends AbstractBase
      * Returns the client using which the formstate handler can work
      *
      * @return \Predis\Client
-     * @throws QCallerException
+     * @throws \QCubed\Exception\Caller
      */
     private static function GetClient()
     {
         if (!class_exists('Predis\Client')) {
-            throw new QCallerException('Predis library needs to be installed for Redis Formstate Handler to work');
+            throw new \QCubed\Exception\Caller('Predis library needs to be installed for Redis Formstate Handler to work');
         }
 
         // There must be keys named 'parameters' and 'options' in the configuration
@@ -70,7 +70,7 @@ class RedisHandler extends AbstractBase
             $objOptionsArray = unserialize(__REDIS_BACKED_FORM_STATE_HANDLER_CONFIG__);
             if (!array_key_exists('parameters', $objOptionsArray) || !array_key_exists('options', $objOptionsArray)) {
                 // Needed keys do not exist
-                throw new QCallerException('The configuration parameters for creating predis client in the configuration file are wrong. The config array must contain the "parameters" and "options" keys');
+                throw new \QCubed\Exception\Caller('The configuration parameters for creating predis client in the configuration file are wrong. The config array must contain the "parameters" and "options" keys');
             }
 
             return new Predis\Client($objOptionsArray['parameters'], $objOptionsArray['options']);
@@ -106,7 +106,7 @@ class RedisHandler extends AbstractBase
             defined('__REDIS_BACKED_FORM_STATE_HANDLER_IV_HASH_KEY__')
         ) {
             try {
-                $crypt = new QCryptography(__REDIS_BACKED_FORM_STATE_HANDLER_ENCRYPTION_KEY__, false, null,
+                $crypt = new \QCubed\Cryptography(__REDIS_BACKED_FORM_STATE_HANDLER_ENCRYPTION_KEY__, false, null,
                     __REDIS_BACKED_FORM_STATE_HANDLER_IV_HASH_KEY__);
                 $strFormState = $crypt->Encrypt($strFormState);
             } catch (Exception $e) {
@@ -179,7 +179,7 @@ class RedisHandler extends AbstractBase
 
         if (defined('__REDIS_BACKED_FORM_STATE_HANDLER_ENCRYPTION_KEY__') && defined('__REDIS_BACKED_FORM_STATE_HANDLER_IV_HASH_KEY__')) {
             try {
-                $crypt = new QCryptography(__REDIS_BACKED_FORM_STATE_HANDLER_ENCRYPTION_KEY__, false, null,
+                $crypt = new \QCubed\Cryptography(__REDIS_BACKED_FORM_STATE_HANDLER_ENCRYPTION_KEY__, false, null,
                     __REDIS_BACKED_FORM_STATE_HANDLER_IV_HASH_KEY__);
                 $strSerializedForm = $crypt->Decrypt($strSerializedForm);
             } catch (Exception $e) {

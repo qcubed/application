@@ -1,6 +1,19 @@
 <?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\Event;
+
+use QCubed\Exception\Caller;
 
 /**
+ * Class On
+ *
  * Respond to any custom javascript event.
  *
  * Note, at one time, this event was required to react to bubbled events, but now every event
@@ -8,31 +21,34 @@
  *
  * @param string $strEventName the name of the event i.e.: "click"
  * @param string $strSelector i.e.: "#myselector" ==> results in: $('#myControl').on("myevent","#myselector",function()...
- *
+ * @was QOnEvent
+ * @package QCubed\Event
  */
-class QOnEvent extends QEvent{
+class On extends AbstractBase
+{
     /** @var string Name of the event */
     protected $strEventName;
 
     /**
      * Constructor
-     * @param int  $strEventName
-     * @param int  $intDelay
+     * @param int $strEventName
+     * @param int $intDelay
      * @param string $strCondition
      * @param string $strSelector
-     * @throws Exception|QCallerException
+     * @throws Exception|Caller
      */
-    public function __construct($strEventName, $intDelay = 0, $strCondition = null, $strSelector = null) {
-        $this->strEventName=$strEventName;
+    public function __construct($strEventName, $intDelay = 0, $strCondition = null, $strSelector = null)
+    {
+        $this->strEventName = $strEventName;
         if ($strSelector) {
             $strSelector = addslashes($strSelector);
-            $this->strEventName .= '","'.$strSelector;
+            $this->strEventName .= '","' . $strSelector;
         }
 
         try {
-            parent::__construct($intDelay,$strCondition, $strSelector);
-        } catch (QCallerException $objExc) {
-            $objExc->IncrementOffset();
+            parent::__construct($intDelay, $strCondition, $strSelector);
+        } catch (Caller $objExc) {
+            $objExc->incrementOffset();
             throw $objExc;
         }
     }
@@ -42,20 +58,20 @@ class QOnEvent extends QEvent{
      * @param string $strName
      *
      * @return int|mixed|null|string
-     * @throws Exception|QCallerException
+     * @throws Exception|Caller
      */
-    public function __get($strName) {
+    public function __get($strName)
+    {
         switch ($strName) {
             case 'EventName':
                 return $this->strEventName;
             default:
                 try {
                     return parent::__get($strName);
-                } catch (QCallerException $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
     }
-
 }

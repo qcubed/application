@@ -16,7 +16,7 @@
 	 * @property string         $Text      synonym of Name. Used to store longer text with the item.
 	 * @property string $Id 	A place to save an id for the item. It is up to the corresponding list class to use this in the object.
 	 */
-	class QListItemBase extends QBaseClass {
+	class QListItemBase extends \QCubed\AbstractBase {
 		///////////////////////////
 		// Private Member Variables
 		///////////////////////////
@@ -40,7 +40,7 @@
 		 * @param string|null  $strValue     is any text that represents the value of the ListItem (e.g. maybe a DB Id)
 		 * @param null|QListItemStyle  $objItemStyle     is the item style. If provided here, it is referenced and shared with other items.
 		 *
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __construct($strName, $strValue = null, $objItemStyle = null) {
 			$this->strName = $strName;
@@ -97,7 +97,7 @@
 		 * @param string $strName
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException
+		 * @throws Exception|\QCubed\Exception\Caller
 		 */
 		public function __get($strName) {
 			switch ($strName) {
@@ -111,7 +111,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -127,47 +127,47 @@
 		 * @param string $mixValue
 		 *
 		 * @return mixed
-		 * @throws Exception|QCallerException|QInvalidCastException
+		 * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast
 		 */
 		public function __set($strName, $mixValue) {
 			switch ($strName) {
 				case "Text":
 				case "Name":
 					try {
-						$this->strName = QType::Cast($mixValue, QType::String);
+						$this->strName = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Value":
 					try {
-						$this->strValue = QType::Cast($mixValue, QType::String);
+						$this->strValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}				
 				case "ItemStyle":
 					try {
-						$this->objItemStyle = QType::Cast($mixValue, "QListItemStyle");
+						$this->objItemStyle = \QCubed\Type::Cast($mixValue, "QListItemStyle");
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				case "Id":
 					try {
-						$this->strId = QType::Cast($mixValue, QType::String);
+						$this->strId = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
 						break;
-					} catch (QInvalidCastException $objExc) {
+					} catch (\QCubed\Exception\InvalidCast $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
