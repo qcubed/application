@@ -9,28 +9,37 @@
 
 namespace QCubed\Control;
 
+use QCubed\Exception\InvalidCast;
+use QCubed\Html;
 use QCubed\HtmlAttributeManager;
 use QCubed\Exception;
 use QCubed;
-use QCubed\Project\Control\FormBase;
-use QCubed\Project\Control\ControlBase;
+use QCubed\Project\Control\FormBase as QForm;
+use QCubed\Action\AbstractBase as QAction;
+use QCubed\Event\AbstractBase as QEvent;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\TagStyler;
+use QCubed\Type;
+use QCubed\Project\Watcher\Watcher as Watcher;
+use QCubed\ModelConnector\Param as ModelConnectorParam;
+
 
 /**
- * This is the base class of all ControlBases and shares their common properties.
+ * This is the base class of all QControl and shares their common properties.
  *
  * Not every control will utilize every single one of these properties.
  *
  * All Controls must implement the following abstract functions:
  * <ul>
- *        <li>{@link ControlBaseBase::getControlHtml()}</li>
- *        <li>{@link ControlBaseBase::parsePostData()}</li>
- *        <li>{@link ControlBaseBase::validate()}</li>
+ *        <li>{@link AbstractBase::getControlHtml()}</li>
+ *        <li>{@link AbstractBase::parsePostData()}</li>
+ *        <li>{@link AbstractBase::validate()}</li>
  * </ul>
  *
- * A ControlBase conceptually is an object in an html form that manages data or that can be controlled via PHP.
+ * A QControl conceptually is an object in an html form that manages data or that can be controlled via PHP.
  * In the early days of the internet, this was simply an html input or select tag that was submitted via a POST.
- * As the internet has evolved, so has ControlBase, but its basic idea is the same. Its an object on the screen that
- * you would like to either control from PHP, or receive information from. The parts of a ControlBase that are
+ * As the internet has evolved, so has QControl, but its basic idea is the same. Its an object on the screen that
+ * you would like to either control from PHP, or receive information from. The parts of a QControl that are
  * sent to the browser are:
  *  - The base tag and its contents, as returned by GetControlHtml(). This would be an Input tag, or a Button, or
  *    even just a div. Many Javascript widget libraries will take a div and add to it to create a control. The tag
@@ -42,7 +51,7 @@ use QCubed\Project\Control\ControlBase;
  *    that are handled by a jQuery wrapper function of some kind.
  *  - Optional Javascript attached to the control through the AddActions mechanism.
  *
- * You control how these parts are rendered by implementing Render* methods in your own ControlBase class. Some basic
+ * You control how these parts are rendered by implementing Render* methods in your own QControl class. Some basic
  * ones are included in this class for you to start with.
  *
  * Depending on the control, and the implementation, the control might need or want to be rendered with a wrapper tag,
@@ -53,18 +62,18 @@ use QCubed\Project\Control\ControlBase;
  * you should include a wrapper here so the additional html is included inside your wrapper, and thus the entire
  * control will get redrawn on a refresh (jQueryUI's Dialog is an example of this kind of widget.)
  *
- * ControlBases are part of a tree type hierarchy, whose parent can either be a FormBase, or another ControlBase.
+ * QControl are part of a tree type hierarchy, whose parent can either be a FormBase, or another QControl.
  *
- * The ControlBase system is designed to manage the process of redrawing a control automatically when something about
+ * The QControl system is designed to manage the process of redrawing a control automatically when something about
  * the control changes. You can force a redraw by using the Refresh command from outside of a control, or by setting
- * the blnModified member variable from a subclass. You can also use the QWatcher mechanism to automatically redraw
+ * the blnModified member variable from a subclass. You can also use the Watcher mechanism to automatically redraw
  * when something in the database changes.
  *
- * ControlBases are the base objects for actions to be attached to events. When attaching actions to multiple objects
+ * QControl are the base objects for actions to be attached to events. When attaching actions to multiple objects
  * of the same type, considering attaching the event to a parent object and using event delegation for your action,
  * as it can be more efficient in certain cases.
  *
- * ControlBases can trigger validation and are part of the validation system. ControlBases that are not Enabled or not
+ * QControl can trigger validation and are part of the validation system. QControl that are not Enabled or not
  * Visible will not go through the form's Validation routine.
  *
  * Controls can be made visible using either the Visible or Display PHP parameters. Both are booleans.
@@ -74,8 +83,6 @@ use QCubed\Project\Control\ControlBase;
  * - Setting Display to false leaves the control in the DOM, but simply sets its display property to 'none' in CSS.
  *   Show and hide are much faster.
  *
- * @package Controls
- *
  * @property-read boolean $ActionsMustTerminate Prevent the default action from happenning upon an event trigger. See documentation for "protected $blnActionsMustTerminate" below.
  * @property-read boolean $ScriptsOnly Whether the control only generates javascripts and not html.
  * @property mixed $ActionParameter This property allows you to pass your own parameters to the handlers for actions applied to this control.
@@ -83,18 +90,18 @@ use QCubed\Project\Control\ControlBase;
  *             when using an ajax or server action.
  * @property mixed $CausesValidation flag says whether or not the form should run through its validation routine if this control has an action defined and is acted upon
  * @property-read string $ControlId returns the id of this control
- * @property-read FormBase $Form returns the parent form object
+ * @property-read QForm $Form returns the parent form object
  * @property-read array $FormAttributes
- * @property string $HtmlAfter HTML that is shown after the control {@link ControlBase::RenderWithName}
- * @property string $HtmlBefore HTML that is shown before the control {@link ControlBase::RenderWithName}
- * @property string $Instructions instructions that is shown next to the control's name label {@link ControlBase::RenderWithName}
+ * @property string $HtmlAfter HTML that is shown after the control {@link QControl::RenderWithName}
+ * @property string $HtmlBefore HTML that is shown before the control {@link QControl::RenderWithName}
+ * @property string $Instructions instructions that is shown next to the control's name label {@link QControl::RenderWithName}
  * @property-read string $JavaScripts
  * @property-read boolean $Modified indicates if the control has been changed. Used to tell Qcubed to rerender the control or not (Ajax calls).
  * @property boolean $Moveable
  * @property boolean $Resizable
- * @property string $Name sets the Name of the Control (see {@link ControlBase::RenderWithName})
+ * @property string $Name sets the Name of the Control (see {@link QControl::RenderWithName})
  * @property-read boolean $OnPage is true if the control is connected to the form
- * @property-read FormBase|ControlBase $ParentControl returns the parent control
+ * @property-read QForm|QControl $ParentControl returns the parent control
  * @property-read boolean $Rendered
  * @property-read boolean $Rendering
  * @property-read string $RenderMethod carries the name of the function, which were initially used for rendering
@@ -103,7 +110,7 @@ use QCubed\Project\Control\ControlBase;
  * @property-read string $StyleSheets
  * @property string $ValidationError is the string that contains the validation error (if applicable) or will be blank if (1) the form did not undergo its validation routine or (2) this control had no error
  * @property boolean $Visible specifies whether or not the control should be rendered in the page.  This is in contrast to Display, which will just hide the control via CSS styling.
- * @property string $Warning is warning text that will be shown next to the control's name label {@link ControlBase::RenderWithName}
+ * @property string $Warning is warning text that will be shown next to the control's name label {@link QControl::RenderWithName}
  * @property boolean $UseWrapper defaults to true
  * @property \QCubed\Query\Node\AbstractBase $LinkedNode A database node that this control is directly editing
  * @property-read boolean $WrapperModified
@@ -126,17 +133,23 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     const COMMENT_START = 'Begin';
     const COMMENT_END = 'End';
 
-    /*
-     * Static Members
+    /**
+     * Contains The 'CausesValidation' property options
+     * used mostly by buttons which take actions on Forms and controls.
      */
 
-    protected $objWrapperStyler = null;
+    const CAUSES_VALIDATION_NONE = false; /** Does not cause the validation */
+    const CAUSES_VALIDATION_ALL = true; /** Cause validation of all controls */
+    const CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN = 2; /** Cause validation of the control, siblings and children */
+    const CAUSES_VALIDATION_SIBLINGS_ONLY = 3; /** Cause validation of siblings only */
 
     /**
      * Protected members
      */
 
-    /** @var mixed Controls how this control will effect the validation system */
+    /** @var TagStyler|null */
+    protected $objWrapperStyler = null;
+    /** @var mixed Controls how this control will effect the validation system. One of CAUSES_VALIDATION_* constants */
     protected $mixCausesValidation = false;
     /** @var bool Is it mandatory for the control to receive data on a POST back for the control to be called valid? */
     protected $blnRequired = false;
@@ -158,11 +171,11 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /** @var string Same as validation error message but is supposed to contain custom messages */
     protected $strWarning = null;
 
-    /** @var QDraggable|null When initialized, it implements the jQuery UI Draggable capabilities on to this control. */
+    /** @var QCubed\Jqui\Draggable|null When initialized, it implements the jQuery UI Draggable capabilities on to this control. */
     protected $objDraggable = null;
-    /** @var QResizable|null When initialized, it implements the jQuery UI Resizable capabilities on to this control. */
+    /** @var QCubed\Jqui\Resizable|null When initialized, it implements the jQuery UI Resizable capabilities on to this control. */
     protected $objResizable = null;
-    /** @var QDroppable|null When initialized, it implements the jQuery UI Droppable capabilities on to this control. */
+    /** @var QCubed\Jqui\Droppable|null When initialized, it implements the jQuery UI Droppable capabilities on to this control. */
     protected $objDroppable = null;
 
     // MISC
@@ -171,11 +184,11 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      *            and used for the HTML 'id' attribute on the control.
      */
     protected $strControlId;
-    /** @var \QCubed\Project\Control\FormBase Redundant copy of the global $_FORM variable. */
+    /** @var QForm Redundant copy of the global $_FORM variable. */
     protected $objForm = null;
-    /** @var \QCubed\Project\Control\ControlBase Immediate parent of this control,if a control */
+    /** @var QControl Immediate parent of this control,if a control */
     protected $objParentControl = null;
-    /** @var ControlBase[] Controls which have this control as their parent */
+    /** @var QControl[] Controls which have this control as their parent */
     protected $objChildControlArray = array();
     /** @var string|null Name of the control - used as a lable for the control when RenderWithName is used to render */
     protected $strName = null;
@@ -235,7 +248,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /** @var bool Is this control a block type element? This determines whether the control will be wrapped in
      *  a div or a span if blnUseWrapper is true. For example, if */
     protected $blnIsBlockElement = false;
-    /** @var QWatcher Stores information about watched tables. */
+    /** @var Watcher Stores information about watched tables. */
     protected $objWatcher = null;
     /** @var \QCubed\Query\Node\AbstractBase  Used by designer to associate a db node with this control */
     protected $objLinkedNode;
@@ -259,12 +272,12 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     // Methods
     //////////
     /**
-     * Creates a ControlBaseBase object
-     * This constructor will generally not be used to create a ControlBaseBase object.  Instead it is used by the
+     * Creates a ControlBase object
+     * This constructor will generally not be used to create a QControl object.  Instead it is used by the
      * classes which extend the class.  Only the parent object parameter is required.  If the option strControlId
      * parameter is not used, QCubed will generate the id.
      *
-     * @param ControlBase|FormBase|ControlBaseBase $objParentObject
+     * @param QControl|QForm $objParentObject
      * @param string $strControlId
      *   optional id of this Control. In html, this will be set as the value of the id attribute. The id can only
      *   contain alphanumeric characters.  If this parameter is not passed, QCubed will generate the id.
@@ -273,14 +286,14 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      */
     public function __construct($objParentObject, $strControlId = null)
     {
-        if ($objParentObject instanceof FormBase) {
+        if ($objParentObject instanceof QForm) {
             $this->objForm = $objParentObject;
         } else {
-            if ($objParentObject instanceof ControlBase) {
+            if ($objParentObject instanceof AbstractBase) {
                 $this->objParentControl = $objParentObject;
                 $this->objForm = $objParentObject->Form;
             } else {
-                throw new Exception\Caller('ParentObject must be either a FormBase or ControlBase object');
+                throw new Exception\Caller('ParentObject must be either a QForm or QControl object');
             }
         }
 
@@ -355,7 +368,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      *
      * This implementation puts the state into the session. Override to provide a different method if so desired.
      *
-     * Should normally be called only by FormBase code. See GetState and PutState for the control side implementation.
+     * Should normally be called only by QForm code. See GetState and PutState for the control side implementation.
      */
     public function _WriteState()
     {
@@ -416,7 +429,8 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * A utility function to convert a template file name into a full path.
      *
-     * @param $strTemplate
+     * @param string $strTemplate   name of template
+     * @return string
      */
     public function getTemplatePath($strTemplate)
     {
@@ -425,14 +439,14 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             $strOriginalPath = $strTemplate;
 
             // Try the control's subclass location
-            $reflector = new ReflectionClass(get_class($this));
+            $reflector = new \ReflectionClass(get_class($this));
             $strDir = dirname($reflector->getFileName());
             $strTemplate = $strDir . DIRECTORY_SEPARATOR . $strTemplate;
 
             if (!file_exists($strTemplate)) {
                 // Try the control's parent
                 if ($this->objParentControl) {
-                    $reflector = new ReflectionClass(get_class($this->objParentControl));
+                    $reflector = new \ReflectionClass(get_class($this->objParentControl));
                     $strDir = dirname($reflector->getFileName());
                     $strTemplate = $strDir . DIRECTORY_SEPARATOR . $strTemplate;
                 }
@@ -440,7 +454,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
             if (!file_exists($strTemplate)) {
                 // Try the form's location
-                $reflector = new ReflectionClass(get_class($this->objForm));
+                $reflector = new \ReflectionClass(get_class($this->objForm));
                 $strDir = dirname($reflector->getFileName());
                 $strTemplate = $strDir . DIRECTORY_SEPARATOR . $strTemplate;
 
@@ -455,7 +469,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
     /**
      * This function evaluates a template and is used by a variety of controls. It is similar to the function found in the
-     * FormBase, but recreated here so that the "$this" in the template will be the control, instead of the form,
+     * QForm, but recreated here so that the "$this" in the template will be the control, instead of the form,
      * and the protected members of the control are available to draw directly.
      * @param string $strTemplate Path to the HTML template file
      *
@@ -476,7 +490,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             }
 
             // Evaluate the new template
-            ob_start('__FormBase_EvaluateTemplate_ObHandler');
+            ob_start('__QForm_EvaluateTemplate_ObHandler');
 
             $strTemplate = $this->getTemplatePath($strTemplate);
             require($strTemplate);
@@ -502,12 +516,12 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      * simple string, and allows actions to get more information as well. This also allows widgets to modify
      * the action parameter, while preserving the original action parameter so that the action can see both.
      *
-     * @param ControlBase $objSourceControl
+     * @param AbstractBase $objSourceControl
      * @param QAction $objAction
      * @param $mixParameter
      * @return mixed
      */
-    public static function _ProcessActionParams(ControlBase $objSourceControl, QAction $objAction, $mixParameter)
+    public static function _ProcessActionParams(AbstractBase $objSourceControl, QAction $objAction, $mixParameter)
     {
         $mixParameters['param'] = null;
         $mixParameters = $objSourceControl->processActionParameters($objAction, $mixParameter);
@@ -519,8 +533,9 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      * the parent, and then modify the "param" item in the returned array if needed. This also provides additional
      * information to the action about the triggering control.
      *
+     * @param QAction $objAction
      * @param $mixParameter
-     * @return mixed
+     * @return array
      */
     protected function processActionParameters(QAction $objAction, $mixParameter)
     {
@@ -532,14 +547,14 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     }
 
     /**
-     * Used by the FormBase engine to call the method in the control, allowing the method to be a protected method.
+     * Used by the QForm engine to call the method in the control, allowing the method to be a protected method.
      *
-     * @param ControlBase $objDestControl
+     * @param AbstractBase $objDestControl
      * @param string $strMethodName
-     * @param $strSourceControlId
-     * @param mixed $mixParameter Parameters coming from javascript
+     * @param string $strFormId
+     * @param mixed $params Parameters coming from javascript
      */
-    public static function _CallActionMethod(ControlBase $objDestControl, $strMethodName, $strFormId, $params)
+    public static function _CallActionMethod(AbstractBase $objDestControl, $strMethodName, $strFormId, $params)
     {
         $objDestControl->$strMethodName($strFormId, $params['controlId'], $params['param'], $params);
     }
@@ -559,27 +574,27 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
     /**
      * The object has just been unserialized, so fix up pointers to embedded forms.
-     * @param FormBase $objForm
+     * @param QForm $objForm
      */
-    public function wakeup(FormBase $objForm)
+    public function wakeup(QForm $objForm)
     {
         $this->objForm = $objForm;
     }
 
     /**
      * A helper function to fix up a 'callable', a formObj, or any other object that we would like to represent
-     * in the serialized stream differently than the default. If a ControlBase, make sure this isn't the only
+     * in the serialized stream differently than the default. If a QControl, make sure this isn't the only
      * instance of the control in the stream, or have some other way to serialize the control.
      *
-     * @param FormBase|ControlBase|array|callable $obj
+     * @param QForm|QControl|array|callable $obj
      * @return mixed
      */
     public static function sleepHelper($obj)
     {
-        if ($obj instanceof FormBase) {
+        if ($obj instanceof QForm) {
             // assume its THE form
             return '**QF;';
-        } elseif ($obj instanceof ControlBase) {
+        } elseif ($obj instanceof AbstractBase) {
             return '**QC;' . $obj->strControlId;
         } elseif (is_array($obj)) {
             $ret = array();
@@ -594,7 +609,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * A helper function to restore something possibly serialized with SleepHelper.
      *
-     * @param FormBase|FormBaseBase $objForm
+     * @param QForm $objForm
      * @param array|string $obj
      *
      * @return mixed
@@ -620,9 +635,9 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * Adds a control as a child of this control.
      *
-     * @param ControlBase|ControlBaseBase $objControl the control to add
+     * @param \QCubed\Control\AbstractBase $objControl the control to add
      */
-    public function addChildControl(ControlBase $objControl)
+    public function addChildControl(QCubed\Control\AbstractBase $objControl)
     {
         $this->blnModified = true;
         $this->objChildControlArray[$objControl->ControlId] = $objControl;
@@ -633,7 +648,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      * Returns all child controls as an array
      *
      * @param boolean $blnUseNumericIndexes
-     * @return ControlBase[]
+     * @return QControl[]
      */
     public function getChildControls($blnUseNumericIndexes = true)
     {
@@ -651,7 +666,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * Returns the child control with the given id
      * @param string $strControlId
-     * @return ControlBase
+     * @return QControl
      */
     public function getChildControl($strControlId)
     {
@@ -999,7 +1014,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      * This is utilized by Render methods to display various name-value HTML attributes for the
      * control.
      *
-     * ControlBase's implementation contains the very-basic set of HTML attributes... it is expected
+     * QControl's implementation contains the very-basic set of HTML attributes... it is expected
      * that most subclasses will extend this method's functionality to add Control-specific HTML
      * attributes (e.g. textbox will likely add the maxlength html attribute, etc.)
      *
@@ -1027,7 +1042,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     }
 
     /**
-     * Returns the html for the attributes for the base control of the ControlBase.
+     * Returns the html for the attributes for the base control of the QControl.
      * Allows the given arrays to override the attributes and styles before
      * rendering. This inserts the control id into the rendering of the tag.
      * @param null|string $attributeOverrides
@@ -1044,7 +1059,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     }
 
     /**
-     * Returns all action attributes for this ControlBase
+     * Returns all action attributes for this QControl
      *
      * @return string
      */
@@ -1096,12 +1111,12 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
     /**
      * Returns the styler for the wrapper tag.
-     * @return null|QTagStyler
+     * @return null|TagStyler
      */
     public function getWrapperStyler()
     {
         if (!$this->objWrapperStyler) {
-            $this->objWrapperStyler = new QTagStyler();
+            $this->objWrapperStyler = new TagStyler();
         }
         return $this->objWrapperStyler;
     }
@@ -1182,7 +1197,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                 $styles['display'] = 'none';
             }
         }
-        return QHtml::renderStyles($styles);
+        return Html::renderStyles($styles);
     }
 
     /**
@@ -1215,7 +1230,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
         $overrides = ['id' => $this->getWrapperId()];
         $attributes = $this->getWrapperAttributes($overrides);
 
-        return QHtml::renderTag($strTag, $attributes, $strOutput);
+        return Html::renderTag($strTag, $attributes, $strOutput);
     }
 
     /**
@@ -1232,7 +1247,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      * </ul>
      * Proper usage within the first line of any Render() method is:
      *        <code>$this->renderHelper(func_get_args(), __FUNCTION__);</code>
-     * See {@link ControlBase::renderWithName()} as example.
+     * See {@link QControl::renderWithName()} as example.
      *
      * @param mixed $mixParameterArray the parameters given to the render call
      * @param string $strRenderMethod the method which has been used to render the
@@ -1240,16 +1255,16 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      *
      * @throws Exception\Caller
      * @throws Exception|Exception\Caller
-     * @see ControlBaseBase::renderOutput()
+     * @see QControlBase::renderOutput()
      */
     protected function renderHelper($mixParameterArray, $strRenderMethod)
     {
         // Make sure the form is already "RenderBegun"
-        if ((!$this->objForm) || ($this->objForm->FormStatus != FormBase::FormStatusRenderBegun)) {
+        if ((!$this->objForm) || ($this->objForm->FormStatus != QForm::FORM_STATUS_RENDER_BEGUN)) {
             if (!$this->objForm) {
                 $objExc = new Exception\Caller('Control\'s form does not exist.  It could be that you are attempting to render after RenderEnd() has been called on the form.');
             } else {
-                if ($this->objForm->FormStatus == FormBase::FormStatusRenderEnded) {
+                if ($this->objForm->FormStatus == QForm::FORM_STATUS_RENDER_ENDED) {
                     $objExc = new Exception\Caller('Control cannot be rendered after RenderEnd() has been called on the form.');
                 } else {
                     $objExc = new Exception\Caller('Control cannot be rendered until RenderBegin() has been called on the form.');
@@ -1276,7 +1291,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
         $this->strRenderMethod = $strRenderMethod;
 
         // Remove non-overrides from the parameter array
-        while (!empty($mixParameterArray) && gettype(reset($mixParameterArray)) != \QCubed\Type::STRING && gettype(reset($mixParameterArray)) != \QCubed\Type::ARRAY_TYPE) {
+        while (!empty($mixParameterArray) && gettype(reset($mixParameterArray)) != Type::STRING && gettype(reset($mixParameterArray)) != Type::ARRAY_TYPE) {
             array_shift($mixParameterArray);
         }
 
@@ -1382,7 +1397,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     {
         if ($this->strAttributeScripts) {
             foreach ($this->strAttributeScripts as $scriptArgs) {
-                array_unshift($scriptArgs, $this->getJControlBaseId());
+                array_unshift($scriptArgs, $this->getJQControlId());
                 call_user_func_array('QApplication::ExecuteControlCommand', $scriptArgs);
             }
         }
@@ -1407,7 +1422,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     }
 
     /**
-     * For any HTML code that needs to be rendered at the END of the FormBase when this control is
+     * For any HTML code that needs to be rendered at the END of the QForm when this control is
      * INITIALLY rendered.
      *
      */
@@ -1443,11 +1458,9 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      *          out javascript will read and put into the control's spot on the page. Requires coordination with
      *          the code in qcubed.js.
      *
-     * @param string $strOutput
-     *   Your html-code which should be printed out
-     * @param boolean $blnDisplayOutput
-     *   should it be printed, or just be returned?
-     *
+     * @param string $strOutput Your html-code which should be printed out
+     * @param boolean $blnDisplayOutput should it be printed, or just be returned?
+     * @param boolean $blnForceAsBlockElement Force this to be a block element? Useful when we are wrapping a block element.
      * @return string
      */
     protected function renderOutput($strOutput, $blnDisplayOutput, $blnForceAsBlockElement = false)
@@ -1520,6 +1533,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
         // Output or Return
         if ($blnDisplayOutput) {
             print($strOutput);
+            return '';
         } else {
             return $strOutput;
         }
@@ -1528,7 +1542,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * This method will render the control, itself, and will return the rendered HTML as a string
      *
-     * As an abstract method, any class extending ControlBaseBase must implement it.  This ensures that
+     * As an abstract method, any class extending QControl must implement it.  This ensures that
      * each control has its own specific html.
      *
      * When outputting html, you should call GetHtmlAttributes to get the attributes for the main control.
@@ -1695,11 +1709,11 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
             if ($this->strValidationError) {
                 $strOutput .= sprintf('<br %s/><span %sclass="error">%s</span>', $strDataRel, $strDataRel,
-                    QHtml::renderString($this->strValidationError));
+                    Html::renderString($this->strValidationError));
             } else {
                 if ($this->strWarning) {
                     $strOutput .= sprintf('<br %s/><span %sclass="warning">%s</span>', $strDataRel, $strDataRel,
-                        QHtml::renderString($this->strWarning));
+                        Html::renderString($this->strWarning));
                 }
             }
         } catch (Exception\Caller $objExc) {
@@ -1715,7 +1729,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * Renders the control with an attached name
      *
-     * This will call {@link ControlBaseBase::getControlHtml()} for the bulk of the work, but will add layout html as well.  It will include
+     * This will call {@link QControlBase::getControlHtml()} for the bulk of the work, but will add layout html as well.  It will include
      * the rendering of the Controls' name label, any errors or warnings, instructions, and html before/after (if specified).
      * As this is the parent class of all controls, this method defines how ALL controls will render when rendered with a name.
      * If you need certain controls to display differently, override this function in that control's class.
@@ -1757,20 +1771,20 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
         if ($this->strInstructions) {
             $strInstructions = '<br/>' .
-                QHtml::renderTag('span', ['class' => "instructions"], QHtml::renderString($this->strInstructions));
+                Html::renderTag('span', ['class' => "instructions"], Html::renderString($this->strInstructions));
         } else {
             $strInstructions = '';
         }
-        $strLabel = QHtml::renderTag('label', null, QHtml::renderString($this->strName));
-        $strToReturn = QHtml::renderTag('div', ['class' => $strLabelClass], $strLabel . $strInstructions);
+        $strLabel = Html::renderTag('label', null, Html::renderString($this->strName));
+        $strToReturn = Html::renderTag('div', ['class' => $strLabelClass], $strLabel . $strInstructions);
 
         // Render the Right side
         $strMessage = '';
         if ($this->strValidationError) {
-            $strMessage = sprintf('<span class="error">%s</span>', QHtml::renderString($this->strValidationError));
+            $strMessage = sprintf('<span class="error">%s</span>', Html::renderString($this->strValidationError));
         } else {
             if ($this->strWarning) {
-                $strMessage = sprintf('<span class="warning">%s</span>', QHtml::renderString($this->strWarning));
+                $strMessage = sprintf('<span class="warning">%s</span>', Html::renderString($this->strWarning));
             }
         }
 
@@ -1786,7 +1800,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
         }
 
         // render control dressing, which is essentially a wrapper. Not sure why we are not just rendering a wrapper here!
-        $strToReturn = QHtml::renderTag('div', $aWrapperAttributes, $strToReturn);
+        $strToReturn = Html::renderTag('div', $aWrapperAttributes, $strToReturn);
 
         ////////////////////////////////////////////
         // Call RenderOutput, Returning its Contents
@@ -1797,12 +1811,12 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * Format a comment block if we are not in MINIMIZE mode.
      *
-     * @param string $strType Either ControlBase::COMMENT_START or ControlBase::COMMENT_END
+     * @param string $strType Either QControl::COMMENT_START or QControl::COMMENT_END
      * @return string
      */
     public function renderComment($strType)
     {
-        return QHtml::comment($strType . ' ' . get_class($this) . ' ' . $this->strName . ' id:' . $this->strControlId);
+        return Html::comment($strType . ' ' . get_class($this) . ' ' . $this->strName . ' id:' . $this->strControlId);
     }
 
 
@@ -1910,8 +1924,8 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     }
 
     /**
-     * Sets the Form of this ControlBase
-     * @param FormBase|FormBaseBase $objForm
+     * Sets the Form of this QControl
+     * @param QForm $objForm
      */
     public function setForm($objForm)
     {
@@ -1920,7 +1934,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
     /**
      * Sets the parent control for this control
-     * @param ControlBase|ControlBaseBase $objControl The control which has to be set as this control's parent
+     * @param QControl $objControl The control which has to be set as this control's parent
      */
     public function setParentControl($objControl)
     {
@@ -1951,7 +1965,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     }
 
     /**
-     * Runs var_export on this ControlBase
+     * Runs var_export on this QControl
      * @param bool $blnReturn Does the result of var_export have to be returned?
      *
      * @return mixed
@@ -1973,9 +1987,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             $this->$key = self::sleepHelper($val);
         }
 
-        if ($blnReturn) {
-            return var_export($this, true);
-        }
+        return var_export($this, $blnReturn);
     }
 
     /**
@@ -1989,7 +2001,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      *
      * @return string the DOM element id on which to apply the jQuery UI function
      */
-    public function getJControlBaseId()
+    public function getJQControlId()
     {
         return $this->ControlId;
     }
@@ -2021,7 +2033,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                 $class = WATCHER_CLASS;
                 $this->objWatcher = new $class(); // only create a watcher object when needed, since it is stored in the form state
             } else {
-                $this->objWatcher = new QWatcher(); // only create a watcher object when needed, since it is stored in the form state
+                $this->objWatcher = new Watcher(); // only create a watcher object when needed, since it is stored in the form state
             }
         }
         $this->objWatcher->watch($objNode);
@@ -2063,7 +2075,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      * @param string $strMethodName Name of the method
      * @param bool $blnIncludeCurrentControl Include this control as well?
      *
-     * @return null|ControlBase The control found in the hierarchy to have the method
+     * @return null|QControl The control found in the hierarchy to have the method
      *                       Or null if no control was found in the hierarchy with the given name
      */
     public function getControlFromHierarchyByMethodName($strMethodName, $blnIncludeCurrentControl = true)
@@ -2072,7 +2084,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             $ctlDelegatorControl = $this;
         } else {
             if (!$this->ParentControl) {
-                // ParentControl is null. This means the parent is a FormBase.
+                // ParentControl is null. This means the parent is a QForm.
                 $ctlDelegatorControl = $this->Form;
             } else {
                 $ctlDelegatorControl = $this->ParentControl;
@@ -2084,13 +2096,13 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                 return $ctlDelegatorControl;
             } else {
                 if (!$ctlDelegatorControl->ParentControl) {
-                    // ParentControl is null. This means the parent is a FormBase.
+                    // ParentControl is null. This means the parent is a QForm.
                     $ctlDelegatorControl = $ctlDelegatorControl->Form;
                 } else {
                     $ctlDelegatorControl = $ctlDelegatorControl->ParentControl;
                 }
             }
-        } while (!($ctlDelegatorControl instanceof FormBase));
+        } while (!($ctlDelegatorControl instanceof QForm));
 
         // If we are here, we could not find the method in the hierarchy/lineage of this control.
         return null;
@@ -2098,7 +2110,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
     /**
      * Returns the form associated with the control. Used by the QDataBinder trait.
-     * @return FormBase
+     * @return QForm
      */
     public function getForm()
     {
@@ -2225,7 +2237,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
      * @return mixed|void
      * @throws Exception\Caller
      * @throws Exception|Exception\Caller
-     * @throws Exception|\QCubed\Exception\InvalidCast
+     * @throws Exception|InvalidCast
      */
     public function __set($strName, $mixValue)
     {
@@ -2238,17 +2250,17 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                     $this->getWrapperStyler()->__set($strName, $mixValue);
                     $this->markAsWrapperModified();
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "Display":    // boolean to determine whether to display or not
                 try {
-                    $mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $mixValue = Type::cast($mixValue, Type::BOOLEAN);
                     $this->markAsWrapperModified();
                     $this->blnDisplay = $mixValue;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2258,71 +2270,71 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                     $this->mixCausesValidation = $mixValue;
                     // This would not need to cause a redraw
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "Required":
                 try {
-                    $this->blnRequired = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnRequired = Type::cast($mixValue, Type::BOOLEAN);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "Visible":
                 try {
-                    if ($this->blnVisible !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN))) {
+                    if ($this->blnVisible !== ($mixValue = Type::cast($mixValue, Type::BOOLEAN))) {
                         $this->markAsModified();
                         $this->blnVisible = $mixValue;
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "PreferredRenderMethod":
                 try {
-                    if ($this->strPreferredRenderMethod !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING))) {
+                    if ($this->strPreferredRenderMethod !== ($mixValue = Type::cast($mixValue, Type::STRING))) {
                         $this->markAsModified();
                         $this->strPreferredRenderMethod = $mixValue;
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "HtmlBefore":
                 try {
-                    if ($this->strHtmlBefore !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING))) {
+                    if ($this->strHtmlBefore !== ($mixValue = Type::cast($mixValue, Type::STRING))) {
                         $this->markAsModified();
                         $this->strHtmlBefore = $mixValue;
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "HtmlAfter":
                 try {
-                    if ($this->strHtmlAfter !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING))) {
+                    if ($this->strHtmlAfter !== ($mixValue = Type::cast($mixValue, Type::STRING))) {
                         $this->markAsModified();
                         $this->strHtmlAfter = $mixValue;
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "Instructions":
                 try {
-                    if ($this->strInstructions !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING))) {
+                    if ($this->strInstructions !== ($mixValue = Type::cast($mixValue, Type::STRING))) {
                         $this->markAsModified();
                         $this->strInstructions = $mixValue;
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2331,12 +2343,12 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                     if (is_string($mixValue) && trim($mixValue) === '') { // treat empty strings as nulls to prevent unnecessary drawing
                         $mixValue = null;
                     }
-                    if ($this->strWarning !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING))) {
+                    if ($this->strWarning !== ($mixValue = Type::cast($mixValue, Type::STRING))) {
                         $this->strWarning = $mixValue;
                         $this->markAsModified();
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2346,22 +2358,22 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                     if (is_string($mixValue) && trim($mixValue) === '') { // treat empty strings as nulls to prevent unnecessary drawing
                         $mixValue = null;
                     }
-                    if ($this->strValidationError !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING))) {
+                    if ($this->strValidationError !== ($mixValue = Type::cast($mixValue, Type::STRING))) {
                         $this->strValidationError = $mixValue;
                         $this->markAsModified();
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "Minimize":
                 try {
-                    $this->blnMinimize = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnMinimize = Type::cast($mixValue, Type::BOOLEAN);
                     $this->markAsModified();
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2369,7 +2381,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             case "Moveable":
                 try {
                     $this->markAsWrapperModified();
-                    if (\QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN)) {
+                    if (Type::cast($mixValue, Type::BOOLEAN)) {
                         if (!$this->objDraggable) {
                             $this->objDraggable = new QDraggable($this, $this->ControlId . 'draggable');
                         } else {
@@ -2381,7 +2393,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                         }
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2389,7 +2401,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             case "Resizable":
                 try {
                     $this->markAsWrapperModified();
-                    if (\QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN)) {
+                    if (Type::cast($mixValue, Type::BOOLEAN)) {
                         if (!$this->objResizable) {
                             $this->objResizable = new QResizable($this);
                         } else {
@@ -2401,7 +2413,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                         }
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2409,7 +2421,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             case "Droppable":
                 try {
                     $this->markAsWrapperModified();
-                    if (\QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN)) {
+                    if (Type::cast($mixValue, Type::BOOLEAN)) {
                         if (!$this->objDroppable) {
                             $this->objDroppable = new QDroppable($this);
                         } else {
@@ -2421,7 +2433,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                         }
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2429,40 +2441,40 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             // MISC
             case "Name":
                 try {
-                    if ($this->strName !== ($mixValue = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING))) {
+                    if ($this->strName !== ($mixValue = Type::cast($mixValue, Type::STRING))) {
                         $this->markAsModified();
                         $this->strName = $mixValue;
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "ActionParameter":
                 try {
-                    $this->mixActionParameter = ($mixValue instanceof \QCubed\Js\Closure) ? $mixValue : \QCubed\Type::cast($mixValue,
-                        \QCubed\Type::STRING);
+                    $this->mixActionParameter = ($mixValue instanceof \QCubed\Js\Closure) ? $mixValue : Type::cast($mixValue,
+                        Type::STRING);
                     $this->markAsModified();
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "WrapperCssClass":
                 try {
-                    $strWrapperCssClass = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING);
+                    $strWrapperCssClass = Type::cast($mixValue, Type::STRING);
                     if ($this->getWrapperStyler()->setCssClass($strWrapperCssClass)) {
                         $this->markAsWrapperModified();
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "UseWrapper":
                 try {
-                    if ($this->blnUseWrapper != \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN)) {
+                    if ($this->blnUseWrapper != Type::cast($mixValue, Type::BOOLEAN)) {
                         $this->blnUseWrapper = !$this->blnUseWrapper;
                         //need to render the parent again (including its children)
                         if ($this->ParentControl) {
@@ -2470,28 +2482,28 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
                         }
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "WrapLabel":
                 try {
-                    if ($this->blnWrapLabel != \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN)) {
+                    if ($this->blnWrapLabel != Type::cast($mixValue, Type::BOOLEAN)) {
                         $this->blnWrapLabel = !$this->blnWrapLabel;
                         //need to render the parent again (including its children)
                         $this->markAsModified();
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "SaveState":
                 try {
-                    $this->blnSaveState = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnSaveState = Type::cast($mixValue, Type::BOOLEAN);
                     $this->_ReadState(); // during form creation, if we are setting this value, it means we want the state restored at form creation too, so handle both here.
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2499,8 +2511,8 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
 
             case "AutoRender":
                 try {
-                    $this->blnAutoRender = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                    $this->blnAutoRender = Type::cast($mixValue, Type::BOOLEAN);
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2510,9 +2522,9 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
             // CODEGEN
             case "LinkedNode":
                 try {
-                    $this->objLinkedNode = \QCubed\Type::cast($mixValue, '\QCubed\Query\Node\AbstractBase');
+                    $this->objLinkedNode = Type::cast($mixValue, '\QCubed\Query\Node\AbstractBase');
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -2554,42 +2566,42 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     /**
      * Returns a description of the options available to modify by the designer for the code generator.
      *
-     * @return QModelConnectorParam[]
+     * @return ModelConnectorParam[]
      */
     public static function getModelConnectorParams()
     {
         return array(
-            new QModelConnectorParam ('ControlBase', 'CssClass', 'Css Class assigned to the control', \QCubed\Type::STRING),
-            new QModelConnectorParam ('ControlBase', 'AccessKey', 'Access Key to focus control', \QCubed\Type::STRING),
-            new QModelConnectorParam ('ControlBase', 'CausesValidation',
-                'How and what to validate. Can also be set to a control.', QModelConnectorParam::SelectionList,
+            new ModelConnectorParam ('Control', 'CssClass', 'Css Class assigned to the control', Type::STRING),
+            new ModelConnectorParam ('Control', 'AccessKey', 'Access Key to focus control', Type::STRING),
+            new ModelConnectorParam ('Control', 'CausesValidation',
+                'How and what to validate. Can also be set to a control.', ModelConnectorParam::SELECTION_LIST,
                 array(
-                    null => 'None',
-                    'QCausesValidation::AllControls' => 'All Controls',
-                    'QCausesValidation::SiblingsAndChildren' => 'Siblings And Children',
-                    'QCausesValidation::SiblingsOnly' => 'Siblings Only'
+                    '\\QCubed\\Control\\AbstractBase::NONE' => 'None',
+                    '\\QCubed\\Control\\AbstractBase::CAUSES_VALIDATION_ALL' => 'All Controls',
+                    '\\QCubed\\Control\\AbstractBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN' => 'Siblings And Children',
+                    '\\QCubed\\Control\\AbstractBase::CAUSES_VALIDATION_SIBLINGS_ONLY' => 'Siblings Only'
                 )
             ),
-            new QModelConnectorParam ('ControlBase', 'Enabled', 'Will it start as enabled (default true)?',
-                \QCubed\Type::BOOLEAN),
-            new QModelConnectorParam ('ControlBase', 'Required',
+            new ModelConnectorParam ('Control', 'Enabled', 'Will it start as enabled (default true)?',
+                Type::BOOLEAN),
+            new ModelConnectorParam ('Control', 'Required',
                 'Will it fail validation if nothing is entered (default depends on data definition, if NULL is allowed.)?',
-                \QCubed\Type::BOOLEAN),
-            new QModelConnectorParam ('ControlBase', 'TabIndex', '', \QCubed\Type::INTEGER),
-            new QModelConnectorParam ('ControlBase', 'ToolTip', '', \QCubed\Type::STRING),
-            new QModelConnectorParam ('ControlBase', 'Visible', '', \QCubed\Type::BOOLEAN),
-            new QModelConnectorParam ('ControlBase', 'Height',
-                'Height in pixels. However, you can specify a different unit (e.g. 3.0 em).', \QCubed\Type::STRING),
-            new QModelConnectorParam ('ControlBase', 'Width',
-                'Width in pixels. However, you can specify a different unit (e.g. 3.0 em).', \QCubed\Type::STRING),
-            new QModelConnectorParam ('ControlBase', 'Instructions', 'Additional help for user.', \QCubed\Type::STRING),
-            new QModelConnectorParam ('ControlBase', 'Moveable', '', \QCubed\Type::BOOLEAN),
-            new QModelConnectorParam ('ControlBase', 'Resizable', '', \QCubed\Type::BOOLEAN),
-            new QModelConnectorParam ('ControlBase', 'Droppable', '', \QCubed\Type::BOOLEAN),
-            new QModelConnectorParam ('ControlBase', 'UseWrapper', 'Control will be forced to be wrapped with a div',
-                \QCubed\Type::BOOLEAN),
-            new QModelConnectorParam ('ControlBase', 'WrapperCssClass', '', \QCubed\Type::STRING),
-            new QModelConnectorParam ('ControlBase', 'PreferredRenderMethod', '', \QCubed\Type::STRING)
+                Type::BOOLEAN),
+            new ModelConnectorParam ('Control', 'TabIndex', '', Type::INTEGER),
+            new ModelConnectorParam ('Control', 'ToolTip', '', Type::STRING),
+            new ModelConnectorParam ('Control', 'Visible', '', Type::BOOLEAN),
+            new ModelConnectorParam ('Control', 'Height',
+                'Height in pixels. However, you can specify a different unit (e.g. 3.0 em).', Type::STRING),
+            new ModelConnectorParam ('Control', 'Width',
+                'Width in pixels. However, you can specify a different unit (e.g. 3.0 em).', Type::STRING),
+            new ModelConnectorParam ('Control', 'Instructions', 'Additional help for user.', Type::STRING),
+            new ModelConnectorParam ('Control', 'Moveable', '', Type::BOOLEAN),
+            new ModelConnectorParam ('Control', 'Resizable', '', Type::BOOLEAN),
+            new ModelConnectorParam ('Control', 'Droppable', '', Type::BOOLEAN),
+            new ModelConnectorParam ('Control', 'UseWrapper', 'Control will be forced to be wrapped with a div',
+                Type::BOOLEAN),
+            new ModelConnectorParam ('Control', 'WrapperCssClass', '', Type::STRING),
+            new ModelConnectorParam ('Control', 'PreferredRenderMethod', '', Type::STRING)
         );
 
     }

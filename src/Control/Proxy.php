@@ -9,7 +9,7 @@
 
 namespace QCubed\Control;
 
-use \QControl;
+use QCubed\Project\Control\ControlBase as QControl;
 use \QCubed\Exception\Caller;
 use QCubed\Html;
 use QCubed\Js\Closure;
@@ -19,7 +19,7 @@ use QCubed\QString;
  * Class QControlProxy is used to 'proxy' the actions for another control
  * @was QControlProxy
  */
-class Proxy extends ProjectControl
+class Proxy extends QControl
 {
     /** @var bool Overriding parent class */
     protected $blnActionsMustTerminate = true;

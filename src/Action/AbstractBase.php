@@ -10,15 +10,15 @@
 namespace QCubed\Action;
 
 use \QCubed\Exception\Caller;
+use QCubed\Jqui\Event\AbstractProperty;
 use QCubed\Type;
 use QCubed\Project\Control\ControlBase as QControl;
-
 
 /**
  * Base class for all other Actions.
  *
  * @package Actions
- * @property QEvent $Event Any QEvent derivated class instance
+ * @property \QCubed\Event\AbstractBase $Event Any QEvent derivated class instance
  * @was QAction
  */
 abstract class AbstractBase extends \QCubed\AbstractBase
@@ -26,24 +26,24 @@ abstract class AbstractBase extends \QCubed\AbstractBase
     /**
      * Abstract method, implemented in derived classes. Returns the JS needed for the action to work
      *
-     * @param QControl $objControl
+     * @param \QCubed\Control\AbstractBase $objControl
      *
      * @return mixed
      */
-    abstract public function RenderScript(QControl $objControl);
+    abstract public function renderScript(\QCubed\Control\AbstractBase $objControl);
 
     /** @var \QCubed\Event\AbstractBase Event object which will fire this action */
     protected $objEvent;
 
     /**
-     * @param \QControl $objControl QControl for which the actions have to be rendered
+     * @param \QCubed\Control\AbstractBase $objControl QControl for which the actions have to be rendered
      * @param string $strEventName Name of the event for which the actions have to be rendered
      * @param AbstractBase[] $objActions Array of actions
      *
      * @return null|string
      * @throws \Exception
      */
-    public static function RenderActions(QControl $objControl, $strEventName, $objActions)
+    public static function renderActions(\QCubed\Control\AbstractBase $objControl, $strEventName, $objActions)
     {
         $strToReturn = '';
         $strJqUiProperty = null;
@@ -58,17 +58,17 @@ abstract class AbstractBase extends \QCubed\AbstractBase
                     throw new Exception('Invalid Action Event in this entry in the ActionArray');
                 }
 
-                if ($objAction->objEvent instanceof QJqUiPropertyEvent) {
+                if ($objAction->objEvent instanceof AbstractProperty) {
                     $strJqUiProperty = $objAction->objEvent->JqProperty;
                 }
 
                 if ($objAction->objEvent->Delay > 0) {
                     $strCode = sprintf(" qcubed.setTimeout('%s', \$j.proxy(function(){%s},this), %s);",
                         $objControl->ControlId,
-                        _nl() . _indent(trim($objAction->RenderScript($objControl))) . _nl(),
+                        _nl() . _indent(trim($objAction->renderScript($objControl))) . _nl(),
                         $objAction->objEvent->Delay);
                 } else {
-                    $strCode = ' ' . $objAction->RenderScript($objControl);
+                    $strCode = ' ' . $objAction->renderScript($objControl);
                 }
 
                 // Add Condition (if applicable)
@@ -104,7 +104,6 @@ abstract class AbstractBase extends \QCubed\AbstractBase
                 $strOut = sprintf('$j("#%s").on("%s", function(event, ui){%s});',
                     $objControl->getJqControlId(),
                     $strEventName, $strToReturn);
-
             }
 
             if (isset($strOut)) {
@@ -175,16 +174,3 @@ abstract class AbstractBase extends \QCubed\AbstractBase
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

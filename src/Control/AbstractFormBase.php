@@ -9,6 +9,7 @@
 
 namespace QCubed\Control;
 
+use QCubed;
 use QCubed\Exception\Caller;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
@@ -548,7 +549,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             if (defined('__DESIGN_MODE__') && __DESIGN_MODE__ == 1) {
                 // Attach custom event to dialog to handle right click menu items sent by form
 
-                $dlg = new QModelConnectorEditDlg ($objClass, 'qconnectoreditdlg');
+                $dlg = new QCubed\ModelConnector\EditDlg ($objClass, 'qconnectoreditdlg');
 
                 $dlg->addAction(
                     new QOnEvent('qdesignerclick'),
@@ -926,11 +927,11 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
     /**
      * Add a QControl to the current QForm.
-     * @param QControl|QControlBase $objControl
+     * @param  AbstractBase $objControl
      *
      * @throws Caller
      */
-    public function addControl(QControl $objControl)
+    public function addControl(AbstractBase $objControl)
     {
         $strControlId = $objControl->ControlId;
         $objControl->markAsModified(); // make sure new controls get drawn

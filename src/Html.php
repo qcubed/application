@@ -39,6 +39,9 @@ abstract class Html {
     const FONT_FAMILY_COURIER_NEW = "'Courier New', Courier, monospaced";
     const FONT_FAMILY_COURIER = 'Courier, monospaced';
 
+    const TEXT_ALIGN_LEFT = "left";
+    const TEXT_ALIGN_RIGHT = "right";
+
     /**
      * This faux constructor method throws a caller exception.
      * The Css object should never be instantiated, and this constructor
