@@ -9,11 +9,15 @@
 
 namespace QCubed\Control;
 
-use QCubed as Q;
 use QCubed\Exception\Caller;
+use QCubed\Exception\IndexOutOfRange;
+use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Control\TableColumn\AbstractBase as ColumnBase;
 use QCubed\Control\TableColumn as Column;
+use QCubed\Type;
+use QCubed\Project\Control\FormBase as QForm;
+
 
 /**
  * Class Table
@@ -43,7 +47,7 @@ use QCubed\Control\TableColumn as Column;
  * @was QHtmlTableBase
  * @package QCubed\Control
  */
-abstract class Table extends PaginatedControl
+abstract class TableBase extends PaginatedControl
 {
     /** @var ColumnBase[] */
     protected $objColumnArray = [];
@@ -165,11 +169,11 @@ abstract class Table extends PaginatedControl
      * @param integer $intColumnIndex column position
      * @param mixed $mixParams extra parameters to pass to the closure callback.
      *
-     * @return Column\Callable
+     * @return Column\QCallable
      */
     public function createCallableColumn($strName, $objCallable, $intColumnIndex = -1, $mixParams = null)
     {
-        $objColumn = new Column\Callable($strName, $objCallable, $mixParams);
+        $objColumn = new Column\QCallable($strName, $objCallable, $mixParams);
         $this->addColumnAt($intColumnIndex, $objColumn);
         return $objColumn;
     }
@@ -236,7 +240,7 @@ abstract class Table extends PaginatedControl
      * @param integer $intColumnIndex new position
      * @param string $strNewName new column name
      *
-     * @return QAbstractHtmlTableColumn
+     * @return ColumnBase
      */
     public function moveColumn($strName, $intColumnIndex = -1, $strNewName = null)
     {
@@ -254,7 +258,7 @@ abstract class Table extends PaginatedControl
      * @param string $strOldName
      * @param string $strNewName
      *
-     * @return QAbstractHtmlTableColumn
+     * @return ColumnBase
      */
     public function renameColumn($strOldName, $strNewName)
     {
@@ -266,11 +270,11 @@ abstract class Table extends PaginatedControl
     /**
      * Add a column to the end of the column array.
      *
-     * @param QAbstractHtmlTableColumn $objColumn
+     * @param ColumnBase $objColumn
      *
-     * @return QAbstractHtmlTableColumn
+     * @return ColumnBase
      */
-    public function addColumn(QAbstractHtmlTableColumn $objColumn)
+    public function addColumn(ColumnBase $objColumn)
     {
         $this->addColumnAt(-1, $objColumn);
         return $objColumn;
@@ -282,15 +286,15 @@ abstract class Table extends PaginatedControl
      * Use AddColumn to add a column to the end.
      *
      * @param integer $intColumnIndex column position. -1 to add to the end.
-     * @param QAbstractHtmlTableColumn $objColumn
+     * @param ColumnBase $objColumn
      *
-     * @throws \QCubed\Exception\InvalidCast
+     * @throws InvalidCast
      */
-    public function addColumnAt($intColumnIndex, QAbstractHtmlTableColumn $objColumn)
+    public function addColumnAt($intColumnIndex, ColumnBase $objColumn)
     {
         try {
-            $intColumnIndex = \QCubed\Type::cast($intColumnIndex, \QCubed\Type::INTEGER);
-        } catch (\QCubed\Exception\InvalidCast $objExc) {
+            $intColumnIndex = Type::cast($intColumnIndex, Type::INTEGER);
+        } catch (InvalidCast $objExc) {
             $objExc->incrementOffset();
             throw $objExc;
         }
@@ -312,20 +316,20 @@ abstract class Table extends PaginatedControl
      *
      * @param int $intColumnIndex 0-based index of the column to remove
      *
-     * @return QAbstractHtmlTableColumn the removed column
-     * @throws \QCubed\Exception\IndexOutOfRange|\QCubed\Exception\InvalidCast
+     * @return ColumnBase the removed column
+     * @throws IndexOutOfRange|InvalidCast
      */
     public function removeColumn($intColumnIndex)
     {
         $this->blnModified = true;
         try {
-            $intColumnIndex = \QCubed\Type::cast($intColumnIndex, \QCubed\Type::INTEGER);
-        } catch (\QCubed\Exception\InvalidCast $objExc) {
+            $intColumnIndex = Type::cast($intColumnIndex, Type::INTEGER);
+        } catch (InvalidCast $objExc) {
             $objExc->incrementOffset();
             throw $objExc;
         }
         if ($intColumnIndex < 0 || $intColumnIndex > count($this->objColumnArray)) {
-            throw new \QCubed\Exception\IndexOutOfRange($intColumnIndex, "RemoveColumn()");
+            throw new IndexOutOfRange($intColumnIndex, "RemoveColumn()");
         }
 
         $col = $this->objColumnArray[$intColumnIndex];
@@ -355,7 +359,7 @@ abstract class Table extends PaginatedControl
      *
      * @param string $strName name of the column to remove
      *
-     * @return QAbstractHtmlTableColumn the removed column or null of no column with the given name was found
+     * @return ColumnBase the removed column or null of no column with the given name was found
      */
     public function removeColumnByName($strName)
     {
@@ -375,7 +379,7 @@ abstract class Table extends PaginatedControl
      *
      * @param string $strName name of the columns to remove
      *
-     * @return QAbstractHtmlTableColumn[] the array of columns removed
+     * @return ColumnBase[] the array of columns removed
      */
     public function removeColumnsByName($strName/*...*/)
     {
@@ -387,7 +391,7 @@ abstract class Table extends PaginatedControl
      *
      * @param string[] $strNamesArray names of the columns to remove
      *
-     * @return QAbstractHtmlTableColumn[] the array of columns removed
+     * @return ColumnBase[] the array of columns removed
      */
     public function removeColumns($strNamesArray)
     {
@@ -441,7 +445,7 @@ abstract class Table extends PaginatedControl
     /**
      * Returns all columns in the table
      *
-     * @return QAbstractHtmlTableColumn[]
+     * @return ColumnBase[]
      */
     public function getAllColumns()
     {
@@ -454,7 +458,7 @@ abstract class Table extends PaginatedControl
      * @param integer $intColumnIndex
      * @param boolean $blnVisible true to only count the visible columns
      *
-     * @return QAbstractHtmlTableColumn
+     * @return ColumnBase
      */
     public function getColumn($intColumnIndex, $blnVisible = false)
     {
@@ -481,7 +485,7 @@ abstract class Table extends PaginatedControl
      *
      * @param string $strName column name
      *
-     * @return QAbstractHtmlTableColumn
+     * @return ColumnBase
      */
     public function getColumnByName($strName)
     {
@@ -498,7 +502,7 @@ abstract class Table extends PaginatedControl
     /**
      * @param $strId
      *
-     * @return null|QAbstractHtmlTableColumn
+     * @return null|ColumnBase
      */
     public function getColumnById($strId)
     {
@@ -518,7 +522,7 @@ abstract class Table extends PaginatedControl
      *
      * @param string $strName column name
      *
-     * @return QAbstractHtmlTableColumn
+     * @return int
      */
     public function getColumnIndex($strName)
     {
@@ -539,7 +543,7 @@ abstract class Table extends PaginatedControl
      *
      * @param string $strName column name
      *
-     * @return QAbstractHtmlTableColumn[]
+     * @return ColumnBase[]
      */
     public function getColumnsByName($strName)
     {
@@ -869,97 +873,97 @@ abstract class Table extends PaginatedControl
      * @return mixed|void
      * @throws Exception
      * @throws Caller
-     * @throws \QCubed\Exception\InvalidCast
+     * @throws InvalidCast
      */
     public function __set($strName, $mixValue)
     {
         switch ($strName) {
             case "RowCssClass":
                 try {
-                    $this->strRowCssClass = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING);
+                    $this->strRowCssClass = Type::cast($mixValue, Type::STRING);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "AlternateRowCssClass":
                 try {
-                    $this->strAlternateRowCssClass = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING);
+                    $this->strAlternateRowCssClass = Type::cast($mixValue, Type::STRING);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "HeaderRowCssClass":
                 try {
-                    $this->strHeaderRowCssClass = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING);
+                    $this->strHeaderRowCssClass = Type::cast($mixValue, Type::STRING);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "ShowHeader":
                 try {
-                    $this->blnShowHeader = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnShowHeader = Type::cast($mixValue, Type::BOOLEAN);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "ShowFooter":
                 try {
-                    $this->blnShowFooter = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnShowFooter = Type::cast($mixValue, Type::BOOLEAN);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "RenderColumnTags":
                 try {
-                    $this->blnRenderColumnTags = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnRenderColumnTags = Type::cast($mixValue, Type::BOOLEAN);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "Caption":
                 try {
-                    $this->strCaption = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING);
+                    $this->strCaption = Type::cast($mixValue, Type::STRING);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "HeaderRowCount":
                 try {
-                    $this->intHeaderRowCount = \QCubed\Type::cast($mixValue, \QCubed\Type::INTEGER);
+                    $this->intHeaderRowCount = Type::cast($mixValue, Type::INTEGER);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "HideIfEmpty":
                 try {
-                    $this->blnHideIfEmpty = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnHideIfEmpty = Type::cast($mixValue, Type::BOOLEAN);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case "RowParamsCallback":
                 try {
-                    $this->rowParamsCallback = \QCubed\Type::cast($mixValue, \QCubed\Type::CALLABLE_TYPE);
+                    $this->rowParamsCallback = Type::cast($mixValue, Type::CALLABLE_TYPE);
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -985,23 +989,23 @@ abstract class Table extends PaginatedControl
     {
         return array_merge(parent::getModelConnectorParams(), array(
             new QModelConnectorParam(get_called_class(), 'RowCssClass', 'Css class given to each row',
-                \QCubed\Type::STRING),
+                Type::STRING),
             new QModelConnectorParam(get_called_class(), 'AlternateRowCssClass', 'Css class given to every other row',
-                \QCubed\Type::STRING),
+                Type::STRING),
             new QModelConnectorParam(get_called_class(), 'HeaderRowCssClass', 'Css class given to the header rows',
-                \QCubed\Type::STRING),
+                Type::STRING),
             new QModelConnectorParam(get_called_class(), 'ShowHeader',
-                'Whether or not to show the header. Default is true.', \QCubed\Type::BOOLEAN),
+                'Whether or not to show the header. Default is true.', Type::BOOLEAN),
             new QModelConnectorParam(get_called_class(), 'ShowFooter',
-                'Whether or not to show the footer. Default is false.', \QCubed\Type::BOOLEAN),
+                'Whether or not to show the footer. Default is false.', Type::BOOLEAN),
             new QModelConnectorParam(get_called_class(), 'RenderColumnTags',
                 'Whether or not to render html column tags for the columns. Column tags are only needed in special situations. Default is false.',
-                \QCubed\Type::BOOLEAN),
+                Type::BOOLEAN),
             new QModelConnectorParam(get_called_class(), 'Caption', 'Text to print in the caption tag of the table.',
-                \QCubed\Type::STRING),
+                Type::STRING),
             new QModelConnectorParam(get_called_class(), 'HideIfEmpty',
                 'Whether to draw nothing if there is no data, or draw the table tags with no cells instead. Default is to drag the table tags.',
-                \QCubed\Type::BOOLEAN)
+                Type::BOOLEAN)
         ));
     }
 }
