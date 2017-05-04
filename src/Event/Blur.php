@@ -15,7 +15,7 @@ namespace QCubed\Event;
  * @was QBlurEvent
  * @package QCubed\Event
  */
-class Blue extends AbstractBase
+class Blur extends AbstractBase
 {
     /** Event Name */
     const EVENT_NAME = 'blur';
