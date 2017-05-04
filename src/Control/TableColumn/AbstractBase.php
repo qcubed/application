@@ -16,7 +16,7 @@ use QCubed\Project\Application;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\ControlBase as QControl;
-
+use QCubed\Control\TableBase;
 
 /**
  * Class AbstractBase
@@ -32,8 +32,8 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @property boolean                $RenderAsHeader if true, all cells in the column will be rendered with a <<th>> tag instead of <<td>>
  * @property integer                $Id             HTML id attribute to put in the col tag
  * @property integer                $Span           HTML span attribute to put in the col tag
- * @property-read QHtmlTableBase  $ParentTable    parent table of the column
- * @property-write QHtmlTableBase $_ParentTable   Parent table of this column
+ * @property-read TableBase  $ParentTable    parent table of the column
+ * @property-write TableBase $_ParentTable   Parent table of this column
  * @property-write callable $CellParamsCallback A callback to set the html parameters of a generated cell
  * @property boolean                $Visible        Whether the column will be drawn. Defaults to true.
  * @property-read Q\TagStyler		$CellStyler		The tag styler for the cells in the column

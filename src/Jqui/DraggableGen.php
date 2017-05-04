@@ -200,7 +200,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * @property integer $ZIndex
  * Z-index for the helper while being dragged.
  *
- * @was QDraggable
+ * @was QDraggableGen
+
  */
 
 abstract class DraggableGen extends QCubed\Project\Control\ControlBase

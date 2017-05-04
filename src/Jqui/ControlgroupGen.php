@@ -58,7 +58,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * hidden, the controlgroup will not have rounded corners on the top
  * edge.
  *
- * @was QControlgroup
+ * @was QControlgroupGen
+
  */
 
 class ControlgroupGen extends QCubed\Control\Panel

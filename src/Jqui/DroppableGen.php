@@ -86,7 +86,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * 
 
  *
- * @was QDroppable
+ * @was QDroppableGen
+
  */
 
 abstract class DroppableGen extends QCubed\Project\Control\ControlBase

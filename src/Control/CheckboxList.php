@@ -8,6 +8,9 @@
 
 namespace QCubed\Control;
 
+require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
+use QCubed\Application\t;
+
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
@@ -67,7 +70,7 @@ class CheckboxList extends ListControl
     protected $intCellPadding = -1;
     protected $intCellSpacing = -1;
     protected $intRepeatColumns = 1;
-    protected $strRepeatDirection = QRepeatDirection::Vertical;
+    protected $strRepeatDirection = self::REPEAT_VERTICAL;
     protected $objItemStyle = null;
     protected $intButtonMode;
     protected $strMaxHeight; // will create a scroll pane if height is exceeded
@@ -226,7 +229,7 @@ class CheckboxList extends ListControl
                 // Iterate through Table Columns
                 $strRowHtml = '';
                 for ($intColIndex = 0; $intColIndex < $intColCount; $intColIndex++) {
-                    if ($this->strRepeatDirection == QRepeatDirection::Horizontal) {
+                    if ($this->strRepeatDirection == self::REPEAT_HORIZONTAL) {
                         $intIndex = $intColIndex + $this->intRepeatColumns * $intRowIndex;
                     } else {
                         $intIndex = (floor($this->ItemCount / $this->intRepeatColumns) * $intColIndex)
@@ -516,8 +519,8 @@ class CheckboxList extends ListControl
                 'Whether to repeat horizontally or vertically', QModelConnectorParam::SelectionList,
                 array(
                     null => 'Default',
-                    'QRepeatDirection::Horizontal' => 'Horizontal',
-                    'QRepeatDirection::Vertical' => 'Vertical'
+                    'self::REPEAT_HORIZONTAL' => 'Horizontal',
+                    'self::REPEAT_VERTICAL' => 'Vertical'
                 )),
             new QModelConnectorParam(get_called_class(), 'ButtonMode', 'How to display the buttons',
                 QModelConnectorParam::SelectionList,

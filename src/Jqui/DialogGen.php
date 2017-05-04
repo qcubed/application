@@ -172,7 +172,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * @property integer $Width
  * The width of the dialog, in pixels.
  *
- * @was QDialog
+ * @was QDialogGen
+
  */
 
 class DialogGen extends QCubed\Control\Panel

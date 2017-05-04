@@ -37,7 +37,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * Text to show in the button. When not specified (null), the HTML
  * content of the associated <label> element is used.
  *
- * @was QCheckboxradio
+ * @was QCheckboxradioGen
+
  */
 
 class CheckboxGen extends QCubed\Project\Control\Checkbox

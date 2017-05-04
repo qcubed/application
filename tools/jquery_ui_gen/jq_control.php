@@ -417,7 +417,7 @@ class JqControlGen extends \QCubed\Codegen\AbstractBase
         }
 
         $mixArgumentArray = array('objJqDoc' => $objJqDoc);
-        $strResult = $this->EvaluatePHP(dirname(__FILE__) . '/jq_control.tpl.php', $mixArgumentArray);
+        $strResult = $this->EvaluatePHP(dirname(__FILE__) . '/jq_control_gen.tpl.php', $mixArgumentArray);
         $strOutFileName = $strOutDirControlsBase . '/' . $objJqDoc->strQcClass . 'Gen.php';
         file_put_contents($strOutFileName, $strResult);
 
@@ -427,11 +427,10 @@ class JqControlGen extends \QCubed\Codegen\AbstractBase
             file_put_contents($strOutFileName, $strEmpty);
         }
 
+        $mixArgumentArray = array('objJqDoc' => $objJqDoc);
+        $strResult = $this->EvaluatePHP(dirname(__FILE__) . '/jq_control.tpl.php', $mixArgumentArray);
         $strOutFileName = $strOutDirControls . '/' . $objJqDoc->strQcClass . '.php';
-        if (!file_exists($strOutFileName)) {
-            $strEmpty = "<?php\n\tclass " . $objJqDoc->strQcClass . " extends " . $objJqDoc->strQcClass . "Base\n\t{\n\t}\n?>";
-            file_put_contents($strOutFileName, $strEmpty);
-        }
+        file_put_contents($strOutFileName, $strResult);
 
         echo "Generated class: " . $objJqDoc->strQcClass . "<br>";
     }

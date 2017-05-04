@@ -76,7 +76,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * This option can be used to specify multiple handles. If the range
  * option is set to true, the length of values should be 2.
  *
- * @was QSlider
+ * @was QSliderGen
+
  */
 
 class SliderGen extends QCubed\Control\Panel

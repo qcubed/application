@@ -104,7 +104,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * 
 
  *
- * @was QSpinner
+ * @was QSpinnerGen
+
  */
 
 class SpinnerGen extends QCubed\Project\Control\TextBox

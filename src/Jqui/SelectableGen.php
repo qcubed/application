@@ -64,7 +64,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * 
 
  *
- * @was QSelectable
+ * @was QSelectableGen
+
  */
 
 class SelectableGen extends QCubed\Control\Panel

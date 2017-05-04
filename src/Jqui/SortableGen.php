@@ -165,7 +165,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * @property integer $ZIndex
  * Z-index for element/helper while being sorted.
  *
- * @was QSortable
+ * @was QSortableGen
+
  */
 
 class SortableGen extends QCubed\Control\Panel

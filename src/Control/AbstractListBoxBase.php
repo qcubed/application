@@ -9,6 +9,9 @@
 
 namespace QCubed\Control;
 
+require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
+use QCubed\Application\t;
+
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
@@ -16,7 +19,6 @@ use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
-
 
 /**
  * Class AbstractListBoxBase
@@ -73,22 +75,22 @@ abstract class AbstractListBoxBase extends ListControl
     /**
      * Parses the data received back from the client/browser
      */
-    public function ParsePostData()
+    public function parsePostData()
     {
         if (array_key_exists($this->strControlId, $_POST)) {
             if (is_array($_POST[$this->strControlId])) {
                 // Multi-Select, so find them all.
-                $this->SetSelectedItemsById($_POST[$this->strControlId], false);
+                $this->setSelectedItemsById($_POST[$this->strControlId], false);
             } elseif ($_POST[$this->strControlId] === '') {
-                $this->UnselectAllItems(false);
+                $this->unselectAllItems(false);
             } else {
                 // Single-select
-                $this->SetSelectedItemsById(array($_POST[$this->strControlId]), false);
+                $this->setSelectedItemsById(array($_POST[$this->strControlId]), false);
             }
         } else {
             // Multiselect forms with nothing passed via $_POST means that everything was DE selected
             if ($this->SelectionMode == QSelectionMode::Multiple) {
-                $this->UnselectAllItems(false);
+                $this->unselectAllItems(false);
             }
         }
     }
@@ -99,7 +101,7 @@ abstract class AbstractListBoxBase extends ListControl
      * @param ListItem $objItem
      * @return string resulting HTML
      */
-    protected function GetItemHtml(ListItem $objItem)
+    protected function getItemHtml(ListItem $objItem)
     {
         // The Default Item Style
         if ($this->objItemStyle) {
@@ -110,16 +112,16 @@ abstract class AbstractListBoxBase extends ListControl
 
         // Apply any Style Override (if applicable)
         if ($objStyle = $objItem->ItemStyle) {
-            $objStyler->Override($objStyle);
+            $objStyler->override($objStyle);
         }
 
-        $objStyler->SetHtmlAttribute('value', ($objItem->Empty) ? '' : $objItem->Id);
+        $objStyler->setHtmlAttribute('value', ($objItem->Empty) ? '' : $objItem->Id);
         if ($objItem->Selected) {
-            $objStyler->SetHtmlAttribute('selected', 'selected');
+            $objStyler->setHtmlAttribute('selected', 'selected');
         }
 
-        $strHtml = Html::RenderTag('option', $objStyler->RenderHtmlAttributes(),
-                QString::HtmlEntities($objItem->Name), false, true) . _nl();
+        $strHtml = Html::renderTag('option', $objStyler->renderHtmlAttributes(),
+                QString::htmlEntities($objItem->Name), false, true) . _nl();
 
         return $strHtml;
     }
@@ -128,7 +130,7 @@ abstract class AbstractListBoxBase extends ListControl
      * Returns the html for the entire control.
      * @return string
      */
-    protected function GetControlHtml()
+    protected function getControlHtml()
     {
         // If no selection is specified, we select the first item, because once we draw this, that is what the browser
         // will consider selected on the screen.
@@ -146,11 +148,11 @@ abstract class AbstractListBoxBase extends ListControl
             $attrOverride['name'] = $this->strControlId;
         }
 
-        $strToReturn = $this->RenderTag('select', $attrOverride, null, $this->RenderInnerHtml());
+        $strToReturn = $this->renderTag('select', $attrOverride, null, $this->renderInnerHtml());
 
         // If MultiSelect and if NOT required, add a "Reset" button to deselect everything
         if (($this->SelectionMode == QSelectionMode::Multiple) && (!$this->blnRequired) && ($this->Enabled) && ($this->blnVisible)) {
-            $strToReturn .= $this->GetResetButtonHtml();
+            $strToReturn .= $this->getResetButtonHtml();
         }
         return $strToReturn;
     }
@@ -159,17 +161,17 @@ abstract class AbstractListBoxBase extends ListControl
      * Return the inner html for the select box.
      * @return string
      */
-    protected function RenderInnerHtml()
+    protected function renderInnerHtml()
     {
         $strHtml = '';
-        $intItemCount = $this->GetItemCount();
+        $intItemCount = $this->getItemCount();
         if (!$intItemCount) {
             return '';
         }
         $groups = array();
 
         for ($intIndex = 0; $intIndex < $intItemCount; $intIndex++) {
-            $objItem = $this->GetItem($intIndex);
+            $objItem = $this->getItem($intIndex);
             // Figure Out Groups (if applicable)
             if ($strGroup = $objItem->ItemGroup) {
                 $groups[$strGroup][] = $objItem;
@@ -181,14 +183,14 @@ abstract class AbstractListBoxBase extends ListControl
         foreach ($groups as $strGroup => $items) {
             if (!$strGroup) {
                 foreach ($items as $objItem) {
-                    $strHtml .= $this->GetItemHtml($objItem);
+                    $strHtml .= $this->getItemHtml($objItem);
                 }
             } else {
                 $strGroupHtml = '';
                 foreach ($items as $objItem) {
-                    $strGroupHtml .= $this->GetItemHtml($objItem);
+                    $strGroupHtml .= $this->getItemHtml($objItem);
                 }
-                $strHtml .= QHtml::RenderTag('optgroup', ['label' => QApplication::HtmlEntities($strGroup)],
+                $strHtml .= QHtml::renderTag('optgroup', ['label' => QApplication::htmlEntities($strGroup)],
                     $strGroupHtml);
             }
         }
@@ -196,13 +198,13 @@ abstract class AbstractListBoxBase extends ListControl
     }
 
     // For multiple-select based listboxes, you must define the way a "Reset" button should look
-    abstract protected function GetResetButtonHtml();
+    abstract protected function getResetButtonHtml();
 
     /**
      * Determines whether the supplied input data is valid or not.
      * @return bool
      */
-    public function Validate()
+    public function validate()
     {
         if ($this->blnRequired) {
             if ($this->SelectedIndex == -1) {
@@ -231,14 +233,14 @@ abstract class AbstractListBoxBase extends ListControl
      * Override of superclass that will update the selection using javascript so that the whole control does
      * not need to be redrawn.
      */
-    protected function RefreshSelection()
+    protected function refreshSelection()
     {
         $items = $this->SelectedItems;
         $values = [];
         foreach ($items as $objItem) {
             $values[] = $objItem->Id;
         }
-        QApplication::ExecuteControlCommand($this->ControlId, 'val', $values);
+        QApplication::executeControlCommand($this->ControlId, 'val', $values);
     }
 
     /**
@@ -246,12 +248,12 @@ abstract class AbstractListBoxBase extends ListControl
      * if the item did not exist, the default selection would be removed and nothing would be selected.
      * @param mixed $state
      */
-    public function PutState($state)
+    public function putState($state)
     {
         if (!empty($state['SelectedValues'])) {
             // assume only one selection in list
             $strValue = reset($state['SelectedValues']);
-            if ($this->FindItemByValue($strValue)) {
+            if ($this->findItemByValue($strValue)) {
                 $this->SelectedValues = [$strValue];
             }
         }
@@ -273,7 +275,7 @@ abstract class AbstractListBoxBase extends ListControl
         switch ($strName) {
             // APPEARANCE
             case "Rows":
-                return $this->GetHtmlAttribute('size');
+                return $this->getHtmlAttribute('size');
             case "LabelForRequired":
                 return $this->strLabelForRequired;
             case "LabelForRequiredUnnamed":
@@ -281,13 +283,13 @@ abstract class AbstractListBoxBase extends ListControl
 
             // BEHAVIOR
             case "SelectionMode":
-                return $this->HasHtmlAttribute('multiple') ? QSelectionMode::Multiple : QSelectionMode::Single;
+                return $this->hasHtmlAttribute('multiple') ? QSelectionMode::Multiple : QSelectionMode::Single;
 
             default:
                 try {
                     return parent::__get($strName);
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
@@ -310,40 +312,40 @@ abstract class AbstractListBoxBase extends ListControl
             // APPEARANCE
             case "Rows":
                 try {
-                    $this->SetHtmlAttribute('size', Type::Cast($mixValue, Type::INTEGER));
+                    $this->setHtmlAttribute('size', Type::cast($mixValue, Type::INTEGER));
                     break;
                 } catch (InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "LabelForRequired":
                 try {
-                    $this->strLabelForRequired = Type::Cast($mixValue, Type::STRING);
+                    $this->strLabelForRequired = Type::cast($mixValue, Type::STRING);
                     break;
                 } catch (InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "LabelForRequiredUnnamed":
                 try {
-                    $this->strLabelForRequiredUnnamed = Type::Cast($mixValue, Type::STRING);
+                    $this->strLabelForRequiredUnnamed = Type::cast($mixValue, Type::STRING);
                     break;
                 } catch (InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             // BEHAVIOR
             case "SelectionMode":
                 try {
-                    if (Type::Cast($mixValue, Type::STRING) == QSelectionMode::Multiple) {
-                        $this->SetHtmlAttribute('multiple', 'multiple');
+                    if (Type::cast($mixValue, Type::STRING) == QSelectionMode::Multiple) {
+                        $this->setHtmlAttribute('multiple', 'multiple');
                     } else {
-                        $this->RemoveHtmlAttribute('multiple');
+                        $this->removeHtmlAttribute('multiple');
                     }
                     break;
                 } catch (InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
 
@@ -351,7 +353,7 @@ abstract class AbstractListBoxBase extends ListControl
                 try {
                     parent::__set($strName, $mixValue);
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
                 break;
@@ -363,12 +365,12 @@ abstract class AbstractListBoxBase extends ListControl
      *
      * @return QModelConnectorParam[]
      */
-    public static function GetModelConnectorParams()
+    public static function getModelConnectorParams()
     {
-        return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Rows', 'Height of field for multirow field',
+        return array_merge(parent::getModelConnectorParams(), array(
+            new QModelConnectorParam(get_called_class(), 'Rows', 'Height of field for multirow field',
                 Type::INTEGER),
-            new QModelConnectorParam (get_called_class(), 'SelectionMode', 'Single or multiple selections',
+            new QModelConnectorParam(get_called_class(), 'SelectionMode', 'Single or multiple selections',
                 QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
@@ -377,5 +379,4 @@ abstract class AbstractListBoxBase extends ListControl
                 ))
         ));
     }
-
 }

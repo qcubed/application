@@ -208,7 +208,7 @@ abstract class AbstractBase extends QCubed\Project\HtmlAttributeManager
     protected $strCustomAttributeArray = null;
     /** @var string|null Custom CSS style attributes for the control */
     protected $strCustomStyleArray = null;
-    /** @var array Array containing the list of actions set on the control (for different events) */
+    /** @var array Array of arrays containing the list of actions set on the control (for different events) */
     protected $objActionArray = array();
     /** @var string|\QCubed\Js\Closure|null The action parameter (typically small amount of data) for the Ajax or Server Callback */
     protected $mixActionParameter = null;

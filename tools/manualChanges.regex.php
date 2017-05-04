@@ -22,6 +22,18 @@ $a['const']['QCausesValidation::SiblingsOnly'] = '\\QCubed\\Control\\AbstractBas
 $a['const']['QTextAlign::Left'] = '\\QCubed\\Html::TEXT_ALIGN_LEFT';
 $a['const']['QTextAlign::Right'] = '\\QCubed\\Html::TEXT_ALIGN_RIGHT';
 
+$a['const']['QTextMode::SingeLine'] = '\\QCubed\\Control\\TextBoxBase::SINGLE_LINE';
+$a['const']['QTextMode::MultiLine'] = '\\QCubed\\Control\\TextBoxBase::MULTI_LINE';
+$a['const']['QTextMode::Password'] = '\\QCubed\\Control\\TextBoxBase::PASSWORD';
+$a['const']['QTextMode::Search'] = '\\QCubed\\Control\\TextBoxBase::SEARCH';
+$a['const']['QTextMode::Number'] = '\\QCubed\\Control\\TextBoxBase::NUMBER';
+$a['const']['QTextMode::Email'] = '\\QCubed\\Control\\TextBoxBase::EMAIL';
+$a['const']['QTextMode::Tel'] = '\\QCubed\\Control\\TextBoxBase::TEL';
+$a['const']['QTextMode::Url'] = '\\QCubed\\Control\\TextBoxBase::URL';
+
+$a['const']['QRepeatDirection::Horizontal'] = '\\QCubed\\Control\\ListControl::REPEAT_HORIZONTAL';
+$a['const']['QRepeatDirection::Vertical'] = '\\QCubed\\Control\\ListControl::REPEAT_VERTICAL';
+
 $a['const']['QSelectionMode::Single'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_SINGLE';
 $a['const']['QSelectionMode::Multiple'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_MULTIPLE';
 $a['const']['QSelectionMode::None'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_NONE';

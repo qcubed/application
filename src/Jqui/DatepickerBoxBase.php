@@ -10,12 +10,12 @@
 namespace QCubed\Jqui;
 
 require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
+use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\QDateTime;
 use QCubed\Type;
-use QCubed\Application\t;
 
 
 /**

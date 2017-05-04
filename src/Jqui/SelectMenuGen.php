@@ -55,7 +55,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * will be set for the width, allowing the width to be set in a
  * stylesheet.
  *
- * @was QSelectmenu
+ * @was QSelectmenuGen
+
  */
 
 class SelectMenuGen extends QCubed\Project\Control\ListBox

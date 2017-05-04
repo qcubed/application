@@ -113,7 +113,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * 
 
  *
- * @was QAutocomplete
+ * @was QAutocompleteGen
+
  */
 
 class AutocompleteGen extends QCubed\Project\Control\TextBox

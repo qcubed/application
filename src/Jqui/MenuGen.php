@@ -60,7 +60,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * Note: The role option should not be changed after initialization.
  * Existing (sub)menus and menu items will not be updated.
  *
- * @was QMenu
+ * @was QMenuGen
+
  */
 
 class MenuGen extends QCubed\Control\Panel

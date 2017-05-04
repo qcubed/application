@@ -41,7 +41,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * 
 
  *
- * @was QProgressbar
+ * @was QProgressbarGen
+
  */
 
 class ProgressbarGen extends QCubed\Control\Panel

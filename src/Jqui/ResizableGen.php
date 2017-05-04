@@ -135,7 +135,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * @property integer $MinWidth
  * The minimum width the resizable should be allowed to resize to.
  *
- * @was QResizable
+ * @was QResizableGen
+
  */
 
 abstract class ResizableGen extends QCubed\Project\Control\ControlBase

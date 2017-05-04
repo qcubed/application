@@ -41,7 +41,11 @@ abstract class ListControl extends QControl
 {
     use ListItemManagerTrait;
 
-    /** @var null|ListItemStyle The common style for all elements in the list */
+    const REPEAT_HORIZONTAL = 'Horizontal';
+    const REPEAT_VERTICAL = 'Vertical';
+
+
+/** @var null|ListItemStyle The common style for all elements in the list */
     protected $objItemStyle = null;
 
     //////////

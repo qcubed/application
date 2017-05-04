@@ -116,7 +116,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * 
 
  *
- * @was QTabs
+ * @was QTabsGen
+
  */
 
 class TabsGen extends QCubed\Control\Panel

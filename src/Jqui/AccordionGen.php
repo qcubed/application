@@ -89,7 +89,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * 
 
  *
- * @was QAccordion
+ * @was QAccordionGen
+
  */
 
 class AccordionGen extends QCubed\Control\Panel
