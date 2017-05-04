@@ -2,6 +2,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -323,9 +324,9 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
     /** @var boolean */
     protected $blnButtonImageOnly = null;
     /** @var string */
-    protected $strButtonText = null;
+    protected $strButtonText;
     /** @var mixed */
-    protected $mixCalculateWeek = null;
+    protected $mixCalculateWeek;
     /** @var boolean */
     protected $blnChangeMonth = null;
     /** @var boolean */
@@ -488,7 +489,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -496,9 +497,9 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -512,7 +513,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Opens the datepicker in a dialog box.
@@ -532,7 +533,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function dialog($date, $onSelect = null, $options = null, $pos = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "dialog", $date, $onSelect, $options, $pos, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "dialog", $date, $onSelect, $options, $pos, Application::PRIORITY_LOW);
     }
     /**
      * Returns the current date for the datepicker or null if no date has
@@ -542,7 +543,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function getDate()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "getDate", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "getDate", Application::PRIORITY_LOW);
     }
     /**
      * Close a previously opened date picker.
@@ -551,7 +552,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function hide()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "hide", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "hide", Application::PRIORITY_LOW);
     }
     /**
      * Determine whether a date picker has been disabled.
@@ -560,7 +561,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function isDisabled()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isDisabled", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isDisabled", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -574,7 +575,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -584,7 +585,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the datepicker option associated with the specified
@@ -602,7 +603,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the datepicker.
@@ -612,7 +613,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Redraw the date picker, after having made some external modifications.
@@ -621,7 +622,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function refresh()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
     }
     /**
      * Sets the date for the datepicker. The new date may be a Date object or
@@ -635,7 +636,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function setDate($date)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "setDate", $date, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "setDate", $date, Application::PRIORITY_LOW);
     }
     /**
      * Open the date picker. If the datepicker is attached to an input, the
@@ -645,7 +646,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
      */
     public function show()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "show", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "show", Application::PRIORITY_LOW);
     }
 
 
@@ -722,7 +723,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'AltFormat':
                 try {
-                    $this->strAltFormat = QType::Cast($mixValue, QType::String);
+                    $this->strAltFormat = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'altFormat', $this->strAltFormat);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -732,7 +733,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'AppendText':
                 try {
-                    $this->strAppendText = QType::Cast($mixValue, QType::String);
+                    $this->strAppendText = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'appendText', $this->strAppendText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -742,7 +743,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'AutoSize':
                 try {
-                    $this->blnAutoSize = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoSize = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoSize', $this->blnAutoSize);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -762,7 +763,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ButtonImage':
                 try {
-                    $this->strButtonImage = QType::Cast($mixValue, QType::String);
+                    $this->strButtonImage = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'buttonImage', $this->strButtonImage);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -772,7 +773,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ButtonImageOnly':
                 try {
-                    $this->blnButtonImageOnly = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnButtonImageOnly = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'buttonImageOnly', $this->blnButtonImageOnly);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -782,7 +783,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ButtonText':
                 try {
-                    $this->strButtonText = QType::Cast($mixValue, QType::String);
+                    $this->strButtonText = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'buttonText', $this->strButtonText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -797,7 +798,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ChangeMonth':
                 try {
-                    $this->blnChangeMonth = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnChangeMonth = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'changeMonth', $this->blnChangeMonth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -807,7 +808,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ChangeYear':
                 try {
-                    $this->blnChangeYear = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnChangeYear = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'changeYear', $this->blnChangeYear);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -817,7 +818,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'CloseText':
                 try {
-                    $this->strCloseText = QType::Cast($mixValue, QType::String);
+                    $this->strCloseText = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'closeText', $this->strCloseText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -827,7 +828,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ConstrainInput':
                 try {
-                    $this->blnConstrainInput = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnConstrainInput = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'constrainInput', $this->blnConstrainInput);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -837,7 +838,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'CurrentText':
                 try {
-                    $this->strCurrentText = QType::Cast($mixValue, QType::String);
+                    $this->strCurrentText = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'currentText', $this->strCurrentText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -847,7 +848,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'JqDateFormat':
                 try {
-                    $this->strJqDateFormat = QType::Cast($mixValue, QType::String);
+                    $this->strJqDateFormat = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dateFormat', $this->strJqDateFormat);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -857,7 +858,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'DayNames':
                 try {
-                    $this->arrDayNames = QType::Cast($mixValue, QType::ArrayType);
+                    $this->arrDayNames = Type::Cast($mixValue, QType::ArrayType);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dayNames', $this->arrDayNames);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -867,7 +868,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'DayNamesMin':
                 try {
-                    $this->arrDayNamesMin = QType::Cast($mixValue, QType::ArrayType);
+                    $this->arrDayNamesMin = Type::Cast($mixValue, QType::ArrayType);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dayNamesMin', $this->arrDayNamesMin);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -877,7 +878,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'DayNamesShort':
                 try {
-                    $this->arrDayNamesShort = QType::Cast($mixValue, QType::ArrayType);
+                    $this->arrDayNamesShort = Type::Cast($mixValue, QType::ArrayType);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dayNamesShort', $this->arrDayNamesShort);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -897,7 +898,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'FirstDay':
                 try {
-                    $this->intFirstDay = QType::Cast($mixValue, QType::Integer);
+                    $this->intFirstDay = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'firstDay', $this->intFirstDay);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -907,7 +908,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'GotoCurrent':
                 try {
-                    $this->blnGotoCurrent = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnGotoCurrent = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'gotoCurrent', $this->blnGotoCurrent);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -917,7 +918,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'HideIfNoPrevNext':
                 try {
-                    $this->blnHideIfNoPrevNext = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnHideIfNoPrevNext = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'hideIfNoPrevNext', $this->blnHideIfNoPrevNext);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -927,7 +928,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'IsRTL':
                 try {
-                    $this->blnIsRTL = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnIsRTL = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'isRTL', $this->blnIsRTL);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -947,7 +948,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'MonthNames':
                 try {
-                    $this->arrMonthNames = QType::Cast($mixValue, QType::ArrayType);
+                    $this->arrMonthNames = Type::Cast($mixValue, QType::ArrayType);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'monthNames', $this->arrMonthNames);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -957,7 +958,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'MonthNamesShort':
                 try {
-                    $this->arrMonthNamesShort = QType::Cast($mixValue, QType::ArrayType);
+                    $this->arrMonthNamesShort = Type::Cast($mixValue, QType::ArrayType);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'monthNamesShort', $this->arrMonthNamesShort);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -967,7 +968,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'NavigationAsDateFormat':
                 try {
-                    $this->blnNavigationAsDateFormat = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnNavigationAsDateFormat = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'navigationAsDateFormat', $this->blnNavigationAsDateFormat);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -977,7 +978,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'NextText':
                 try {
-                    $this->strNextText = QType::Cast($mixValue, QType::String);
+                    $this->strNextText = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'nextText', $this->strNextText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1007,7 +1008,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'PrevText':
                 try {
-                    $this->strPrevText = QType::Cast($mixValue, QType::String);
+                    $this->strPrevText = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'prevText', $this->strPrevText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1017,7 +1018,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'SelectOtherMonths':
                 try {
-                    $this->blnSelectOtherMonths = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnSelectOtherMonths = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'selectOtherMonths', $this->blnSelectOtherMonths);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1032,7 +1033,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ShowAnim':
                 try {
-                    $this->strShowAnim = QType::Cast($mixValue, QType::String);
+                    $this->strShowAnim = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showAnim', $this->strShowAnim);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1042,7 +1043,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ShowButtonPanel':
                 try {
-                    $this->blnShowButtonPanel = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnShowButtonPanel = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showButtonPanel', $this->blnShowButtonPanel);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1052,7 +1053,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ShowCurrentAtPos':
                 try {
-                    $this->intShowCurrentAtPos = QType::Cast($mixValue, QType::Integer);
+                    $this->intShowCurrentAtPos = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showCurrentAtPos', $this->intShowCurrentAtPos);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1062,7 +1063,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ShowMonthAfterYear':
                 try {
-                    $this->blnShowMonthAfterYear = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnShowMonthAfterYear = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showMonthAfterYear', $this->blnShowMonthAfterYear);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1072,7 +1073,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ShowOn':
                 try {
-                    $this->strShowOn = QType::Cast($mixValue, QType::String);
+                    $this->strShowOn = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showOn', $this->strShowOn);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1087,7 +1088,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ShowOtherMonths':
                 try {
-                    $this->blnShowOtherMonths = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnShowOtherMonths = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showOtherMonths', $this->blnShowOtherMonths);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1097,7 +1098,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'ShowWeek':
                 try {
-                    $this->blnShowWeek = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnShowWeek = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showWeek', $this->blnShowWeek);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1107,7 +1108,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'StepMonths':
                 try {
-                    $this->intStepMonths = QType::Cast($mixValue, QType::Integer);
+                    $this->intStepMonths = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'stepMonths', $this->intStepMonths);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1117,7 +1118,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'WeekHeader':
                 try {
-                    $this->strWeekHeader = QType::Cast($mixValue, QType::String);
+                    $this->strWeekHeader = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'weekHeader', $this->strWeekHeader);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1127,7 +1128,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'YearRange':
                 try {
-                    $this->strYearRange = QType::Cast($mixValue, QType::String);
+                    $this->strYearRange = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'yearRange', $this->strYearRange);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1137,7 +1138,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 
             case 'YearSuffix':
                 try {
-                    $this->strYearSuffix = QType::Cast($mixValue, QType::String);
+                    $this->strYearSuffix = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'yearSuffix', $this->strYearSuffix);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1151,7 +1152,7 @@ class DatepickerBoxGen extends QCubed\Project\Control\TextBox
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

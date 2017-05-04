@@ -9,6 +9,17 @@
 
 namespace QCubed;
 
+/**
+ * Class Context
+ *
+ * The Context singleton reports information about the current environment the script is running in.
+ *
+ * Scripts could be running in command line mode (CLI), or in response to web server requests. Web server requests
+ * can come in the form of Ajax or Standard requests. This class encapsulates that information and makes it available
+ * to the application as needed. All processed information is cached so multiple requests for the same thing can be fast.
+ *
+ * @package QCubed
+ */
 class Context
 {
     const INTERNET_EXPLORER = 1;
@@ -52,17 +63,28 @@ class Context
     protected $strRequestMode;
 
 
+    /**
+     * Context constructor.
+     */
     public function __construct()
     {
         $this->blnCliMode = (PHP_SAPI == 'cli');
 
     }
 
+    /**
+     * @return bool Whether we are in command line mode.
+     */
     public function cliMode()
     {
         return $this->blnCliMode;
     }
 
+    /**
+     * The address of the server making a request.
+     *
+     * @return string
+     */
     public function serverAddress()
     {
         if (!$this->strServerAddress) {
@@ -79,6 +101,10 @@ class Context
         return $this->strServerAddress;
     }
 
+    /**
+     * The name of the script file currently running. If a file is included, this would be the topmost file.
+     * @return bool|string
+     */
     public function scriptFileName()
     {
         if (!$this->strScriptFileName) {
@@ -95,6 +121,11 @@ class Context
         return $this->strScriptFileName;
     }
 
+    /**
+     * The current file executing. This would be the same as the __FILE__ global.
+     *
+     * @return string
+     */
     public function scriptName()
     {
         if (!$this->strScriptName) {
@@ -103,6 +134,11 @@ class Context
         return $this->strScriptName;
     }
 
+    /**
+     * The path of the http request.
+     *
+     * @return string
+     */
     public function pathInfo()
     {
         if (!$this->strPathInfo) {
@@ -114,6 +150,11 @@ class Context
         return $this->strPathInfo;
     }
 
+    /**
+     * The query part of the http request.
+     *
+     * @return string
+     */
     public function queryString()
     {
         if (!$this->strQueryString) {
@@ -124,6 +165,11 @@ class Context
         return $this->strQueryString;
     }
 
+    /**
+     * The entire requested Uri
+     *
+     * @return string
+     */
     public function requestUri()
     {
         if (!$this->strRequestUri) {
@@ -200,6 +246,11 @@ class Context
         }
     }
 
+    /**
+     * Returns a bit mask representing the current browser. See consts at top of this file.
+     *
+     * @return int
+     */
     public function browserType()
     {
         if (!$this->intBrowserType) {
@@ -208,6 +259,11 @@ class Context
         return $this->intBrowserType;
     }
 
+    /**
+     * Return the browser version as a float.
+     *
+     * @return float
+     */
     public function browserVersion()
     {
         if (!$this->fltBrowserVersion) {
@@ -216,6 +272,11 @@ class Context
         return $this->fltBrowserVersion;
     }
 
+    /**
+     * Internal function to get browser info.
+     *
+     * @internal
+     */
     protected function browserInit()
     {
         // Setup Browser Type
@@ -338,6 +399,11 @@ class Context
         return ($intBrowserType & $this->browserType()) != 0;
     }
 
+    /**
+     * Returns either Standard or Ajax for the request mode.
+     *
+     * @return string
+     */
     public function requestMode()
     {
         if (!$this->strRequestMode) {

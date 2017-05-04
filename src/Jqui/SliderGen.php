@@ -2,6 +2,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -144,7 +145,7 @@ class SliderGen extends QCubed\Control\Panel
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -152,9 +153,9 @@ class SliderGen extends QCubed\Control\Panel
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -168,7 +169,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables the slider.
@@ -177,7 +178,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Enables the slider.
@@ -186,7 +187,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the sliders instance object. If the element does not have an
@@ -199,7 +200,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -213,7 +214,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -223,7 +224,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the slider option associated with the specified
@@ -241,7 +242,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the slider.
@@ -251,7 +252,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Get the value of the slider.
@@ -260,7 +261,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function value()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", Application::PRIORITY_LOW);
     }
     /**
      * Set the value of the slider.
@@ -270,7 +271,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function value1($value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", $value, Application::PRIORITY_LOW);
     }
     /**
      * Get the value for all handles.
@@ -279,7 +280,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function values()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", Application::PRIORITY_LOW);
     }
     /**
      * Get the value for the specified handle.
@@ -289,7 +290,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function values1($index)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", $index, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", $index, Application::PRIORITY_LOW);
     }
     /**
      * Set the value for the specified handle.
@@ -301,7 +302,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function values2($index, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", $index, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", $index, $value, Application::PRIORITY_LOW);
     }
     /**
      * Set the value for all handles.
@@ -311,7 +312,7 @@ class SliderGen extends QCubed\Control\Panel
      */
     public function values3($values)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", $values, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "values", $values, Application::PRIORITY_LOW);
     }
 
 
@@ -353,7 +354,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -363,7 +364,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Max':
                 try {
-                    $this->intMax = QType::Cast($mixValue, QType::Integer);
+                    $this->intMax = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'max', $this->intMax);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -373,7 +374,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Min':
                 try {
-                    $this->intMin = QType::Cast($mixValue, QType::Integer);
+                    $this->intMin = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'min', $this->intMin);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -383,7 +384,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Orientation':
                 try {
-                    $this->strOrientation = QType::Cast($mixValue, QType::String);
+                    $this->strOrientation = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'orientation', $this->strOrientation);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -398,7 +399,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Step':
                 try {
-                    $this->intStep = QType::Cast($mixValue, QType::Integer);
+                    $this->intStep = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'step', $this->intStep);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -408,7 +409,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Value':
                 try {
-                    $this->intValue = QType::Cast($mixValue, QType::Integer);
+                    $this->intValue = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'value', $this->intValue);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -418,7 +419,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Values':
                 try {
-                    $this->arrValues = QType::Cast($mixValue, QType::ArrayType);
+                    $this->arrValues = Type::Cast($mixValue, QType::ArrayType);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'values', $this->arrValues);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -437,7 +438,7 @@ class SliderGen extends QCubed\Control\Panel
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

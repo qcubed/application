@@ -26,11 +26,22 @@ $a['const']['QSelectionMode::Single'] = '\\QCubed\\AbstractListBoxBase::SELECTIO
 $a['const']['QSelectionMode::Multiple'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_MULTIPLE';
 $a['const']['QSelectionMode::None'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_NONE';
 
+$a['const']['QJsPriority::Standard'] = '\\QCubed\\ApplicationBase::PRIORITY_STANDARD';
+$a['const']['QJsPriority::High'] = '\\QCubed\\ApplicationBase::PRIORITY_HIGH';
+$a['const']['QJsPriority::Low'] = '\\QCubed\\ApplicationBase::PRIORITY_LOW';
+$a['const']['QJsPriority::Exclusive'] = '\\QCubed\\ApplicationBase::PRIORITY_EXCLUSIVE';
+$a['const']['QJsPriority::Last'] = '\\QCubed\\ApplicationBase::PRIORITY_LAST';
+
 $a['func']['QApplication::Translate'] = 't';
 $a['func']['QApplication::PathInfo'] = '\\QCubed\\Project\\Application::instance()->context()->pathItem';
 $a['func']['QApplication::QueryString'] = '\\QCubed\\Project\\Application::instance()->context()->queryStringItem';
 $a['func']['QApplication::IsBrowser'] = '\\QCubed\\Project\\Application::instance()->context()->isBrowser';
 $a['func']['QApplication::HtmlEntities'] = '\\QCubed\\QString::htmlEntities';
+$a['func']['QApplication::MakeDirectory'] = '\\QCubed\\QFolder::makeDirectory';
+$a['func']['QApplication::SetErrorHandler'] = '$objHandler = new \\QCubed\\Error\\Handler';
+$a['func']['QApplication::RestoreErrorHandler'] = '$objHandler->restore';
+$a['func']['QApplication::GenerateQueryString'] = '\\QCubed\\QString::generateQueryString';
+
 
 $a['regex']['QApplication::\\$EncodingType'] = '\\QCubed\\Project\\Application::instance()->encodingType()';
 $a['regex']['QApplication::\\$CliMode'] = '\\QCubed\\Project\\Application::instance()->context()->cliMode()';

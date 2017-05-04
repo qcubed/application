@@ -2,6 +2,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -119,7 +120,7 @@ class MenuGen extends QCubed\Control\Panel
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -127,9 +128,9 @@ class MenuGen extends QCubed\Control\Panel
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -144,7 +145,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function blur($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "blur", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "blur", $event, Application::PRIORITY_LOW);
     }
     /**
      * Closes the currently active sub-menu.
@@ -154,7 +155,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function collapse($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "collapse", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "collapse", $event, Application::PRIORITY_LOW);
     }
     /**
      * Closes all open sub-menus.
@@ -168,7 +169,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function collapseAll($event = null, $all = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "collapseAll", $event, $all, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "collapseAll", $event, $all, Application::PRIORITY_LOW);
     }
     /**
      * Removes the menu functionality completely. This will return the
@@ -178,7 +179,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables the menu.
@@ -187,7 +188,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Enables the menu.
@@ -196,7 +197,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Opens the sub-menu below the currently active item, if one exists.
@@ -206,7 +207,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function expand($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "expand", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "expand", $event, Application::PRIORITY_LOW);
     }
     /**
      * Activates the given menu item and triggers the menus focus event.
@@ -219,7 +220,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function focus($event = null, $item)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "focus", $item, $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "focus", $item, $event, Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the menus instance object. If the element does not have an
@@ -232,7 +233,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Returns a boolean value stating whether or not the currently active
@@ -242,7 +243,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function isFirstItem()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isFirstItem", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isFirstItem", Application::PRIORITY_LOW);
     }
     /**
      * Returns a boolean value stating whether or not the currently active
@@ -252,7 +253,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function isLastItem()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isLastItem", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isLastItem", Application::PRIORITY_LOW);
     }
     /**
      * Moves active state to next menu item.
@@ -262,7 +263,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function next($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "next", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "next", $event, Application::PRIORITY_LOW);
     }
     /**
      * Moves active state to first menu item below the bottom of a scrollable
@@ -273,7 +274,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function nextPage($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "nextPage", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "nextPage", $event, Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -287,7 +288,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -297,7 +298,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the menu option associated with the specified
@@ -315,7 +316,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the menu.
@@ -325,7 +326,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Moves active state to previous menu item.
@@ -335,7 +336,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function previous($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "previous", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "previous", $event, Application::PRIORITY_LOW);
     }
     /**
      * Moves active state to first menu item above the top of a scrollable
@@ -346,7 +347,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function previousPage($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "previousPage", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "previousPage", $event, Application::PRIORITY_LOW);
     }
     /**
      * Initializes sub-menus and menu items that have not already been
@@ -358,7 +359,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function refresh()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
     }
     /**
      * Selects the currently active menu item, collapses all sub-menus and
@@ -369,7 +370,7 @@ class MenuGen extends QCubed\Control\Panel
      */
     public function select($event = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "select", $event, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "select", $event, Application::PRIORITY_LOW);
     }
 
 
@@ -403,7 +404,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -418,7 +419,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Items':
                 try {
-                    $this->strItems = QType::Cast($mixValue, QType::String);
+                    $this->strItems = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'items', $this->strItems);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -428,7 +429,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Menus':
                 try {
-                    $this->strMenus = QType::Cast($mixValue, QType::String);
+                    $this->strMenus = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'menus', $this->strMenus);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -443,7 +444,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Role':
                 try {
-                    $this->strRole = QType::Cast($mixValue, QType::String);
+                    $this->strRole = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'role', $this->strRole);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -462,7 +463,7 @@ class MenuGen extends QCubed\Control\Panel
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

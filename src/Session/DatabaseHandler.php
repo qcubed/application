@@ -13,7 +13,6 @@ use QCubed\Exception\Caller;
 use QCubed\Type;
 use QCubed;
 
-
 /**
  * Class DatabaseHandler
  *
@@ -65,27 +64,27 @@ class DatabaseHandler extends QCubed\AbstractBase
      * @return bool
      * @throws Exception|Caller|\QCubed\Exception\InvalidCast
      */
-    public static function Initialize($intDbIndex = 1, $strTableName = "qc_session")
+    public static function initialize($intDbIndex = 1, $strTableName = "qc_session")
     {
-        self::$intDbIndex = Type::Cast($intDbIndex, Type::INTEGER);
-        self::$strTableName = Type::Cast($strTableName, Type::STRING);
+        self::$intDbIndex = Type::cast($intDbIndex, Type::INTEGER);
+        self::$strTableName = Type::cast($strTableName, Type::STRING);
         // If the database index exists
-        if (!array_key_exists(self::$intDbIndex, QApplication::$Database)) {
+        $objDatabase = QCubed\Database\Service::getDatabase(self::$intDbIndex);
+        if (!$objDatabase) {
             throw new Caller('No database defined at DB_CONNECTION index ' . self::$intDbIndex . '. Correct your settings in configuration.inc.php.');
         }
-        $objDatabase = QCubed\Database\Service::getDatabase(self::$intDbIndex);
         // see if the database contains a table with desired name
-        if (!in_array(self::$strTableName, $objDatabase->GetTables())) {
+        if (!in_array(self::$strTableName, $objDatabase->getTables())) {
             throw new Caller('Table ' . self::$strTableName . ' not found in database at DB_CONNECTION index ' . self::$intDbIndex . '. Correct your settings in configuration.inc.php.');
         }
         // Set session handler functions
         $session_ok = session_set_save_handler(
-            'QDbBackedSessionHandler::SessionOpen',
-            'QDbBackedSessionHandler::SessionClose',
-            'QDbBackedSessionHandler::SessionRead',
-            'QDbBackedSessionHandler::SessionWrite',
-            'QDbBackedSessionHandler::SessionDestroy',
-            'QDbBackedSessionHandler::SessionGarbageCollect'
+            'QDbBackedSessionHandler::sessionOpen',
+            'QDbBackedSessionHandler::sessionClose',
+            'QDbBackedSessionHandler::sessionRead',
+            'QDbBackedSessionHandler::sessionWrite',
+            'QDbBackedSessionHandler::sessionDestroy',
+            'QDbBackedSessionHandler::sessionGarbageCollect'
         );
         // could not register the session handler functions
         if (!$session_ok) {
@@ -103,7 +102,7 @@ class DatabaseHandler extends QCubed\AbstractBase
      *
      * @return bool
      */
-    public static function SessionOpen($save_path, $session_name)
+    public static function sessionOpen($save_path, $session_name)
     {
         self::$strSessionName = $session_name;
         // Nothing to do
@@ -114,7 +113,7 @@ class DatabaseHandler extends QCubed\AbstractBase
      * Close the session (used by PHP when the session handler is active)
      * @return bool
      */
-    public static function SessionClose()
+    public static function sessionClose()
     {
         // Nothing to do.
         return true;
@@ -127,25 +126,24 @@ class DatabaseHandler extends QCubed\AbstractBase
      * @return string the session data, base64 decoded
      * @throws Caller
      */
-    public static function SessionRead($id)
+    public static function sessionRead($id)
     {
         $id = self::$strSessionName . '.' . $id;
         $objDatabase = QCubed\Database\Service::getDatabase(self::$intDbIndex);
         $query = '
             SELECT
-                ' . $objDatabase->EscapeIdentifier('data') . '
+                ' . $objDatabase->escapeIdentifier('data') . '
             FROM
-                ' . $objDatabase->EscapeIdentifier(self::$strTableName) . '
+                ' . $objDatabase->escapeIdentifier(self::$strTableName) . '
             WHERE
-                ' . $objDatabase->EscapeIdentifier('id') . ' = ' . $objDatabase->SqlVariable($id);
+                ' . $objDatabase->escapeIdentifier('id') . ' = ' . $objDatabase->sqlVariable($id);
 
-        $result = $objDatabase->Query($query);
+        $result = $objDatabase->query($query);
 
-        $result_row = $result->FetchRow();
+        $result_row = $result->fetchRow();
 
 
-        if (!$result_row) // either the data was empty or the row was not found
-        {
+        if (!$result_row) { // either the data was empty or the row was not found
             return '';
         }
         $strData = $result_row[0];
@@ -176,7 +174,7 @@ class DatabaseHandler extends QCubed\AbstractBase
             try {
                 $crypt = new QCubed\Cryptography(DB_BACKED_SESSION_HANDLER_ENCRYPTION_KEY, false, null,
                     DB_BACKED_SESSION_HANDLER_HASH_KEY);
-                $strData = $crypt->Decrypt($strData);
+                $strData = $crypt->decrypt($strData);
             } catch (Exception $e) {
             }
         }
@@ -195,20 +193,20 @@ class DatabaseHandler extends QCubed\AbstractBase
      *
      * @return bool does the session exist or not
      */
-    public static function SessionExists($id)
+    public static function sessionExists($id)
     {
         $id = self::$strSessionName . '.' . $id;
         $objDatabase = QCubed\Database\Service::getDatabase(self::$intDbIndex);
         $query = '
             SELECT 1
             FROM
-                ' . $objDatabase->EscapeIdentifier(self::$strTableName) . '
+                ' . $objDatabase->escapeIdentifier(self::$strTableName) . '
             WHERE
-                ' . $objDatabase->EscapeIdentifier('id') . ' = ' . $objDatabase->SqlVariable($id);
+                ' . $objDatabase->escapeIdentifier('id') . ' = ' . $objDatabase->sqlVariable($id);
 
-        $result = $objDatabase->Query($query);
+        $result = $objDatabase->query($query);
 
-        $result_row = $result->FetchArray();
+        $result_row = $result->fetchArray();
 
         // either the data was empty or the row was not found
         return !empty($result_row);
@@ -222,10 +220,10 @@ class DatabaseHandler extends QCubed\AbstractBase
      *
      * @return bool
      */
-    public static function SessionWrite($id, $strSessionData)
+    public static function sessionWrite($id, $strSessionData)
     {
         if (empty($strSessionData)) {
-            static::SessionDestroy($id);
+            static::sessionDestroy($id);
             return true;
         }
 
@@ -239,7 +237,7 @@ class DatabaseHandler extends QCubed\AbstractBase
             try {
                 $crypt = new QCubed\Cryptography(DB_BACKED_SESSION_HANDLER_ENCRYPTION_KEY, false, null,
                     DB_BACKED_SESSION_HANDLER_HASH_KEY);
-                $strEncoded = $crypt->Encrypt($strEncoded);
+                $strEncoded = $crypt->encrypt($strEncoded);
             } catch (Exception $e) {
             }
         }
@@ -247,7 +245,7 @@ class DatabaseHandler extends QCubed\AbstractBase
         if (self::$blnBase64) {
             $encoded = base64_encode($strEncoded);
             if ($strEncoded && !$encoded) {
-                throw new Exception ("Base64 Encoding Failed on " . $strSessionData);
+                throw new Exception("Base64 Encoding Failed on " . $strSessionData);
             } else {
                 $strEncoded = $encoded;
             }
@@ -257,7 +255,7 @@ class DatabaseHandler extends QCubed\AbstractBase
 
         $id = self::$strSessionName . '.' . $id;
         $objDatabase = QCubed\Database\Service::getDatabase(self::$intDbIndex);
-        $objDatabase->InsertOrUpdate(
+        $objDatabase->insertOrUpdate(
             self::$strTableName,
             array(
                 'data' => $strEncoded,
@@ -275,17 +273,17 @@ class DatabaseHandler extends QCubed\AbstractBase
      *
      * @return bool
      */
-    public static function SessionDestroy($id)
+    public static function sessionDestroy($id)
     {
         $id = self::$strSessionName . '.' . $id;
         $objDatabase = QCubed\Database\Service::getDatabase(self::$intDbIndex);
         $query = '
             DELETE FROM
-                ' . $objDatabase->EscapeIdentifier(self::$strTableName) . '
+                ' . $objDatabase->escapeIdentifier(self::$strTableName) . '
             WHERE
-                ' . $objDatabase->EscapeIdentifier('id') . ' = ' . $objDatabase->SqlVariable($id);
+                ' . $objDatabase->escapeIdentifier('id') . ' = ' . $objDatabase->sqlVariable($id);
 
-        $objDatabase->NonQuery($query);
+        $objDatabase->nonQuery($query);
         return true;
     }
 
@@ -296,18 +294,18 @@ class DatabaseHandler extends QCubed\AbstractBase
      *
      * @return bool
      */
-    public static function SessionGarbageCollect($intMaxSessionLifetime)
+    public static function sessionGarbageCollect($intMaxSessionLifetime)
     {
         $objDatabase = QCubed\Database\Service::getDatabase(self::$intDbIndex);
         $old = time() - $intMaxSessionLifetime;
 
         $query = '
             DELETE FROM
-                ' . $objDatabase->EscapeIdentifier(self::$strTableName) . '
+                ' . $objDatabase->escapeIdentifier(self::$strTableName) . '
             WHERE
-                ' . $objDatabase->EscapeIdentifier('last_access_time') . ' < ' . $objDatabase->SqlVariable($old);
+                ' . $objDatabase->escapeIdentifier('last_access_time') . ' < ' . $objDatabase->sqlVariable($old);
 
-        $objDatabase->NonQuery($query);
+        $objDatabase->nonQuery($query);
         return true;
     }
 }

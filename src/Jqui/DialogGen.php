@@ -2,6 +2,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -270,7 +271,7 @@ class DialogGen extends QCubed\Control\Panel
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -278,9 +279,9 @@ class DialogGen extends QCubed\Control\Panel
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -293,7 +294,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function close()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close", Application::PRIORITY_LOW);
     }
     /**
      * Removes the dialog functionality completely. This will return the
@@ -303,7 +304,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the dialogs instance object. If the element does not have an
@@ -316,7 +317,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Whether the dialog is currently open.
@@ -325,7 +326,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function isOpen()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isOpen", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "isOpen", Application::PRIORITY_LOW);
     }
     /**
      * Moves the dialog to the top of the dialog stack.
@@ -334,7 +335,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function moveToTop()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "moveToTop", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "moveToTop", Application::PRIORITY_LOW);
     }
     /**
      * Opens the dialog.
@@ -343,7 +344,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function open()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "open", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "open", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -357,7 +358,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -367,7 +368,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the dialog option associated with the specified
@@ -385,7 +386,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the dialog.
@@ -395,7 +396,7 @@ class DialogGen extends QCubed\Control\Panel
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
 
 
@@ -442,7 +443,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'AutoOpen':
                 try {
-                    $this->blnAutoOpen = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoOpen = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoOpen', $this->blnAutoOpen);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -462,7 +463,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'CloseOnEscape':
                 try {
-                    $this->blnCloseOnEscape = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnCloseOnEscape = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'closeOnEscape', $this->blnCloseOnEscape);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -472,7 +473,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'CloseText':
                 try {
-                    $this->strCloseText = QType::Cast($mixValue, QType::String);
+                    $this->strCloseText = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'closeText', $this->strCloseText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -482,7 +483,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'DialogClass':
                 try {
-                    $this->strDialogClass = QType::Cast($mixValue, QType::String);
+                    $this->strDialogClass = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dialogClass', $this->strDialogClass);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -492,7 +493,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Draggable':
                 try {
-                    $this->blnDraggable = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnDraggable = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'draggable', $this->blnDraggable);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -512,7 +513,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MaxHeight':
                 try {
-                    $this->intMaxHeight = QType::Cast($mixValue, QType::Integer);
+                    $this->intMaxHeight = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'maxHeight', $this->intMaxHeight);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -522,7 +523,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MaxWidth':
                 try {
-                    $this->intMaxWidth = QType::Cast($mixValue, QType::Integer);
+                    $this->intMaxWidth = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'maxWidth', $this->intMaxWidth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -532,7 +533,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MinHeight':
                 try {
-                    $this->intMinHeight = QType::Cast($mixValue, QType::Integer);
+                    $this->intMinHeight = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'minHeight', $this->intMinHeight);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -542,7 +543,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MinWidth':
                 try {
-                    $this->intMinWidth = QType::Cast($mixValue, QType::Integer);
+                    $this->intMinWidth = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'minWidth', $this->intMinWidth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -552,7 +553,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Modal':
                 try {
-                    $this->blnModal = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnModal = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'modal', $this->blnModal);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -567,7 +568,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Resizable':
                 try {
-                    $this->blnResizable = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnResizable = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'resizable', $this->blnResizable);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -582,7 +583,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Title':
                 try {
-                    $this->strTitle = QType::Cast($mixValue, QType::String);
+                    $this->strTitle = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'title', $this->strTitle);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -592,7 +593,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Width':
                 try {
-                    $this->intWidth = QType::Cast($mixValue, QType::Integer);
+                    $this->intWidth = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'width', $this->intWidth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -606,7 +607,7 @@ class DialogGen extends QCubed\Control\Panel
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

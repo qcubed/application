@@ -2,6 +2,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -120,7 +121,7 @@ class ButtonGen extends QCubed\Project\Control\Button
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -128,9 +129,9 @@ class ButtonGen extends QCubed\Project\Control\Button
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -144,7 +145,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables the button.
@@ -153,7 +154,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Enables the button.
@@ -162,7 +163,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the buttons instance object. If the element does not have an
@@ -175,7 +176,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -189,7 +190,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -199,7 +200,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the button option associated with the specified
@@ -217,7 +218,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the button.
@@ -227,7 +228,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Refreshes the visual state of the button. Useful for updating button
@@ -238,7 +239,7 @@ class ButtonGen extends QCubed\Project\Control\Button
      */
     public function refresh()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
     }
 
 
@@ -271,7 +272,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -281,7 +282,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'Icon':
                 try {
-                    $this->strIcon = QType::Cast($mixValue, QType::String);
+                    $this->strIcon = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'icon', $this->strIcon);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -291,7 +292,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'IconPosition':
                 try {
-                    $this->strIconPosition = QType::Cast($mixValue, QType::String);
+                    $this->strIconPosition = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'iconPosition', $this->strIconPosition);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -301,7 +302,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'Label':
                 try {
-                    $this->strLabel = QType::Cast($mixValue, QType::String);
+                    $this->strLabel = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'label', $this->strLabel);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -311,7 +312,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'ShowLabel':
                 try {
-                    $this->blnShowLabel = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnShowLabel = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showLabel', $this->blnShowLabel);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -330,7 +331,7 @@ class ButtonGen extends QCubed\Project\Control\Button
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

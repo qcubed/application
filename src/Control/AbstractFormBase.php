@@ -9,10 +9,12 @@
 
 namespace QCubed\Control;
 
-use QCubed;
+use QCubed as Q;
 use QCubed\Exception\Caller;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
+use QCubed\Type;
+
 
 /**
  * Class AbstractFormBase
@@ -549,11 +551,11 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             if (defined('__DESIGN_MODE__') && __DESIGN_MODE__ == 1) {
                 // Attach custom event to dialog to handle right click menu items sent by form
 
-                $dlg = new QCubed\ModelConnector\EditDlg ($objClass, 'qconnectoreditdlg');
+                $dlg = new Q\ModelConnector\EditDlg ($objClass, 'qconnectoreditdlg');
 
                 $dlg->addAction(
-                    new QOnEvent('qdesignerclick'),
-                    new QAjaxAction ('ctlDesigner_Click', null, null, 'ui')
+                    new Q\Event\On('qdesignerclick'),
+                    new Q\Action\Ajax ('ctlDesigner_Click', null, null, 'ui')
                 );
             }
 
@@ -665,6 +667,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
         if (!empty($controlId)) {
             $objControl = $this->getControl($controlId);
             if ($objControl) {
+                /** @var Q\ModelConnector\EditDlg $dlg */
                 $dlg = $this->getControl('qconnectoreditdlg');
                 $dlg->editControl($objControl);
             }
@@ -712,7 +715,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
     /**
      * Renders the AjaxHelper for the QForm
-     * @param QControlBase $objControl
+     * @param QControl $objControl
      *
      * @return string The Ajax helper string (should be JS commands)
      */
@@ -852,11 +855,11 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
     /**
      * Saves the formstate using the 'Save' method of FormStateHandler set in configuration.inc.php
-     * @param QForm $objForm
+     * @param AbstractFormBase $objForm
      *
      * @return string the Serialized QForm
      */
-    public static function serialize(QForm $objForm)
+    public static function serialize(AbstractFormBase $objForm)
     {
         // Get and then Update PreviousRequestMode
         $strPreviousRequestMode = $objForm->strPreviousRequestMode;
@@ -907,7 +910,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
             // For the QSessionFormStateHandler the __PHP_Incomplete_Class occurs sometimes
             // for the result of the unserialize call.
             $objForm = unserialize($strSerializedForm);
-            $objForm = \QCubed\Type::cast($objForm, 'QForm');
+            $objForm = Type::cast($objForm, 'QForm');
 
             // Reset the links from Control->Form
             if ($objForm->objControlArray) {
@@ -1084,37 +1087,37 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
         }
     }
 
-
-    public function addGrouping(QControlGrouping $objGrouping)
-    {
-        $strGroupingId = $objGrouping->GroupingId;
-        if (array_key_exists($strGroupingId, $this->objGroupingArray)) {
-            throw new Caller(sprintf('A Grouping already exists in the form with the ID: %s',
-                $strGroupingId));
+    /*
+        public function addGrouping(ControlGrouping $objGrouping)
+        {
+            $strGroupingId = $objGrouping->GroupingId;
+            if (array_key_exists($strGroupingId, $this->objGroupingArray)) {
+                throw new Caller(sprintf('A Grouping already exists in the form with the ID: %s',
+                    $strGroupingId));
+            }
+            if (array_key_exists($strGroupingId, $this->objControlArray)) {
+                throw new Caller(sprintf('A Control already exists in the form with the ID: %s', $strGroupingId));
+            }
+            $this->objGroupingArray[$strGroupingId] = $objGrouping;
         }
-        if (array_key_exists($strGroupingId, $this->objControlArray)) {
-            throw new Caller(sprintf('A Control already exists in the form with the ID: %s', $strGroupingId));
+    
+        public function getGrouping($strGroupingId)
+        {
+            if (array_key_exists($strGroupingId, $this->objGroupingArray)) {
+                return $this->objGroupingArray[$strGroupingId];
+            } else {
+                return null;
+            }
         }
-        $this->objGroupingArray[$strGroupingId] = $objGrouping;
-    }
-
-    public function getGrouping($strGroupingId)
-    {
-        if (array_key_exists($strGroupingId, $this->objGroupingArray)) {
-            return $this->objGroupingArray[$strGroupingId];
-        } else {
-            return null;
+    
+        public function removeGrouping($strGroupingId)
+        {
+            if (array_key_exists($strGroupingId, $this->objGroupingArray)) {
+                // Remove this Grouping
+                unset($this->objGroupingArray[$strGroupingId]);
+            }
         }
-    }
-
-    public function removeGrouping($strGroupingId)
-    {
-        if (array_key_exists($strGroupingId, $this->objGroupingArray)) {
-            // Remove this Grouping
-            unset($this->objGroupingArray[$strGroupingId]);
-        }
-    }
-
+    */
     /**
      * Retruns the Groupings
      * @return mixed
@@ -1127,7 +1130,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
     /**
      * Returns the child controls of the current QForm or a QControl object
      *
-     * @param QForm|QControl|QFormBase $objParentObject The object whose child controls are to be searched for
+     * @param QForm|AbstractBase|QFormBase $objParentObject The object whose child controls are to be searched for
      *
      * @throws Caller
      * @return QControl[]
@@ -1303,7 +1306,9 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
                     // Next, go through the linked ajax/server actions to see if a causesvalidation override is set on any of them
                     if ($objActions) {
                         foreach ($objActions as $objAction) {
-                            if (!is_null($objAction->CausesValidationOverride)) {
+                            if (($objAction instanceof Q\Action\Server || $objAction instanceof Q\Action\Ajax) &&
+                                !is_null($objAction->CausesValidationOverride)
+                            ) {
                                 $mixCausesValidation = $objAction->CausesValidationOverride;
                             }
                         }
@@ -1387,7 +1392,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
 
                     // Run Form-Specific Validation (if any)
-                    if ($mixCausesValidation && !($mixCausesValidation instanceof QDialog)) {
+                    if ($mixCausesValidation && !($mixCausesValidation instanceof DialogInterface)) {
                         if (!$this->form_Validate()) {
                             $blnValid = false;
                         }
@@ -1848,7 +1853,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
                 /* Note: GetEndScript may cause the control to register additional commands, or even add javascripts, so those should be handled after this. */
                 if ($strControlScript = $objControl->getEndScript()) {
-                    $strControlScript = \QCubed\Js\Helper::terminateScript($strControlScript);
+                    $strControlScript = Q\Js\Helper::terminateScript($strControlScript);
 
                     // Add comments for developer version of output
                     if (!QApplication::$Minimize) {
@@ -1876,13 +1881,14 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
         }
 
         // Add grouping commands to events (Used for deprecated drag and drop, but not removed yet)
+        /*
         foreach ($this->objGroupingArray as $objGrouping) {
             $strGroupingScript = $objGrouping->render();
             if (strlen($strGroupingScript) > 0) {
                 $strGroupingScript = \QCubed\Js\Helper::terminateScript($strGroupingScript);
                 $strEventScripts .= $strGroupingScript;
             }
-        }
+        }*/
 
         /*** Build the javascript block ****/
 
@@ -1891,7 +1897,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
         // Register controls
         if ($strControlIdToRegister) {
-            $strEndScript .= sprintf("qc.regCA(%s); \n", \QCubed\Js\Helper::toJsObject($strControlIdToRegister));
+            $strEndScript .= sprintf("qc.regCA(%s); \n", Q\Js\Helper::toJsObject($strControlIdToRegister));
         }
 
         // Design mode event
@@ -2067,7 +2073,7 @@ abstract class AbstractFormBase extends \QCubed\AbstractBase
 
             case "CssClass":
                 try {
-                    return ($this->strCssClass = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING));
+                    return ($this->strCssClass = Type::cast($mixValue, Type::STRING));
                 } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;

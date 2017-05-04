@@ -2,6 +2,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -129,7 +130,7 @@ class SelectableGen extends QCubed\Control\Panel
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -137,9 +138,9 @@ class SelectableGen extends QCubed\Control\Panel
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -153,7 +154,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables the selectable.
@@ -162,7 +163,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Enables the selectable.
@@ -171,7 +172,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the selectables instance object. If the element does not
@@ -184,7 +185,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -198,7 +199,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -208,7 +209,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the selectable option associated with the specified
@@ -226,7 +227,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the selectable.
@@ -236,7 +237,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Refresh the position and size of each selectee element. This method
@@ -247,7 +248,7 @@ class SelectableGen extends QCubed\Control\Panel
      */
     public function refresh()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
     }
 
 
@@ -283,7 +284,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'AutoRefresh':
                 try {
-                    $this->blnAutoRefresh = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoRefresh = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoRefresh', $this->blnAutoRefresh);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -303,7 +304,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Delay':
                 try {
-                    $this->intDelay = QType::Cast($mixValue, QType::Integer);
+                    $this->intDelay = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'delay', $this->intDelay);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -313,7 +314,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -323,7 +324,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Distance':
                 try {
-                    $this->intDistance = QType::Cast($mixValue, QType::Integer);
+                    $this->intDistance = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'distance', $this->intDistance);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -338,7 +339,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Tolerance':
                 try {
-                    $this->strTolerance = QType::Cast($mixValue, QType::String);
+                    $this->strTolerance = Type::Cast($mixValue, QType::String);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'tolerance', $this->strTolerance);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -357,7 +358,7 @@ class SelectableGen extends QCubed\Control\Panel
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

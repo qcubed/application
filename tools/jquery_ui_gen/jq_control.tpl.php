@@ -3,6 +3,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -84,7 +85,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -92,9 +93,9 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -128,7 +129,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
             }
             $strArgs = join(", ", $args);
 ?>
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), <?= $strArgs; ?>, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), <?= $strArgs; ?>, Application::PRIORITY_LOW);
     }
 <?php } ?>
 
@@ -162,7 +163,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 <?php 			} ?>
 <?php 		} else { ?>
                 try {
-                    $this-><?= $option->varName ?> = QType::Cast($mixValue, <?= $option->phpQType ?>);
+                    $this-><?= $option->varName ?> = Type::Cast($mixValue, <?= $option->phpQType ?>);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', '<?= $option->name ?>', $this-><?= $option->varName ?>);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -185,7 +186,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

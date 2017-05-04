@@ -2,6 +2,7 @@
 namespace QCubed\Jqui;
 
 use QCubed;
+use QCubed\Type;
 use QCubed\Project\Application;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
@@ -175,7 +176,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
         $jqOptions = $this->makeJqOptions();
         $strFunc = $this->getJqSetupFunction();
 
-        if ($strId !== $this->ControlId && Application::instance()->RequestMode == Application::REQUEST_MODE_AJAX) {
+        if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
             Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
@@ -183,9 +184,9 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, QJsPriority::High);
+            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -199,7 +200,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function close()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close", Application::PRIORITY_LOW);
     }
     /**
      * Removes the autocomplete functionality completely. This will return
@@ -209,7 +210,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables the autocomplete.
@@ -218,7 +219,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Enables the autocomplete.
@@ -227,7 +228,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the autocompletes instance object. If the element does not
@@ -240,7 +241,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -254,7 +255,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -264,7 +265,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the autocomplete option associated with the
@@ -282,7 +283,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the autocomplete.
@@ -292,7 +293,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Triggers a search event and invokes the data source if the event is
@@ -306,7 +307,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
      */
     public function search($value = null)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "search", $value, Application::JS_PRIORITY_LOW);
+        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "search", $value, Application::PRIORITY_LOW);
     }
 
 
@@ -341,7 +342,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'AutoFocus':
                 try {
-                    $this->blnAutoFocus = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoFocus = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoFocus', $this->blnAutoFocus);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -356,7 +357,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'Delay':
                 try {
-                    $this->intDelay = QType::Cast($mixValue, QType::Integer);
+                    $this->intDelay = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'delay', $this->intDelay);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -366,7 +367,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = QType::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -376,7 +377,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'MinLength':
                 try {
-                    $this->intMinLength = QType::Cast($mixValue, QType::Integer);
+                    $this->intMinLength = Type::Cast($mixValue, QType::Integer);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'minLength', $this->intMinLength);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -405,7 +406,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
                     parent::__set($strName, $mixValue);
                     break;
                 } catch (Caller $objExc) {
-                    $objExc->IncrementOffset();
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }

@@ -207,7 +207,7 @@ $loader = require $dirVendor . '/autoload.php'; // load composer autoloader
 $loader->addPsr4('QCubed\\', $dirQCubed . '/common/src'); // make sure common is included
 $loader->addPsr4('QCubed\\', $dirQCubed . '/application/src'); // make sure application is included
 
-$loader->addPsr4('QCubed\\Project\\', $dirProject . '/qcubed'); // make sure project is included
+//$loader->addPsr4('QCubed\\Project\\', $dirProject . '/qcubed'); // make sure project is included
 
 
 $baseUrl = "http://api.jqueryui.com";
