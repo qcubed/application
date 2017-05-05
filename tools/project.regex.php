@@ -55,6 +55,7 @@ $a["class"]['QFormBase'] = '\\QCubed\\Control\\FormBase';
 $a["const"]["QCubed\\Control\\FormBase::FormStatusUnrendered"] = "QCubed\\Control\\FormBase::FORM_STATUS_UNRENDERED";
 $a["const"]["QCubed\\Control\\FormBase::FormStatusRenderBegun"] = "QCubed\\Control\\FormBase::FORM_STATUS_RENDER_BEGUN";
 $a["const"]["QCubed\\Control\\FormBase::FormStatusRenderEnded"] = "QCubed\\Control\\FormBase::FORM_STATUS_RENDER_ENDED";
+$a["class"]['QForm'] = '\\QCubed\\Project\\Control\\FormBase';
 $a["const"]["QCubed\\Project\\Control\\FormBase::FormStatusUnrendered"] = "QCubed\\Project\\Control\\FormBase::FORM_STATUS_UNRENDERED";
 $a["const"]["QCubed\\Project\\Control\\FormBase::FormStatusRenderBegun"] = "QCubed\\Project\\Control\\FormBase::FORM_STATUS_RENDER_BEGUN";
 $a["const"]["QCubed\\Project\\Control\\FormBase::FormStatusRenderEnded"] = "QCubed\\Project\\Control\\FormBase::FORM_STATUS_RENDER_ENDED";

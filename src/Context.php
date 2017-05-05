@@ -141,10 +141,13 @@ class Context
      */
     public function pathInfo()
     {
-        if (!$this->strPathInfo) {
+        if ($this->strPathInfo === null) {
             if (isset($_SERVER['PATH_INFO'])) {
                 $this->strPathInfo = urlencode(trim($_SERVER['PATH_INFO']));
                 $this->strPathInfo = str_ireplace('%2f', '/', $this->strPathInfo);
+            }
+            else {
+                $this->strPathInfo = '';    // no path info given
             }
         }
         return $this->strPathInfo;
@@ -214,6 +217,10 @@ class Context
     {
         // TODO: Cache PathInfo
         $strPathInfo = urldecode($this->pathInfo());
+
+        if (!$strPathInfo) {
+            return null;
+        }
 
         // Remove Starting '/'
         if ($strPathInfo[0] == '/') {

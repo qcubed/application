@@ -1614,6 +1614,7 @@ return array (
     'QHtmlAttributeManager' => '\\QCubed\\Project\\HtmlAttributeManager',
     'QDataGrid' => '\\QCubed\\Project\\Control\\DataGrid',
     'QDialog' => '\\QCubed\\Project\\Jqui\\Dialog',
+    'QForm' => '\\QCubed\\Project\\Control\\FormBase',
     'QJsTimer' => '\\QCubed\\Project\\Control\\JsTimer',
     'QListBox' => '\\QCubed\\Project\\Control\\ListBox',
     'QRadioButton' => '\\QCubed\\Project\\Control\\RadioButton',

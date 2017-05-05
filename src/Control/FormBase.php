@@ -15,7 +15,7 @@ use QCubed\ObjectBase;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Type;
-use QCubed\Control\WaitIcon;
+use QCubed\Project\Application;
 
 
 /**
@@ -378,15 +378,11 @@ abstract class FormBase extends ObjectBase
             $objClass->strCallType = $_POST['Qform__FormCallType'];
             $objClass->intFormStatus = QFormBase::FORM_STATUS_UNRENDERED;
 
-            if ($objClass->strCallType == QCallType::Ajax) {
-                QApplication::$RequestMode = QRequestMode::Ajax;
-            }
-
             // Cleanup ajax post data if the encoding does not match, since ajax data is always utf-8
-            if ($objClass->strCallType == QCallType::Ajax && QApplication::$EncodingType != 'UTF-8') {
+            if ($objClass->strCallType == QCallType::Ajax && Application::instance()->encodingType() != 'UTF-8') {
                 foreach ($_POST as $key => $val) {
                     if (substr($key, 0, 6) != 'Qform_') {
-                        $_POST[$key] = iconv('UTF-8', QApplication::$EncodingType, $val);
+                        $_POST[$key] = iconv('UTF-8', Application::instance()->encodingType(), $val);
                     }
                 }
             }
@@ -617,19 +613,20 @@ abstract class FormBase extends ObjectBase
      */
     protected static function unpackPostVar($val)
     {
-        if (QApplication::$EncodingType != 'UTF-8' && QApplication::$RequestMode != QRequestMode::Ajax) {
+        $encoding = Application::instance()->encodingType();
+        if ($encoding != 'UTF-8' && Application::instance()->context()->requestMode() != Context::REQUEST_MODE_AJAX) {
             // json_decode only accepts utf-8 encoded text. Ajax calls are already UTF-8 encoded.
-            $val = iconv(QApplication::$EncodingType, 'UTF-8', $val);
+            $val = iconv($encoding, 'UTF-8', $val);
         }
         $val = json_decode($val, true);
-        if (QApplication::$EncodingType != 'UTF-8') {
+        if ($encoding != 'UTF-8') {
             // Must convert back from utf-8 to whatever our application encoding is
             if (is_string($val)) {
-                $val = iconv('UTF-8', QApplication::$EncodingType, $val);
+                $val = iconv('UTF-8', $encoding, $val);
             } elseif (is_array($val)) {
-                array_walk_recursive($val, function (&$v, $key) {
+                array_walk_recursive($val, function (&$v, $key) use ($encoding) {
                     if (is_string($v)) {
-                        $v = iconv('UTF-8', QApplication::$EncodingType, $v);
+                        $v = iconv('UTF-8', $encoding, $v);
                     }
                 });
             } else {
@@ -690,10 +687,10 @@ abstract class FormBase extends ObjectBase
     {
         //ob_clean();
         if (isset($_POST['Qform__FormCallType']) && $_POST['Qform__FormCallType'] == QCallType::Ajax) {
-            QApplication::$ProcessOutput = false;
-            QApplication::sendAjaxResponse(['loc' => 'reload']);
+            Application::$ProcessOutput = false;
+            Application::sendAjaxResponse(['loc' => 'reload']);
         } else {
-            header('Location: ' . QApplication::$RequestUri);
+            header('Location: ' . Application::instance()->context()->requestUri());
         }
 
         // End the Response Script

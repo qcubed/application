@@ -50,7 +50,13 @@ $patterns = include($patternFile);
 $regexFind = [];
 $regexReplace = [];
 
-
+/**
+ * Here we try to detect a class that could be like this:
+ *  QControl, or
+ *  \QControl, or
+ *   \QCubed\QControl
+ *
+ */
 if (isset($patterns['class'])) {
     $find = array_map(function ($was) {
         $pattern = <<<'PTRN'
@@ -58,19 +64,42 @@ if (isset($patterns['class'])) {
 PTRN;
         $pattern .= $was;
         $pattern .= <<<'PTRN'
-(\W)/i
+(?:\b)/i
 PTRN;
         return $pattern;
     }, array_keys($patterns['class']));
 
     $replace = array_map(function ($className) {
         $slashedClassName = addslashes($className);
-        return '$1' . $slashedClassName . '$2';
+        return '$1' . $slashedClassName;
     }, array_values($patterns['class']));
 
     $regexFind = array_merge($regexFind, $find);
     $regexReplace = array_merge($regexReplace, $replace);
 }
+
+/*
+if (isset($patterns['class'])) {
+    $find = array_map(function ($was) {
+        $pattern = <<<'PTRN'
+/(^|[^a-zA-Z0-9\\])
+PTRN;
+        $pattern .= $was;
+        $pattern .= <<<'PTRN'
+(?:\b)/i
+PTRN;
+        return $pattern;
+    }, array_keys($patterns['class']));
+
+    $replace = array_map(function ($className) {
+        $slashedClassName = addslashes($className);
+        return '$1' . $slashedClassName;
+    }, array_values($patterns['class']));
+
+    $regexFind = array_merge($regexFind, $find);
+    $regexReplace = array_merge($regexReplace, $replace);
+}
+*/
 
 if (isset($patterns['const'])) {
     $find = array_map(function ($was) {
