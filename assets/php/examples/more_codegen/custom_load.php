@@ -26,13 +26,17 @@
 	// purposes.
 	require(__MODEL_GEN__ . '/ProjectGen.class.php');
 	class Project extends ProjectGen {
-		// Create our Custom Load Method
+        public function __toString() {
+            return $this->Name;
+        }
+
+        // Create our Custom Load Method
 		// Note that this custom load method is based on the sample LoadArrayBySample that is generated
 		// in the Project custom subclass.  Because it utilizes the QCubed Query mechanism,
-		// we can easily take full advantage of any QQ Clauses by taking it in as an optional parameter.
+		// we can easily take full advantage of any \QCubed\Query\QQ Clauses by taking it in as an optional parameter.
 		public static function LoadArrayByBudgetMinimum($fltBudgetMinimum, $objOptionalClauses = null) {
 			return Project::QueryArray(
-				QQ::GreaterOrEqual(QQN::Project()->Budget, $fltBudgetMinimum),
+				\QCubed\Query\QQ::GreaterOrEqual(QQN::Project()->Budget, $fltBudgetMinimum),
 				$objOptionalClauses
 			);
 		}
@@ -44,7 +48,7 @@
 	// Let's load all Projects > $10,000 in budget
 	$objProjectArray = Project::LoadArrayByBudgetMinimum(8000);
 	foreach ($objProjectArray as $objProject)
-		_p('<li>' . QApplication::HtmlEntities($objProject->Name) . ' (Budget: $' . QApplication::HtmlEntities($objProject->Budget) . ')</li>', false);
+		_p('<li>' . \QCubed\QString::htmlEntities($objProject->Name) . ' (Budget: $' . \QCubed\QString::htmlEntities($objProject->Budget) . ')</li>', false);
 ?>
 	</ul>
 </div>

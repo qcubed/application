@@ -27,10 +27,14 @@
 	class Project extends ProjectGen {
 		const TaxPercentage = .0825;
 
+		public function __toString() {
+		    return $this->Name;
+        }
+
 		public function GetPrice($fltDiscount) {
 			// Note that strBudget is a DECIMAL type
 			// Use the bcmath library if you need better precision than float
-			$fltPrice = floatval($this->strBudget);
+			$fltPrice = floatval($this->Budget);
 			$fltPrice = $fltPrice * (1.0 - $fltDiscount);
 			$fltPrice = $fltPrice * (1.0 + Project::TaxPercentage);
 
