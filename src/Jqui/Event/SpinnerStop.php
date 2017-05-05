@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QSpinner_Stop */
-class SpinnerStop extends AbstractBase
+class SpinnerStop extends EventBase
 {
     const EVENT_NAME = 'spinstop';
 }

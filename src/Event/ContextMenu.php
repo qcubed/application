@@ -17,7 +17,7 @@ namespace QCubed\Event;
  * @was QContextMenuEvent
  * @package QCubed\Event
  */
-class ContextMenu extends AbstractBase
+class ContextMenu extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'contextmenu';

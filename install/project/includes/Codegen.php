@@ -2,7 +2,7 @@
 /**
  * CodeGen
  *
- * Overrides the Codegen\AbstractBase class.
+ * Overrides the Codegen\CodegenBase class.
  *
  * Feel free to override any of those methods here to customize your code generation.
  *
@@ -17,7 +17,7 @@ namespace Project;
  * @package Project
  * @was QCodeGen
  */
-class Codegen extends \QCubed\Codegen\AbstractBase {
+class Codegen extends \QCubed\Codegen\CodegenBase {
 
 	/**
 	 * Construct the CodeGen object.

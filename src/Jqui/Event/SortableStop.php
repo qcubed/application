@@ -43,7 +43,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSortable_Stop */
-class SortableStop extends AbstractBase
+class SortableStop extends EventBase
 {
     const EVENT_NAME = 'sortstop';
 }

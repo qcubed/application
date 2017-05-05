@@ -19,7 +19,7 @@ use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Control\TableBase;
 
 /**
- * Class AbstractBase
+ * Class Base
  *
  * Represents a column for a Table control. Different subclasses (see below) allow accessing and fetching the data
  * for each cells in a variety of ways
@@ -42,7 +42,7 @@ use QCubed\Control\TableBase;
  * @was QAbstractHtmlTableColumn
  * @package QCubed\Control\TableColumn
  */
-abstract class AbstractBase extends Q\AbstractBase
+abstract class Base extends Q\Base
 {
     /** @var string */
     protected $strName;

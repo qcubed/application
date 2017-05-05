@@ -26,7 +26,7 @@ namespace QCubed\Jqui\Event;
  *
  * @was <?= $event->oldEventClassName ?>
  */
-class <?= $event->eventClassName ?> extends AbstractBase
+class <?= $event->eventClassName ?> extends EventBase
 {
     const EVENT_NAME = '<?= $event->eventName ?>';
 }

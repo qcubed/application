@@ -13,7 +13,7 @@ use QCubed as Q;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
-use QCubed\Control\TableColumn\AbstractBase as ColumnBase;
+use QCubed\Control\TableColumn\Base as ColumnBase;
 use QCubed\Control\TableColumn as Column;
 use QCubed\Type;
 

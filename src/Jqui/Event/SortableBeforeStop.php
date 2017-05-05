@@ -44,7 +44,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSortable_BeforeStop */
-class SortableBeforeStop extends AbstractBase
+class SortableBeforeStop extends EventBase
 {
     const EVENT_NAME = 'sortbeforestop';
 }

@@ -35,7 +35,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QDraggable_Stop */
-class DraggableStop extends AbstractBase
+class DraggableStop extends EventBase
 {
     const EVENT_NAME = 'dragstop';
 }

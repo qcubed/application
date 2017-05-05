@@ -13,7 +13,7 @@ use QCubed\Exception\Caller;
 use QCubed\Exception\IndexOutOfRange;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Control\TableColumn\AbstractBase as ColumnBase;
+use QCubed\Control\TableColumn\Base as ColumnBase;
 use QCubed\Control\TableColumn as Column;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;

@@ -20,7 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QRedirectAction
  * @package QCubed\Action
  */
-class Redirect extends AbstractBase
+class Redirect extends ActionBase
 {
     /** @var string JS to be run on the client side */
     protected $strJavaScript;

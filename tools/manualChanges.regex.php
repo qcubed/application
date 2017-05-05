@@ -14,10 +14,10 @@ $a['const']['QFontFamily::LucidaConsole'] = '\\QCubed\\Html::FONT_FAMILY_LUCIDA_
 $a['const']['QFontFamily::CourierNew'] = '\\QCubed\\Html::FONT_FAMILY_LUCIDA_COURIER_NEW';
 $a['const']['QFontFamily::Courier'] = '\\QCubed\\Html::FONT_FAMILY_LUCIDA_COURIER';
 
-$a['const']['QCausesValidation::None'] = '\\QCubed\\Control\\AbstractBase::CAUSES_VALIDATION_NONE';
-$a['const']['QCausesValidation::AllControls'] = '\\QCubed\\Control\\AbstractBase::CAUSES_VALIDATION_ALL';
-$a['const']['QCausesValidation::SiblingsAndChildren'] = '\\QCubed\\Control\\AbstractBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN';
-$a['const']['QCausesValidation::SiblingsOnly'] = '\\QCubed\\Control\\AbstractBase::CAUSES_VALIDATION_SIBLINGS_ONLY';
+$a['const']['QCausesValidation::None'] = '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_NONE';
+$a['const']['QCausesValidation::AllControls'] = '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_ALL';
+$a['const']['QCausesValidation::SiblingsAndChildren'] = '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN';
+$a['const']['QCausesValidation::SiblingsOnly'] = '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_ONLY';
 
 $a['const']['QTextAlign::Left'] = '\\QCubed\\Html::TEXT_ALIGN_LEFT';
 $a['const']['QTextAlign::Right'] = '\\QCubed\\Html::TEXT_ALIGN_RIGHT';
@@ -34,9 +34,9 @@ $a['const']['QTextMode::Url'] = '\\QCubed\\Control\\TextBoxBase::URL';
 $a['const']['QRepeatDirection::Horizontal'] = '\\QCubed\\Control\\ListControl::REPEAT_HORIZONTAL';
 $a['const']['QRepeatDirection::Vertical'] = '\\QCubed\\Control\\ListControl::REPEAT_VERTICAL';
 
-$a['const']['QSelectionMode::Single'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_SINGLE';
-$a['const']['QSelectionMode::Multiple'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_MULTIPLE';
-$a['const']['QSelectionMode::None'] = '\\QCubed\\AbstractListBoxBase::SELECTION_MODE_NONE';
+$a['const']['QSelectionMode::Single'] = '\\QCubed\\ListBoxBase::SELECTION_MODE_SINGLE';
+$a['const']['QSelectionMode::Multiple'] = '\\QCubed\\ListBoxBase::SELECTION_MODE_MULTIPLE';
+$a['const']['QSelectionMode::None'] = '\\QCubed\\ListBoxBase::SELECTION_MODE_NONE';
 
 $a['const']['QJsPriority::Standard'] = '\\QCubed\\ApplicationBase::PRIORITY_STANDARD';
 $a['const']['QJsPriority::High'] = '\\QCubed\\ApplicationBase::PRIORITY_HIGH';

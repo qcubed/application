@@ -14,7 +14,7 @@ namespace QCubed\Event;
  * @package QCubed\Event
  * @was QDataGrid_SortEvent
  */
-class DataGridSort extends AbstractBase {
+class DataGridSort extends EventBase {
     const JS_RETURN_PARAM = 'ui'; // returns the col id
     const EVENT_NAME = 'qdg2sort';
 }

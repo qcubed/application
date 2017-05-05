@@ -30,7 +30,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QMenu_Select */
-class MenuSelect extends AbstractBase
+class MenuSelect extends EventBase
 {
     const EVENT_NAME = 'menuselect';
 }

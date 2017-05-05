@@ -32,7 +32,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QAccordion_Create */
-class AccordionCreate extends AbstractBase
+class AccordionCreate extends EventBase
 {
     const EVENT_NAME = 'accordioncreate';
 }

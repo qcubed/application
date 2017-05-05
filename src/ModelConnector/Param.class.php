@@ -9,8 +9,12 @@
 
 namespace QCubed\ModelConnector;
 
+require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
+use QCubed\Application\t;
+
 use QCubed\Exception\Caller;
 use QCubed;
+use QCubed\ObjectBase;
 use QCubed\Type as QType;
 
 /**
@@ -29,7 +33,7 @@ use QCubed\Type as QType;
  * @package QCubed\ModelConnector
  */
 
-class Param extends QCubed\AbstractBase
+class Param extends ObjectBase
 {
     /** Specifies a list of items to present to the user to select from. */
     const SELECTION_LIST = 'list';
@@ -47,9 +51,9 @@ class Param extends QCubed\AbstractBase
 
     public function __construct($strCategory, $strName, $strDescription, $controlType, $options = null)
     {
-        $this->strCategory = QApplication::translate($strCategory);
-        $this->strName = QApplication::translate($strName);
-        $this->strDescription = QApplication::translate($strDescription);
+        $this->strCategory = t($strCategory);
+        $this->strName = t($strName);
+        $this->strDescription = t($strDescription);
         $this->controlType = $controlType;
 
         $this->options = $options;
@@ -90,7 +94,7 @@ class Param extends QCubed\AbstractBase
     {
         switch ($this->controlType) {
             case QType::BOOLEAN:
-                $ctl = new QRadioButtonList($objParent);
+                $ctl = new RadioButtonList($objParent);
                 $ctl->addItem('True', true);
                 $ctl->addItem('False', false);
                 $ctl->addItem('None', null);
@@ -98,19 +102,19 @@ class Param extends QCubed\AbstractBase
                 break;
 
             case QType::STRING:
-                $ctl = new QTextBox($objParent);
+                $ctl = new TextBox($objParent);
                 break;
 
             case QType::INTEGER:
-                $ctl = new QIntegerTextBox($objParent);
+                $ctl = new IntegerTextBox($objParent);
                 break;
 
             case QType::ARRAY_TYPE:    // an array the user will specify in a comma separated list
-                $ctl = new QTextBox($objParent);
+                $ctl = new TextBox($objParent);
                 break;
 
             case QModelConnectorParam::SELECTION_LIST: // a specific set of choices to present to the user
-                $ctl = new QListBox($objParent);
+                $ctl = new ListBox($objParent);
 
                 foreach ($this->options as $key => $val) {
                     $ctl->addItem($val, $key === '' ? null : $key); // allow null item keys
@@ -118,7 +122,7 @@ class Param extends QCubed\AbstractBase
                 break;
 
             default: // i.e. QJsClosure, or other random items. Probably codegened, and not used much.
-                $ctl = new QTextBox($objParent);
+                $ctl = new TextBox($objParent);
                 break;
 
         }

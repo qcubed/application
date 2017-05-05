@@ -19,7 +19,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QRegisterClickPositionAction
  * @package QCubed\Action
  */
-class RegisterClickPosition extends AbstractBase
+class RegisterClickPosition extends ActionBase
 {
     /** @var null|string Control ID of the control on which the click position has to be registered */
     protected $strControlId = null;

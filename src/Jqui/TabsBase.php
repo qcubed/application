@@ -257,9 +257,9 @@ class TabsBase extends TabsGen
 
     /**
      * Overriding to keep info in sync.
-     * @param Q\Control\AbstractBase $objControl
+     * @param Q\Control\Base $objControl
      */
-    public function addChildControl(Q\Control\AbstractBase $objControl)
+    public function addChildControl(Q\Control\Base $objControl)
     {
         parent::addChildControl($objControl);
         if (count($this->objChildControlArray) == 1) {

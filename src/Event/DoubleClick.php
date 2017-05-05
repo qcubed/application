@@ -16,7 +16,7 @@ namespace QCubed\Event;
  * @was QDoubleClickEvent
  * @package QCubed\Event
  */
-class DoubleClick extends AbstractBase
+class DoubleClick extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'dblclick';

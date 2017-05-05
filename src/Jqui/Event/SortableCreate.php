@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QSortable_Create */
-class SortableCreate extends AbstractBase
+class SortableCreate extends EventBase
 {
     const EVENT_NAME = 'sortcreate';
 }

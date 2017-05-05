@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QDialog_Create */
-class DialogCreate extends AbstractBase
+class DialogCreate extends EventBase
 {
     const EVENT_NAME = 'dialogcreate';
 }

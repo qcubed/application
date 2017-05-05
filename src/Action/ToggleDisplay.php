@@ -21,7 +21,7 @@ use QCubed\Type;
  * @was QToggleDisplayAction
  * @package QCubed\Action
  */
-class ToggleDisplay extends AbstractBase
+class ToggleDisplay extends ActionBase
 {
     /** @var string Control ID of the control */
     protected $strControlId = null;

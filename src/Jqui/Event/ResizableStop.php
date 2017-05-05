@@ -43,7 +43,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QResizable_Stop */
-class ResizableStop extends AbstractBase
+class ResizableStop extends EventBase
 {
     const EVENT_NAME = 'resizestop';
 }

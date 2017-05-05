@@ -49,7 +49,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QAjaxAction
  * @package QCubed\Action
  */
-class Ajax extends AbstractBase
+class Ajax extends ActionBase
 {
     /** @var string Ajax Action ID */
     protected $strId;

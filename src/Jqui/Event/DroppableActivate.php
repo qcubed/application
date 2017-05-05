@@ -39,7 +39,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QDroppable_Activate */
-class DroppableActivate extends AbstractBase
+class DroppableActivate extends EventBase
 {
     const EVENT_NAME = 'dropactivate';
 }

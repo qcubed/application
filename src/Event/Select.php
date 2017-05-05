@@ -15,7 +15,7 @@ namespace QCubed\Event;
  * @was QSelectEvent
  * @package QCubed\Event
  */
-class Select extends AbstractBase
+class Select extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'select';

@@ -10,6 +10,7 @@
 namespace QCubed\Session;
 
 use QCubed\Exception\Caller;
+use QCubed\ObjectBase;
 use QCubed\Type;
 use QCubed;
 
@@ -30,7 +31,7 @@ use QCubed;
  * @package Sessions
  * @was QDbBackedSessionHandler
  */
-class DatabaseHandler extends QCubed\AbstractBase
+class DatabaseHandler extends ObjectBase
 {
 
     /**

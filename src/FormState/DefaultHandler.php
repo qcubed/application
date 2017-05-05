@@ -9,7 +9,7 @@
 
 namespace QCubed\FormState;
 
-use QCubed\AbstractBase;
+use QCubed\ObjectBase;
 
 /**
  * Class QFormStateHandler
@@ -31,7 +31,7 @@ use QCubed\AbstractBase;
  * @package QCubed\FormState
  * @was QFormStateHandler
  */
-class DefaultHandler extends AbstractBase
+class DefaultHandler extends ObjectBase
 {
     public static function Save($strFormState, $blnBackButtonFlag)
     {

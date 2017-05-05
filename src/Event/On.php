@@ -24,7 +24,7 @@ use QCubed\Exception\Caller;
  * @was QOnEvent
  * @package QCubed\Event
  */
-class On extends AbstractBase
+class On extends EventBase
 {
     /** @var string Name of the event */
     protected $strEventName;

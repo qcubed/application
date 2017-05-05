@@ -22,7 +22,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QShowDialog
  * @package QCubed\Action
  */
-class ShowDialog extends AbstractBase
+class ShowDialog extends ActionBase
 {
     /** @var null|string The JS to show the dialog */
     protected $strJavaScript = null;

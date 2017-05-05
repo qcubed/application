@@ -30,7 +30,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QMenu_Blur */
-class MenuBlur extends AbstractBase
+class MenuBlur extends EventBase
 {
     const EVENT_NAME = 'menublur';
 }

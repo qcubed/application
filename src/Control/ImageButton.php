@@ -28,7 +28,7 @@ use QCubed\Type;
  * @was QImageButton
  * @package QCubed\Control
  */
-class ImageButton extends AbstractActionControl
+class ImageButton extends ActionControl
 {
     protected $strAlternateText = null;
     protected $strImageUrl = null;

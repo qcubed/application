@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QAutocomplete_Create */
-class AutocompleteCreate extends AbstractBase
+class AutocompleteCreate extends EventBase
 {
     const EVENT_NAME = 'autocompletecreate';
 }

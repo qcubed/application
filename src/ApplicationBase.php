@@ -13,28 +13,25 @@ use QCubed\Exception\Caller;
 use QCubed\Project\Application;
 use QCubed\Js;
 use QCubed\Database\Service as DatabaseService;
-use QCubed as Q;
 
 /**
- * This abstract class should never be instantiated.  It contains static methods,
- * variables and constants to be used throughout the application.
- *
- * The static method "Initialize" should be called at the begin of the script by
- * prepend.inc.
+ * This is the base class for the singleton application object. It contains utility code and code to aid the communication
+ * with the client. The difference between this and the QForm class is that anything in the application class must be
+ * recreated on every entry into to the server, whereas the QForm class uses its built-in serialization mechanism to
+ * recreate itself on each entry. This means that any information that should persist for the user as they move
+ * through the application should go in the Form, and anything that is just used at the moment to build a response
+ * should go here.
  */
-class ApplicationBase extends Q\AbstractBase
+class ApplicationBase extends ObjectBase
 {
+    // These constants help us to organize and build a list of responses to the client.
     const PRIORITY_STANDARD = '*jsMed*';
     const PRIORITY_HIGH = '*jsHigh*';
     const PRIORITY_LOW = '*jsLow*';
-    const PRIORITY_EXCLUSIVE = '*jsExclusive*';
     /** Execute ONLY this command and exclude all others */
-    const PRIORITY_LAST = '*jsFinal*';
+    const PRIORITY_EXCLUSIVE = '*jsExclusive*';
     /** Execute this command after all ajax commands have been completely flushed */
-
-    //////////////////////////
-    // Public Static Variables
-    //////////////////////////
+    const PRIORITY_LAST = '*jsFinal*';
 
     /**
      * @var bool Set to true to turn on short-term caching. This is an in-memory cache that caches database

@@ -9,7 +9,7 @@
 
 namespace QCubed\FormState;
 
-use QCubed\AbstractBase;
+use QCubed\ObjectBase;
 use QCubed\Control\FormBase;
 use QCubed\Cryptography;
 
@@ -34,7 +34,7 @@ use QCubed\Cryptography;
  * @was QSessionFormStateHandler
  * @package QCubed\FormState
  */
-class SessionHandler extends AbstractBase
+class SessionHandler extends ObjectBase
 {
     const SESSION_KEY = 'qformstate';
     

@@ -22,7 +22,7 @@ use QCubed\Type;
  * @was QToggleEnableAction
  * @package QCubed\Action
  */
-class ToggleEnable extends AbstractBase
+class ToggleEnable extends ActionBase
 {
     /** @var null|string Control ID of the control to be Enabled/Disabled */
     protected $strControlId = null;

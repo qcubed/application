@@ -35,7 +35,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSlider_Change */
-class SliderChange extends AbstractBase
+class SliderChange extends EventBase
 {
     const EVENT_NAME = 'slidechange';
 }

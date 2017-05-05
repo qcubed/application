@@ -30,7 +30,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QDroppable_Out */
-class DroppableOut extends AbstractBase
+class DroppableOut extends EventBase
 {
     const EVENT_NAME = 'dropout';
 }

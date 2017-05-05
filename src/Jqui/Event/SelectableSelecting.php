@@ -31,7 +31,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSelectable_Selecting */
-class SelectableSelecting extends AbstractBase
+class SelectableSelecting extends EventBase
 {
     const EVENT_NAME = 'selectableselecting';
 }

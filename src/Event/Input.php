@@ -20,7 +20,7 @@ namespace QCubed\Event;
  * @was QInputEvent
  * @package QCubed\Event
  */
-class Input extends AbstractBase
+class Input extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'input';

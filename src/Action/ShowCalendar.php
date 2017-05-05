@@ -21,7 +21,7 @@ use QCubed\Control\Calendar;
  * @was QShowCalendarAction
  * @package QCubed\Action
  */
-class ShowCalendar extends AbstractBase
+class ShowCalendar extends ActionBase
 {
     /** @var null|string Control ID of the calendar */
     protected $strControlId = null;

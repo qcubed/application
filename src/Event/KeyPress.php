@@ -17,7 +17,7 @@ namespace QCubed\Event;
  * @was QKeyPressEvent
  * @package QCubed\Event
  */
-class KeyPress extends AbstractBase
+class KeyPress extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'keypress';

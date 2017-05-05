@@ -38,7 +38,7 @@ class Property extends Data
      * @param string $strName name of the column
      * @param string|null $strProperty the property name to use when accessing the DataSource row object.
      *                                 Can be null, in which case object will have the ->__toString() function called on it.
-     * @param \QCubed\Query\Node\AbstractBase $objBaseNode if not null, the OrderBy and ReverseOrderBy clauses will be created using the property path and the given database node
+     * @param \QCubed\Query\Node\Base $objBaseNode if not null, the OrderBy and ReverseOrderBy clauses will be created using the property path and the given database node
      */
     public function __construct($strName, $strProperty, $objBaseNode = null)
     {

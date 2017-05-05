@@ -20,7 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QSetValueAction
  * @package QCubed\Action
  */
-class SetValue extends AbstractBase {
+class SetValue extends ActionBase {
     protected $strControlId = null;
     protected $strValue = "";
 

@@ -31,7 +31,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QAutocomplete_Search */
-class AutocompleteSearch extends AbstractBase
+class AutocompleteSearch extends EventBase
 {
     const EVENT_NAME = 'autocompletesearch';
 }

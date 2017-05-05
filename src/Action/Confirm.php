@@ -25,7 +25,7 @@ use QCubed\Js;
  * @was QConfirmAction
  * @package QCubed\Action
  */
-class Confirm extends AbstractBase
+class Confirm extends ActionBase
 {
     /** @var string Message to be shown to the user on the confirmation prompt */
     protected $strMessage;

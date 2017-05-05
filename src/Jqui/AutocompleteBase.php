@@ -13,7 +13,7 @@ use QCubed as Q;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Control\AbstractBase as QControl;
+use QCubed\Control\Base as QControl;
 use QCubed\Type;
 
 /**

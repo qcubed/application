@@ -22,7 +22,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QAlertAction
  * @package QCubed\Action
  */
-class Alert extends AbstractBase
+class Alert extends ActionBase
 {
     /** @var string Message to be shown as the alert */
     protected $strMessage;

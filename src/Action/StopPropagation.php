@@ -20,7 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QStopPropagationAction
  * @package QCubed\Action
  */
-class StopPropagation extends AbstractBase
+class StopPropagation extends ActionBase
 {
     /**
      * Returns the JavaScript to be executed on the client side

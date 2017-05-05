@@ -23,7 +23,7 @@ namespace QCubed\Event;
  * @was QDialog_ButtonEvent
  * @package QCubed\Event
  */
-class DialogButton extends AbstractBase
+class DialogButton extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'QDialog_Button';

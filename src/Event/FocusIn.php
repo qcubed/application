@@ -15,7 +15,7 @@ namespace QCubed\Event;
  * @was QFocusInEvent
  * @package QCubed\Event
  */
-class FocusIn extends AbstractBase
+class FocusIn extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'focusin';

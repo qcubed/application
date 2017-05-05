@@ -9,7 +9,7 @@
 
 namespace QCubed\FormState;
 
-use QCubed\AbstractBase;
+use QCubed\ObjectBase;
 use QCubed\Cryptography;
 use QCubed\Database;
 
@@ -44,7 +44,7 @@ use QCubed\Database;
  * @package QCubed\FormState
  * @was QDbBackedFormStateHandler
  */
-class DatabaseHandler extends AbstractBase
+class DatabaseHandler extends ObjectBase
 {
 
     /**

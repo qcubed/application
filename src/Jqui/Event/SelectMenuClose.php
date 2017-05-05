@@ -28,7 +28,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QSelectmenu_Close */
-class SelectMenuClose extends AbstractBase
+class SelectMenuClose extends EventBase
 {
     const EVENT_NAME = 'selectmenuclose';
 }

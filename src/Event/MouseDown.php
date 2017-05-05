@@ -15,7 +15,7 @@ namespace QCubed\Event;
  * @was QMouseDownEvent
  * @package QCubed\Event
  */
-class MouseDown extends AbstractBase
+class MouseDown extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'mousedown';

@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QDraggable_Create */
-class DraggableCreate extends AbstractBase
+class DraggableCreate extends EventBase
 {
     const EVENT_NAME = 'dragcreate';
 }

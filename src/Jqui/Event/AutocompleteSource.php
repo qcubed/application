@@ -17,7 +17,7 @@ namespace QCubed\Jqui\Event;
  * @was QAutocomplete_Select
  * @package QCubed\Jqui\Event
  */
-class AutocompleteSource extends AbstractBase
+class AutocompleteSource extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'QAutocomplete_Source';

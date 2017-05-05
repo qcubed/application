@@ -13,7 +13,7 @@ namespace QCubed\Jqui;
 /**
  * Class CheckboxBase
  *
- * The  QJqCheckBoxBase class defined here provides an interface between the generated
+ * The  CheckBoxBase class defined here provides an interface between the generated
  * QJqCheckBoxGen class, and QCubed. This file is part of the core and will be overwritten
  * when you update QCubed. To override, make your changes to the QJqCheckBox.class.php file instead.
  *

@@ -42,7 +42,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSortable_Remove */
-class SortableRemove extends AbstractBase
+class SortableRemove extends EventBase
 {
     const EVENT_NAME = 'sortremove';
 }

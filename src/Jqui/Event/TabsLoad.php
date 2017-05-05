@@ -32,7 +32,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QTabs_Load */
-class TabsLoad extends AbstractBase
+class TabsLoad extends EventBase
 {
     const EVENT_NAME = 'tabsload';
 }

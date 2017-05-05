@@ -35,7 +35,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QAutocomplete_Focus */
-class AutocompleteFocus extends AbstractBase
+class AutocompleteFocus extends EventBase
 {
     const EVENT_NAME = 'autocompletefocus';
 }

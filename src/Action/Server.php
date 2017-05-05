@@ -26,7 +26,7 @@ use QCubed\Js;
  * @was QServerAction
  * @package QCubed\Action
  */
-class Server extends AbstractBase
+class Server extends ActionBase
 {
     /** @var string Name of the method in the form to be called */
     protected $strMethodName;

@@ -37,7 +37,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QAccordion_BeforeActivate */
-class AccordionBeforeActivate extends AbstractBase
+class AccordionBeforeActivate extends EventBase
 {
     const EVENT_NAME = 'accordionbeforeactivate';
 }

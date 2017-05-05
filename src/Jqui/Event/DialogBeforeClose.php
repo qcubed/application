@@ -30,7 +30,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QDialog_BeforeClose */
-class DialogBeforeClose extends AbstractBase
+class DialogBeforeClose extends EventBase
 {
     const EVENT_NAME = 'dialogbeforeclose';
 }

@@ -46,7 +46,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSortable_Out */
-class SortableOut extends AbstractBase
+class SortableOut extends EventBase
 {
     const EVENT_NAME = 'sortout';
 }

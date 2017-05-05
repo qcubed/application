@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QButton_Create */
-class ButtonCreate extends AbstractBase
+class ButtonCreate extends EventBase
 {
     const EVENT_NAME = 'buttoncreate';
 }

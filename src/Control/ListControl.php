@@ -71,7 +71,7 @@ abstract class ListControl extends QControl
         if (gettype($mixListItemOrName) == Type::OBJECT) {
             $objListItem = Type::cast($mixListItemOrName, "ListItem");
         } elseif ($mixOverrideParameters) {
-            // The OverrideParameters can only be included if they are not null, because OverrideAttributes in \QCubed\AbstractBase can't accept a NULL Value
+            // The OverrideParameters can only be included if they are not null, because OverrideAttributes in \QCubed\Base can't accept a NULL Value
             $objListItem = new ListItem($mixListItemOrName, $strValue, $blnSelected, $strItemGroup,
                 $mixOverrideParameters);
         } else {

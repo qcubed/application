@@ -398,7 +398,7 @@ class JqDoc
     }
 }
 
-class JqControlGen extends \QCubed\Codegen\AbstractBase
+class JqControlGen extends \QCubed\Codegen\CodegenBase
 {
     protected $intDatabaseIndex = 1;
 

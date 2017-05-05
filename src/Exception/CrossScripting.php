@@ -17,7 +17,7 @@ namespace QCubed\Exception;
  * @was QCrossScriptingException
  * @package QCubed\Action
  */
-class CrossScripting extends \QCubed\Exception\Caller
+class CrossScripting extends Caller
 {
     /**
      * Constructor

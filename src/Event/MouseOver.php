@@ -17,7 +17,7 @@ namespace QCubed\Event;
  * @was QMouseOverEvent
  * @package QCubed\Event
  */
-class MouseOver extends AbstractBase
+class MouseOver extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'mouseover';

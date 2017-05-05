@@ -9,8 +9,7 @@
 
 namespace QCubed\Exception;
 
-use QCubed\Database\Exception\AbstractBase;
-
+use QCubed as Q;
 
 /**
  * Class DataBind
@@ -21,7 +20,7 @@ use QCubed\Database\Exception\AbstractBase;
  * @was QDataBindException
  * @package QCubed\Exception
  */
-class DataBind extends AbstractBase
+class DataBind extends Caller
 {
     private $intOffset;
     private $strTraceArray;
@@ -37,7 +36,7 @@ class DataBind extends AbstractBase
         $this->intOffset = $objExc->Offset;
         $this->strTraceArray = $objExc->TraceArray;
 
-        if ($objExc instanceof AbstractBase) {
+        if ($objExc instanceof Q\Database\Exception\ExceptionBase) {
             $this->strQuery = $objExc->Query;
         }
 

@@ -17,7 +17,7 @@ namespace QCubed\Event;
  * @was QDragDropEvent
  * @package QCubed\Event
  */
-class DragDrop extends AbstractBase
+class DragDrop extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'drop';

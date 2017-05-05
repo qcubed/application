@@ -29,7 +29,7 @@ use QCubed\Type;
  * @was QLinkButton
  * @package QCubed\Control
  */
-class LinkButton extends AbstractActionControl
+class LinkButton extends ActionControl
 {
     ///////////////////////////
     // Private Member Variables

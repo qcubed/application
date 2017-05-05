@@ -9,6 +9,8 @@
 
 namespace QCubed\Event;
 
+use QCubed\Exception\Caller;
+
 /**
  * Class QCellClickEvent
  * An event to detect clicking on a table cell.
@@ -105,7 +107,7 @@ class CellClick extends Click
             default:
                 try {
                     return parent::__get($strName);
-                } catch (\QCubed\Exception\Caller $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }

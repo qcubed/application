@@ -9,7 +9,8 @@
 
 namespace QCubed\FormState;
 
-use QCubed\AbstractBase;
+use QCubed\ObjectBase;
+
 
 /**
  * Class FileHandler
@@ -33,7 +34,7 @@ use QCubed\AbstractBase;
  * @was QFileFormStateHandler
  * @package QCubed\FormState
  */
-class FileHandler extends AbstractBase
+class FileHandler extends ObjectBase
 {
     /**
      * The PATH where the FormState files should be saved
@@ -107,7 +108,7 @@ class FileHandler extends AbstractBase
         // Go through all the files
         $objDirectory = dir(self::$StatePath);
         while (($strFile = $objDirectory->read()) !== false) {
-            if (!count(self::$FileNamePrefix)) {
+            if (!self::$FileNamePrefix) {
                 $intPosition = 0;
             } else {
                 $intPosition = strpos($strFile, self::$FileNamePrefix);

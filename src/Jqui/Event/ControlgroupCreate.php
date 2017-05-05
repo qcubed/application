@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QControlgroup_Create */
-class ControlgroupCreate extends AbstractBase
+class ControlgroupCreate extends EventBase
 {
     const EVENT_NAME = 'controlgroupcreate';
 }

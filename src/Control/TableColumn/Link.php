@@ -100,15 +100,15 @@ class Link extends Data
      * QHtmlTableLinkColumn constructor.
      *
      * @param string $strName Column name to be displayed in the table header.
-     * @param null|string|array|QQNode\AbstractBase $mixText The text to display as the label of the anchor, a callable callback to get the text,
-     *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same, or a QQNode\AbstractBase representing the property.
+     * @param null|string|array|QQNode\Base $mixText The text to display as the label of the anchor, a callable callback to get the text,
+     *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same, or a QQNode\Base representing the property.
      *   Depends on what type of row item is passed.
      * @param null|string|array|QControlProxy $mixDestination The text representing the destination of the anchor, a callable callback to get the destination,
      *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same,
      *   or a Q\Control\Proxy. Depends on what type of row item is passed.
      * @param null|string|array $getVars An array of key=>value pairs to use as the GET variables in the link URL,
      *   or in the case of a QControlProxy, possibly a string to represent the action parameter. In either case, each item
-     *   can be a property chain, an array index list, a QQNode\AbstractBase, or a callable callback as specified above. If the destination is a
+     *   can be a property chain, an array index list, a QQNode\Base, or a callable callback as specified above. If the destination is a
      *   QControlProxy, this would be what to use as the action parameter.
      * @param null|array $tagAttributes An array of key=>value pairs to use as additional attributes in the tag.
      *   For example, could be used to add a class or an id to each tag.
@@ -196,15 +196,15 @@ class Link extends Data
             } else {
                 return $item; // We have no idea what this is, so return the item for possible further processing
             }
-        } elseif ($mixSpec instanceof QQNode\AbstractBase) {
+        } elseif ($mixSpec instanceof QQNode\Base) {
             $properties = array($mixSpec->_PropertyName);
             $objNode = $mixSpec;
             while ($objNode = $objNode->_ParentNode) {
-                if (!($objNode instanceof QQNode\AbstractBase)) {
-                    throw new Caller('QQNode\AbstractBase cannot go through any "To Many" association nodes.');
+                if (!($objNode instanceof QQNode\Base)) {
+                    throw new Caller('QQNode\Base cannot go through any "To Many" association nodes.');
                 }
                 if (($objNode instanceof QQNode\ReverseReference) && !$objNode->isUnique()) {
-                    throw new Caller('QQNode\AbstractBase cannot go through any "To Many" association nodes.');
+                    throw new Caller('QQNode\Base cannot go through any "To Many" association nodes.');
                 }
                 if ($strPropName = $objNode->_PropertyName) {
                     $properties[] = $strPropName;
@@ -258,7 +258,7 @@ class Link extends Data
                         $getVars[$key] = static::getObjectValue($val, $item);
                     }
                 }
-            } elseif ($this->getVars instanceof QQNode\AbstractBase) {
+            } elseif ($this->getVars instanceof QQNode\Base) {
                 $getVars = static::getObjectValue($this->getVars, $item);
             } else {
                 $getVars = $this->getVars; // could be a simple action parameter.
@@ -383,7 +383,7 @@ class Link extends Data
                         foreach ($mixValue as $key => $val) {
                             $this->getVars[$key] = self::splitSpec($val);
                         }
-                    } elseif ($mixValue instanceof QQNode\AbstractBase) {
+                    } elseif ($mixValue instanceof QQNode\Base) {
                         $this->getVars = $mixValue;
                     } else {
                         throw new Exception("Invalid type");

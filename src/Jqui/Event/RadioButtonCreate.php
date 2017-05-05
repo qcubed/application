@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QCheckboxradio_Create */
-class RadioButtonCreate extends AbstractBase
+class RadioButtonCreate extends EventBase
 {
     const EVENT_NAME = 'checkboxradiocreate';
 }

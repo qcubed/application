@@ -44,7 +44,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSortable_Update */
-class SortableUpdate extends AbstractBase
+class SortableUpdate extends EventBase
 {
     const EVENT_NAME = 'sortupdate';
 }

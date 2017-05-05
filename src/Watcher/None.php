@@ -18,7 +18,7 @@ namespace QCubed\Watcher;
  * @package QCubed\Watcher
  * @was QWatcherNone
  */
-class None extends AbstractBase
+class None extends WatcherBase
 {
 
     /**

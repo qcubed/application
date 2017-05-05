@@ -24,7 +24,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QTerminateAction
  * @package QCubed\Action
  */
-class Terminate extends AbstractBase
+class Terminate extends ActionBase
 {
     /**
      * Returns the JS for the browser

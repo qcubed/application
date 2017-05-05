@@ -34,7 +34,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSlider_Stop */
-class SliderStop extends AbstractBase
+class SliderStop extends EventBase
 {
     const EVENT_NAME = 'slidestop';
 }

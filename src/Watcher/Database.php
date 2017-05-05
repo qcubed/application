@@ -43,7 +43,7 @@ if (!defined('__WATCHER_TABLE_NAME__')) {
     define('__WATCHER_TABLE_NAME__', 'qc_watchers');
 }
 
-class Database extends AbstractBase
+class Database extends WatcherBase
 {
 
     /**

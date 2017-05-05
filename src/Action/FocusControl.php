@@ -20,7 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QFocusControlAction
  * @package QCubed\Action
  */
-class FocusControl extends AbstractBase
+class FocusControl extends ActionBase
 {
     /** @var null|string Control ID of the control on which focus is to be put */
     protected $strControlId = null;

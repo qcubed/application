@@ -30,7 +30,7 @@ use QCubed\Type;
  * @was QListItemBase
  * @package QCubed\Control
  */
-class ListItemBase extends QCubed\AbstractBase
+class ListItemBase extends QCubed\Base
 {
     ///////////////////////////
     // Private Member Variables

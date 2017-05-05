@@ -33,7 +33,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSpinner_Spin */
-class SpinnerSpin extends AbstractBase
+class SpinnerSpin extends EventBase
 {
     const EVENT_NAME = 'spin';
 }

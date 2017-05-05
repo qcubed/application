@@ -21,7 +21,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QBlurControlAction
  * @package QCubed\Action
  */
-class BlurControl extends AbstractBase
+class BlurControl extends ActionBase
 {
     /** @var null|string Control ID of the control from which focus has to be removed */
     protected $strControlId = null;

@@ -21,7 +21,7 @@ namespace QCubed\Watcher;
  *
  * @was QWatcherCache
  */
-class Cache extends AbstractBase
+class Cache extends WatcherBase
 {
 
     /** @var  QAbstractCacheProvider */

@@ -82,7 +82,7 @@ use QCubed\Js;
  * @was QHtmlAttributeManagerBase
  */
 
-class HtmlAttributeManagerBase extends AbstractBase {
+class HtmlAttributeManagerBase extends ObjectBase {
 	/** @var  array attributes stored in PHP native format so they can be retrieved. Escaping happens when they are drawn. */
 	protected $attributes = array();
 	protected $styles = array();

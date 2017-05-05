@@ -44,7 +44,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSortable_Receive */
-class SortableReceive extends AbstractBase
+class SortableReceive extends EventBase
 {
     const EVENT_NAME = 'sortreceive';
 }

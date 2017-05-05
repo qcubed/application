@@ -30,7 +30,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QAutocomplete_Close */
-class AutocompleteClose extends AbstractBase
+class AutocompleteClose extends EventBase
 {
     const EVENT_NAME = 'autocompleteclose';
 }

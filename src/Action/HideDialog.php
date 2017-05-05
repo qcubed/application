@@ -20,7 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @package QCubed\Action
  * @deprecated Dialogs in general should be created on the fly. Also this implementation is very JQuery UI specific.
  */
-class HideDialog extends AbstractBase
+class HideDialog extends ActionBase
 {
     /** @var null|string JS to be executed on the client side for closing the dialog */
     protected $strJavaScript = null;

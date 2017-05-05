@@ -35,7 +35,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QDialog_Resize */
-class DialogResize extends AbstractBase
+class DialogResize extends EventBase
 {
     const EVENT_NAME = 'dialogresize';
 }

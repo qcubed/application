@@ -21,7 +21,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QJavaScriptAction
  * @package QCubed\Action
  */
-class JavaScript extends AbstractBase
+class JavaScript extends ActionBase
 {
     /** @var string JS to be run on the client side */
     protected $strJavaScript;

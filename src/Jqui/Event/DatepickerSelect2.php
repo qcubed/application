@@ -19,7 +19,7 @@ namespace QCubed\Jqui\Event;
  * @was QDatepicker_SelectEvent2
  */
 
-class DatepickerSelect2 extends AbstractBase {
+class DatepickerSelect2 extends EventBase {
     /** Event name for the event */
     const EventName = 'QDatepicker_Select2';
 }

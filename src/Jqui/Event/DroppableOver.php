@@ -38,7 +38,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QDroppable_Over */
-class DroppableOver extends AbstractBase
+class DroppableOver extends EventBase
 {
     const EVENT_NAME = 'dropover';
 }

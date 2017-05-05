@@ -20,7 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QCssClassAction
  * @package QCubed\Action
  */
-class CssClass extends AbstractBase
+class CssClass extends ActionBase
 {
     /** @var null|string The CSS class to be added to the control */
     protected $strTemporaryCssClass = null;

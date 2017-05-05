@@ -23,7 +23,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QResetTimerAction
  * @package QCubed\Action
  */
-class ResetTimer extends AbstractBase
+class ResetTimer extends ActionBase
 {
     /**
      * Returns the JavaScript to be executed on the client side (to clear the timeout on the control)

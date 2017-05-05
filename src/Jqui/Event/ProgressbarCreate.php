@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QProgressbar_Create */
-class ProgressbarCreate extends AbstractBase
+class ProgressbarCreate extends EventBase
 {
     const EVENT_NAME = 'progressbarcreate';
 }

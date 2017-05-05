@@ -16,7 +16,7 @@ namespace QCubed\Event;
  * @was QChangeEvent
  * @package QCubed\Event
  */
-class Change extends AbstractBase
+class Change extends EventBase
 {
     /** Event Name */
     const EVENT_NAME = 'change';

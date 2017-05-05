@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QSlider_Create */
-class SliderCreate extends AbstractBase
+class SliderCreate extends EventBase
 {
     const EVENT_NAME = 'slidecreate';
 }

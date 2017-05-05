@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Control\AbstractBase as QControl;
+use QCubed\Control\Base as QControl;
 
 /**
  * Class AjaxControl

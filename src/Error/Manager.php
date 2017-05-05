@@ -189,7 +189,7 @@ class Manager
 
         $__exc_objErrorAttributeArray = [];
 
-        if ($__exc_objException instanceof \QCubed\Database\Exception\AbstractBase) {
+        if ($__exc_objException instanceof \QCubed\Database\Exception\Base) {
             $__exc_objErrorAttribute = new QErrorAttribute("Database Error Number", $__exc_errno, false);
             $__exc_objErrorAttributeArray[0] = $__exc_objErrorAttribute;
 

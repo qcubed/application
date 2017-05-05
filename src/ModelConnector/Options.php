@@ -10,6 +10,7 @@
 namespace QCubed\ModelConnector;
 
 use QCubed;
+use QCubed\ObjectBase;
 
 /**
  * Interface to the ModelConnector options that let you specify various options per field to be placed in the codegened
@@ -25,7 +26,7 @@ use QCubed;
  * @was QModelConnectorOptions
  * @package QCubed\ModelConnector
  */
-class Options extends QCubed\AbstractBase
+class Options extends ObjectBase
 {
     protected $options = array();
     protected $blnChanged = false;

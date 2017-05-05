@@ -44,7 +44,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSortable_Activate */
-class SortableActivate extends AbstractBase
+class SortableActivate extends EventBase
 {
     const EVENT_NAME = 'sortactivate';
 }

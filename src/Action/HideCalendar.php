@@ -21,7 +21,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QHideCalendarAction
  * @package QCubed\Action
  */
-class HideCalendar extends AbstractBase
+class HideCalendar extends ActionBase
 {
     /** @var null|string Control ID of the calendar control */
     protected $strControlId = null;

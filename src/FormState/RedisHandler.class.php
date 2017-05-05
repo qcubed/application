@@ -9,7 +9,7 @@
 
 namespace QCubed\FormState;
 
-use QCubed\AbstractBase;
+use QCubed\ObjectBase;
 
 
 /**
@@ -33,7 +33,7 @@ use QCubed\AbstractBase;
  * @was QRedisBackedFormStateHandler
  * @package QCubed\FormState
  */
-class RedisHandler extends AbstractBase
+class RedisHandler extends ObjectBase
 {
     /**
      * The number of days after which the formstate will expire.

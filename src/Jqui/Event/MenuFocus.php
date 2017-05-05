@@ -30,7 +30,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QMenu_Focus */
-class MenuFocus extends AbstractBase
+class MenuFocus extends EventBase
 {
     const EVENT_NAME = 'menufocus';
 }

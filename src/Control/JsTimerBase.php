@@ -174,7 +174,7 @@ class JsTimerBase extends QControl
         if (!($objEvent instanceof Q\Event\TimerExpired)) {
             throw new Caller('First parameter of JsTimer::AddAction is expecting an object of type Event\\TimerExpired');
         }
-        if (!($objAction instanceof Q\Action\AbstractBase)) {
+        if (!($objAction instanceof Q\Action\Base)) {
             throw new Caller('Second parameter of AddAction is expecting an object of type Action');
         }
 
@@ -253,7 +253,7 @@ class JsTimerBase extends QControl
         $strToReturn .= 'function() {';
 
         foreach (reset($this->objActionArray) as $objAction) {
-            /** @var Q\Action\AbstractBase $objAction */
+            /** @var Q\Action\Base $objAction */
             $strToReturn .= ' ' . $objAction->renderScript($this);
         }
         if ($this->ActionsMustTerminate) {
@@ -386,11 +386,11 @@ class JsTimerBase extends QControl
 
     /**
      * Add a child control to the current control (useless because JsTimer cannot have children)
-     * @param Q\Control\AbstractBase $objControl
+     * @param Q\Control\Base $objControl
      *
      * @throws Caller
      */
-    public function addChildControl(Q\Control\AbstractBase $objControl)
+    public function addChildControl(Q\Control\Base $objControl)
     {
         throw new Caller('Do not add child-controls to an instance of JsTimer!');
     }

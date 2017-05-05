@@ -31,7 +31,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QSelectmenu_Change */
-class SelectMenuChange extends AbstractBase
+class SelectMenuChange extends EventBase
 {
     const EVENT_NAME = 'selectmenuchange';
 }

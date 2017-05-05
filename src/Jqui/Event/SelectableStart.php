@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QSelectable_Start */
-class SelectableStart extends AbstractBase
+class SelectableStart extends EventBase
 {
     const EVENT_NAME = 'selectablestart';
 }

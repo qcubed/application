@@ -31,7 +31,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QDialog_DragStart */
-class DialogDragStart extends AbstractBase
+class DialogDragStart extends EventBase
 {
     const EVENT_NAME = 'dialogdragstart';
 }

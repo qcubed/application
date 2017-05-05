@@ -19,7 +19,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QSelectControlAction
  * @package QCubed\Action
  */
-class SelectControl extends AbstractBase
+class SelectControl extends ActionBase
 {
     /** @var null|string Control ID of the QTextBox which is to be selected */
     protected $strControlId = null;

@@ -19,7 +19,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QCssAction
  * @package QCubed\Action
  */
-class CssAction extends AbstractBase
+class CssAction extends ActionBase
 {
     /** @var string CSS property to be set */
     protected $strCssProperty = null;

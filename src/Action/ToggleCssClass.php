@@ -20,7 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QToggleCssClassAction
  * @package QCubed\Action
  */
-class ToggleCssClass extends AbstractBase
+class ToggleCssClass extends ActionBase
 {
     protected $strCssClass;
     protected $strTargetSelector;

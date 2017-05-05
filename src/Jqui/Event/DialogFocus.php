@@ -29,7 +29,7 @@ namespace QCubed\Jqui\Event;
  * events._
  *
  * @was QDialog_Focus */
-class DialogFocus extends AbstractBase
+class DialogFocus extends EventBase
 {
     const EVENT_NAME = 'dialogfocus';
 }

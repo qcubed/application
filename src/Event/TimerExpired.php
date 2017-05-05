@@ -16,7 +16,7 @@ namespace QCubed\Event;
  * @was QTimerExpiredEvent
  * @package QCubed\Event
  */
-class TimerExpired extends AbstractBase
+class TimerExpired extends EventBase
 {
     /** Event's name. Used by QCubed framework for its internal purpose */
     const EVENT_NAME = 'timerexpiredevent';

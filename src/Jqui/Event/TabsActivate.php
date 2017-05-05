@@ -39,7 +39,7 @@ namespace QCubed\Jqui\Event;
  * 
  *
  * @was QTabs_Activate */
-class TabsActivate extends AbstractBase
+class TabsActivate extends EventBase
 {
     const EVENT_NAME = 'tabsactivate';
 }
