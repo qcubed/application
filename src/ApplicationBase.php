@@ -15,12 +15,16 @@ use QCubed\Js;
 use QCubed\Database\Service as DatabaseService;
 
 /**
+ * Class ApplicationBase
+ *
  * This is the base class for the singleton application object. It contains utility code and code to aid the communication
  * with the client. The difference between this and the QForm class is that anything in the application class must be
  * recreated on every entry into to the server, whereas the QForm class uses its built-in serialization mechanism to
  * recreate itself on each entry. This means that any information that should persist for the user as they move
  * through the application should go in the Form, and anything that is just used at the moment to build a response
  * should go here.
+ * @package QCubed
+ * //was QApplicationBase (do not put annotiation here, all transformations are manual)
  */
 class ApplicationBase extends ObjectBase
 {

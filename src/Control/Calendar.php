@@ -9,6 +9,14 @@
 
 namespace QCubed\Control;
 
+use QCubed\Exception\Caller;
+use QCubed\Exception\InvalidCast;
+use QCubed\QDateTime;
+use QCubed as Q;
+use QCubed\Type;
+use QCubed\Action\ActionBase as QAction;
+use QCubed\Event\EventBase as QEvent;
+
 /**
  * Class Calendar
  *
@@ -16,9 +24,9 @@ namespace QCubed\Control;
  * that can be used to let the user pick a date.
  *
  * @package Controls
- * @property \QCubed\QDateTime MinDate
- * @property \QCubed\QDateTime MaxDate
- * @property \QCubed\QDateTime DefaultDate
+ * @property QDateTime MinDate
+ * @property QDateTime MaxDate
+ * @property QDateTime DefaultDate
  * @property int FirstDay
  * @property int|int[] NumberOfMonths
  * @property boolean AutoSize
@@ -91,10 +99,12 @@ class Calendar extends DateTimeTextBox
 
     /**
      * @deprecated Use \QCubed\Js\Helper::toJsObject
+     * @param QDateTime $dt
+     * @return string
      */
-    public static function jsDate(\QCubed\QDateTime $dt)
+    public static function jsDate(QDateTime $dt)
     {
-        return \QCubed\Js\Helper::toJsObject($dt);
+        return Q\Js\Helper::toJsObject($dt);
     }
 
     /**
@@ -114,7 +124,7 @@ class Calendar extends DateTimeTextBox
             return '';
         }
 
-        return $strKey . ': ' . \QCubed\Js\Helper::toJsObject($objValue) . ', ';
+        return $strKey . ': ' . Q\Js\Helper::toJsObject($objValue) . ', ';
     }
 
     /**
@@ -156,7 +166,7 @@ class Calendar extends DateTimeTextBox
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception|\QCubed\Exception\Caller
+     * @throws Exception|Caller
      */
     public function __get($strName)
     {
@@ -186,7 +196,7 @@ class Calendar extends DateTimeTextBox
             default:
                 try {
                     return parent::__get($strName);
-                } catch (\QCubed\Exception\Caller $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -202,85 +212,89 @@ class Calendar extends DateTimeTextBox
      * @param string $strName
      * @param string $mixValue
      *
-     * @return mixed
-     * @throws Exception|\QCubed\Exception\Caller|\QCubed\Exception\InvalidCast|Exception
+     * @return void
+     * @throws Exception|Caller|InvalidCast|Exception
      */
     public function __set($strName, $mixValue)
     {
-        $this->blnModified = true;
         switch ($strName) {
             case "MinDate":
                 try {
-                    $this->datMinDate = \QCubed\Type::cast($mixValue, \QCubed\Type::DATE_TIME);
+                    $this->datMinDate = Type::cast($mixValue, Type::DATE_TIME);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "MaxDate":
-                $blnMaxDate = true;
                 try {
-                    $this->datMaxDate = \QCubed\Type::cast($mixValue, \QCubed\Type::DATE_TIME);
+                    $this->datMaxDate = Type::cast($mixValue, Type::DATE_TIME);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "DefaultDate":
-                $blnDefaultDate = true;
                 try {
-                    $this->datDefaultDate = \QCubed\Type::cast($mixValue, \QCubed\Type::DATE_TIME);
+                    $this->datDefaultDate = Type::cast($mixValue, Type::DATE_TIME);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "FirstDay":
-                $blnFirstDay = true;
                 try {
-                    $this->intFirstDay = \QCubed\Type::cast($mixValue, \QCubed\Type::INTEGER);
+                    $this->intFirstDay = Type::cast($mixValue, Type::INTEGER);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "GotoCurrent":
                 try {
-                    $this->blnGotoCurrent = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnGotoCurrent = Type::cast($mixValue, Type::BOOLEAN);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "IsRTL":
                 try {
-                    $this->blnIsRTL = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnIsRTL = Type::cast($mixValue, Type::BOOLEAN);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "NumberOfMonths":
-                $blnNumberOfMonths = true;
                 if (!is_array($mixValue) && !is_numeric($mixValue)) {
                     throw new exception('NumberOfMonths must be an integer or an array');
                 }
                 $this->mixNumberOfMonths = $mixValue;
+                $this->blnModified = true;
                 break;
             case "AutoSize":
                 try {
-                    $this->blnAutoSize = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnAutoSize = Type::cast($mixValue, Type::BOOLEAN);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case "JqDateFormat":
                 try {
-                    $this->strJqDateFormat = \QCubed\Type::cast($mixValue, \QCubed\Type::STRING);
+                    $this->strJqDateFormat = Type::cast($mixValue, Type::STRING);
                     parent::__set('DateTimeFormat', static::qcFrmt($this->strJqDateFormat));
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -288,12 +302,14 @@ class Calendar extends DateTimeTextBox
             case "DateFormat":
                 parent::__set('DateTimeFormat', $mixValue);
                 $this->strJqDateFormat = static::jqFrmt($this->strDateTimeFormat);
+                $this->blnModified = true;
                 break;
             case "ShowButtonPanel":
                 try {
-                    $this->blnShowButtonPanel = \QCubed\Type::cast($mixValue, \QCubed\Type::BOOLEAN);
+                    $this->blnShowButtonPanel = Type::cast($mixValue, Type::BOOLEAN);
+                    $this->blnModified = true;
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -301,7 +317,7 @@ class Calendar extends DateTimeTextBox
             default:
                 try {
                     parent::__set($strName, $mixValue);
-                } catch (\QCubed\Exception\Caller $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -316,12 +332,12 @@ class Calendar extends DateTimeTextBox
      * @param QEvent $objEvent
      * @param QAction $objAction
      *
-     * @throws \QCubed\Exception\Caller
+     * @throws Caller
      */
-    public function addAction($objEvent, $objAction)
+    public function addAction(QEvent $objEvent, QAction $objAction)
     {
         if ($objEvent instanceof QClickEvent) {
-            throw new \QCubed\Exception\Caller('QCalendar does not support click events');
+            throw new Caller('QCalendar does not support click events');
         }
         parent::addAction($objEvent, $objAction);
     }
