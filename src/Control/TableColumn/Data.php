@@ -33,7 +33,7 @@ use QCubed\Project\Control\FormBase as QForm;
  * @was QAbstractHtmlTableDataColumn
  * @package QCubed\Control\TableColumn
  */
-abstract class Data extends Base
+abstract class Data extends TableColumnBase
 {
     /** @var mixed Order By information. Can be a \QCubed\Query\QQ::Clause, or any kind of object depending on your need */
     protected $objOrderByClause = null;

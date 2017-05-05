@@ -219,7 +219,7 @@ class MenuGen extends QCubed\Control\Panel
      * @param $item
      * @param $event
      */
-    public function focus($event = null, $item)
+    public function focus1($event = null, $item)
     {
         Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "focus", $item, $event, Application::PRIORITY_LOW);
     }

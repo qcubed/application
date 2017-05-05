@@ -20,5 +20,5 @@ namespace QCubed\Event;
 class MouseEnter extends EventBase
 {
     /** Event Name */
-    const EventName = 'mouseenter';
+    const EVENT_NAME = 'mouseenter';
 }

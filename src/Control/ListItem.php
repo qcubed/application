@@ -29,7 +29,7 @@ use QCubed\Type;
  * @was QListItem
  * @package QCubed\Control
  */
-class ListItem extends ListItemBase implements JsonSerializable
+class ListItem extends ListItemBase implements \JsonSerializable
 {
 
     ///////////////////////////

@@ -52,7 +52,7 @@ class EditDlg extends QDialog
     protected $categories;
     protected $datagrids;
 
-    public function __construct($objParentObject, $strControlId)
+    public function __construct($objParentObject, $strControlId = null)
     {
         parent::__construct($objParentObject, $strControlId);
 

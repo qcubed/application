@@ -12,6 +12,7 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed;
+use QCubed\ObjectBase;
 use QCubed\Type;
 
 /**
@@ -30,7 +31,7 @@ use QCubed\Type;
  * @was QListItemBase
  * @package QCubed\Control
  */
-class ListItemBase extends QCubed\Base
+class ListItemBase extends ObjectBase
 {
     ///////////////////////////
     // Private Member Variables

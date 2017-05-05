@@ -149,6 +149,13 @@ class HtmlJqDoc extends JqDoc {
 		$signature = preg_replace('/\).*/', ')', $name_node->innertext());
 		$signature = str_replace('[,', ',[', $signature);
 
+        /**
+         * Make sure name of method does not conflict with a control's method name.
+         */
+        if ($name == 'focus') {
+            $name = $name . '1';
+        }
+
 		// sometimes jQuery controls (e.g. tabs) uses the same property name for more than one options
 		$name = $this->unique_name($name);
 

@@ -12,6 +12,7 @@ namespace QCubed\Control\TableColumn;
 use QCubed as Q;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\ObjectBase;
 use QCubed\Project\Application;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;
@@ -42,7 +43,7 @@ use QCubed\Control\TableBase;
  * @was QAbstractHtmlTableColumn
  * @package QCubed\Control\TableColumn
  */
-abstract class Base extends Q\Base
+abstract class TableColumnBase extends ObjectBase
 {
     /** @var string */
     protected $strName;
