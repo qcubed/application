@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Event;
+namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
@@ -162,20 +162,17 @@ class JsTimerBase extends QControl
     /**
      * Adds an action to the control
      *
-     * @param QEvent $objEvent has to be an instance of QTimerExpiredEvent
-     * @param QAction $objAction Only a QTimerExpiredEvent can be added,
+     * @param Q\Event\EventBase $objEvent has to be an instance of QTimerExpiredEvent
+     * @param Q\Action\ActionBase $objAction Only a QTimerExpiredEvent can be added,
      *                                         but multiple Actions using the same event are possible!
      *
      * @throws Caller
      * @return void
      */
-    public function addAction($objEvent, $objAction)
+    public function addAction(Q\Event\EventBase $objEvent, Q\Action\ActionBase $objAction)
     {
         if (!($objEvent instanceof Q\Event\TimerExpired)) {
             throw new Caller('First parameter of JsTimer::AddAction is expecting an object of type Event\\TimerExpired');
-        }
-        if (!($objAction instanceof Q\Action\Base)) {
-            throw new Caller('Second parameter of AddAction is expecting an object of type Action');
         }
 
         $strEventName = $objEvent->EventName;
@@ -253,7 +250,7 @@ class JsTimerBase extends QControl
         $strToReturn .= 'function() {';
 
         foreach (reset($this->objActionArray) as $objAction) {
-            /** @var Q\Action\Base $objAction */
+            /** @var Q\Action\ActionBase $objAction */
             $strToReturn .= ' ' . $objAction->renderScript($this);
         }
         if ($this->ActionsMustTerminate) {
@@ -386,11 +383,11 @@ class JsTimerBase extends QControl
 
     /**
      * Add a child control to the current control (useless because JsTimer cannot have children)
-     * @param Q\Control\Base $objControl
+     * @param QControl $objControl
      *
      * @throws Caller
      */
-    public function addChildControl(Q\Control\Base $objControl)
+    public function addChildControl(QControl $objControl)
     {
         throw new Caller('Do not add child-controls to an instance of JsTimer!');
     }

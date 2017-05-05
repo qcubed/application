@@ -9,7 +9,7 @@ namespace QCubed\Project\Control;
  * @was QDataGrid
  * @package QCubed\Project\Control
  */
-class DataGrid extends DataGridBase
+class DataGrid extends \QCubed\Control\DataGridBase
 {
     // Feel free to specify global display preferences/defaults for all QDataGrid controls
 

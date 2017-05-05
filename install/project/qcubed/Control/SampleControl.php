@@ -12,9 +12,8 @@
 	 *  - GetEndScript()
 	 *  - GetEndHtml()
 	 * 
-	 * @package Controls
 	 */
-	class SampleControl extends \QCubed\Control\AbstractBase {
+	class SampleControl extends \QCubed\Control\ControlBase {
 		protected $intExample;
 		protected $strFoo;
 

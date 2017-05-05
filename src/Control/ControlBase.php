@@ -13,7 +13,7 @@ use QCubed\Exception\InvalidCast;
 use QCubed\Html;
 use QCubed\HtmlAttributeManager;
 use QCubed\Exception;
-use QCubed;
+use QCubed as Q;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Action\ActionBase as QAction;
 use QCubed\Event\EventBase as QEvent;
@@ -86,7 +86,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  * @property-read boolean $ActionsMustTerminate Prevent the default action from happenning upon an event trigger. See documentation for "protected $blnActionsMustTerminate" below.
  * @property-read boolean $ScriptsOnly Whether the control only generates javascripts and not html.
  * @property mixed $ActionParameter This property allows you to pass your own parameters to the handlers for actions applied to this control.
- *             this can be a string or an object of type \QCubed\Js\Closure. If you pass in a \QCubed\Js\Closure it is possible to return javascript objects/arrays
+ *             this can be a string or an object of type Q\Js\Closure. If you pass in a Q\Js\Closure it is possible to return javascript objects/arrays
  *             when using an ajax or server action.
  * @property mixed $CausesValidation flag says whether or not the form should run through its validation routine if this control has an action defined and is acted upon
  * @property-read string $ControlId returns the id of this control
@@ -112,7 +112,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  * @property boolean $Visible specifies whether or not the control should be rendered in the page.  This is in contrast to Display, which will just hide the control via CSS styling.
  * @property string $Warning is warning text that will be shown next to the control's name label {@link QControl::RenderWithName}
  * @property boolean $UseWrapper defaults to true
- * @property \QCubed\Query\Node\Base $LinkedNode A database node that this control is directly editing
+ * @property Q\Query\Node\Base $LinkedNode A database node that this control is directly editing
  * @property-read boolean $WrapperModified
  * @property string $WrapperCssClass
  * @property boolean $WrapLabel For checkboxes, radio buttons, and similar controls, whether to wrap the label around
@@ -124,7 +124,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  *        are appended to the form after all other controls.
  * @was QControlBase
  */
-abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
+abstract class ControlBase extends Q\Project\HtmlAttributeManager
 {
 
     /*
@@ -171,11 +171,11 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
     /** @var string Same as validation error message but is supposed to contain custom messages */
     protected $strWarning = null;
 
-    /** @var QCubed\Jqui\Draggable|null When initialized, it implements the jQuery UI Draggable capabilities on to this control. */
+    /** @var Q\Project\Jqui\Draggable|null When initialized, it implements the jQuery UI Draggable capabilities on to this control. */
     protected $objDraggable = null;
-    /** @var QCubed\Jqui\Resizable|null When initialized, it implements the jQuery UI Resizable capabilities on to this control. */
+    /** @var Q\Project\Jqui\Resizable|null When initialized, it implements the jQuery UI Resizable capabilities on to this control. */
     protected $objResizable = null;
-    /** @var QCubed\Jqui\Droppable|null When initialized, it implements the jQuery UI Droppable capabilities on to this control. */
+    /** @var Q\Project\Jqui\Droppable|null When initialized, it implements the jQuery UI Droppable capabilities on to this control. */
     protected $objDroppable = null;
 
     // MISC
@@ -210,13 +210,13 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
     protected $strCustomStyleArray = null;
     /** @var array Array of arrays containing the list of actions set on the control (for different events) */
     protected $objActionArray = array();
-    /** @var string|\QCubed\Js\Closure|null The action parameter (typically small amount of data) for the Ajax or Server Callback */
+    /** @var string|Q\Js\Closure|null The action parameter (typically small amount of data) for the Ajax or Server Callback */
     protected $mixActionParameter = null;
     /** @var string|null CSS class for the control's wrapper */
     //protected $strWrapperCssClass = null; -- See objWrapperStyler now
     /** @var bool Should the wrapper be used when rendering? */
     protected $blnUseWrapper = true;
-    /** @var string  One time scripts associated with the control. */
+    /** @var array  One time scripts associated with the control. */
     protected $strAttributeScripts = null;
     /** @var string The INITIAL class for the object. Only subclasses should set this before calling the parent constructor. */
     protected $strCssClass = null;
@@ -250,7 +250,7 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
     protected $blnIsBlockElement = false;
     /** @var Watcher Stores information about watched tables. */
     protected $objWatcher = null;
-    /** @var \QCubed\Query\Node\Base  Used by designer to associate a db node with this control */
+    /** @var Q\Query\Node\Base  Used by designer to associate a db node with this control */
     protected $objLinkedNode;
     /**
      * @var bool | null For controls that also produce built-in labels (QCheckBox, QCheckBoxList, etc.)
@@ -516,12 +516,12 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
      * simple string, and allows actions to get more information as well. This also allows widgets to modify
      * the action parameter, while preserving the original action parameter so that the action can see both.
      *
-     * @param Base $objSourceControl
+     * @param QControl $objSourceControl
      * @param QAction $objAction
      * @param $mixParameter
      * @return mixed
      */
-    public static function _ProcessActionParams(Base $objSourceControl, QAction $objAction, $mixParameter)
+    public static function _ProcessActionParams(QControl $objSourceControl, QAction $objAction, $mixParameter)
     {
         $mixParameters['param'] = null;
         $mixParameters = $objSourceControl->processActionParameters($objAction, $mixParameter);
@@ -635,9 +635,9 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
     /**
      * Adds a control as a child of this control.
      *
-     * @param \QCubed\Control\Base $objControl the control to add
+     * @param QControl $objControl the control to add
      */
-    public function addChildControl(QCubed\Control\Base $objControl)
+    public function addChildControl(QControl $objControl)
     {
         $this->blnModified = true;
         $this->objChildControlArray[$objControl->ControlId] = $objControl;
@@ -711,21 +711,13 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
     /**
      * Adds an action to the control
      *
-     * @param QEvent $objEvent
-     * @param QAction $objAction
+     * @param Q\Event\EventBase $objEvent
+     * @param Q\Action\ActionBase $objAction
      *
      * @throws Exception\Caller
      */
-    public function addAction($objEvent, $objAction)
+    public function addAction(QEvent $objEvent, QAction $objAction)
     {
-        if (!($objEvent instanceof QEvent)) {
-            throw new Exception\Caller('First parameter of AddAction is expecting an object of type QEvent');
-        }
-
-        if (!($objAction instanceof QAction)) {
-            throw new Exception\Caller('Second parameter of AddAction is expecting an object of type QAction');
-        }
-
         // Modified
         $this->blnModified = true;
 
@@ -2024,9 +2016,9 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
      * Watch a particular node in the database. Call this to trigger a redraw of the control
      * whenever the database table that this node points to is changed.
      *
-     * @param \QCubed\Query\Node\Base $objNode
+     * @param Q\Query\Node\Base $objNode
      */
-    public function watch(\QCubed\Query\Node\Base $objNode)
+    public function watch(Q\Query\Node\Base $objNode)
     {
         if (!$this->objWatcher) {
             if (defined('WATCHER_CLASS')) {
@@ -2452,7 +2444,7 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
                 }
             case "ActionParameter":
                 try {
-                    $this->mixActionParameter = ($mixValue instanceof \QCubed\Js\Closure) ? $mixValue : Type::cast($mixValue,
+                    $this->mixActionParameter = ($mixValue instanceof Q\Js\Closure) ? $mixValue : Type::cast($mixValue,
                         Type::STRING);
                     $this->markAsModified();
                     break;
@@ -2522,7 +2514,7 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
             // CODEGEN
             case "LinkedNode":
                 try {
-                    $this->objLinkedNode = Type::cast($mixValue, '\QCubed\Query\Node\Base');
+                    $this->objLinkedNode = Type::cast($mixValue, 'Q\Query\Node\Base');
                     break;
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
@@ -2576,10 +2568,10 @@ abstract class ControlBase extends QCubed\Project\HtmlAttributeManager
             new ModelConnectorParam ('Control', 'CausesValidation',
                 'How and what to validate. Can also be set to a control.', ModelConnectorParam::SELECTION_LIST,
                 array(
-                    '\\QCubed\\Control\\Base::NONE' => 'None',
-                    '\\QCubed\\Control\\Base::CAUSES_VALIDATION_ALL' => 'All Controls',
-                    '\\QCubed\\Control\\Base::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN' => 'Siblings And Children',
-                    '\\QCubed\\Control\\Base::CAUSES_VALIDATION_SIBLINGS_ONLY' => 'Siblings Only'
+                    '\Q\\Control\\Base::NONE' => 'None',
+                    '\Q\\Control\\Base::CAUSES_VALIDATION_ALL' => 'All Controls',
+                    '\Q\\Control\\Base::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN' => 'Siblings And Children',
+                    '\Q\\Control\\Base::CAUSES_VALIDATION_SIBLINGS_ONLY' => 'Siblings Only'
                 )
             ),
             new ModelConnectorParam ('Control', 'Enabled', 'Will it start as enabled (default true)?',

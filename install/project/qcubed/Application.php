@@ -12,7 +12,7 @@ use QCubed\I18n\TranslationService;
  * application, and to add your own globally accessible methods and properties specific to your application.
  *
  * @package QCubed\Project
- * @was QApplication
+ * //was QApplication (do not put annotiation here, all transformations are manual)
  */
 class Application extends QCubed\ApplicationBase
 {

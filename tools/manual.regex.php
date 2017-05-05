@@ -69,4 +69,19 @@ $a['regex']['QApplication::\\$DocumentRoot'] = '\\QCubed\\Project\\Application::
 $a['regex']['QApplication::\\$Minimize'] = '\\QCubed\\Project\\Application::instance()->context()->minimize()';
 $a['regex']['QApplication::\\$RequestMode'] = '\\QCubed\\Project\\Application::instance()->context()->requestMode()';
 
+$a['regex']['QApplicationBase::\\$EncodingType'] = '\\QCubed\\Project\\Application::instance()->encodingType()';
+$a['regex']['QApplicationBase::\\$CliMode'] = '\\QCubed\\Project\\Application::instance()->context()->cliMode()';
+$a['regex']['QApplicationBase::\\$ServerAddress'] = '\\QCubed\\Project\\Application::instance()->context()->serverAddress()';
+$a['regex']['QApplicationBase::\\$ScriptFilename'] = '\\QCubed\\Project\\Application::instance()->context()->scriptFileName()';
+$a['regex']['QApplicationBase::\\$ScriptName'] = '\\QCubed\\Project\\Application::instance()->context()->scriptName()';
+$a['regex']['QApplicationBase::\\$PathInfo'] = '\\QCubed\\Project\\Application::instance()->context()->pathInfo()';
+$a['regex']['QApplicationBase::\\$QueryString'] = '\\QCubed\\Project\\Application::instance()->context()->queryString()';
+$a['regex']['QApplicationBase::\\$RequestUri'] = '\\QCubed\\Project\\Application::instance()->context()->requestUri()';
+$a['regex']['QApplicationBase::\\$BrowserType'] = '\\QCubed\\Project\\Application::instance()->context()->browserType()';
+$a['regex']['QApplicationBase::\\$BrowserVersion'] = '\\QCubed\\Project\\Application::instance()->context()->browserVersion()';
+$a['regex']['QApplicationBase::\\$DocumentRoot'] = '\\QCubed\\Project\\Application::instance()->context()->docRoot()';
+$a['regex']['QApplicationBase::\\$Minimize'] = '\\QCubed\\Project\\Application::instance()->context()->minimize()';
+$a['regex']['QApplicationBase::\\$RequestMode'] = '\\QCubed\\Project\\Application::instance()->context()->requestMode()';
+
+
 return $a;

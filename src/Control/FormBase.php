@@ -936,7 +936,7 @@ abstract class FormBase extends ObjectBase
      *
      * @throws Caller
      */
-    public function addControl(Base $objControl)
+    public function addControl(QControl $objControl)
     {
         $strControlId = $objControl->ControlId;
         $objControl->markAsModified(); // make sure new controls get drawn

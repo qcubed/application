@@ -1,4 +1,6 @@
 <?php
+use QCubed as Q;
+
 /**
  * Utility code to make common control management and rendering tasks easier to type.
  *
@@ -11,7 +13,7 @@
 
 /**
  * Standard Print function.  To aid with possible cross-scripting vulnerabilities,
- * this will automatically perform QApplication::HtmlEntities() unless otherwise specified.
+ * this will automatically perform QString::htmlEntities() unless otherwise specified.
  *
  * @param string $strString string value to print
  * @param boolean $blnHtmlEntities perform HTML escaping on the string first
@@ -20,7 +22,7 @@
 function _p($strString, $blnHtmlEntities = true) {
 	// Standard Print
 	if ($blnHtmlEntities && (gettype($strString) != 'object'))
-		print(QApplication::HtmlEntities($strString));
+		print(Q\QString::htmlEntities($strString));
 	else
 		print($strString);
 }
@@ -38,7 +40,7 @@ function _p($strString, $blnHtmlEntities = true) {
 function _b($strString, $blnHtmlEntities = true) {
 	// Text Block Print
 	if ($blnHtmlEntities && (gettype($strString) != 'object'))
-		print(QHtml::RenderString($strString));
+		print(Q\Html::RenderString($strString));
 	else
 		print(nl2br($strString));
 }
@@ -46,13 +48,13 @@ function _b($strString, $blnHtmlEntities = true) {
 /**
  * Standard Print-Translated functions.
  *
- * Uses QApplication::Translate() to perform the translation (if applicable)
+ * Uses the QCubed ii18n library to perform the translation (if applicable)
  *
  * @param string $strString string value to print via translation
  */
 function _t($strString) {
 	// Print, via Translation (if applicable)
-	print(QApplication::Translate($strString));
+	print(t($strString));
 }
 
 /**
@@ -61,7 +63,7 @@ function _t($strString) {
  * @return string
  */
 function _tr($strString) {
-	return QApplication::Translate($strString);
+	return t($strString);
 }
 
 /**
@@ -87,7 +89,7 @@ function _tp($strString, $blnHtmlEntities = true) {
  * @return string
  */
 function _nl($strText = null) {
-	if (QApplication::$Minimize) {
+	if (\QCubed\Project\Application::instance()->minimize()) {
 		return $strText;
 	} else {
 		if ($strText === null) return "\n";
@@ -180,4 +182,3 @@ function _c($strString) {
 	// Print Currency with Localized Formatting
 }*/
 
-//////////////////////////////////////
