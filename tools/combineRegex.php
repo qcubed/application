@@ -9,6 +9,7 @@ $dirQCubed= dirname(dirname(__DIR__));
 
 $files = [
     __DIR__ . '/manualChanges.regex.php',
+    __DIR__ . '/app.regex.php',
     $dirQCubed . '/common/tools/common.regex.php',
     $dirQCubed . '/orm/tools/orm.regex.php',
     $dirQCubed . '/orm/tools/manual.regex.php',
@@ -20,7 +21,8 @@ $aNew = [
     'const'=>[],
     'class'=>[],
     'func'=>[],
-    'regex'=>[]
+    'regex'=>[],
+    'warn'=>[]
 ];
 foreach ($files as $file) {
     $a = include($file);

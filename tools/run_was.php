@@ -25,7 +25,7 @@
  */
 
 /**
- * Process a script from the gen_sed command
+ * Process a script from the gen_was command
  */
 
 if (count($argv) < 3) {
@@ -117,12 +117,26 @@ if (isset($patterns['regex'])) {
 
 function processFile($file, $regexFind, $regexReplace)
 {
+    global $patterns;
+
     $strFile = file_get_contents($file);
     //var_export($regexFind); return;
     //var_export($regexReplace); return;
     $newFile = preg_replace($regexFind, $regexReplace, $strFile);
 //echo $newFile; return;
     file_put_contents($file, $newFile);
+
+    if (isset($patterns['warn'])) {
+        foreach ($patterns['warn'] as $pat=>$msg) {
+            if (preg_match('/' . $pat . '/i', $strFile)) {
+                echo "File: ";
+                echo $file;
+                echo " - ";
+                echo $msg;
+                echo "\n";
+            }
+        }
+    }
 }
 
 function processFiles($files, $regexFind, $regexReplace)
