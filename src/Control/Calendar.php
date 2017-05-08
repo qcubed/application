@@ -11,6 +11,7 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\Project\Application;
 use QCubed\QDateTime;
 use QCubed as Q;
 use QCubed\Type;
@@ -151,7 +152,7 @@ class Calendar extends DateTimeTextBox
             $strJqOptions = substr($strJqOptions, 0, -2);
         }
 
-        QApplication::executeJavaScript(
+        Application::executeJavaScript(
             sprintf('jQuery("#%s").datepicker({%s})', $this->strControlId, $strJqOptions));
 
         return $strToReturn;

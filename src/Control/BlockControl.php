@@ -12,6 +12,7 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\QString;
 use QCubed\Type;
 
 /**
@@ -76,7 +77,6 @@ abstract class BlockControl extends QControl
                 $objTargetControl->ControlId, $objTargetControl->ControlId));
             $this->objMovesControlsArray[$objTargetControl->ControlId] = true;
 
-            // TODO:
             // Replace ExecuteJavascript with this:
             //$this->addAttributeScript('qcubed', 'ctrlToMove', $objTargetControl->ControlId);
         }
@@ -203,7 +203,7 @@ abstract class BlockControl extends QControl
         }
 
         if ($this->blnHtmlEntities) {
-            $strText = QApplication::htmlEntities($strText);
+            $strText = QString::htmlEntities($strText);
         }
 
         $strTemplateEvaluated = '';

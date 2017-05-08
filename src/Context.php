@@ -9,6 +9,8 @@
 
 namespace QCubed;
 
+use QCubed\Project\Control\FormBase as QForm;
+
 /**
  * Class Context
  *
@@ -38,8 +40,11 @@ class Context
     /** We don't know this gentleman...err...gentlebrowser */
     const UNSUPPORTED = 0x8000000;
 
-    const REQUEST_MODE_STANDARD = 'Standard';
-    const REQUEST_MODE_AJAX = 'Ajax';
+    const REQUEST_MODE_QCUBED_SERVER = 'Server'; // calling back in to currently showing page using a standard form post
+    const REQUEST_MODE_HTTP = 'Http';   // new page request
+    const REQUEST_MODE_QCUBED_AJAX = 'Ajax';  // calling back in to an currently showing page using an ajax request
+    const REQUEST_MODE_AJAX = 'AjaxNonQ';   // calling an entry point from ajax, but not through qcubed.js. REST API perhaps?
+    const REQUEST_MODE_CLI = 'Cli'; // command line call
 
     /** @var  bool Are we running in command line mode? */
     protected $blnCliMode;
@@ -145,8 +150,7 @@ class Context
             if (isset($_SERVER['PATH_INFO'])) {
                 $this->strPathInfo = urlencode(trim($_SERVER['PATH_INFO']));
                 $this->strPathInfo = str_ireplace('%2f', '/', $this->strPathInfo);
-            }
-            else {
+            } else {
                 $this->strPathInfo = '';    // no path info given
             }
         }
@@ -414,11 +418,18 @@ class Context
     public function requestMode()
     {
         if (!$this->strRequestMode) {
-            // TODO: change to enums
-            if (isset($_POST['Qform__FormCallType']) && $_POST['Qform__FormCallType'] == 'Ajax') {
+            if (isset($_POST[QForm::POST_CALL_TYPE])) { // call is being made by qcubed.js
+                if ($_POST[QForm::POST_CALL_TYPE] == 'Ajax') {
+                    $this->strRequestMode = self::REQUEST_MODE_QCUBED_AJAX;
+                } else {
+                    $this->strRequestMode = self::REQUEST_MODE_QCUBED_SERVER;
+                }
+            } elseif (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                 $this->strRequestMode = self::REQUEST_MODE_AJAX;
+            } elseif (php_sapi_name() === 'cli') {
+                $this->strRequestMode = self::REQUEST_MODE_CLI;
             } else {
-                $this->strRequestMode = self::REQUEST_MODE_STANDARD;
+                $this->strRequestMode = self::REQUEST_MODE_HTTP;
             }
         }
         return $this->strRequestMode;

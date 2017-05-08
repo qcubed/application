@@ -1,6 +1,6 @@
 <?php
 	require_once('../qcubed.inc.php');
-	QApplication::CheckRemoteAdmin();
+	\QCubed\Project\Application::checkAuthorized();
 	
 	// Create an installation status message.
 	$arrInstallationMessages = QInstallationValidator::Validate();
@@ -26,7 +26,7 @@
 		<li><a href="<?php _p(__VIRTUAL_DIRECTORY__ . __PHP_ASSETS__) ?>/qcubed_unit_tests.php">QCubed Unit Tests</a> - set of tests that QCubed developers use to verify the integrity of the framework.
 			You must install the test SQL database and codegen_options.json file to run the tests. These can be found in the <?php _p(__VIRTUAL_DIRECTORY__ . __PHP_ASSETS__ . '/examples')?> directory.</li>
 	</ul>
-<?php if (!QApplication::IsRemoteAdminSession()) { ?>
-	<pre><code><?php QApplication::VarDump(); ?></code></pre>
+<?php if (\QCubed\Project\Application::isAuthorized()) { ?>
+	<pre><code><?php \QCubed\Project\Application::varDump(); ?></code></pre>
 <?php } ?>
 <?php require(__CONFIGURATION__ . '/footer.inc.php'); ?>

@@ -10,6 +10,7 @@
 namespace QCubed\Control;
 
 use QCubed\Exception\InvalidCast;
+use QCubed\Html;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Exception\Caller;
@@ -110,7 +111,7 @@ class DataRepeater extends PaginatedControl
             throw new Caller("You must specify an item tag name before rendering the list.");
         }
 
-        $strToReturn = QHtml::renderTag($this->strItemTagName, $this->getItemAttributes($objItem), $this->getItemInnerHtml($objItem));
+        $strToReturn = Html::renderTag($this->strItemTagName, $this->getItemAttributes($objItem), $this->getItemInnerHtml($objItem));
         return $strToReturn;
     }
 

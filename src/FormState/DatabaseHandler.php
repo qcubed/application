@@ -12,6 +12,7 @@ namespace QCubed\FormState;
 use QCubed\ObjectBase;
 use QCubed\Cryptography;
 use QCubed\Database;
+use QCubed\Project\Application;
 
 
 /**
@@ -157,7 +158,7 @@ class DatabaseHandler extends ObjectBase
             }
         }
 
-        if (!empty($_POST['Qform__FormState']) && QApplication::$RequestMode == QRequestMode::Ajax) {
+        if (!empty($_POST['Qform__FormState']) && Application::isAjax()) {
             // update the current form state if possible
             $strPageId = $_POST['Qform__FormState'];
 

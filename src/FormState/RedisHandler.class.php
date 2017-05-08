@@ -10,6 +10,7 @@
 namespace QCubed\FormState;
 
 use QCubed\ObjectBase;
+use QCubed\Project\Application;
 
 
 /**
@@ -123,7 +124,7 @@ class RedisHandler extends ObjectBase
         }
 
         $strPageId = '';
-        if (!empty($_POST['Qform__FormState']) && QApplication::$RequestMode == QRequestMode::Ajax) {
+        if (!empty($_POST['Qform__FormState']) && Application::isAjax()) {
             // update the current form state if possible
             $strPageId = $_POST['Qform__FormState'];
         } else {

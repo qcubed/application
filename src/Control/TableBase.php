@@ -12,11 +12,14 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed\Exception\IndexOutOfRange;
 use QCubed\Exception\InvalidCast;
+use QCubed\Html;
 use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Control\TableColumn\Base as ColumnBase;
+use QCubed\Control\TableColumn\TableColumnBase as ColumnBase;
 use QCubed\Control\TableColumn as Column;
+use QCubed\QString;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;
+use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 
 /**
@@ -573,7 +576,7 @@ abstract class TableBase extends PaginatedControl
                     $strCells .= $objColumn->renderHeaderCell();
                 }
             }
-            $strToReturn .= QHtml::renderTag('tr', $this->getHeaderRowParams(), $strCells);
+            $strToReturn .= Html::renderTag('tr', $this->getHeaderRowParams(), $strCells);
         }
 
         return $strToReturn;
@@ -618,7 +621,7 @@ abstract class TableBase extends PaginatedControl
             }
         }
 
-        return QHtml::renderTag('tr', $this->getRowParams($objObject, $intCurrentRowIndex), $strCells);
+        return Html::renderTag('tr', $this->getRowParams($objObject, $intCurrentRowIndex), $strCells);
     }
 
     /**
@@ -735,7 +738,7 @@ abstract class TableBase extends PaginatedControl
     {
         $strHtml = '';
         if ($this->strCaption) {
-            $strHtml .= '<caption>' . QApplication::htmlEntities($this->strCaption) . '</caption>' . _nl();
+            $strHtml .= '<caption>' . QString::htmlEntities($this->strCaption) . '</caption>' . _nl();
         }
         return $strHtml;
     }
@@ -764,12 +767,12 @@ abstract class TableBase extends PaginatedControl
 
         // Header Row (if applicable)
         if ($this->blnShowHeader) {
-            $strHtml .= QHtml::renderTag('thead', null, $this->getHeaderRowHtml());
+            $strHtml .= Html::renderTag('thead', null, $this->getHeaderRowHtml());
         }
 
         // Footer Row (if applicable)
         if ($this->blnShowFooter) {
-            $strHtml .= QHtml::renderTag('tfoot', null, $this->getFooterRowHtml());
+            $strHtml .= Html::renderTag('tfoot', null, $this->getFooterRowHtml());
         }
 
         // DataGrid Rows
@@ -781,7 +784,7 @@ abstract class TableBase extends PaginatedControl
                 $this->intCurrentRowIndex++;
             }
         }
-        $strHtml .= QHtml::renderTag('tbody', null, $strRows);
+        $strHtml .= Html::renderTag('tbody', null, $strRows);
 
         $strHtml = $this->renderTag('table', null, null, $strHtml);
 

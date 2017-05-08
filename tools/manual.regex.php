@@ -53,9 +53,25 @@ $a['func']['QApplication::MakeDirectory'] = '\\QCubed\\QFolder::makeDirectory';
 $a['func']['QApplication::SetErrorHandler'] = '$objHandler = new \\QCubed\\Error\\Handler';
 $a['func']['QApplication::RestoreErrorHandler'] = '$objHandler->restore';
 $a['func']['QApplication::GenerateQueryString'] = '\\QCubed\\QString::generateQueryString';
+$a['func']['QApplication::DisplayAlert'] = '\\QCubed\\Project\\Application::displayAlert';
+$a['func']['QApplication::ExecuteJsFunction'] = '\\QCubed\\Project\\Application::executeJsFunction';
+$a['func']['QApplication::ExecuteSelectorFunction'] = '\\QCubed\\Project\\Application::executeSelectorFunction';
+$a['func']['QApplication::ExecuteControlCommand'] = '\\QCubed\\Project\\Application::executeControlCommand';
+$a['func']['QApplication::ExecuteJavaScript'] = '\\QCubed\\Project\\Application::executeJavaScript';
+
+$a['func']['QCrossScripting::Allow'] = '\\QCubed\\Control\\TextBoxBase::XSS_ALLOW';
+$a['func']['QCrossScripting::HtmlEntities'] = '\\QCubed\\Control\\TextBoxBase::XSS_HTML_ENTITIES';
+$a['func']['QCrossScripting::HTMLPurifier'] = '\\QCubed\\Control\\TextBoxBase::XSS_HTML_PURIFIER';
+
+$a['warn']['QCrossScripting::Deny'] = 'QCrossScripting::Deny has been removed. Use XSS_HTML_PURIFIER instead.';
+$a['warn']['QCrossScripting::Legacy'] = 'QCrossScripting::Legacy has been removed. Use XSS_HTML_PURIFIER instead.';
+
+$a['func']['QApplication::isIpInRange'] = '\\QCubed\\AuthBase::isIpInRange';
+$a['func']['QApplication::isRemoteAdminSession'] = '\\QCubed\\AuthBase::isRemoteAdminSession';
+$a['func']['QApplication::checkRemoteAdminSession'] = '\\QCubed\\AuthBase::checkRemoteAdminSession';
 
 
-$a['regex']['QApplication::\\$EncodingType'] = '\\QCubed\\Project\\Application::instance()->encodingType()';
+$a['regex']['QApplication::\\$EncodingType'] = '\\QCubed\\Project\\Application::encodingType()';
 $a['regex']['QApplication::\\$CliMode'] = '\\QCubed\\Project\\Application::instance()->context()->cliMode()';
 $a['regex']['QApplication::\\$ServerAddress'] = '\\QCubed\\Project\\Application::instance()->context()->serverAddress()';
 $a['regex']['QApplication::\\$ScriptFilename'] = '\\QCubed\\Project\\Application::instance()->context()->scriptFileName()';
@@ -69,7 +85,7 @@ $a['regex']['QApplication::\\$DocumentRoot'] = '\\QCubed\\Project\\Application::
 $a['regex']['QApplication::\\$Minimize'] = '\\QCubed\\Project\\Application::instance()->context()->minimize()';
 $a['regex']['QApplication::\\$RequestMode'] = '\\QCubed\\Project\\Application::instance()->context()->requestMode()';
 
-$a['regex']['QApplicationBase::\\$EncodingType'] = '\\QCubed\\Project\\Application::instance()->encodingType()';
+$a['regex']['QApplicationBase::\\$EncodingType'] = '\\QCubed\\Project\\Application::encodingType()';
 $a['regex']['QApplicationBase::\\$CliMode'] = '\\QCubed\\Project\\Application::instance()->context()->cliMode()';
 $a['regex']['QApplicationBase::\\$ServerAddress'] = '\\QCubed\\Project\\Application::instance()->context()->serverAddress()';
 $a['regex']['QApplicationBase::\\$ScriptFilename'] = '\\QCubed\\Project\\Application::instance()->context()->scriptFileName()';
@@ -83,5 +99,27 @@ $a['regex']['QApplicationBase::\\$DocumentRoot'] = '\\QCubed\\Project\\Applicati
 $a['regex']['QApplicationBase::\\$Minimize'] = '\\QCubed\\Project\\Application::instance()->context()->minimize()';
 $a['regex']['QApplicationBase::\\$RequestMode'] = '\\QCubed\\Project\\Application::instance()->context()->requestMode()';
 
+$a['warn']['QCallType'] = 'QCallType has been removed. Use Application::isAjax, or Application::instance()->context()->requestMode() instead.';
+
+$a['const']['QFormGen::Both'] = '\\QCubed\\ModelConnector\\Options::FORMGEN_BOTH';
+$a['const']['QFormGen::LabelOnly'] = '\\QCubed\\ModelConnector\\Options::FORMGEN_LABEL_ONLY';
+$a['const']['QFormGen::ControlOnly'] = '\\QCubed\\ModelConnector\\Options::FORMGEN_CONTROL_ONLY';
+$a['const']['QFormGen::None'] = '\\QCubed\\ModelConnector\\Options::FORMGEN_NONE';
+
+$a['const']['QModelConnectorCreateType::CreateOrEdit'] = '\\QCubed\\ModelConnector\\Options::CREATE_OR_EDIT';
+$a['const']['QModelConnectorCreateType::CreateOnRecordNotFound'] = '\\QCubed\\ModelConnector\\Options::CREATE_ON_RECORD_NOT_FOUND';
+$a['const']['QModelConnectorCreateType::EditOnly'] = '\\QCubed\\ModelConnector\\Options::EDIT_ONLY';
+
+$a['regex']['\\bForm_Run\\s{0,3}('] = 'formRun(';
+$a['regex']['\\bForm_Load\\s{0,3}('] = 'formLoad(';
+$a['regex']['\\bForm_Create\\s{0,3}('] = 'formCreate(';
+$a['regex']['\\bForm_PreRender\\s{0,3}('] = 'formPreRender(';
+$a['regex']['\\bForm_Initialize\\s{0,3}('] = 'formInitialize(';
+$a['regex']['\\bForm_Validate\\s{0,3}('] = 'formValidate(';
+$a['regex']['\\bForm_Invalid\\s{0,3}('] = 'formInvalid(';
+$a['regex']['\\bForm_Exit\\s{0,3}('] = 'formExit(';
+
+$a['regex']['\\$this->RenderBegin\\('] = '$this->renderBegin(';
+$a['regex']['\\$this->RenderEnd\\('] = '$this->renderEnd(';
 
 return $a;

@@ -88,14 +88,14 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
         if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
-            Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
+            Application::executeControlCommand($strId, 'off', Application::PRIORITY_HIGH);
         }
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -129,7 +129,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
             }
             $strArgs = join(", ", $args);
 ?>
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), <?= $strArgs; ?>, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), <?= $strArgs; ?>, Application::PRIORITY_LOW);
     }
 <?php } ?>
 

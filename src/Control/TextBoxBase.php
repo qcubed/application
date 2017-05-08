@@ -13,10 +13,12 @@ require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
-use QCubed\Exception\CrossScripting;
 use QCubed\Exception\InvalidCast;
+use QCubed\Project\Application;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\QString;
 use QCubed\Type;
+use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 /**
  * Class TextBoxBase
@@ -54,24 +56,22 @@ use QCubed\Type;
  */
 abstract class TextBoxBase extends QControl
 {
-    /** Single line text inputs INPUT type="text" boxes */
-    const SINGLE_LINE = 'text';
-    /** Textareas */
-    const MULTI_LINE = 'MultiLine';
-    /** Single line password inputs INPUT type="password" boxes */
-    const PASSWORD = 'password';
-    /** HTML5 Search box */
+    // Text types
+    const SINGLE_LINE = 'text'; // Single line text inputs INPUT type="text" boxes
+    const MULTI_LINE = 'MultiLine'; // Textareas
+    const PASSWORD = 'password'; //Single line password inputs
     const SEARCH = 'search';
-    /** HTML5 Number box */
     const NUMBER = 'number';
-    /** HTML5 email box.  */
     const EMAIL = 'email';
-    /** HTML5 telephone box.  */
     const TEL = 'tel';
-    /** HTML5 url box.  */
     const URL = 'url';
 
-    /** @var int */
+    const XSS_ALLOW = 'Allow';
+    const XSS_HTML_ENTITIES = 'HtmlEntities';   // simple entity maker
+    const XSS_HTML_PURIFIER = 'HTMLPurifier'; // use html purifier
+    // Legacy and Deny are remvoed. Use something else.
+
+/** @var int */
     protected $intColumns = 0;
     /** @var string */
     protected $strText = null;
@@ -100,7 +100,7 @@ abstract class TextBoxBase extends QControl
     /** @var int */
     protected $intRows = 0;
     /** @var string Subclasses should not set this directly, but rather use the TextMode accessor */
-    protected $strTextMode = QTextMode::SingleLine;
+    protected $strTextMode = self::SINGLE_LINE;
     /** @var string */
     protected $strCrossScripting;
     /** @var null */
@@ -142,48 +142,12 @@ abstract class TextBoxBase extends QControl
 
         $this->strLabelForTooLong = t('%s must have at most %s characters');
         $this->strLabelForTooLongUnnamed = t('Must have at most %s characters');
-
-        $this->strCrossScripting = QApplication::$DefaultCrossScriptingMode;
-
-        if ($this->strCrossScripting == QCrossScripting::HTMLPurifier) {
-            $this->initHtmlPurifier();
-        }
-    }
-
-    /**
-     * Initializee the HtmlPurifier library.
-     */
-    protected function initHtmlPurifier()
-    {
-        // If we are purifying using HTMLPurify, we will need the autoloader to be included.
-        // We load lazy to make sure that the library is not loaded every time 'prepend.inc.php'
-        // or 'qcubed.inc.php' is inlcuded. HTMLPurifier is a HUGE and SLOW library. Lazy loading
-        // keeps it simpler.
-        require_once(__DOCROOT__ . __VENDOR_ASSETS__ . '/ezyang/htmlpurifier/library/HTMLPurifier.auto.php');
-
-        // We configure the default set of forbidden tags (elements) and attributes here
-        // so that the rules are applicable the moment CrossScripting is set to Purify.
-        // Use the QTextBox::SetPurifierConfig method to override these settings.
-        $this->objHTMLPurifierConfig = HTMLPurifier_Config::createDefault();
-        $this->objHTMLPurifierConfig->set('HTML.ForbiddenElements',
-            'script,applet,embed,style,link,iframe,body,object');
-        $this->objHTMLPurifierConfig->set('HTML.ForbiddenAttributes',
-            '*@onfocus,*@onblur,*@onkeydown,*@onkeyup,*@onkeypress,*@onmousedown,*@onmouseup,*@onmouseover,*@onmouseout,*@onmousemove,*@onclick');
-
-        if (defined('__PURIFIER_CACHE__')) {
-            if (!is_dir(__PURIFIER_CACHE__)) {
-                mkdir(__PURIFIER_CACHE__);
-            }
-            $this->objHTMLPurifierConfig->set('Cache.SerializerPath', __PURIFIER_CACHE__);
-        } else {
-            # Disable the cache entirely
-            $this->objHTMLPurifierConfig->set('Cache.DefinitionImpl', null);
-        }
     }
 
     /**
      * This function allows to set the Configuration for HTMLPurifier
-     * similar to the HTMLPurifierConfig::set() method from the HTMLPurifier API.
+     * similar to the HTMLPurifierConfig::set() method from the HTMLPurifier API. This creates a custom purifier just
+     * for this textbox. See the Purifier class for setting global options.
      *
      * @param strParameter : The parameter to set for HTMLPurifier
      * @param mixValue : Value of the parameter.
@@ -193,15 +157,15 @@ abstract class TextBoxBase extends QControl
      */
     public function setPurifierConfig($strParameter, $mixValue)
     {
-        if ($this->objHTMLPurifierConfig != null) {
-            $this->objHTMLPurifierConfig->set($strParameter, $mixValue);
+        if ($this->objHTMLPurifierConfig == null) {
+            $this->objHTMLPurifierConfig = \HTMLPurifier_Config::createDefault();
         }
+        $this->objHTMLPurifierConfig->set($strParameter, $mixValue);
     }
 
     /**
      * Parse the data posted back via the control.
      * This function basically test for the Crossscripting rules applied to the QTextBox
-     * @throws QCrossScriptingException
      */
     public function parsePostData()
     {
@@ -215,53 +179,19 @@ abstract class TextBoxBase extends QControl
             $this->sanitize();
 
             switch ($this->strCrossScripting) {
-                case QCrossScripting::Allow:
+                case self::XSS_ALLOW:
                     // Do Nothing, allow everything
                     break;
-                case QCrossScripting::HtmlEntities:
+                case self::XSS_HTML_ENTITIES:
                     // Go ahead and perform HtmlEntities on the text
-                    $this->strText = QApplication::htmlEntities($this->strText);
+                    $this->strText = QString::htmlEntities($this->strText);
                     break;
-                case QCrossScripting::HTMLPurifier:
-                    // let HTMLPurifier do the job! User should have set it up!
-                    //	require_once(__VENDOR__ . '/ezyang/htmlpurifier/library/HTMLPurifier.auto.php');
-                    $objPurifier = new HTMLPurifier($this->objHTMLPurifierConfig);
-
-                    // HTML Purifier does an html_encode, which is not what we usually want.
-                    $this->strText = html_entity_decode($objPurifier->purify($this->strText)); // don't save data as html entities! Encode at display time.
+                case self::XSS_HTML_PURIFIER:
+                    $this->strText = Application::purify($this->strText, $this->objHTMLPurifierConfig); // don't save data as html entities! Encode at display time.
                     break;
-                // The use of the modes below is not recommended; they're there only for legacy
-                // purposes. If you need to check for cross-site scripting violations, use QCrossScripting::Purify
-                case QCrossScripting::Legacy:
-                case QCrossScripting::Deny:
                 default:
-                    // Deny the Use of CrossScripts
-                    // Check for cross scripting patterns
-                    $strText = mb_strtolower($this->strText, QApplication::$EncodingType);
-                    if ((mb_strpos($strText, '<script', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, '<applet', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, '<embed', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, '<style', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, '<link', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, '<body', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, '<iframe', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, 'javascript:', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onfocus=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onblur=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onkeydown=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onkeyup=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onkeypress=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onmousedown=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onmouseup=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onmouseover=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onmouseout=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onmousemove=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, ' onclick=', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, '<object', 0, QApplication::$EncodingType) !== false) ||
-                        (mb_strpos($strText, 'background:url', 0, QApplication::$EncodingType) !== false)
-                    ) {
-                        throw new CrossScripting($this->strControlId);
-                    }
+                    throw new \Exception("Unknown cross scripting setting. Legacy purifier is not supported any more.");
+                    break;
             }
         }
     }
@@ -289,8 +219,8 @@ abstract class TextBoxBase extends QControl
         $attrOverride = array('name' => $this->strControlId);
 
         switch ($this->strTextMode) {
-            case QTextMode::MultiLine:
-                $strText = QApplication::htmlEntities($this->strText);
+            case self::MULTI_LINE:
+                $strText = QString::htmlEntities($this->strText);
 
                 return $this->renderTag('textarea',
                     $attrOverride,
@@ -369,7 +299,7 @@ abstract class TextBoxBase extends QControl
         $strText = $this->strText;
         // Check for Required
         if ($this->blnRequired) {
-            if (mb_strlen($strText, QApplication::$EncodingType) == 0) {
+            if (mb_strlen($strText, Application::encodingType()) == 0) {
                 if ($this->strName) {
                     $this->ValidationError = sprintf($this->strLabelForRequired, $this->strName);
                 } else {
@@ -381,7 +311,7 @@ abstract class TextBoxBase extends QControl
 
         // Check against minimum length?
         if ($this->intMinLength > 0) {
-            if (mb_strlen($strText, QApplication::$EncodingType) < $this->intMinLength) {
+            if (mb_strlen($strText, Application::encodingType()) < $this->intMinLength) {
                 if ($this->strName) {
                     $this->ValidationError = sprintf($this->strLabelForTooShort, $this->strName, $this->intMinLength);
                 } else {
@@ -393,7 +323,7 @@ abstract class TextBoxBase extends QControl
 
         // Check against maximum length?
         if ($this->intMaxLength > 0) {
-            if (mb_strlen($strText, QApplication::$EncodingType) > $this->intMaxLength) {
+            if (mb_strlen($strText, Application::encodingType()) > $this->intMaxLength) {
                 if ($this->strName) {
                     $this->ValidationError = sprintf($this->strLabelForTooLong, $this->strName, $this->intMaxLength);
                 } else {
@@ -420,7 +350,7 @@ abstract class TextBoxBase extends QControl
      */
     public function select()
     {
-        QApplication::executeJavaScript(sprintf('qc.getW("%s").select();', $this->strControlId));
+        Application::executeJavaScript(sprintf('qc.getW("%s").select();', $this->strControlId));
     }
 
     /**
@@ -638,10 +568,6 @@ abstract class TextBoxBase extends QControl
             case "CrossScripting":
                 try {
                     $this->strCrossScripting = Type::cast($mixValue, Type::STRING);
-                    // Protect from XSS to the best we can do with HTMLPurifier.
-                    if ($this->strCrossScripting == QCrossScripting::HTMLPurifier) {
-                        $this->initHtmlPurifier();
-                    }
                     break;
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
@@ -779,13 +705,17 @@ abstract class TextBoxBase extends QControl
             new QModelConnectorParam(get_called_class(), 'Placeholder', 'HTML5 Placeholder attribute',
                 Type::STRING),
             new QModelConnectorParam(get_called_class(), 'ReadOnly', 'Editable or not', Type::BOOLEAN),
-            new QModelConnectorParam(get_called_class(), 'TextMode', 'Field type', QModelConnectorParam::SelectionList,
+            new QModelConnectorParam(get_called_class(), 'TextMode', 'Field type', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => '-',
-                    'QTextMode::SEARCH' => 'Search',
-                    'QTextMode::MultiLine' => 'MultiLine',
-                    'QTextMode::PASSWORD' => 'Password',
-                    'QTextMode::SingleLine' => 'SingleLine'
+                    '\\QCubed\\Project\\Control\\TextBox::SEARCH' => 'Search',
+                    '\\QCubed\\Project\\Control\\TextBox::MULTI_LINE' => 'Multiline (textarea)',
+                    '\\QCubed\\Project\\Control\\TextBox::PASSWORD' => 'Password',
+                    '\\QCubed\\Project\\Control\\TextBox::SINGLE_LINE' => 'Single Line',
+                    '\\QCubed\\Project\\Control\\TextBox::NUMBER' => 'Number',
+                    '\\QCubed\\Project\\Control\\TextBox::EMAIL' => 'Email',
+                    '\\QCubed\\Project\\Control\\TextBox::TEL' => 'Telephone',
+                    '\\QCubed\\Project\\Control\\TextBox::URL' => 'Url'
                 ))
         ));
     }

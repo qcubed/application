@@ -15,10 +15,11 @@ use QCubed\Application\t;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\QString;
 use QCubed\Type;
 use QCubed\TagStyler as QTagStyler;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
-use QCubed\Html as QHtml;
+use QCubed\Html;
 
 /**
  * Class Checkbox
@@ -105,22 +106,22 @@ class CheckboxBase extends QControl
         }
 
         if (strlen($this->strText)) {
-            $strText = ($this->blnHtmlEntities) ? QApplication::htmlEntities($this->strText) : $this->strText;
+            $strText = ($this->blnHtmlEntities) ? QString::htmlEntities($this->strText) : $this->strText;
             if (!$this->blnWrapLabel) {
                 $strLabelAttributes = ' for="' . $this->strControlId . '"';
             } else {
                 $strLabelAttributes = $this->renderLabelAttributes();
             }
-            $strCheckHtml = QHtml::renderLabeledInput(
+            $strCheckHtml = Html::renderLabeledInput(
                 $strText,
-                $this->strTextAlign == QHtml::TEXT_ALIGN_LEFT,
+                $this->strTextAlign == Html::TEXT_ALIGN_LEFT,
                 $this->renderHtmlAttributes($attrOverride),
                 $strLabelAttributes,
                 $this->blnWrapLabel
             );
             if (!$this->blnWrapLabel) {
                 // Additionally wrap in a span so we can associate the label with the checkbox visually and apply the styles
-                $strCheckHtml = QHtml::renderTag('span', $this->renderLabelAttributes(), $strCheckHtml);
+                $strCheckHtml = Html::renderTag('span', $this->renderLabelAttributes(), $strCheckHtml);
             }
         } else {
             $strCheckHtml = $this->renderTag('input', $attrOverride, null, null, true);

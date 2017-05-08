@@ -174,7 +174,7 @@ class HList extends QControl
      */
     protected function getItemText($objItem)
     {
-        $strHtml = QApplication::htmlEntities($objItem->Text);
+        $strHtml = Q\QString::htmlEntities($objItem->Text);
 
         if ($strAnchor = $objItem->Anchor) {
             $strHtml = Q\Html::renderTag('a', ['href' => $strAnchor], $strHtml, false, true);

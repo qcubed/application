@@ -10,6 +10,8 @@
 namespace QCubed\Jqui;
 
 use QCubed\Exception\InvalidCast;
+use QCubed\Html;
+use QCubed\Project\Application;
 use QCubed\Type;
 
 /**
@@ -63,7 +65,7 @@ class AccordionBase extends AccordionGen
         foreach ($this->getChildControls() as $objControl) {
             if (!$objControl->Rendered) {
                 $renderMethod = $objControl->strPreferredRenderMethod;
-                $strToReturn .= QHtml::renderTag('div', null, $objControl->$renderMethod(false));
+                $strToReturn .= Html::renderTag('div', null, $objControl->$renderMethod(false));
             }
         }
 
@@ -82,7 +84,8 @@ class AccordionBase extends AccordionGen
     public function getEndScript()
     {
         $strJS = parent::getEndScript();
-        QApplication::executeJsFunction('qcubed.accordion', $this->getJqControlId(), QJsPriority::High);
+        Application::executeJsFunction('qcubed.accordion', $this->getJqControlId(), Application::PRIORITY_HIGH);
+
         return $strJS;
     }
 

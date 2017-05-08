@@ -28,7 +28,7 @@ class Paginator extends \QCubed\Control\PaginatorBase
         parent::__construct($objParentObject, $strControlId);
 
         $this->CssClass = 'paginator';
-        //$this->strLabelForPrevious = QApplication::translate('<<');
-        //$this->strLabelForNext = QApplication::translate('>>');
+        //$this->strLabelForPrevious = t('<<');
+        //$this->strLabelForNext = t('>>');
     }
 }

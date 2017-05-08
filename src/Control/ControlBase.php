@@ -14,6 +14,7 @@ use QCubed\Html;
 use QCubed\HtmlAttributeManager;
 use QCubed\Exception;
 use QCubed as Q;
+use QCubed\Project\Application;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Action\ActionBase as QAction;
 use QCubed\Event\EventBase as QEvent;
@@ -112,7 +113,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  * @property boolean $Visible specifies whether or not the control should be rendered in the page.  This is in contrast to Display, which will just hide the control via CSS styling.
  * @property string $Warning is warning text that will be shown next to the control's name label {@link QControl::RenderWithName}
  * @property boolean $UseWrapper defaults to true
- * @property Q\Query\Node\Base $LinkedNode A database node that this control is directly editing
+ * @property Q\Query\Node\NodeBase $LinkedNode A database node that this control is directly editing
  * @property-read boolean $WrapperModified
  * @property string $WrapperCssClass
  * @property boolean $WrapLabel For checkboxes, radio buttons, and similar controls, whether to wrap the label around
@@ -138,10 +139,14 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * used mostly by buttons which take actions on Forms and controls.
      */
 
-    const CAUSES_VALIDATION_NONE = false; /** Does not cause the validation */
-    const CAUSES_VALIDATION_ALL = true; /** Cause validation of all controls */
-    const CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN = 2; /** Cause validation of the control, siblings and children */
-    const CAUSES_VALIDATION_SIBLINGS_ONLY = 3; /** Cause validation of siblings only */
+    const CAUSES_VALIDATION_NONE = false;
+    /** Does not cause the validation */
+    const CAUSES_VALIDATION_ALL = true;
+    /** Cause validation of all controls */
+    const CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN = 2;
+    /** Cause validation of the control, siblings and children */
+    const CAUSES_VALIDATION_SIBLINGS_ONLY = 3;
+    /** Cause validation of siblings only */
 
     /**
      * Protected members
@@ -429,7 +434,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * A utility function to convert a template file name into a full path.
      *
-     * @param string $strTemplate   name of template
+     * @param string $strTemplate name of template
      * @return string
      */
     public function getTemplatePath($strTemplate)
@@ -482,7 +487,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
         global $_FORM;
 
         if ($strTemplate) {
-            QApplication::$ProcessOutput = false;
+            $blnProcessing = Application::setProcessOutput(false);
             // Store the Output Buffer locally
             $strAlreadyRendered = ob_get_contents();
             if ($strAlreadyRendered) {
@@ -501,7 +506,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             if ($strAlreadyRendered) {
                 print($strAlreadyRendered);
             }
-            QApplication::$ProcessOutput = true;
+            Application::setProcessOutput($blnProcessing);
 
             return $strTemplateEvaluated;
         }
@@ -549,12 +554,12 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Used by the QForm engine to call the method in the control, allowing the method to be a protected method.
      *
-     * @param Base $objDestControl
+     * @param ControlBase $objDestControl
      * @param string $strMethodName
      * @param string $strFormId
      * @param mixed $params Parameters coming from javascript
      */
-    public static function _CallActionMethod(Base $objDestControl, $strMethodName, $strFormId, $params)
+    public static function _CallActionMethod(ControlBase $objDestControl, $strMethodName, $strFormId, $params)
     {
         $objDestControl->$strMethodName($strFormId, $params['controlId'], $params['param'], $params);
     }
@@ -781,7 +786,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * Returns all actions that are connected with specific events
      *
      * @param string $strEventType the type of the event. Be sure and use a
-     *                              QFooEvent::EventName here. (QClickEvent::EventName, for example)
+     *                              FooEvent::EVENT_NAME here. (\QCubed\Event\Click::EVENT_NAME, for example)
      * @param string $strActionType if given only actions of this type will be
      *                              returned
      *
@@ -1323,7 +1328,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function focus()
     {
-        QApplication::executeControlCommand($this->strControlId, 'focus');
+        Application::executeControlCommand($this->strControlId, 'focus');
     }
 
     /**
@@ -1343,7 +1348,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function blink($strFromColor = '#ffff66', $strToColor = '#ffffff')
     {
-        QApplication::executeJavaScript(sprintf('qc.getW("%s").blink("%s", "%s");', $this->strControlId, $strFromColor,
+        Application::executeJavaScript(sprintf('qc.getW("%s").blink("%s", "%s");', $this->strControlId, $strFromColor,
             $strToColor));
     }
 
@@ -1390,7 +1395,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
         if ($this->strAttributeScripts) {
             foreach ($this->strAttributeScripts as $scriptArgs) {
                 array_unshift($scriptArgs, $this->getJQControlId());
-                call_user_func_array('QApplication::ExecuteControlCommand', $scriptArgs);
+                call_user_func_array('\QCubed\ApplicationBase::executeControlCommand', $scriptArgs);
             }
         }
         $this->strAttributeScripts = null;
@@ -1474,43 +1479,39 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             }
         }
 
-        switch ($this->objForm->CallType) {
-            case QCallType::Ajax:
-                if ($this->objParentControl) {
-                    if ($this->objParentControl->Rendered || $this->objParentControl->Rendering) {
-                        // If we have a ParentControl and the ParentControl has NOT been rendered, then output
-                        // as standard HTML
-                        if ($this->blnUseWrapper) {
-                            $strOutput = $this->renderWrappedOutput($strOutput,
-                                    $blnForceAsBlockElement) . $this->getNonWrappedHtml();
-                        } else {
-                            $strOutput = $strOutput . $this->getNonWrappedHtml();
-                        }
+        if (Application::isAjax()) {
+            if ($this->objParentControl) {
+                if ($this->objParentControl->Rendered || $this->objParentControl->Rendering) {
+                    // If we have a ParentControl and the ParentControl has NOT been rendered, then output
+                    // as standard HTML
+                    if ($this->blnUseWrapper) {
+                        $strOutput = $this->renderWrappedOutput($strOutput,
+                                $blnForceAsBlockElement) . $this->getNonWrappedHtml();
                     } else {
-                        // Do nothing. RenderAjax will handle it.
+                        $strOutput = $strOutput . $this->getNonWrappedHtml();
                     }
                 } else {
-                    // if this is an injected top-level control, then we need to render the whole thing
-                    if (!$this->blnOnPage) {
-                        if ($this->blnUseWrapper) {
-                            $strOutput = $this->renderWrappedOutput($strOutput,
-                                    $blnForceAsBlockElement) . $this->getNonWrappedHtml();
-                        } else {
-                            $strOutput = $strOutput . $this->getNonWrappedHtml();
-                        }
+                    // Do nothing. RenderAjax will handle it.
+                }
+            } else {
+                // if this is an injected top-level control, then we need to render the whole thing
+                if (!$this->blnOnPage) {
+                    if ($this->blnUseWrapper) {
+                        $strOutput = $this->renderWrappedOutput($strOutput,
+                                $blnForceAsBlockElement) . $this->getNonWrappedHtml();
+                    } else {
+                        $strOutput = $strOutput . $this->getNonWrappedHtml();
                     }
                 }
-                break;
+            }
+        } else {
+            if ($this->blnUseWrapper) {
+                $strOutput = $this->renderWrappedOutput($strOutput) . $this->getNonWrappedHtml();
+            } else {
+                $strOutput = $strOutput . $this->getNonWrappedHtml();
+            }
 
-            default:
-                if ($this->blnUseWrapper) {
-                    $strOutput = $this->renderWrappedOutput($strOutput) . $this->getNonWrappedHtml();
-                } else {
-                    $strOutput = $strOutput . $this->getNonWrappedHtml();
-                }
-
-                $strOutput = $this->renderComment(self::COMMENT_START) . _indent($strOutput) . $this->renderComment(self::COMMENT_END);
-                break;
+            $strOutput = $this->renderComment(self::COMMENT_START) . _indent($strOutput) . $this->renderComment(self::COMMENT_END);
         }
 
         // Update watcher
@@ -1561,10 +1562,8 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function render($blnDisplayOutput = true /* ... */)
     {
-        $blnMinimized = QApplication::$Minimize;
-        if ($this->blnMinimize) {
-            QApplication::$Minimize = true;
-        }
+        $blnMinimized = Application::instance()->setMinimize($this->blnMinimize);
+
         $this->renderHelper(func_get_args(), __FUNCTION__);
 
         try {
@@ -1586,7 +1585,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
         // Call RenderOutput, returning its contents
         $strOut = $this->renderOutput($strOutput, $blnDisplayOutput);
 
-        QApplication::$Minimize = $blnMinimized;
+        Application::instance()->setMinimize($blnMinimized);
 
         return $strOut;
     }
@@ -2543,7 +2542,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function _GetFormAttributes()
     {
-        if (QApplication::$RequestMode == QRequestMode::Ajax) {
+        if (Application::isAjax()) {
             if ($this->isModified()) {
                 return $this->strFormAttributes;
             } else {

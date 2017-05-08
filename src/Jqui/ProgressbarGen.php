@@ -96,14 +96,14 @@ class ProgressbarGen extends QCubed\Control\Panel
         if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
-            Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
+            Application::executeControlCommand($strId, 'off', Application::PRIORITY_HIGH);
         }
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -117,7 +117,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables the progressbar.
@@ -126,7 +126,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Enables the progressbar.
@@ -135,7 +135,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the progressbars instance object. If the element does not
@@ -148,7 +148,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -162,7 +162,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -172,7 +172,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the progressbar option associated with the specified
@@ -190,7 +190,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the progressbar.
@@ -200,7 +200,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Gets the current value of the progressbar.
@@ -209,7 +209,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function value()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", Application::PRIORITY_LOW);
     }
     /**
      * Sets the current value of the progressbar.
@@ -220,7 +220,7 @@ class ProgressbarGen extends QCubed\Control\Panel
      */
     public function value1($value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", $value, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "value", $value, Application::PRIORITY_LOW);
     }
 
 

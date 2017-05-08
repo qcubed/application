@@ -119,7 +119,7 @@ class Proxy extends QControl
         if ($strActionParameter) {
             $attributes['data-qap'] = $strActionParameter;
         }
-        return QHtml::renderHtmlAttributes($attributes);
+        return Html::renderHtmlAttributes($attributes);
     }
 
     /**

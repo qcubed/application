@@ -28,6 +28,15 @@ use QCubed\ObjectBase;
  */
 class Options extends ObjectBase
 {
+    const FORMGEN_BOTH = 'both';
+    const FORMGEN_LABEL_ONLY = 'label'; //Generate only a label
+    const FORMGEN_CONTROL_ONLY = 'control'; //Generate only a control
+    const FORMGEN_NONE = 'none'; // Do not generate anything for this database object
+
+    const CREATE_OR_EDIT = 1; // Do not generate anything for this database object
+    const CREATE_ON_RECORD_NOT_FOUND = 2;
+    const EDIT_ONLY = 3;
+
     protected $options = array();
     protected $blnChanged = false;
 

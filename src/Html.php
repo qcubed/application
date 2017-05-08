@@ -10,6 +10,7 @@
 namespace QCubed;
 
 use QCubed\Exception\Caller;
+use QCubed\Project\Application;
 
 /**
  * An abstract utility class to handle Html tag rendering, as well as utilities to render
@@ -41,6 +42,28 @@ abstract class Html {
 
     const TEXT_ALIGN_LEFT = "left";
     const TEXT_ALIGN_RIGHT = "right";
+
+    // type property for ordered lists
+    const OL_NUMBERS = '1';
+    const OL_UPPERCASE_LETTERS = 'A';
+    const OL_LOWERCASE_LETTERS = 'a';
+    const OL_UPPERCASE_ROMAN = 'I';
+    const OL_LOWERCASE_ROMAN = 'i';
+
+    // list-style-type property for unordered list
+    const UL_DISC = 'disc';
+    const UL_CIRCLE = 'circle';
+    const UL_SQUARE = 'square';
+    const UL_NONE = 'none';
+
+    /**
+     * Contains/Defines Overflow CSS Styles to be used on QControls
+     */
+    const OVERFLOW_NOT_SET = 'NotSet';
+    const OVERFLOW_AUTO = 'auto';
+    const OVERFLOW_HIDDEN = 'hidden';
+    const OVERFLOW_SCROLL = 'scroll';
+    const OVERFLOW_VISIBLE = 'visible';
 
     /**
      * This faux constructor method throws a caller exception.
@@ -84,7 +107,7 @@ abstract class Html {
                 $strToReturn .=  ' ' . trim($mixAttributes);
             } else {
                 // assume array
-                $strToReturn .=  QHtml::renderHtmlAttributes($mixAttributes);
+                $strToReturn .=  self::renderHtmlAttributes($mixAttributes);
             }
         };
         if ($blnIsVoidElement) {
@@ -337,7 +360,7 @@ abstract class Html {
                 if ($strValue === false) {
                     $strToReturn .= (' ' . $strName);
                 } elseif (!is_null($strValue)) {
-                    $strToReturn .= (' ' . $strName . '="' . htmlspecialchars($strValue, ENT_COMPAT | ENT_HTML5, QApplication::$EncodingType) . '"');
+                    $strToReturn .= (' ' . $strName . '="' . htmlspecialchars($strValue, ENT_COMPAT | ENT_HTML5, __APPLICATION_ENCODING_TYPE__) . '"');
                 }
             }
         }
@@ -367,7 +390,7 @@ abstract class Html {
      * @return string
      */
     public static function comment($strText, $blnRemoveOnMinimize = true) {
-        if ($blnRemoveOnMinimize && QApplication::$Minimize) {
+        if ($blnRemoveOnMinimize && Application::instance()->minimize()) {
             return '';
         }
         return  _nl() . '<!-- ' . $strText . ' -->' . _nl();
@@ -375,7 +398,7 @@ abstract class Html {
     }
 
     /**
-     * Generate a URL from components. This URL can be used in the QApplication::Redirect function, or applied to
+     * Generate a URL from components. This URL can be used in the Application::tedirect function, or applied to
      * an anchor tag by setting the href attribute.
      *
      * You can also use this to modify a URL by passing a complete URL in the location. The URL will be modified by the parameters given.
@@ -500,7 +523,7 @@ abstract class Html {
     public static function renderLink($strUrl, $strText, $attributes = null, $blnHtmlEntities = true) {
         $attributes["href"] = $strUrl;
         if ($blnHtmlEntities) {
-            $strText = QApplication::htmlEntities($strText);
+            $strText = QString::htmlEntities($strText);
         }
         return self::renderTag("a", $attributes, $strText);
     }
@@ -512,7 +535,7 @@ abstract class Html {
      * @return string
      */
     public static function renderString($strText) {
-        return nl2br(htmlspecialchars($strText, ENT_COMPAT | ENT_HTML5, QApplication::$EncodingType));
+        return nl2br(htmlspecialchars($strText, ENT_COMPAT | ENT_HTML5, __APPLICATION_ENCODING_TYPE__));
     }
 
     /**
@@ -525,7 +548,7 @@ abstract class Html {
      * 				['name'=>'carrot', 'type'=>'vegetable']
      * 	];
      *
-     * 	print(QHtml::renderTable($data, ['name','type'], ['class'=>'mytable'], ['Name', 'Type']);
+     * 	print(Html::renderTable($data, ['name','type'], ['class'=>'mytable'], ['Name', 'Type']);
      *
      *
      * @param []mixed			$data				An array of objects, or an array of arrays
@@ -550,7 +573,7 @@ abstract class Html {
         if ($strHeaderTitles) {
             foreach ($strHeaderTitles as $strHeaderTitle) {
                 if ($blnHtmlEntities) {
-                    $strHeaderTitle = QApplication::htmlEntities($strHeaderTitle);
+                    $strHeaderTitle = QString::htmlEntities($strHeaderTitle);
                 }
                 $strHeader .= '<th>' . $strHeaderTitle . '</th>';
             }
@@ -570,7 +593,7 @@ abstract class Html {
                         $strItem = $row[$strField];
                     }
                     if ($blnHtmlEntities) {
-                        $strItem = QApplication::htmlEntities($strItem);
+                        $strItem = QString::htmlEntities($strItem);
                     }
                     if ($intFieldNum <= $intHeaderColumnCount) {
                         $strRow .= '<th>' . $strItem . '</th>';
@@ -582,7 +605,7 @@ abstract class Html {
                 foreach ($row as $strItem) {
                     $intFieldNum ++;
                     if ($blnHtmlEntities) {
-                        $strItem = QApplication::htmlEntities($strItem);
+                        $strItem = QString::htmlEntities($strItem);
                     }
                     if ($intFieldNum <= $intHeaderColumnCount) {
                         $strRow .= '<th>' . $strItem . '</th>';

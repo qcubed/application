@@ -11,6 +11,7 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\QString;
 use QCubed\Type;
 
 /**
@@ -75,7 +76,7 @@ abstract class ButtonBase extends ActionControl
      */
     protected function getInnerHtml()
     {
-        return ($this->blnHtmlEntities) ? QApplication::htmlEntities($this->strText) : $this->strText;
+        return ($this->blnHtmlEntities) ? QString::htmlEntities($this->strText) : $this->strText;
     }
 
 

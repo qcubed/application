@@ -17,7 +17,7 @@ if (defined('ERROR_LOG_PATH') && ERROR_LOG_PATH && defined('ERROR_LOG_FLAG') && 
 }
 
 if (defined('ERROR_EMAIL') && class_exists('\\QCubed\\EmailMessage')) {
-    $objEmail = new \QCubed\EmailMessage();
+    $objEmail = new \QCubed\EmailMessage(); // TODO: Must find another way
     $objEmail->From = ERROR_EMAIL_FROM;
     $objEmail->Subject = ERROR_EMAIL_SUBJECT;
     $objEmail->To = ERROR_EMAIL;
@@ -27,7 +27,7 @@ if (defined('ERROR_EMAIL') && class_exists('\\QCubed\\EmailMessage')) {
     \QCubed\EmailServer::Send($objEmail);
 }
 
-if (isset($_POST['Qform__FormCallType']) && $_POST['Qform__FormCallType'] == 'Ajax') {
+if (class_exists('\QCubed\Project\Application') && \QCubed\Project\Application::isAjax()) {
     if (defined('ERROR_FRIENDLY_AJAX_MESSAGE') && ERROR_FRIENDLY_AJAX_MESSAGE) {
         // Reset the Buffer
         while (ob_get_level()) {

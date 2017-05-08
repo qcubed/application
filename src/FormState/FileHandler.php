@@ -10,6 +10,7 @@
 namespace QCubed\FormState;
 
 use QCubed\ObjectBase;
+use QCubed\Project\Application;
 
 
 /**
@@ -143,7 +144,7 @@ class FileHandler extends ObjectBase
         // Figure Out Session Id (if applicable)
         $strSessionId = session_id();
 
-        if (!empty($_POST['Qform__FormState']) && QApplication::$RequestMode == QRequestMode::Ajax) {
+        if (!empty($_POST['Qform__FormState']) && Application::isAjax()) {
             $strPageId = $_POST['Qform__FormState'];    // reuse old page id
         } else {
             // Calculate a new unique Page Id

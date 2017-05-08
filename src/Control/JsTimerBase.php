@@ -11,6 +11,7 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\Project\Application;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed as Q;
@@ -134,7 +135,7 @@ class JsTimerBase extends QControl
             // timer is not periodic. We will set the timeout
             $strJS = $this->tidString() . ' = window.setTimeout("' . $this->callbackString() . '()", ' . $this->intDeltaTime . ');';
         }
-        QApplication::executeJavaScript($strJS);
+        Application::executeJavaScript($strJS);
         $this->intState = self::STARTED;
     }
 
@@ -155,7 +156,7 @@ class JsTimerBase extends QControl
             // One-time timer. We should clear the timeout we had set beforehand
             $strJS = 'window.clearTimeout(' . $this->tidString() . ');';
         }
-        QApplication::executeJavaScript($strJS);
+        Application::executeJavaScript($strJS);
         $this->intState = self::STOPPED;
     }
 
@@ -195,16 +196,16 @@ class JsTimerBase extends QControl
 
     /**
      * Returns all actions connected/attached to the timer
-     * @param string $strEventType
-     * @param null $strActionType
+     * @param string $strEventType  an EVENT_NAME constant
+     * @param null|string $strActionType
      *
      * @return array
      */
     public function getAllActions($strEventType, $strActionType = null)
     {
-        if (($strEventType == 'QTimerExpiredEvent' && $this->blnPeriodic == false) &&
-            (($strActionType == 'QAjaxAction' && $this->objForm->CallType == QCallType::Ajax) ||
-                ($strActionType == 'QServerAction' && $this->objForm->CallType == QCallType::Server))
+        if (($strEventType == Q\Event\TimerExpired::EVENT_NAME && $this->blnPeriodic == false) &&
+            (($strActionType == '\QCubed\Action\Ajax' && Application::isAjax()) ||
+                ($strActionType == '\QCubed\Action\Server' && Application::instance()->context()->requestMode() == Q\Context::REQUEST_MODE_QCUBED_SERVER))
         ) {
             //if we are in an ajax or server post and our timer is not periodic
             //and this method gets called then the timer has finished(stopped) --> set the State flag to "stopped"
@@ -267,7 +268,7 @@ class JsTimerBase extends QControl
      */
     public function getEndScript()
     {
-        if ($this->objForm->CallType == QCallType::Server) {
+        if (Application::instance()->context()->requestMode() == Q\Context::REQUEST_MODE_QCUBED_SERVER) {
             //this point is not reached on initial rendering
             if ($this->blnRestartOnServerAction && $this->intState === self::STARTED) {
                 $this->start();

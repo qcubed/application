@@ -18,6 +18,9 @@ use QCubed\QString;
 use QCubed\TagStyler;
 use QCubed as Q;
 use QCubed\Type;
+use QCubed\Html;
+use QCubed\ModelConnector\Param as QModelConnectorParam;
+
 
 /**
  * Class CheckboxList
@@ -242,7 +245,7 @@ class CheckboxList extends ListControl
                     $strRowHtml .= $strItemHtml;
                 }
 
-                $strRowHtml = QHtml::renderTag('div', ['class' => 'qc-tableRow'], $strRowHtml);
+                $strRowHtml = Html::renderTag('div', ['class' => 'qc-tableRow'], $strRowHtml);
                 $strToReturn .= $strRowHtml;
             }
 
@@ -252,7 +255,7 @@ class CheckboxList extends ListControl
                 $this->setCssStyle('max-height', $this->strMaxHeight, true);
                 $this->setCssStyle('overflow-y', 'scroll');
 
-                $strToReturn = QHtml::renderTag('div', ['class' => 'qc-table'], $strToReturn);
+                $strToReturn = Html::renderTag('div', ['class' => 'qc-table'], $strToReturn);
             } else {
                 $this->addCssClass('qc-table'); // format as a table
             }
@@ -289,7 +292,7 @@ class CheckboxList extends ListControl
         for ($intIndex = 0; $intIndex < $count; $intIndex++) {
             $strHtml = $this->getItemHtml($this->objListItemArray[$intIndex], $intIndex,
                 $this->getHtmlAttribute('tabindex'), $this->blnWrapLabel);
-            $strToReturn .= QHtml::renderTag('div', null, $strHtml);
+            $strToReturn .= Html::renderTag('div', null, $strHtml);
         }
         $strToReturn = $this->renderTag('div', ['id' => $this->strControlId], null, $strToReturn);
         return $strToReturn;
@@ -318,11 +321,11 @@ class CheckboxList extends ListControl
     protected function refreshSelection()
     {
         $indexes = $this->SelectedIndexes;
-        QApplication::executeSelectorFunction(['input', '#' . $this->ControlId], 'val', $indexes);
+        Application::executeSelectorFunction(['input', '#' . $this->ControlId], 'val', $indexes);
         if ($this->intButtonMode == self::BUTTON_MODE_SET ||
             $this->intButtonMode == self::BUTTON_MODE_JQ
         ) {
-            QApplication::executeSelectorFunction(['input', '#' . $this->ControlId], 'button', "refresh");
+            Application::executeSelectorFunction(['input', '#' . $this->ControlId], 'button', "refresh");
         }
     }
 
@@ -505,7 +508,7 @@ class CheckboxList extends ListControl
     public static function getModelConnectorParams()
     {
         return array_merge(parent::getModelConnectorParams(), array(
-            new QModelConnectorParam(get_called_class(), 'TextAlign', '', QModelConnectorParam::SelectionList,
+            new QModelConnectorParam(get_called_class(), 'TextAlign', '', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
                     'QTextAlign::Left' => 'Left',
@@ -516,14 +519,14 @@ class CheckboxList extends ListControl
             new QModelConnectorParam(get_called_class(), 'RepeatColumns',
                 'The number of columns of checkboxes to display', Type::INTEGER),
             new QModelConnectorParam(get_called_class(), 'RepeatDirection',
-                'Whether to repeat horizontally or vertically', QModelConnectorParam::SelectionList,
+                'Whether to repeat horizontally or vertically', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
                     'self::REPEAT_HORIZONTAL' => 'Horizontal',
                     'self::REPEAT_VERTICAL' => 'Vertical'
                 )),
             new QModelConnectorParam(get_called_class(), 'ButtonMode', 'How to display the buttons',
-                QModelConnectorParam::SelectionList,
+                QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
                     'QCheckBoxList::BUTTON_MODE_JQ' => 'JQuery UI Buttons',

@@ -11,6 +11,7 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed as Q;
 use QCubed\Exception\InvalidCast;
+use QCubed\Project\Application;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Control\TableColumn\Base as ColumnBase;
@@ -106,7 +107,7 @@ class DataGridBase extends TableBase
         $strHtml = $objPaginator->render(false);
         $strHtml = Q\Html::renderTag('span', ['class' => 'paginator-control'], $strHtml);
         if ($this->strCaption) {
-            $strHtml = '<span>' . QApplication::htmlEntities($this->strCaption) . '</span>' . $strHtml;
+            $strHtml = '<span>' . Q\QString::htmlEntities($this->strCaption) . '</span>' . $strHtml;
         }
 
         $strHtml = Q\Html::renderTag('caption', null, $strHtml);
@@ -306,7 +307,7 @@ class DataGridBase extends TableBase
         $blnSortable = false;
         $strCellValue = $objColumn->fetchHeaderCellValue();
         if ($objColumn->HtmlEntities) {
-            $strCellValue = QApplication::htmlEntities($strCellValue);
+            $strCellValue = Q\QString::htmlEntities($strCellValue);
         }
         $strCellValue = Q\Html::renderTag('span', null, $strCellValue);    // wrap in a span for positioning
 
@@ -343,7 +344,7 @@ class DataGridBase extends TableBase
     public function getEndScript()
     {
         $strJS = parent::getEndScript();
-        QApplication::executeJsFunction('qcubed.datagrid2', $this->ControlId);
+        Application::executeJsFunction('qcubed.datagrid2', $this->ControlId);
         return $strJS;
     }
 

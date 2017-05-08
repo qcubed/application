@@ -1,9 +1,7 @@
 <?php
 	require_once('../qcubed.inc.php');
 
-	// Security check for ALLOW_REMOTE_ADMIN
-	// To allow access REGARDLESS of ALLOW_REMOTE_ADMIN, simply remove the line below
-	QApplication::CheckRemoteAdmin();
+	\QCubed\Project\Application::checkAuthorized();
 
 	// Iterate through the files in this "form_drafts" folder, looking for files
 	// that end in _edit.php or _list.php
@@ -38,8 +36,8 @@
 <?php
 		foreach ($strObjectArray as $strObject=>$blnValue) {
 			printf('<h1>%s</h1><p class="create"><a href="%s/%s_list.php">%s</a> &nbsp;|&nbsp; <a href="%s/%s_edit.php">%s</a></p>',
-				$strObject, __VIRTUAL_DIRECTORY__ . __FORMS__, $strObject, QApplication::Translate('View List'),
-				__VIRTUAL_DIRECTORY__ . __FORMS__, $strObject, QApplication::Translate('Create New'));
+				$strObject, __VIRTUAL_DIRECTORY__ . __FORMS__, $strObject, t('View List'),
+				__VIRTUAL_DIRECTORY__ . __FORMS__, $strObject, t('Create New'));
 		}
 ?>
 	</div>

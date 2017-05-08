@@ -118,9 +118,9 @@ class JsResponse
      * @param string $strControlId Id of control to direct the command to.
      * @param string $strFunctionName Function name to call. For jQueryUI, this would be the widget name
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
-     *                                        end with a QJsPriority to prioritize the command.
+     *                                        end with a PRIORITY_* to prioritize the command.
      */
-    public function executeControlCommand($strControlId, $strFunctionName /*, ..., QJsPriority */)
+    public function executeControlCommand($strControlId, $strFunctionName /*, ..., PRIORITY_* */)
     {
         $args = func_get_args();
         $args[0] = '#' . $strControlId;
@@ -134,10 +134,10 @@ class JsResponse
      * @param array|string $mixSelector
      * @param string $strFunctionName
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
-     *                                        end with a QJsPriority to prioritize the command.
+     *                                        end with a PRIORITY_* to prioritize the command.
      * @throws Q\Exception\Caller
      */
-    public function executeSelectorFunction($mixSelector, $strFunctionName /*, ..., QJsPriority */)
+    public function executeSelectorFunction($mixSelector, $strFunctionName /*, ..., PRIORITY_* */)
     {
         if (!(is_string($mixSelector) || (is_array($mixSelector) && count($mixSelector) == 2))) {
             throw new Q\Exception\Caller('Selector must be a string or an array of two items');
@@ -188,7 +188,7 @@ class JsResponse
      * The function can be inside an object accessible from the global namespace by separating with periods.
      * @param string $strFunctionName Can be namespaced, as in "qcubed.func".
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
-     *                                        end with a QJsPriority to prioritize the command.
+     *                                        end with a PRIORITY_* to prioritize the command.
      */
     public function executeJsFunction($strFunctionName /*, ... */)
     {
@@ -290,7 +290,7 @@ class JsResponse
             $strScript .= self::renderCommandArray($this->commands[self::COMMANDS_LOW]);
         }
 
-        // A QApplication::Redirect
+        // A Application::redirect
         if (!empty($this->commands[self::LOCATION])) {
             $strLocation = $this->commands[self::LOCATION];
             $strScript .= sprintf('document.location = "%s";', $strLocation);
@@ -421,6 +421,10 @@ class JsResponse
     public function closeWindow()
     {
         $this->commands[self::CLOSE] = true;
+    }
+
+    public function hasExclusiveCommand() {
+        return (!empty($this->exclusiveCommand));
     }
 
 }

@@ -15,6 +15,7 @@ use QCubed\Application\t;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
+use QCubed\Project\Application;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\QString;
 use QCubed\Type;
@@ -190,7 +191,7 @@ abstract class ListBoxBase extends ListControl
                 foreach ($items as $objItem) {
                     $strGroupHtml .= $this->getItemHtml($objItem);
                 }
-                $strHtml .= QHtml::renderTag('optgroup', ['label' => QApplication::htmlEntities($strGroup)],
+                $strHtml .= Html::renderTag('optgroup', ['label' => QString::htmlEntities($strGroup)],
                     $strGroupHtml);
             }
         }
@@ -240,7 +241,7 @@ abstract class ListBoxBase extends ListControl
         foreach ($items as $objItem) {
             $values[] = $objItem->Id;
         }
-        QApplication::executeControlCommand($this->ControlId, 'val', $values);
+        Application::executeControlCommand($this->ControlId, 'val', $values);
     }
 
     /**

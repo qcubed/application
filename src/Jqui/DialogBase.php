@@ -160,9 +160,7 @@ class DialogBase extends DialogGen
     public function getEndScript()
     {
         $strJS = parent::getEndScript();
-        $strControlId = $this->getJqControlId();
-        QApplication::executeJsFunction('qc.dialog', $strControlId, QJsPriority::High);
-
+        Application::executeJsFunction('qc.dialog', $this->getJqControlId(), Application::PRIORITY_HIGH);
         return $strJS;
     }
 
@@ -339,12 +337,12 @@ class DialogBase extends DialogGen
     public function showHideButton($strButtonId, $blnVisible)
     {
         if ($blnVisible) {
-            QApplication::executeJavaScript(
+            Application::executeJavaScript(
                 sprintf('$j("#%s").next().find("button[data-btnid=\'%s\']").show();',
                     $this->getJqControlId(), $strButtonId)
             );
         } else {
-            QApplication::executeJavaScript(
+            Application::executeJavaScript(
                 sprintf('$j("#%s").next().find("button[data-btnid=\'%s\']").hide();',
                     $this->getJqControlId(), $strButtonId)
             );
@@ -359,7 +357,7 @@ class DialogBase extends DialogGen
      */
     public function setButtonStyle($strButtonId, $styles)
     {
-        QApplication::executeJavaScript(
+        Application::executeJavaScript(
             sprintf('$j("#%s").next().find("button[data-btnid=\'%s\']").css(%s)', $this->getJqControlId(), $strButtonId,
                 Q\Js\Helper::toJsObject($styles))
         );

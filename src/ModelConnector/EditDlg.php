@@ -9,11 +9,19 @@
 
 namespace QCubed\ModelConnector;
 
+use QCubed\Action\AjaxControl;
+use QCubed\Codegen\ControlCategoryType;
+use QCubed\Control\TableColumn\QCallable;
+use QCubed\Project\Application;
 use QCubed\Project\Control\Dialog as QDialog;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Event;
 use QCubed\Control\Panel;
-
+use QCubed\ModelConnector\Param as QModelConnectorParam;
+use QCubed\ModelConnector\Options as QModelConnectorOptions;
+use QCubed\Project\Control\Table;
+use QCubed\Project\Jqui\Tabs;
+use QCubed\Type;
 
 /**
  * Class EditDlg
@@ -35,7 +43,7 @@ class EditDlg extends QDialog
 {
     /** @var  QControl */
     protected $objCurrentControl;
-
+    /** @var Tabs  */
     protected $tabs;
 
     protected $txtName;
@@ -47,9 +55,12 @@ class EditDlg extends QDialog
     protected $objModelConnectorOptions;
 
     protected $generalOptions;
+    /** @var  Table */
     protected $dtgGeneralOptions;
 
+    /** @var  QModelConnectorParam[] */
     protected $categories;
+
     protected $datagrids;
 
     public function __construct($objParentObject, $strControlId = null)
@@ -65,14 +76,14 @@ class EditDlg extends QDialog
         $objPanel->Height = 400;    // We need an intermediate object to force the height
         $objPanel->AutoRenderChildren = true;
 
-        $this->tabs = new QTabs ($objPanel, 'qconnectoreditTabs');
+        $this->tabs = new Tabs($objPanel, 'qconnectoreditTabs');
         $this->tabs->HeightStyle = "content";
 
         $this->addButton('Save', 'save');
         $this->addButton('Save, Regenerate and Reload', 'saveRefresh');
         $this->addButton('Cancel', 'cancel');
 
-        $this->addAction(new Event\DialogButton, new QAjaxControlAction($this, 'ButtonClick'));
+        $this->addAction(new Event\DialogButton, new AjaxControl($this, 'ButtonClick'));
     }
 
     /**
@@ -84,11 +95,11 @@ class EditDlg extends QDialog
         $this->tabs->removeChildControls(true);
         $this->categories = array();
 
-        $this->dtgGeneralOptions = new QHtmlTable($this->tabs);
+        $this->dtgGeneralOptions = new Table($this->tabs);
         $this->dtgGeneralOptions->ShowHeader = false;
         $this->dtgGeneralOptions->Name = "General";
         $this->dtgGeneralOptions->createPropertyColumn('Attribute', 'Name');
-        $col = $this->dtgGeneralOptions->addColumn(new QHtmlTableCallableColumn('Attribute',
+        $col = $this->dtgGeneralOptions->addColumn(new QCallable('Attribute',
             array($this, 'dtg_ValueRender'), $this->dtgGeneralOptions));
         $col->HtmlEntities = false;
         $this->dtgGeneralOptions->setDataBinder('dtgGeneralOptions_Bind', $this);
@@ -102,41 +113,41 @@ class EditDlg extends QDialog
         if ($this->objCurrentControl->LinkedNode->_ParentNode) {
             // Specify general options for a database column
             $this->generalOptions = array(
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'ControlClass',
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'ControlClass',
                     'Override of the PHP type for the control. If you change this, save the dialog and reopen to reload the tabs to show the control specific options.',
-                    QModelConnectorParam::SelectionList, $strClassNames),
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'FormGen',
+                    QModelConnectorParam::SELECTION_LIST, $strClassNames),
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'FormGen',
                     'Whether or not to generate this object, just a label for the object, just the control, or both the control and label',
-                    QModelConnectorParam::SelectionList,
+                    QModelConnectorParam::SELECTION_LIST,
                     array(
-                        QFormGen::Both => 'Both',
-                        QFormGen::None => 'None',
-                        QFormGen::ControlOnly => 'Control',
-                        QFormGen::LabelOnly => 'Label'
+                        QModelConnectorOptions::FORMGEN_BOTH => 'Both',
+                        QModelConnectorOptions::FORMGEN_NONE => 'None',
+                        QModelConnectorOptions::FORMGEN_CONTROL_ONLY => 'Control',
+                        QModelConnectorOptions::FORMGEN_LABEL_ONLY => 'Label'
                     )),
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'Name', 'Control\'s Name',
-                    QType::String),
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'NoColumn',
-                    'True to prevent a column in the lister from being generated.', QType::Boolean)
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'Name', 'Control\'s Name',
+                    Type::STRING),
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'NoColumn',
+                    'True to prevent a column in the lister from being generated.', Type::BOOLEAN)
             );
         } else {
             // Specify general options for a database table, meaning an object that is listing the content of a whole table.
             // These would be options at a higher level than the control itself, and would modify how the control is used in a form.
             $this->generalOptions = array(
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'ControlClass',
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'ControlClass',
                     'Override of the PHP type for the control. If you change this, save the dialog and reopen to reload the tabs to show the control specific options.',
-                    QModelConnectorParam::SelectionList, $strClassNames),
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'Name',
-                    'The Control\'s Name. Generally leave this blank, or use a plural name.', QType::String),
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'ItemName',
+                    QModelConnectorParam::SELECTION_LIST, $strClassNames),
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'Name',
+                    'The Control\'s Name. Generally leave this blank, or use a plural name.', Type::STRING),
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'ItemName',
                     'The public name of an item in the list. Its used by the title of the edit form, for example. Defaults to the name of the table in the database.',
-                    QType::String),
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'CreateFilter',
+                    Type::STRING),
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'CreateFilter',
                     'Whether to generate a separate control to filter the data. If the data list control does its own filtering, set this to false. Default is true.',
-                    QType::Boolean),
-                new QModelConnectorParam (QModelConnectorParam::GeneralCategory, 'EditMode',
+                    Type::BOOLEAN),
+                new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'EditMode',
                     'How to edit an item. 1) Options are: to go to a separate form, 2) popup a dialog, or 3) popup a dialog only if not on a mobile device since mobile devices struggle with showing dialogs that are bigger than the screen.',
-                    QModelConnectorParam::SelectionList,
+                    QModelConnectorParam::SELECTION_LIST,
                     array(
                         'form' => 'Edit with a QForm',
                         'dialog' => 'Edit with a QDialog',
@@ -160,7 +171,7 @@ class EditDlg extends QDialog
             }
         }
 
-        if (!isset ($strControlClass)) {
+        if (!isset($strControlClass)) {
             $strControlClass = get_class($this->objCurrentControl);
         }
         $params = $strControlClass::getModelConnectorParams();
@@ -171,9 +182,9 @@ class EditDlg extends QDialog
         }
 
         // Add any additional general items to the general tab
-        if (isset ($this->categories[QModelConnectorParam::GeneralCategory])) {
+        if (isset($this->categories[QModelConnectorParam::GENERAL_CATEGORY])) {
             // load values from settings file
-            foreach ($this->categories[QModelConnectorParam::GeneralCategory] as $objParam) {
+            foreach ($this->categories[QModelConnectorParam::GENERAL_CATEGORY] as $objParam) {
                 $objControl = $objParam->getControl($this->dtgGeneralOptions);    // get a control that will edit this option
                 $strName = $objControl->Name;
 
@@ -185,7 +196,7 @@ class EditDlg extends QDialog
                 $this->generalOptions[] = $objParam;
             }
 
-            unset($this->categories[QModelConnectorParam::GeneralCategory]);
+            unset($this->categories[QModelConnectorParam::GENERAL_CATEGORY]);
         }
 
         foreach ($this->categories as $tabName => $params) {
@@ -195,11 +206,11 @@ class EditDlg extends QDialog
             //$panel->AutoRenderChildren = true;
             //$panel->Name = $tabName;
 
-            $dtg = new QHtmlTable($this->tabs);
+            $dtg = new Table($this->tabs);
             $dtg->ShowHeader = false;
             $dtg->Name = $tabName;
             $dtg->createPropertyColumn('Attribute', 'Name');
-            $col = $dtg->addColumn(new QHtmlTableCallableColumn('Attribute', array($this, 'dtg_ValueRender'), $dtg));
+            $col = $dtg->addColumn(new QCallable('Attribute', array($this, 'dtg_ValueRender'), $dtg));
             $col->HtmlEntities = false;
             $dtg->setDataBinder('dtgControlBind', $this);
             $dtg->Name = $tabName; // holder for category
@@ -218,7 +229,6 @@ class EditDlg extends QDialog
                     }
                 }
             }
-
         }
     }
 
@@ -232,8 +242,9 @@ class EditDlg extends QDialog
 
     /**
      * Binder for the control specific options
+     * @param Table $dtg
      */
-    public function dtgControlBind($dtg)
+    public function dtgControlBind(Table $dtg)
     {
         $dtg->DataSource = $this->categories[$dtg->Name];
     }
@@ -248,7 +259,12 @@ class EditDlg extends QDialog
     public function dtg_ValueRender(QModelConnectorParam $objControlParam, QControl $objParent)
     {
         $objControl = $objControlParam->getControl($objParent);
-        return $objControl->render(false);
+        if ($objControl) {
+            return $objControl->render(false);
+        }
+        else {
+            return "";
+        }
     }
 
     /**
@@ -289,7 +305,7 @@ class EditDlg extends QDialog
             foreach (QCodeGen::$CodeGenArray as $objCodeGen) {
                 $objCodeGen->generateAll(); // silently codegen
             }
-            QApplication::redirect($_SERVER['PHP_SELF']);
+            Application::redirect($_SERVER['PHP_SELF']);
         }
 
         $this->close();
@@ -309,7 +325,7 @@ class EditDlg extends QDialog
             if (!is_null($value)) {
                 $this->params[$strName] = $value;
             } else {
-                unset ($this->params[$strName]);
+                unset($this->params[$strName]);
             }
         }
 
@@ -323,16 +339,16 @@ class EditDlg extends QDialog
                     if (!is_null($value)) {
                         $this->params['Overrides'][$strName] = $value;
                     } else {
-                        unset ($this->params['Overrides'][$strName]);
+                        unset($this->params['Overrides'][$strName]);
                     }
                 } else {
-                    unset ($this->params['Overrides'][$strName]);
+                    unset($this->params['Overrides'][$strName]);
                 }
             }
         }
 
         if (empty($this->params['Overrides'])) {
-            unset ($this->params['Overrides']);
+            unset($this->params['Overrides']);
         }
     }
 
@@ -412,21 +428,22 @@ class EditDlg extends QDialog
         // For the most part, the control category types are the same as the database type
         $node = $this->objCurrentControl->LinkedNode;
         $type = $node->_Type;
-        if (($node->_Type == QType::ReverseReference && $node->isUnique()) || $node->_Type == QType::ArrayType) {
-            $type = QControlCategoryType::SingleSelect;
-        } elseif (($node->_Type == QType::ReverseReference && !$node->isUnique()) || $node->_Type == QType::Association) {
-            $type = QControlCategoryType::MultiSelect;
+        if (($node->_Type == Type::REVERSE_REFERENCE && $node->isUnique()) || $node->_Type == Type::ARRAY_TYPE) {
+            $type = ControlCategoryType::SINGLE_SELECT;
+        } elseif (($node->_Type == Type::REVERSE_REFERENCE && !$node->isUnique()) || $node->_Type == Type::ASSOCIATION) {
+            $type = ControlCategoryType::MULTI_SELECT;
         } elseif ($node->_TableName) { // indicates a reference to a table
             if ($node->_ParentNode) {
                 // A foreign key to another table
-                $type = QControlCategoryType::SingleSelect;
+                $type = ControlCategoryType::SINGLE_SELECT;
             } else {
                 // A top level table, so a grid or list view
-                $type = QControlCategoryType::Table;
+                $type = ControlCategoryType::TABLE;
             }
         }
 
-        if (isset ($controls[$type])) {
+        if (isset($controls[$type])) {
+            $a = [];
             foreach ($controls[$type] as $strClassName) {
                 $a[$strClassName] = $strClassName;    // remove duplicates
             }
@@ -435,8 +452,5 @@ class EditDlg extends QDialog
         } else {
             return null;
         }
-
     }
-
 }
-

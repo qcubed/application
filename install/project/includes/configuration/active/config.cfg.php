@@ -94,7 +94,7 @@ switch (SERVER_INSTANCE) {
  */
 define ('__URL_REWRITE__', 'none');
 
-/** The value for QApplication::$EncodingType constant */
+/** The encoding that you want output in your web pages */
 define('__APPLICATION_ENCODING_TYPE__', 'UTF-8');
 
 if ((function_exists('date_default_timezone_set')) && (!ini_get('date.timezone')))

@@ -183,14 +183,14 @@ class TabsGen extends QCubed\Control\Panel
         if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
-            Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
+            Application::executeControlCommand($strId, 'off', Application::PRIORITY_HIGH);
         }
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -204,7 +204,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables all tabs.
@@ -213,7 +213,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Disables a tab. The selected tab cannot be disabled. To disable more
@@ -225,7 +225,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function disable1($index)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", $index, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", $index, Application::PRIORITY_LOW);
     }
     /**
      * Disables a tab. The selected tab cannot be disabled.
@@ -235,7 +235,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function disable2($href)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", $href, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", $href, Application::PRIORITY_LOW);
     }
     /**
      * Enables all tabs.
@@ -244,7 +244,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Enables a tab. To enable more than one tab at once reset the disabled
@@ -255,7 +255,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function enable1($index)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", $index, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", $index, Application::PRIORITY_LOW);
     }
     /**
      * Enables a tab.
@@ -265,7 +265,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function enable2($href)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", $href, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", $href, Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the tabss instance object. If the element does not have an
@@ -278,7 +278,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Loads the panel content of a remote tab.
@@ -288,7 +288,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function load($index)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "load", $index, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "load", $index, Application::PRIORITY_LOW);
     }
     /**
      * Loads the panel content of a remote tab.
@@ -298,7 +298,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function load1($href)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "load", $href, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "load", $href, Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -312,7 +312,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -322,7 +322,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the tabs option associated with the specified
@@ -340,7 +340,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the tabs.
@@ -350,7 +350,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Process any tabs that were added or removed directly in the DOM and
@@ -361,7 +361,7 @@ class TabsGen extends QCubed\Control\Panel
      */
     public function refresh()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
     }
 
 

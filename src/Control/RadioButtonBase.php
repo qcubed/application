@@ -11,6 +11,7 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\Project\Application;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Type;
 
@@ -150,7 +151,7 @@ class RadioButtonBase extends CheckboxBase
                     if ($val != $this->blnChecked) {
                         $this->blnChecked = $val;
                         if ($this->GroupName && $val == true) {
-                            QApplication::executeJsFunction('qcubed.setRadioInGroup', $this->strControlId);
+                            Application::executeJsFunction('qcubed.setRadioInGroup', $this->strControlId);
                         } else {
                             $this->addAttributeScript('prop', 'checked', $val); // just set the one radio
                         }

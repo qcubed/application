@@ -26,7 +26,7 @@ use QCubed\Database\Service as DatabaseService;
  * @package QCubed
  * //was QApplicationBase (do not put annotiation here, all transformations are manual)
  */
-class ApplicationBase extends ObjectBase
+abstract class ApplicationBase extends ObjectBase
 {
     // These constants help us to organize and build a list of responses to the client.
     const PRIORITY_STANDARD = '*jsMed*';
@@ -44,56 +44,60 @@ class ApplicationBase extends ObjectBase
      * */
     public static $blnLocalCache = false;
 
-    /**
-     * Definition of CacheControl for the HTTP header.  In general, it is
-     * recommended to keep this as "private".  But this can/should be overriden
-     * for file/scripts that have special caching requirements (e.g. dynamically
-     * created images like QImageLabel).
-     *
-     * @var string CacheControl
-     */
-    public static $CacheControl = 'private';
-
-    /**
-     * @var #P#C\QCrossScripting.Purify|?
-     * Defines the default mode for controls that need protection against
-     * cross-site scripting. Can be overridden at the individual control level,
-     * or for all controls by overriding it in QApplication.
-     *
-     * Set to QCrossScripting::Legacy for backward compatibility reasons for legacy applications;
-     * For new applications the recommended setting is QCrossScripting::Purify.
-     */
-//    public static $DefaultCrossScriptingMode = QCrossScripting::Legacy;
-
-    /**
-     * Whether or not we are currently trying to Process the Output of the page.
-     * Used by the OutputPage PHP output_buffering handler.  As of PHP 5.2,
-     * this gets called whenever ob_get_contents() is called.  Because some
-     * classes like QFormBase utilizes ob_get_contents() to perform template
-     * evaluation without wanting to actually perform OutputPage, this flag
-     * can be set/modified by QFormBase::EvaluateTemplate accordingly to
-     * prevent OutputPage from executing.
-     *
-     * Also set this to false if you are outputting custom headers, especially
-     * if you send your own "Content-Type" header.
-     *
-     * @var boolean ProcessOutput
-     */
-    public static $ProcessOutput = true;
-
-    /**
-     * The content type to output.
-     *
-     * @var string ContentType
-     */
-    public static $ContentType = "text/html";
+    private static $instance = null;
 
 
     /** @var Context */
     protected $objContext;
     /** @var  JsResponse */
     protected $objJsResponse;
+    /** @var  bool Current state of output, whether it should be minimized or not. */
+    protected $blnMinimize = false;
+    /** @var  Purifier The purifier service. */
+    protected $objPurifier;
+    /** @var bool */
+    protected $blnProcessOutput = true;
+    /** @var string */
+    protected  $strCacheControl = 'private';
+    /** @var string  */
+    protected  $strContentType = "text/html";
 
+
+
+    /**
+     * Return and possibly create the application instance, which is a subclass of this class. It will be treated as
+     * a singleton.
+     *
+     * @return Application
+     */
+    public static function instance()
+    {
+        if (!self::$instance) {
+            self::$instance = new Application();
+        }
+        return self::$instance;
+    }
+
+
+    public function __construct()
+    {
+        if (defined('__MINIMIZE__') && __MINIMIZE__) {
+            $this->blnMinimize = true;
+        }
+    }
+
+    /**
+     * Set whether output should be minimized. Returns the prior state.
+     *
+     * @param $blnMinimize
+     * @return bool
+     */
+    public function setMinimize($blnMinimize)
+    {
+        $blnRet = $this->blnMinimize;
+        $this->blnMinimize = $blnMinimize;
+        return $blnRet;
+    }
 
     /**
      * Return true if all output should be minimized. Useful for production environments when you are trying to reduce
@@ -103,10 +107,7 @@ class ApplicationBase extends ObjectBase
      */
     public function minimize()
     {
-        if (defined('__MINIMIZE__') && __MINIMIZE__) {
-            return true;
-        }
-        return false;
+        return $this->blnMinimize;
     }
 
     /**
@@ -130,7 +131,7 @@ class ApplicationBase extends ObjectBase
      *
      * @return JsResponse
      */
-    protected function jsResponse()
+    public function jsResponse()
     {
         if (!$this->objJsResponse) {
             $this->objJsResponse = new JsResponse();
@@ -141,7 +142,7 @@ class ApplicationBase extends ObjectBase
     /**
      * @return string   The application encoding type.
      */
-    public function encodingType()
+    public static function encodingType()
     {
         assert(defined('__APPLICATION_ENCODING_TYPE__')); // Must be defined
         return __APPLICATION_ENCODING_TYPE__;
@@ -150,14 +151,20 @@ class ApplicationBase extends ObjectBase
     /**
      * @return string   The current docroot setting
      */
-    public function docRoot()
+    public static function docRoot()
     {
         return trim(__DOCROOT__);
     }
 
+    /**
+     * Returns true if this is a QCubed Ajax call. Note that if you are calling an entry point with ajax, but not through
+     * qcubed.js, then it will return false. If you want to know whether a particular entry point is being called with
+     * ajax that might be serving up a REST api for example, check requestMode() for Context::REQUEST_MODE_AJAX
+     * @return bool
+     */
     public static function isAjax()
     {
-        return Application::instance()->context()->requestMode() == Context::REQUEST_MODE_AJAX;
+        return Application::instance()->context()->requestMode() == Context::REQUEST_MODE_QCUBED_AJAX;
     }
 
     /**
@@ -200,6 +207,72 @@ class ApplicationBase extends ObjectBase
     }
 
     /**
+     * Use the purifier to purify text, initializing it if it does not exist.
+     *
+     * @param $strText
+     * @param null|\HTMLPurifier_Config $objCustomConfig
+     * @return string
+     */
+    public static function purify($strText, $objCustomConfig = null)
+    {
+        if (!Application::instance()->objPurifier) {
+            Application::instance()->initPurifier();
+        }
+        return Application::instance()->objPurifier->purify($strText, $objCustomConfig);
+    }
+
+    abstract function initPurifier();
+
+    /**
+     * Whether or not we are currently trying to Process the Output of the page.
+     * Used by the OutputPage PHP output_buffering handler.  As of PHP 5.2,
+     * this gets called whenever ob_get_contents() is called.  Because some
+     * classes like QFormBase utilizes ob_get_contents() to perform template
+     * evaluation without wanting to actually perform OutputPage, this flag
+     * can be set/modified by QFormBase::EvaluateTemplate accordingly to
+     * prevent OutputPage from executing.
+     *
+     * Also set this to false if you are outputting custom headers, especially
+     * if you send your own "Content-Type" header.
+     *
+     * @param $blnProcess
+     * @return bool
+     */
+    public static function setProcessOutput($blnProcess)
+    {
+        $blnOldValue = Application::instance()->blnProcessOutput;
+        Application::instance()->blnProcessOutput = $blnProcess;
+        return $blnOldValue;
+    }
+    /**
+     * Definition of CacheControl for the HTTP header.  In general, it is
+     * recommended to keep this as "private".  But this can/should be overriden
+     * for file/scripts that have special caching requirements.
+     *
+     * Returns old value.
+     *
+     * @param string $strControl The new value
+     * @return string The old value
+     */
+    public static function setCacheControl($strControl) {
+        $strOldValue = Application::instance()->strCacheControl;
+        Application::instance()->strCacheControl = $strControl;
+        return $strOldValue;
+    }
+
+    /**
+     * The content type to output.
+     *
+     * @param string $strContentType
+     * @return string The old value
+     */
+    public static function setContentType($strContentType) {
+        $strOldValue = Application::instance()->strCacheControl;
+        Application::instance()->strCacheControl = $strContentType;
+        return $strOldValue;
+    }
+
+    /**
      * This will redirect the user to a new web location.  This can be a relative or absolute web path, or it
      * can be an entire URL.
      *
@@ -215,7 +288,7 @@ class ApplicationBase extends ObjectBase
             // Use the javascript command mechanism
             Application::instance()->jsResponse()->setLocation($strLocation);
         } else {
-            /** \QCubed\Project\Control\Form */
+            /** @var \QCubed\Project\Control\FormBase */
             global $_FORM;
 
             if ($_FORM) {
@@ -225,10 +298,7 @@ class ApplicationBase extends ObjectBase
             // Clear the output buffer (if any)
             ob_clean();
 
-            if (Application::isAjax() ||
-                (array_key_exists('Qform__FormCallType', $_POST) &&
-                    ($_POST['Qform__FormCallType'] == QCallType::Ajax))
-            ) {
+            if (Application::isAjax()) {
                 Application::sendAjaxResponse(array(JsResponse::LOCATION => $strLocation));
             } else {
                 // Was "DOCUMENT_ROOT" set?
@@ -296,7 +366,7 @@ class ApplicationBase extends ObjectBase
         $strDomain = null,
         $blnSecure = false
     ) {
-        if (QApplication::$RequestMode == QRequestMode::Ajax) {
+        if (self::isAjax()) {
             self::executeJsFunction('qcubed.setCookie',
                 $strName,
                 $strValue,
@@ -327,107 +397,6 @@ class ApplicationBase extends ObjectBase
 
 
     /**
-     * By default, this is used by the codegen and form drafts to do a quick check
-     * on the ALLOW_REMOTE_ADMIN constant (as defined in configuration.inc.php).  If enabled,
-     * then anyone can access the page.  If disabled, only "localhost" can access the page.
-     * If you want to run a script that should be accessible regardless of
-     * ALLOW_REMOTE_ADMIN, simply remove the CheckRemoteAdmin() method call from that script.
-     *
-     * @throws QRemoteAdminDeniedException
-     * @return void
-     */
-    public static function checkRemoteAdmin()
-    {
-        if (!QApplication::isRemoteAdminSession()) {
-            return;
-        }
-
-        // If we're here -- then we're not allowed to access.  Present the Error/Issue.
-        header($_SERVER['SERVER_PROTOCOL'] . ' 401 Access Denied');
-        header('Status: 401 Access Denied', true);
-
-        throw new QRemoteAdminDeniedException();
-    }
-
-    /**
-     * Checks whether the current request was made by an ADMIN
-     * This does not refer to your Database admin or an Admin user defined in your application but an IP address
-     * (or IP address range) defined in configuration.inc.php.
-     *
-     * The function can be used to restrict access to sensitive pages to a list of IPs (or IP ranges), such as the LAN to which
-     * the server hosting the QCubed application is connected.
-     * @static
-     * @return bool
-     */
-    public static function isRemoteAdminSession()
-    {
-        // Allow Remote?
-        if (ALLOW_REMOTE_ADMIN === true) {
-            return false;
-        }
-
-        // Are we localhost?
-        if (substr($_SERVER['REMOTE_ADDR'], 0, 4) == '127.' || $_SERVER['REMOTE_ADDR'] == '::1') {
-            return false;
-        }
-
-        // Are we the correct IP?
-        if (is_string(ALLOW_REMOTE_ADMIN)) {
-            foreach (explode(',', ALLOW_REMOTE_ADMIN) as $strIpAddress) {
-                if (QApplication::isIPInRange($_SERVER['REMOTE_ADDR'], $strIpAddress) ||
-                    (array_key_exists('HTTP_X_FORWARDED_FOR',
-                            $_SERVER) && (QApplication::isIPInRange($_SERVER['HTTP_X_FORWARDED_FOR'], $strIpAddress)))
-                ) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Checks whether the given IP falls into the given IP range
-     * @static
-     * @param string $ip the IP number to check
-     * @param string $range the IP number range. The range could be in 'IP/mask' or 'IP - IP' format. mask could be a simple
-     * integer or a dotted netmask.
-     * @return bool
-     */
-    public static function isIPInRange($ip, $range)
-    {
-        $ip = trim($ip);
-        if (strpos($range, '/') !== false) {
-            // we are given a IP/mask
-            list($net, $mask) = explode('/', $range);
-            $net = ip2long(trim($net));
-            $mask = trim($mask);
-            //$ip_net = ip2long($net);
-            if (strpos($mask, '.') !== false) {
-                // mask has the dotted notation
-                $ip_mask = ip2long($mask);
-            } else {
-                // mask is an integer
-                $ip_mask = ~((1 << (32 - $mask)) - 1);
-            }
-            $ip = ip2long($ip);
-            return ($net & $ip_mask) == ($ip & $ip_mask);
-        }
-        if (strpos($range, '-') !== false) {
-            // we are given an IP - IP range
-            list($first, $last) = explode('-', $range);
-            $first = ip2long(trim($first));
-            $last = ip2long(trim($last));
-            $ip = ip2long($ip);
-            return $first <= $ip && $ip <= $last;
-        }
-
-        // $range is a simple IP
-        return $ip == trim($range);
-    }
-
-
-    /**
      * Causes the browser to display a JavaScript alert() box with supplied message
      * @param string $strMessage Message to be displayed
      */
@@ -449,7 +418,7 @@ class ApplicationBase extends ObjectBase
      * @param string $strPriority
      * @throws QCallerException
      */
-    public static function executeJavaScript($strJavaScript, $strPriority = QJsPriority::Standard)
+    public static function executeJavaScript($strJavaScript, $strPriority = self::PRIORITY_STANDARD)
     {
         Application::instance()->jsResponse()->executeJavaScript($strJavaScript, $strPriority);
     }
@@ -464,9 +433,9 @@ class ApplicationBase extends ObjectBase
      * @param string $strControlId Id of control to direct the command to.
      * @param string $strFunctionName Function name to call. For jQueryUI, this would be the widget name
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
-     *                                        end with a QJsPriority to prioritize the command.
+     *                                        end with a PRIORITY_* to prioritize the command.
      */
-    public static function executeControlCommand($strControlId, $strFunctionName /*, ..., QJsPriority */)
+    public static function executeControlCommand($strControlId, $strFunctionName /*, ..., PRIORITY_* */)
     {
         $args = func_get_args();
         call_user_func_array([Application::instance()->jsResponse(), 'executeControlCommand'], $args);
@@ -479,10 +448,10 @@ class ApplicationBase extends ObjectBase
      * @param array|string $mixSelector
      * @param string $strFunctionName
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
-     *                                        end with a QJsPriority to prioritize the command.
+     *                                        end with a PRIORITY_* to prioritize the command.
      * @throws QCallerException
      */
-    public static function executeSelectorFunction($mixSelector, $strFunctionName /*, ..., QJsPriority */)
+    public static function executeSelectorFunction($mixSelector, $strFunctionName /*, ..., PRIORITY_* */)
     {
         $args = func_get_args();
         call_user_func_array([Application::instance()->jsResponse(), 'executeSelectorFunction'], $args);
@@ -494,7 +463,7 @@ class ApplicationBase extends ObjectBase
      * The function can be inside an object accessible from the global namespace by separating with periods.
      * @param string $strFunctionName Can be namespaced, as in "qcubed.func".
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
-     *                                        end with a QJsPriority to prioritize the command.
+     *                                        end with a PRIORITY_* to prioritize the command.
      */
     public static function executeJsFunction($strFunctionName /*, ... */)
     {
@@ -521,43 +490,48 @@ class ApplicationBase extends ObjectBase
     }
 
     /**
-     * Outputs the current page with the buffer data
+     * Outputs the current page with the buffer data.
+     *
+     * When directly outputting a QForm (Server or New), it needs to do some special things around cache control and content type.
+     *
+     * When outputting Ajax, it needs to send out JSON.
+     *
+     * Otherwise, in situations where we have some kind of PHP file that is doing more unique processing, like outputting a JPEG file,
+     * a PDF or a REST service, we need to just send out the page unmodified, and trust that PHP file to do the right thing regarding
+     * headers and the like.
+     *
      * @param string $strBuffer Buffer data
      *
      * @return string
      */
     public static function outputPage($strBuffer)
     {
-        // If the ProcessOutput flag is set to false, simply return the buffer
-        // without processing anything.
-        if (!QApplication::$ProcessOutput) {
-            return $strBuffer;
-        }
+        global $_FORM;
 
-        if (QApplication::$ErrorFlag) {
-            return $strBuffer;
+        if (\QCubed\Error\Manager::isError() ||
+            Application::isAjax() ||
+            empty($_FORM) ||
+            !Application::instance()->blnProcessOutput
+        ) {
+            return trim($strBuffer);
         } else {
-            if (Application::isAjax()) {
-                return trim($strBuffer);
-            } else {
-                // Update Cache-Control setting
-                header('Cache-Control: ' . QApplication::$CacheControl);
-                // make sure the server does not override the character encoding value by explicitly sending it out as a header.
-                // some servers will use an internal default if not specified in the header, and that will override the "encoding" value sent in the text.
-                header(sprintf('Content-Type: %s; charset=%s', strtolower(QApplication::$ContentType),
-                    strtolower(Application::instance()->encodingType())));
+            // We are outputting a QForm
+            header('Cache-Control: ' . Application::instance()->strCacheControl);
+            // make sure the server does not override the character encoding value by explicitly sending it out as a header.
+            // some servers will use an internal default if not specified in the header, and that will override the "encoding" value sent in the text.
+            header(sprintf('Content-Type: %s; charset=%s', strtolower(Application::instance()->strCacheControl),
+                strtolower(Application::encodingType())));
 
-                /*
-                 * Normally, FormBase->RenderEnd will render the javascripts. In the unusual case
-                 * of not rendering with a QForm object, this will still output embedded javascript commands.
-                 */
-                $strScript = Application::instance()->jsResponse()->renderJavascript();
-                if ($strScript) {
-                    return $strBuffer . '<script type="text/javascript">' . $strScript . '</script>';
-                }
-
-                return $strBuffer;
+            /*
+             * Normally, FormBase->renderEnd will render the javascripts. In the unusual case
+             * of not rendering with a QForm object, this will still output embedded javascript commands.
+             */
+            $strScript = Application::instance()->jsResponse()->renderJavascript();
+            if ($strScript) {
+                return $strBuffer . '<script type="text/javascript">' . $strScript . '</script>';
             }
+
+            return $strBuffer;
         }
     }
 
@@ -566,13 +540,13 @@ class ApplicationBase extends ObjectBase
         if (php_sapi_name() !== 'cli' &&    // Do not buffer the command line interface
             !defined('__NO_OUTPUT_BUFFER__')
         ) {
-            ob_start('QApplicationBase::EndOutputBuffering');
+            ob_start('\QCubed\ApplicationBase::endOutputBuffering');
         }
     }
 
     public static function endOutputBuffering($strBuffer)
     {
-        return QApplication::outputPage($strBuffer);
+        return static::outputPage($strBuffer);
     }
 
 
@@ -625,8 +599,8 @@ class ApplicationBase extends ObjectBase
     {
         header('Content-Type: text/json'); // not application/json, as IE reportedly blows up on that, but jQuery knows what to do.
         $strJSON = Js\Helper::toJSON($strResponseArray);
-        if (Application::instance()->encodingType() && Application::instance()->encodingType() != 'UTF-8') {
-            $strJSON = iconv(Application::instance()->encodingType(), 'UTF-8', $strJSON); // json must be UTF-8 encoded
+        if (Application::encodingType() && Application::encodingType() != 'UTF-8') {
+            $strJSON = iconv(Application::encodingType(), 'UTF-8', $strJSON); // json must be UTF-8 encoded
         }
         print($strJSON);
     }
@@ -689,12 +663,12 @@ class ApplicationBase extends ObjectBase
         printf('<li>ERROR_PAGE_PATH = "%s"</li>', ERROR_PAGE_PATH);
         printf('<li>PHP Include Path = "%s"</li>', get_include_path());
         printf('<li>DocumentRoot = "%s"</li>', Application::instance()->docRoot());
-        printf('<li>QApplication::$EncodingType = "%s"</li>', Application::instance()->encodingType());
-        printf('<li>QApplication::$PathInfo = "%s"</li>', Application::instance()->context()->pathInfo());
+        printf('<li>EncodingType = "%s"</li>', Application::encodingType());
+        printf('<li>PathInfo = "%s"</li>', Application::instance()->context()->pathInfo());
         printf('<li>QueryString = "%s"</li>', Application::instance()->context()->queryString());
         printf('<li>RequestUri = "%s"</li>', Application::instance()->context()->requestUri());
-        printf('<li>QApplication::$ScriptFilename = "%s"</li>', Application::instance()->context()->scriptFileName());
-        printf('<li>QApplication::$ScriptName = "%s"</li>', Application::instance()->context()->scriptName());
+        printf('<li>ScriptFilename = "%s"</li>', Application::instance()->context()->scriptFileName());
+        printf('<li>ScriptName = "%s"</li>', Application::instance()->context()->scriptName());
         printf('<li>ServerAddress = "%s"</li>', Application::instance()->context()->serverAddress());
 
         if (DatabaseService::isInitialized()) {

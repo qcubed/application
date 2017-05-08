@@ -9,11 +9,12 @@
 
 namespace QCubed\Action;
 
-use \QCubed\Exception\Caller;
+use QCubed\Exception\Caller;
 use QCubed\Jqui\Event\AbstractProperty;
 use QCubed\ObjectBase;
 use QCubed\Type;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Application;
 
 
 /**
@@ -109,7 +110,7 @@ abstract class ActionBase extends ObjectBase
             }
 
             if (isset($strOut)) {
-                if (!QApplication::$Minimize) {
+                if (!Application::instance()->minimze) {
                     // Render a comment
                     $strOut = _nl() . _nl() .
                         sprintf('/*** Event: %s  Control Type: %s, Control Name: %s, Control Id: %s  ***/',

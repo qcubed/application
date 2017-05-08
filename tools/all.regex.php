@@ -1750,7 +1750,7 @@ return array (
   ),
   'regex' => 
   array (
-    'QApplication::\\$EncodingType' => '\\QCubed\\Project\\Application::instance()->encodingType()',
+    'QApplication::\\$EncodingType' => '\\QCubed\\Project\\Application::encodingType()',
     'QApplication::\\$CliMode' => '\\QCubed\\Project\\Application::instance()->context()->cliMode()',
     'QApplication::\\$ServerAddress' => '\\QCubed\\Project\\Application::instance()->context()->serverAddress()',
     'QApplication::\\$ScriptFilename' => '\\QCubed\\Project\\Application::instance()->context()->scriptFileName()',
@@ -1763,7 +1763,7 @@ return array (
     'QApplication::\\$DocumentRoot' => '\\QCubed\\Project\\Application::instance()->context()->docRoot()',
     'QApplication::\\$Minimize' => '\\QCubed\\Project\\Application::instance()->context()->minimize()',
     'QApplication::\\$RequestMode' => '\\QCubed\\Project\\Application::instance()->context()->requestMode()',
-    'QApplicationBase::\\$EncodingType' => '\\QCubed\\Project\\Application::instance()->encodingType()',
+    'QApplicationBase::\\$EncodingType' => '\\QCubed\\Project\\Application::encodingType()',
     'QApplicationBase::\\$CliMode' => '\\QCubed\\Project\\Application::instance()->context()->cliMode()',
     'QApplicationBase::\\$ServerAddress' => '\\QCubed\\Project\\Application::instance()->context()->serverAddress()',
     'QApplicationBase::\\$ScriptFilename' => '\\QCubed\\Project\\Application::instance()->context()->scriptFileName()',

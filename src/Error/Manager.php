@@ -12,7 +12,14 @@ namespace QCubed\Error;
 class Manager
 {
     /** @var bool */
-    public static $errorFlag = false; // indicates an error occurred
+    protected static $errorFlag = false; // indicates an error occurred
+
+    /**
+     * @return bool
+     */
+    public static function isError() {
+        return static::$errorFlag;
+    }
 
     /**
      * Set Error/Exception Handling to the default

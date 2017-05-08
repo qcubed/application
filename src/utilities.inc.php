@@ -1,5 +1,6 @@
 <?php
 use QCubed as Q;
+use QCubed\Project\Application;
 
 /**
  * Utility code to make common control management and rendering tasks easier to type.
@@ -89,7 +90,7 @@ function _tp($strString, $blnHtmlEntities = true) {
  * @return string
  */
 function _nl($strText = null) {
-	if (\QCubed\Project\Application::instance()->minimize()) {
+	if (Application::instance()->minimize()) {
 		return $strText;
 	} else {
 		if ($strText === null) return "\n";
@@ -115,7 +116,7 @@ function _nl($strText = null) {
  * @return string
  */
 function _indent($strText, $intCount = 1) {
-	if (!defined('__CODE_GENERATING__') && QApplication::$Minimize) {
+	if (!defined('__CODE_GENERATING__') && Application::instance()->minimze()) {
 		return $strText;
 	} else {
 		if (defined ('__CODE_GENERATING__')) {

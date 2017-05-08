@@ -11,6 +11,7 @@ namespace QCubed\Control\TableColumn;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\Html;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\ControlBase as QControl;
@@ -57,7 +58,7 @@ class Checkbox extends Data
         if ($this->blnShowCheckAll) {
             $aParams = $this->getCheckboxParams(null);
             $aParams['type'] = 'checkbox';
-            return QHtml::renderTag('input', $aParams, null, true);
+            return Html::renderTag('input', $aParams, null, true);
         } else {
             return $this->Name;
         }
@@ -67,7 +68,7 @@ class Checkbox extends Data
     {
         $aParams = $this->getCheckboxParams($item);
         $aParams['type'] = 'checkbox';
-        return QHtml::renderTag('input', $aParams, null, true);
+        return Html::renderTag('input', $aParams, null, true);
     }
 
     /**

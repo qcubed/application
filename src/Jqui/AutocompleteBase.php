@@ -137,7 +137,7 @@ class AutocompleteBase extends AutocompleteGen
     public function getEndScript()
     {
         $strJS = parent::getEndScript();
-        QApplication::executeJsFunction('qc.autocomplete', $this->getJqControlId(), QJsPriority::High);
+        Application::executeJsFunction('qc.autocomplete', $this->getJqControlId(), Application::PRIORITY_HIGH);
 
         return $strJS;
     }
@@ -149,7 +149,8 @@ class AutocompleteBase extends AutocompleteGen
         if (!$dataSource) {
             $dataSource = array();
         }
-        QApplication::executeJsFunction('qc.acSetData', $this->getJqControlId(), $dataSource, QJsPriority::Exclusive);
+        Application::executeJsFunction('qc.acSetData', $this->getJqControlId(), $dataSource,
+            Application::PRIORITY_EXCLUSIVE);
     }
 
     /**

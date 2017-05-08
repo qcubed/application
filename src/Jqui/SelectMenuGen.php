@@ -116,14 +116,14 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
         if ($strId !== $this->ControlId && Application::isAjax()) {
             // If events are not attached to the actual object being drawn, then the old events will not get
             // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
-            Application::instance()->executeControlCommand($strId, 'off', QJsPriority::High);
+            Application::executeControlCommand($strId, 'off', Application::PRIORITY_HIGH);
         }
 
         // Attach the javascript widget to the html object
         if (empty($jqOptions)) {
-            Application::instance()->executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
         } else {
-            Application::instance()->executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
+            Application::executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
         }
 
         return parent::getEndScript();
@@ -136,7 +136,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function close()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close", Application::PRIORITY_LOW);
     }
     /**
      * Removes the selectmenu functionality completely. This will return the
@@ -146,7 +146,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function destroy()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "destroy", Application::PRIORITY_LOW);
     }
     /**
      * Disables the selectmenu.
@@ -155,7 +155,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function disable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "disable", Application::PRIORITY_LOW);
     }
     /**
      * Enables the selectmenu.
@@ -164,7 +164,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function enable()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "enable", Application::PRIORITY_LOW);
     }
     /**
      * Retrieves the selectmenus instance object. If the element does not
@@ -177,7 +177,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function instance()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "instance", Application::PRIORITY_LOW);
     }
     /**
      * Returns a jQuery object containing the menu element.
@@ -186,7 +186,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function menuWidget()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "menuWidget", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "menuWidget", Application::PRIORITY_LOW);
     }
     /**
      * Opens the menu.
@@ -195,7 +195,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function open()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "open", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "open", Application::PRIORITY_LOW);
     }
     /**
      * Gets the value currently associated with the specified optionName.
@@ -209,7 +209,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function option($optionName)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, Application::PRIORITY_LOW);
     }
     /**
      * Gets an object containing key/value pairs representing the current
@@ -219,7 +219,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function option1()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", Application::PRIORITY_LOW);
     }
     /**
      * Sets the value of the selectmenu option associated with the specified
@@ -237,7 +237,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function option2($optionName, $value)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $optionName, $value, Application::PRIORITY_LOW);
     }
     /**
      * Sets one or more options for the selectmenu.
@@ -247,7 +247,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function option3($options)
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "option", $options, Application::PRIORITY_LOW);
     }
     /**
      * Parses the original element and re-renders the menu. Processes any
@@ -257,7 +257,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
      */
     public function refresh()
     {
-        Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
+        Application::executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "refresh", Application::PRIORITY_LOW);
     }
 
 

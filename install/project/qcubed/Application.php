@@ -3,7 +3,7 @@
 namespace QCubed\Project;
 
 use QCubed;
-use QCubed\I18n\TranslationService;
+use QCubed\Purifier;
 
 /**
  * Class Application
@@ -12,25 +12,13 @@ use QCubed\I18n\TranslationService;
  * application, and to add your own globally accessible methods and properties specific to your application.
  *
  * @package QCubed\Project
- * //was QApplication (do not put annotiation here, all transformations are manual)
+ * @was QApplication
  */
 class Application extends QCubed\ApplicationBase
 {
-    private static $instance = null;
 
     // define any services you will need for your application here
     //protected $authService;
-
-    /**
-     * @return Application
-     */
-    public static function instance()
-    {
-        if (!Application::$instance) {
-            Application::$instance = new Application();
-        }
-        return Application::$instance;
-    }
 
     /**
      * This is called by the PHP5 Autoloader.  This method overrides the
@@ -58,7 +46,6 @@ class Application extends QCubed\ApplicationBase
 
         //$this->authService = new \Project\Service\Auth();
     }
-
     /**
      * If you want to use a custom session handler, set it up here. The commented example below uses a QCubed handler that
      * puts sessions in a database.
@@ -90,4 +77,25 @@ class Application extends QCubed\ApplicationBase
         // If the user or you want a language other than english, set that here.
         //TranslationService::instance()->setLanguage('es');
     }
+
+    /**
+     * Initialize the purify which purifies text that comes from the user, preventing cross-site scripting attacks.
+     * This is a default purifier. You can modify individual text boxes if needed.
+     */
+    public function initPurifier() {
+        $this->objPurifier = new Purifier();
+    }
+
+    /**
+     * This is a stub function for you to check permissions for the current user.
+     *
+     * @param $options  Anything you want. Could be permissions required to view the current page. You would
+     * then make sure the current user is logged in, and has permissions that matched the given permissions.
+     *
+     * @return bool
+     */
+    protected function isAuthorized($options = null) {
+        return true;
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace QCubed\Project\Control;
 
 use QCubed;
+use QCubed\Project\Application;
 
 /**
  * The QListBox class is based upon QListBoxBase.
@@ -40,7 +41,7 @@ class ListBox extends QCubed\Control\ListBoxBase
             t('Reset')
         );
 
-        QApplication::executeJavaScript(sprintf('$j("#reset_ctl_%s").on("%s", function(){ %s });', $this->strControlId,
+        Application::executeJavaScript(sprintf('$j("#reset_ctl_%s").on("%s", function(){ %s });', $this->strControlId,
             "click", $strJavaScriptOnClick));
 
         return $strToReturn;
