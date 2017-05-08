@@ -1,6 +1,8 @@
 <?php
 require_once('../qcubed.inc.php');
 
+use QCubed as Q;
+
 class UrlForm extends QForm {
 	/** @var  QHtmlTable */
 	protected $dtg;
@@ -19,7 +21,7 @@ class UrlForm extends QForm {
 	}
 
 	public function dtg_LinkRender ($item) {
-		return (QHtml::RenderTag('a', ['href'=>$item], urldecode($item)));
+		return (Q\Html::RenderTag('a', ['href'=>$item], urldecode($item)));
 	}
 
 	public function dtg_ButtonRender ($item) {
@@ -37,12 +39,12 @@ class UrlForm extends QForm {
 
 	public function BindData() {
 		$a = [
-			QHtml::MakeUrl(QApplication::$ScriptName, null, 'anchor'),
-			QHtml::MakeUrl(QApplication::$ScriptName, ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back']),
-			QHtml::MakeUrl(QApplication::$ScriptName, ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back'], null, QHtml::HTTP, $_SERVER['HTTP_HOST']),
-			QHtml::MailToUrl('test', 'qcu.be', ['subject'=>'Hey you.']),
-			QHtml::MailToUrl('test', 'qcu.be', ['subject'=>'What & About \ this /']),
-			QHtml::MailToUrl('"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"', 'strange.email.com', ['subject'=>'What & About \ this /']),
+			Q\Html::MakeUrl(QApplication::$ScriptName, null, 'anchor'),
+			Q\Html::MakeUrl(QApplication::$ScriptName, ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back']),
+			Q\Html::MakeUrl(QApplication::$ScriptName, ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back'], null, QHtml::HTTP, $_SERVER['HTTP_HOST']),
+			Q\Html::MailToUrl('test', 'qcu.be', ['subject'=>'Hey you.']),
+			Q\Html::MailToUrl('test', 'qcu.be', ['subject'=>'What & About \ this /']),
+			Q\Html::MailToUrl('"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"', 'strange.email.com', ['subject'=>'What & About \ this /']),
 
 		];
 
