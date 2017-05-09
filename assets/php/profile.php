@@ -12,7 +12,7 @@
 	$strReferrer = QApplication::HtmlEntities($_POST['strReferrer']);
 
 	$objProfileArray = unserialize(base64_decode($_POST['strProfileData']));
-	$objProfileArray = QType::Cast($objProfileArray, QType::ArrayType);
+	$objProfileArray = \QCubed\Type::Cast($objProfileArray, \QCubed\Type::ARRAY_TYPE);
 	$intCount = count($objProfileArray);
 	
 	function PrintExplainStatement($strOriginalQuery) {
