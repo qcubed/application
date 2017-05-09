@@ -12,9 +12,8 @@ use QCubed as Q;
  * to make changes to this file.
  *
  * @see DatepickerBoxBase
- * @was QDatepicker
+ * @was QDatepickerBox
  */
-
 class DatepickerBox extends Q\Jqui\DatepickerBoxBase
 {
 }

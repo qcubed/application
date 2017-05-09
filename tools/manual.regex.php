@@ -122,4 +122,19 @@ $a['regex']['\\bForm_Exit\\s{0,3}\\('] = 'formExit(';
 $a['regex']['\\$this->RenderBegin\\('] = '$this->renderBegin(';
 $a['regex']['\\$this->RenderEnd\\('] = '$this->renderEnd(';
 
+$a['regex']['->HorizontalAlign'] = '->TextAlign';
+$a['class']['QHorizontalAlign'] = '\\QCubed\Css\\TextAlign';
+$a['const']['\\QCubed\Css\\TextAlign::Center'] = '\\QCubed\Css\\TextAlign::CENTER';
+$a['const']['\\QCubed\Css\\TextAlign::Right'] = '\\QCubed\Css\\TextAlign::RIGHT';
+$a['const']['\\QCubed\Css\\TextAlign::Left'] = '\\QCubed\Css\\TextAlign::LEFT';
+
+$a['regex']['const EventName'] = 'const EVENT_NAME';
+$a['regex']['const JsReturnParam'] = 'const JS_RETURN_PARAM';
+
+$a['const']['QDateTimePickerType::Date'] = '\\QCubed\Control\\DateTimePicker::SHOW_DATE';
+$a['const']['QDateTimePickerType::DateTime'] = '\\QCubed\Control\\DateTimePicker::SHOW_DATE_TIME';
+$a['const']['QDateTimePickerType::DateTimeSeconds'] = '\\QCubed\Control\\DateTimePicker::SHOW_DATE_TIME_SECONDS';
+$a['const']['QDateTimePickerType::Time'] = '\\QCubed\Control\\DateTimePicker::SHOW_TIME';
+$a['const']['QDateTimePickerType::TimeSeconds'] = '\\QCubed\Control\\DateTimePicker::SHOW_TIME_SECONDS';
+
 return $a;

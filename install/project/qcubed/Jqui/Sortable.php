@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see SortableBase
  * @was QSortable
  */
-
 class Sortable extends Q\Jqui\SortableBase
 {
 }

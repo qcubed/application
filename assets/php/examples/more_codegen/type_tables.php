@@ -64,7 +64,7 @@
 	<h2>List the employees and their options.</h2>
 <?php
 	// Load all the people and expand the type array associated with the person table
-	$objClauses[] = QQ::ExpandAsArray (QQN::Person()->PersonType);
+	$objClauses[] = \QCubed\Query\QQ::ExpandAsArray (QQN::Person()->PersonType);
 	$objPeople = Person::LoadAll($objClauses);
 	
 	foreach ($objPeople as $objPerson) {

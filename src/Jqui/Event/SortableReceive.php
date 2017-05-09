@@ -43,7 +43,8 @@ namespace QCubed\Jqui\Event;
  * element being used as a placeholder.
  * 
  *
- * @was QSortable_Receive */
+ * @was QSortable_ReceiveEvent
+ */
 class SortableReceive extends EventBase
 {
     const EVENT_NAME = 'sortreceive';

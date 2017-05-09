@@ -9,6 +9,14 @@
 
 namespace QCubed\Event;
 
+/**
+ * Class CheckboxColumnClick
+ *
+ * Registers a click on a table checkbox column.
+ *
+ * @package QCubed\Event
+ * @was QHtmlTableCheckBoxColumn_ClickEvent
+ */
 class CheckboxColumnClick extends Click
 {
     const JS_RETURN_PARAM = '{"row": $j(this).closest("tr")[0].rowIndex, "col": $j(this).closest("th,td")[0].cellIndex, "checked":this.checked, "id":this.id}'; // returns the array of cell info, and the new state of the checkbox

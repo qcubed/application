@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Generated ModelConnector Objects</h1>
@@ -17,7 +17,7 @@
 	<strong>ModelConnector</strong> for your own customizations.
 
 <p>For each field in a class, you can have the <strong>ModelConnector</strong> return for you a data bound
-	and setup <strong>QControl</strong> for editing, or a <strong>QLabel</strong> just for viewing.  But because these ModelConnectors
+	and setup <strong>QControl</strong> for editing, or a <strong>\QCubed\Control\Label</strong> just for viewing.  But because these ModelConnectors
 	are simply returning standard QControls, you can then modify them (stylizing, adding events, etc.) as you normally would
 	any other control.</p>
 
@@ -56,7 +56,7 @@
 
 <p>Finally, note that since the <strong>ModelConnectors</strong> encapsulate all the functionality for a given
 	instance of a given object, and since it is able to keep track of and maintain its own
-	set of controls, you can easily have multiple <strong>ModelConnectors</strong> on any <strong>QForm</strong> or <strong>QPanel</strong>,
+	set of controls, you can easily have multiple <strong>ModelConnectors</strong> on any <strong>\QCubed\Project\Control\FormBase</strong> or <strong>\QCubed\Control\Panel</strong>,
 	view or edit multiple objects of any class at the same time.</p>
 </div>
 
@@ -72,5 +72,5 @@
 	</p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

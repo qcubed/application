@@ -36,7 +36,8 @@ namespace QCubed\Jqui\Event;
  * helper as { top, left } object.
  * 
  *
- * @was QDroppable_Deactivate */
+ * @was QDroppable_DeactivateEvent
+ */
 class DroppableDeactivate extends EventBase
 {
     const EVENT_NAME = 'dropdeactivate';

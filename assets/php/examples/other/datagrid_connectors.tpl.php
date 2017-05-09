@@ -1,12 +1,12 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 	<div id="instructions">
 		<h1>Generated List Objects</h1>
 
 		<p>Although the <em>concept</em> is known as a List <strong>Connector</strong> ... the generated <strong>ListConnector</strong> objects
 			are subclasses <strong>QControl</strong> objects that are designed for listing database tables.
-			<strong>QDataGrid</strong> objects are the default control for this, but other types of controls are possible. (Note that this is different
+			<strong>\QCubed\Project\Control\DataGrid</strong> objects are the default control for this, but other types of controls are possible. (Note that this is different
 			than a <strong>ModelConnector</strong>, which is <em>/not</em> a control, but is in fact a single data object
 			and a collection of controls that can be generated from and linked to it.)</p>
 
@@ -28,5 +28,5 @@
 		<?php $this->dtgProjects->Render(); ?>
 	</div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

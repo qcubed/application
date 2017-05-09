@@ -1,63 +1,63 @@
 <?php
 require_once('../qcubed.inc.php');
 
-// Define the Qform with all our Qcontrols
-class ExamplesForm extends QForm {
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExamplesForm extends \QCubed\Project\Control\FormBase {
 
 	// Local declarations of our Qcontrols
 	protected $lblMessage;
 	protected $btnButton;
 
-	protected function Form_Run() {
+	protected function formRun() {
 		_p('<br><br><br><br><br>', false); // Compensating for the examples header
 
-		_p('<b>Form_Run</b> called<br/>', false);
+		_p('<b>formRun</b> called<br/>', false);
 	}
 
 	// Initialize our Controls during the Form Creation process
-	protected function Form_Create() {
-		_p('<b>Form_Create</b> called<br/>', false);
+	protected function formCreate() {
+		_p('<b>formCreate</b> called<br/>', false);
 		// Define the Label -- Set HtmlEntities to false because we intend on hard coding HTML into the Control
-		$this->lblMessage = new QLabel($this);
+		$this->lblMessage = new \QCubed\Control\Label($this);
 		$this->lblMessage->HtmlEntities = false;
 		$this->lblMessage->Text = 'Click the button to change my message.';
 
 		// Definte the Button
-		$this->btnButton = new QButton($this);
+		$this->btnButton = new \QCubed\Project\Jqui\Button($this);
 		$this->btnButton->Text = 'Click Me!';
 
-		// We add CausesValidation to the Button so that Form_Validate() will get called
+		// We add CausesValidation to the Button so that formValidate() will get called
 		$this->btnButton->CausesValidation = true;
 
 		// Add a Click event handler to the button -- the action to run is a ServerAction (e.g. PHP method)
 		// called "btnButton_Click"
-		$this->btnButton->AddAction(new QClickEvent(), new QServerAction('btnButton_Click'));
+		$this->btnButton->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('btnButton_Click'));
 	}
 
-	protected function Form_Load() {
-		_p('<b>Form_Load</b> called<br/>', false);
+	protected function formLoad() {
+		_p('<b>formLoad</b> called<br/>', false);
 	}
 
-	protected function Form_PreRender() {
-		_p('<b>Form_PreRender</b> called<br/>', false);
+	protected function formPreRender() {
+		_p('<b>formPreRender</b> called<br/>', false);
 	}
 
-	protected function Form_Validate() {
-		_p('<b>Form_Validate</b> called<br/>', false);
+	protected function formValidate() {
+		_p('<b>formValidate</b> called<br/>', false);
 
 		// Form_Validate needs to return true or false
 		return true;
 	}
 
-	protected function Form_Exit() {
-		_p('<b>Form_Exit</b> called<br/>', false);
+	protected function formExit() {
+		_p('<b>formExit</b> called<br/>', false);
 	}
 
 	// The "btnButton_Click" Event handler
 	protected function btnButton_Click($strFormId, $strControlId, $strParameter) {
 		_p('<b>btnButton_Click</b> called<br/>', false);
 		$this->lblMessage->Text = 'Hello, world!<br/>';
-		$this->lblMessage->Text .= 'Note that instead of <b>Form_Create</b> being called, we are now calling <b>Form_Load</b> and <b>btnButton_Click</b>';
+		$this->lblMessage->Text .= 'Note that instead of <b>formCreate</b> being called, we are now calling <b>formLoad</b> and <b>btnButton_Click</b>';
 	}
 
 }

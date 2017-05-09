@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see ControlgroupBase
  * @was QControlgroup
  */
-
 class Controlgroup extends Q\Jqui\ControlgroupBase
 {
 }

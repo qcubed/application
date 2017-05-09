@@ -5,10 +5,10 @@ require_once('../qcubed.inc.php');
 
 // The following code sets up a temporary watcher just for this example, since the examples are based on the default
 // installation of the code, and the default installation does not create a watcher class. Normally, to be able to
-// use watchers correctly, you must edit the QWatcher.class.php to specify the kind of watcher you want to use.
+// use watchers correctly, you must edit the \QCubed\Project\Watcher\Watcher.class.php to specify the kind of watcher you want to use.
 
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
 	// Declare the DataGrid
 	protected $dtgPersons;
@@ -16,12 +16,12 @@ class ExampleForm extends QForm {
 	protected $txtLastName;
 	protected $btnNew;
 	protected $timer;
-	/** @var  QControlProxy */
+	/** @var  \QCubed\Control\Proxy */
 	protected $pxyDelete;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid
-		$this->dtgPersons = new QDataGrid($this);
+		$this->dtgPersons = new \QCubed\Project\Control\DataGrid($this);
 
 		// Define Columns
 		$this->dtgPersons->CreateNodeColumn('First Name', QQN::Person()->FirstName);
@@ -32,25 +32,25 @@ class ExampleForm extends QForm {
 
 		// By default, the examples database uses the qc_watchers table to record when a something in the database has changed.
 		// To configure this, including changing the table name, or even using a shared caching mechanism like
-		// APC or Memcached, modify the QWatcher class in project/includes/controls
+		// APC or Memcached, modify the \QCubed\Project\Watcher\Watcher class in project/includes/controls
 		
 		// Tell the datagrid to watch the Person table.
 		$this->dtgPersons->Watch(QQN::Person());
 
 		// Create a timer to periodically check whether another user has changed the database. Depending on your
 		// application, you might not need to do this, as any activity the user does to a control will also check.
-		//$this->timer = new QJsTimer($this, 500, true);
-		//$this->timer->AddAction(new QTimerExpiredEvent(), new QAjaxAction());
+		//$this->timer = new \QCubed\Project\Control\JsTimer($this, 500, true);
+		//$this->timer->AddAction(new \QCubed\Event\TimerExpired(), new \QCubed\Action\Ajax());
 
-		$this->txtFirstName = new QTextBox($this);
-		$this->txtLastName = new QTextBox($this);
-		$this->btnNew = new QButton($this);
+		$this->txtFirstName = new \QCubed\Project\Control\TextBox($this);
+		$this->txtLastName = new \QCubed\Project\Control\TextBox($this);
+		$this->btnNew = new \QCubed\Project\Jqui\Button($this);
 		$this->btnNew->Text = 'Add';
-		$this->btnNew->AddAction (new QClickEvent(), new QAjaxAction('btnNew_Click'));
+		$this->btnNew->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnNew_Click'));
 
 		// Create a proxy control to handle clicking for a delete
-		$this->pxyDelete = new QControlProxy($this);
-		$this->pxyDelete->AddAction (new QClickEvent(), new QAjaxAction ('delete_Click'));
+		$this->pxyDelete = new \QCubed\Control\Proxy($this);
+		$this->pxyDelete->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\Ajax ('delete_Click'));
 	}
 
 	protected function dtgPersons_Bind() {

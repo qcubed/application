@@ -37,7 +37,8 @@ namespace QCubed\Jqui\Event;
  * top, left } object.
  * 
  *
- * @was QDraggable_Drag */
+ * @was QDraggable_DragEvent
+ */
 class DraggableDrag extends EventBase
 {
     const EVENT_NAME = 'drag';

@@ -1,14 +1,14 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
 	// Declare the DataGrid
 	protected $dtgPersons;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid
-		$this->dtgPersons = new QDataGrid($this, 'dtgPersons');
+		$this->dtgPersons = new \QCubed\Project\Control\DataGrid($this, 'dtgPersons');
 
 		// Style this with a QCubed built-in style that will highlight the row hovered over.
 		$this->dtgPersons->AddCssClass('clickable-rows');
@@ -24,12 +24,12 @@ class ExampleForm extends QForm {
 		$this->dtgPersons->RowParamsCallback = [$this, 'dtgPersons_GetRowParams'];
 
 		// Add an action that will detect a click on the row, and return the html data value that was created by RowParamsCallback
-		$this->dtgPersons->AddAction(new QCellClickEvent(0, null, QCellClickEvent::RowDataValue('value')), new QAjaxAction('dtgPersonsRow_Click'));
+		$this->dtgPersons->AddAction(new \QCubed\Event\CellClick(0, null, \QCubed\Event\CellClick::RowDataValue('value')), new \QCubed\Action\Ajax('dtgPersonsRow_Click'));
 	}
 
 	// DisplayFullName will be called by the DataGrid on each row, whenever it tries to render
 	// the Full Name column.  Note that we take in the $objPerson as a Person parameter.  Also
-	// note that DisplayFullName is a PUBLIC function -- because it will be called by the QDataGrid class.
+	// note that DisplayFullName is a PUBLIC function -- because it will be called by the \QCubed\Project\Control\DataGrid class.
 	public function DisplayFullName(Person $objPerson) {
 		$strToReturn = sprintf('%s, %s', $objPerson->LastName, $objPerson->FirstName);
 		return $strToReturn;
@@ -52,7 +52,7 @@ class ExampleForm extends QForm {
 
 		$objPerson = Person::Load($intPersonId);
 
-		QApplication::DisplayAlert("You clicked on a person with ID #" . $intPersonId .
+		\QCubed\Project\Application::DisplayAlert("You clicked on a person with ID #" . $intPersonId .
 				": " . $objPerson->FirstName . " " . $objPerson->LastName);
 	}
 }

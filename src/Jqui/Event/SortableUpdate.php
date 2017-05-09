@@ -43,7 +43,8 @@ namespace QCubed\Jqui\Event;
  * element being used as a placeholder.
  * 
  *
- * @was QSortable_Update */
+ * @was QSortable_UpdateEvent
+ */
 class SortableUpdate extends EventBase
 {
     const EVENT_NAME = 'sortupdate';

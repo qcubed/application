@@ -1,14 +1,14 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
-	/** @var  QHtmlTable */
+	/** @var  \QCubed\Project\Control\Table */
 	protected $dtgPersons;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid
-		$this->dtgPersons = new QHtmlTable($this);
+		$this->dtgPersons = new \QCubed\Project\Control\Table($this);
 
 		// Define Columns
 		// This first example uses a callback to draw the column, which is the most versatile way of drawing a column.

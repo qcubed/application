@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QAutocomplete_Create */
+ * @was QAutocomplete_CreateEvent
+ */
 class AutocompleteCreate extends EventBase
 {
     const EVENT_NAME = 'autocompletecreate';

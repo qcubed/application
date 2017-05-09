@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see MenuBase
  * @was QMenu
  */
-
 class Menu extends Q\Jqui\MenuBase
 {
 }

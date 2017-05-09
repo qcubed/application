@@ -34,7 +34,8 @@ namespace QCubed\Jqui\Event;
  * selected option.
  * 
  *
- * @was QAutocomplete_Select */
+ * @was QAutocomplete_SelectEvent
+ */
 class AutocompleteSelect extends EventBase
 {
     const EVENT_NAME = 'autocompleteselect';

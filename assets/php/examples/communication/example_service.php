@@ -16,17 +16,17 @@ class ExampleService extends QSoapService {
     }
 
     /**
-     * Returns the Date as a QDateTime.
+     * Returns the Date as a \QCubed\QDateTime.
      * Note that the QSoapService handler will automatically convert to a valid
      * SOAP dateTime.
      * 
      * @param int $intMonth
      * @param int $intDay
      * @param int $intYear
-     * @return QDateTime
+     * @return \QCubed\QDateTime
      */
     public function GetDate($intMonth, $intDay, $intYear) {
-        $dttToReturn = new QDateTime($intYear . '-' . $intMonth . '-' . $intDay);
+        $dttToReturn = new \QCubed\QDateTime($intYear . '-' . $intMonth . '-' . $intDay);
         return $dttToReturn;
     }
 
@@ -38,12 +38,12 @@ class ExampleService extends QSoapService {
      */
     public function GetPeople($strLastName) {
         return Person::QueryArray(
-                        QQ::Equal(QQN::Person()->LastName, $strLastName)
+                        \QCubed\Query\QQ::Equal(QQN::Person()->LastName, $strLastName)
         );
     }
 
 }
 
-// We need to RUN the WebService (just like how we run a QForm)
+// We need to RUN the WebService (just like how we run a \QCubed\Project\Control\FormBase)
 ExampleService::Run('ExampleService', 'http://examples.qcu.be');
 

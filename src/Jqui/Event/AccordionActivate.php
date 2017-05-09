@@ -38,7 +38,8 @@ namespace QCubed\Jqui\Event;
  * 	* oldPanel Type: jQuery The panel that was just deactivated.
  * 
  *
- * @was QAccordion_Activate */
+ * @was QAccordion_ActivateEvent
+ */
 class AccordionActivate extends EventBase
 {
     const EVENT_NAME = 'accordionactivate';

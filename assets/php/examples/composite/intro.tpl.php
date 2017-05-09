@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Creating a Control of Controls</h1>
@@ -40,5 +40,5 @@
 	<p><?php $this->lblMessage->Render(); ?></p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

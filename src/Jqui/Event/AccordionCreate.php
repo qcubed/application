@@ -31,7 +31,8 @@ namespace QCubed\Jqui\Event;
  * 	* panel Type: jQuery The active panel.
  * 
  *
- * @was QAccordion_Create */
+ * @was QAccordion_CreateEvent
+ */
 class AccordionCreate extends EventBase
 {
     const EVENT_NAME = 'accordioncreate';

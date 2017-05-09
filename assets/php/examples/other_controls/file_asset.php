@@ -1,13 +1,13 @@
 <?php
 	require_once('../qcubed.inc.php');
 
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		protected $flaSample;
 
 		protected $lblMessage;
 		protected $btnButton;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Define the sample QFileAssset control -- make it required to show off validation
 			$this->flaSample = new QFileAsset($this);
 			$this->flaSample->Required = true;
@@ -33,14 +33,14 @@
 			$this->flaSample->CssClass = 'file_asset';
 			$this->flaSample->imgFileIcon->CssClass = 'file_asset_icon';
 
-			$this->lblMessage = new QLabel($this);
+			$this->lblMessage = new \QCubed\Control\Label($this);
 			$this->lblMessage->Text = 'Click on the button to change this message.';
 
 			// The "Form Submit" Button -- notice how the form is being submitted via AJAX, even though we are handling
 			// File Uploads on the form.
-			$this->btnButton = new QButton($this);
+			$this->btnButton = new \QCubed\Project\Jqui\Button($this);
 			$this->btnButton->Text = 'Click Me';
-			$this->btnButton->AddAction(new QClickEvent(), new QAjaxAction('btnButton_Click'));
+			$this->btnButton->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnButton_Click'));
 			$this->btnButton->CausesValidation = true;
 		}
 

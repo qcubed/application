@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see SelectableBase
  * @was QSelectable
  */
-
 class Selectable extends Q\Jqui\SelectableBase
 {
 }

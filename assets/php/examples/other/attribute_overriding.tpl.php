@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Overriding QControl Attributes</h1>
@@ -25,7 +25,7 @@
 
 	<p>In theory, if you have a designer working on the design and a developer working on the display
 		logic, the designer should be able to make changes to the design in the HTML template file
-		without needing the intervention of the developer working on the <strong>QForm</strong> object definition.</p>
+		without needing the intervention of the developer working on the <strong>\QCubed\Project\Control\FormBase</strong> object definition.</p>
 </div>
 
 <div id="demoZone">
@@ -36,5 +36,5 @@
 	<p><?php $this->btnButton->Render(); ?></p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

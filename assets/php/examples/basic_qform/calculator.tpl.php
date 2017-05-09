@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>The Four-Function Calculator: Our First Simple Application</h1>
@@ -7,11 +7,11 @@
 	<p>We can combine this understanding of statefulness and events to make our first simple
 		Qforms application.</p>
 
-	<p>This calculator is just a collection of two <strong>QTextBox</strong> objects (one for each operand), a
-		<strong>QListBox</strong> object containing the four arithmetic functions, a <strong>QButton</strong> object to execute
-		the operation, and a <strong>QLabel</strong> to view the result.</p>
+	<p>This calculator is just a collection of two <strong>\QCubed\Project\Control\TextBox</strong> objects (one for each operand), a
+		<strong>\QCubed\Project\Control\ListBox</strong> object containing the four arithmetic functions, a <strong>\QCubed\Project\Jqui\Button</strong> object to execute
+		the operation, and a <strong>\QCubed\Control\Label</strong> to view the result.</p>
 
-	<p>Note that there is no validation, checking, etc. currently in the QForm.  Any string data
+	<p>Note that there is no validation, checking, etc. currently in the \QCubed\Project\Control\FormBase.  Any string data
 		will be parsed by PHP to see if there is any numeric data, and if not, it will be parsed as 0.  Dividing
 		by zero will throw a PHP error.</p>
 </div>
@@ -28,5 +28,5 @@
 	<?php $this->lblResult->Render(); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

@@ -40,7 +40,8 @@ namespace QCubed\Jqui\Event;
  * multi-handled slider.
  * 
  *
- * @was QSlider_Slide */
+ * @was QSlider_SlideEvent
+ */
 class SliderSlide extends EventBase
 {
     const EVENT_NAME = 'slide';

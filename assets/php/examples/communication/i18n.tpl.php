@@ -4,12 +4,12 @@
 	// is where you can specify which controls you want rendered and where.
 ?>
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1><?php _t('Internationalization and Translation') ?></h1>
 	<p><?php _t('
-		QCubed offers internationalization support via <b>QApplication::Translate()</b> (which internally
+		QCubed offers internationalization support via <b>t()</b> (which internally
 		will use the <b>QI18n</b> class). Default language and country
 		settings can be setup in <b>prepend.inc.php</b>.  Out of the box, QCubed will check the session to determine
 		which language and country is currently being used, but it is really up to the developer to
@@ -29,10 +29,10 @@
 	</p>
 
 	<p><?php _t('
-		To translate any piece of text, simply use <b>QApplication::Translate(xxx)</b>. Or as a shortcut,
+		To translate any piece of text, simply use <b>t(xxx)</b>. Or as a shortcut,
 		if you want to do a PHP <b>print()</b> of any translated text in your template, you can use
 		the QCubed printing shortcut <b>_t(xxx)</b> -- this does the equivalent of
-		<b>print(QApplication::Translate(xxx))</b>.'); ?>
+		<b>print(t(xxx))</b>.'); ?>
 	</p>
 
 	<p><?php _t('
@@ -55,11 +55,11 @@
 	<h2><?php _t('Internationalization Example'); ?></h2>
 	<p>
 		<?php _t('Current Language'); ?>: 
-		<strong><?php _p(QApplication::$LanguageCode ? QApplication::$LanguageCode : 'none'); ?></strong>
+		<strong><?php _p(\QCubed\Project\Application::$LanguageCode ? \QCubed\Project\Application::$LanguageCode : 'none'); ?></strong>
 	</p>
 
-	<?php $this->btnEn->Render('Text="' . QApplication::Translate('Switch to') . ' en"'); ?>
-	<?php $this->btnEs->Render('Text="' . QApplication::Translate('Switch to') . ' es"'); ?>
+	<?php $this->btnEn->Render('Text="' . t('Switch to') . ' en"'); ?>
+	<?php $this->btnEs->Render('Text="' . t('Switch to') . ' es"'); ?>
 
 	<p><?php _t('To view the People form translated into the selected language, go to'); ?>
 		<a href="<?php _p(__VIRTUAL_DIRECTORY__ . __FORMS__); ?>/person_list.php" class="bodyLink"><?php _p(__VIRTUAL_DIRECTORY__ . __FORMS__); ?>/person_list.php</a>
@@ -72,5 +72,5 @@
 	</p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

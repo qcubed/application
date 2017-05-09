@@ -4,7 +4,7 @@
 <div id="instructions">
 	<h1>Early Binding: Using Object Expansion</h1>
 
-	<p>(Note: for more information about "QQ::"-related classes (a.k.a. <strong>QCubed Query</strong>), please refer to section 3 of the
+	<p>(Note: for more information about "\QCubed\Query\QQ::"-related classes (a.k.a. <strong>QCubed Query</strong>), please refer to section 3 of the
 	Examples Site.)</p>
 
 	<p>When you need to perform LoadAll or LoadArray calls, and would like to include related objects
@@ -17,13 +17,13 @@
 
 	<p>In our example here, we will perform the <i>exact same task</i> as the previous example, pulling
 	all the <strong>Project</strong> objects and displaying each object's <strong>ManagerPerson</strong>.  Note
-	that the <i>only difference</i> in our code is that we've added a <strong>QQ::Expand()</strong> clause.
+	that the <i>only difference</i> in our code is that we've added a <strong>\QCubed\Query\QQ::Expand()</strong> clause.
 	There is <i>no other difference</i> with the way we access the restored objects and their related
 	objects.</p>
 
 	<p>The end result is that instead of displaying the data using 5 queries, we have now cut this down
 	to just 1 query.  This is accomplished because of the LEFT JOIN which is executed
-	by the code generated ORM and the passed in <strong>QQ::Expand()</strong> clause.</p>
+	by the code generated ORM and the passed in <strong>\QCubed\Query\QQ::Expand()</strong> clause.</p>
 
 	<p>But more importantly, because the way we access the objects is the exact same, this
 	kind of round trip optimization can be done <i>after</i> the page is functional and complete.  This
@@ -45,20 +45,20 @@
 	// Enable Profiling (we're assuming the Examples Site Database is at index 1)
 	// NOTE: Profiling should only be enabled when you are actively wanting to profile a specific PHP script.
 	// Because of SIGNIFICANT performance degradation, it should otherwise always be off.
-	QApplication::$Database[1]->EnableProfiling();
+	\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
 
 	// Load the Project array
 	// The following line of code is the ONLY line of code we will modify
-	$objProjectArray = Project::LoadAll(  QQ::Clause(QQ::Expand(QQN::Project()->ManagerPerson))  );
+	$objProjectArray = Project::LoadAll(  \QCubed\Query\QQ::Clause(\QCubed\Query\QQ::Expand(QQN::Project()->ManagerPerson))  );
 	foreach ($objProjectArray as $objProject) {
-		_p(QApplication::HtmlEntities($objProject->Name) . ' is managed by ' . $objProject->ManagerPerson->FirstName . ' ' . 
+		_p(\QCubed\QString::htmlEntities($objProject->Name) . ' is managed by ' . $objProject->ManagerPerson->FirstName . ' ' . 
 			$objProject->ManagerPerson->LastName);
 		_p('<br/>', false);
 	}
 	_p('<br/>', false);
 
 	// Output Profiling Data
-	QApplication::$Database[1]->OutputProfiling();
+	\QCubed\Database\Service::getDatabase(1)->OutputProfiling();
 ?>
 </div>
 

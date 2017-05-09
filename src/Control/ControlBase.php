@@ -19,6 +19,9 @@ use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Action\ActionBase as QAction;
 use QCubed\Event\EventBase as QEvent;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Jqui\Draggable;
+use QCubed\Project\Jqui\Droppable;
+use QCubed\Project\Jqui\Resizable;
 use QCubed\Query\Node\NodeBase;
 use QCubed\TagStyler;
 use QCubed\Type;
@@ -177,11 +180,11 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /** @var string Same as validation error message but is supposed to contain custom messages */
     protected $strWarning = null;
 
-    /** @var Q\Project\Jqui\Draggable|null When initialized, it implements the jQuery UI Draggable capabilities on to this control. */
+    /** @var Draggable|null When initialized, it implements the jQuery UI Draggable capabilities on to this control. */
     protected $objDraggable = null;
-    /** @var Q\Project\Jqui\Resizable|null When initialized, it implements the jQuery UI Resizable capabilities on to this control. */
+    /** @var Resizable|null When initialized, it implements the jQuery UI Resizable capabilities on to this control. */
     protected $objResizable = null;
-    /** @var Q\Project\Jqui\Droppable|null When initialized, it implements the jQuery UI Droppable capabilities on to this control. */
+    /** @var Droppable|null When initialized, it implements the jQuery UI Droppable capabilities on to this control. */
     protected $objDroppable = null;
 
     // MISC
@@ -496,7 +499,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             }
 
             // Evaluate the new template
-            ob_start('__QForm_EvaluateTemplate_ObHandler');
+            ob_start('\\QCubed\\Control\\FormBase::EvaluateTemplate_ObHandler');
 
             $strTemplate = $this->getTemplatePath($strTemplate);
             require($strTemplate);
@@ -2375,7 +2378,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                     $this->markAsWrapperModified();
                     if (Type::cast($mixValue, Type::BOOLEAN)) {
                         if (!$this->objDraggable) {
-                            $this->objDraggable = new QDraggable($this, $this->ControlId . 'draggable');
+                            $this->objDraggable = new Draggable($this, $this->ControlId . 'draggable');
                         } else {
                             $this->objDraggable->Disabled = false;
                         }
@@ -2395,7 +2398,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                     $this->markAsWrapperModified();
                     if (Type::cast($mixValue, Type::BOOLEAN)) {
                         if (!$this->objResizable) {
-                            $this->objResizable = new QResizable($this);
+                            $this->objResizable = new Resizable($this);
                         } else {
                             $this->objResizable->Disabled = false;
                         }
@@ -2415,7 +2418,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                     $this->markAsWrapperModified();
                     if (Type::cast($mixValue, Type::BOOLEAN)) {
                         if (!$this->objDroppable) {
-                            $this->objDroppable = new QDroppable($this);
+                            $this->objDroppable = new Droppable($this);
                         } else {
                             $this->objDroppable->Disabled = false;
                         }
@@ -2568,10 +2571,10 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             new ModelConnectorParam ('Control', 'CausesValidation',
                 'How and what to validate. Can also be set to a control.', ModelConnectorParam::SELECTION_LIST,
                 array(
-                    '\Q\\Control\\Base::NONE' => 'None',
-                    '\Q\\Control\\Base::CAUSES_VALIDATION_ALL' => 'All Controls',
-                    '\Q\\Control\\Base::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN' => 'Siblings And Children',
-                    '\Q\\Control\\Base::CAUSES_VALIDATION_SIBLINGS_ONLY' => 'Siblings Only'
+                    '\\QCubed\\Control\\ControlBase::NONE' => 'None',
+                    '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_ALL' => 'All Controls',
+                    '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN' => 'Siblings And Children',
+                    '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_ONLY' => 'Siblings Only'
                 )
             ),
             new ModelConnectorParam ('Control', 'Enabled', 'Will it start as enabled (default true)?',

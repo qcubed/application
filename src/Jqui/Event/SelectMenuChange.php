@@ -30,7 +30,8 @@ namespace QCubed\Jqui\Event;
  * 	* item Type: jQuery The active item.
  * 
  *
- * @was QSelectmenu_Change */
+ * @was QSelectMenu_ChangeEvent
+ */
 class SelectMenuChange extends EventBase
 {
     const EVENT_NAME = 'selectmenuchange';

@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>More "J" and Less "A" in AJAX</h1>
@@ -15,7 +15,7 @@
 
 	<p>But as your application matures, you may want to have some fully server-side Ajax functionality
 		be converted into more performance-efficient client-side-only Javascript functionality.
-		This example shows how you can easily change an existing <strong>QForm</strong> that uses all QCubed-based Ajax
+		This example shows how you can easily change an existing <strong>\QCubed\Project\Control\FormBase</strong> that uses all QCubed-based Ajax
 		interactions into a more blended server- and client-side Javascript/Ajax form.  Because the API for
 		<strong>QServerActions</strong>, <strong>QJavaScriptActions</strong> and <strong>QAjaxActions</strong> are all the same, the
 		process for rewriting specific nuggets of functionality in this manner is straightforward,
@@ -66,5 +66,5 @@
 	}
 </script>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

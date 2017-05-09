@@ -34,12 +34,8 @@ class ShowDialog extends ActionBase
      *
      * @throws Caller
      */
-    public function __construct($objControl)
+    public function __construct(\QCubed\Control\DialogInterface $objControl)
     {
-        if (!($objControl instanceof QDialog)) {
-            throw new Caller('First parameter of constructor is expecting an object of type QDialog');
-        }
-
         $strControlId = $objControl->getJqControlId();
         $this->strJavaScript = sprintf('jQuery("#%s").dialog("open");', $strControlId);
     }

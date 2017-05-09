@@ -34,7 +34,8 @@ namespace QCubed\Jqui\Event;
  * 	* item Type: Object The focused item.
  * 
  *
- * @was QAutocomplete_Focus */
+ * @was QAutocomplete_FocusEvent
+ */
 class AutocompleteFocus extends EventBase
 {
     const EVENT_NAME = 'autocompletefocus';

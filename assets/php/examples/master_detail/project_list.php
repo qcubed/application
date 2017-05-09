@@ -2,23 +2,23 @@
 	// Load the QCubed Development Framework
 	require('../qcubed.inc.php');
 	
-	// our child QPanel
+	// our child \QCubed\Control\Panel
 	require ('./records.summary.php');
 		
-	class ProjectListForm extends QForm {
+	class ProjectListForm extends \QCubed\Project\Control\FormBase {
 		// Local instance of the Meta DataGrid to list Projects
 		protected $dtgProjects;
 					
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Instantiate the DataGrid
-			$this->dtgProjects = new QDataGrid($this);
+			$this->dtgProjects = new \QCubed\Project\Control\DataGrid($this);
 
 			// Style the DataGrid
 			//$this->dtgProjects->CssClass = 'datagrid';
 			$this->dtgProjects->AlternateRowCssClass = 'alternate';
 
 			// Add Pagination
-			$this->dtgProjects->Paginator = new QPaginator($this->dtgProjects);
+			$this->dtgProjects->Paginator = new \QCubed\Project\Control\Paginator($this->dtgProjects);
 			$this->dtgProjects->ItemsPerPage = 3;
 
 			// Add columns
@@ -52,7 +52,7 @@
 		}
 
 		protected function dtgProjects_Bind() {
-			$this->dtgProjects->TotalItemCount = Project::QueryCount(QQ::All());
+			$this->dtgProjects->TotalItemCount = Project::QueryCount(\QCubed\Query\QQ::All());
 
 			// If a column is selected to be sorted, and if that column has a OrderByClause set on it, then let's add
 			// the OrderByClause to the $objClauses array
@@ -70,7 +70,7 @@
 		
 		// Function to render our toggle button column
 		// As you can see we pass as a parameter the item binded in the
-		// row of QDataGrid
+		// row of \QCubed\Project\Control\DataGrid
 		public function render_btnToggleRecordsSummary(Project $objProject) {
 			// Create their unique id...
 			$objControlId = 'btnToggleRecordsSummary' . $objProject->Id;
@@ -80,8 +80,8 @@
 				if ($intTeamMemberCount > 0) {
 
 					// If not exists create our toggle button who his parent
-					// is our master QDataGrid...
-					$objControl = new QButton($this->dtgProjects, $objControlId);
+					// is our master \QCubed\Project\Control\DataGrid...
+					$objControl = new \QCubed\Project\Jqui\Button($this->dtgProjects, $objControlId);
 					$objControl->Width = 25;
 					$objControl->Text = '+' . $intTeamMemberCount;
 					$objControl->CssClass = 'inputbutton';
@@ -92,7 +92,7 @@
 					$objControl->ActionParameter = $objProject->Id;
 				
 					// Add event on click the toogle button
-					$objControl->AddAction(new QClickEvent(), new QAjaxAction( 'btnToggleRecordsSummary_Click'));
+					$objControl->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax( 'btnToggleRecordsSummary_Click'));
 				}
 			}
 			// We pass the parameter of "false" to make sure the control doesn't render
@@ -126,7 +126,7 @@
 						$srcControl->Text = '-';
 					}
 
-					// Important! Refresh the parent QDataGrid...
+					// Important! Refresh the parent \QCubed\Project\Control\DataGrid...
 					$this->dtgProjects->Refresh();
 				}
 			}
@@ -137,8 +137,8 @@
 			$objControlId = 'ucRecordsSummary' . $objProject->Id;
 			
 			if (!$objControl = $this->GetControl($objControlId)) {
-				// Create the User Control Child QDataGrid passing the
-				// parent, in this case Master QDataGrid and the unique id.
+				// Create the User Control Child \QCubed\Project\Control\DataGrid passing the
+				// parent, in this case Master \QCubed\Project\Control\DataGrid and the unique id.
 				$objControl = new RecordsSummary($this->dtgProjects, $objProject, $objControlId);
 				
 				// Put invisible at the begging, the toogle button is gonna do the job

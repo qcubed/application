@@ -38,7 +38,8 @@ namespace QCubed\Jqui\Event;
  * helper as { top, left } object.
  * 
  *
- * @was QDroppable_Activate */
+ * @was QDroppable_ActivateEvent
+ */
 class DroppableActivate extends EventBase
 {
     const EVENT_NAME = 'dropactivate';

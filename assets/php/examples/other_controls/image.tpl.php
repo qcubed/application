@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>QImageControl</h1>
@@ -26,7 +26,7 @@
 	<p>Finally, note that any of <strong>Width</strong>, <strong>Height</strong> and <strong>ImageType</strong> can all be left blank, which would cause QCubed to
 	make the best educated guesses as to what to set them to at render time.</p>
 	
-	<p><strong>Note:</strong> Notice that <strong>QImageControl</strong> can be constructed outside of the QForm context, allowing you to call
+	<p><strong>Note:</strong> Notice that <strong>QImageControl</strong> can be constructed outside of the \QCubed\Project\Control\FormBase context, allowing you to call
 	<strong>RenderImage($strDestinationFilePath)</strong> independently (outside of QForms/QControls), giving a
 	nice, modular class to help with standard image rescaling for image files without the need of QForms (e.g. if you want
 	perform batch or back-end operations to rescale whole directories of images, etc.).</p>
@@ -51,5 +51,5 @@
 	<div style="margin:10px 0;"><?php $this->imgSample->Render(); ?></div>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

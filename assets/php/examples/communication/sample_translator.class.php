@@ -3,7 +3,7 @@ class QSampleTranslation implements QTranslationBase {
 	protected $strTranslationArray = array();
 	protected $strCode;
 	public static function Initialize() {
-		return self::Load(QApplication::$LanguageCode, QApplication::$CountryCode);
+		return self::Load(\QCubed\Project\Application::$LanguageCode, \QCubed\Project\Application::$CountryCode);
 	}
 	
 	public static function Load($strLanguageCode = null, $strCountryCode = null) {

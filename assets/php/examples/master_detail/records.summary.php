@@ -1,12 +1,12 @@
+<?php
 /*
-Here is the Child QDataGrid...
+Here is the Child \QCubed\Project\Control\DataGrid...
 */
 
-<?php
-	// Load the QCubed Development Framework
+// Load the QCubed Development Framework
 	require_once('../../qcubed.inc.php');
 
-	class RecordsSummary extends QPanel {
+	class RecordsSummary extends \QCubed\Control\Panel {
 		public $dtgRecordsSummary;
 		
 		protected $objParentObject;
@@ -26,15 +26,15 @@ Here is the Child QDataGrid...
 				//  </td> <tr><td> render content of this child </td> </tr> <td> )
 				$this->Template = 'records.summary.tpl.php';
 				
-				// Setting local the Msster QDataGrid to refresh on
+				// Setting local the Msster \QCubed\Project\Control\DataGrid to refresh on
 				// Saves on the Child DataGrid..
 				$this->objParentObject = $objParentObject;
 				$this->objProject = $objProject;
 				
-				// Create the child DataGrid as a normal QDataGrid 
-				$this->dtgRecordsSummary = new QDataGrid($this);
+				// Create the child DataGrid as a normal \QCubed\Project\Control\DataGrid 
+				$this->dtgRecordsSummary = new \QCubed\Project\Control\DataGrid($this);
 				// pagination
-				$this->dtgRecordsSummary->Paginator = new QPaginator($this->dtgRecordsSummary);
+				$this->dtgRecordsSummary->Paginator = new \QCubed\Project\Control\Paginator($this->dtgRecordsSummary);
 
 				$this->dtgRecordsSummary->ItemsPerPage = 5;
 
@@ -46,7 +46,7 @@ Here is the Child QDataGrid...
 				$col = $this->dtgRecordsSummary->CreateNodeColumn('Id', QQN::Person()->Id);
 				$col->CellStyler->Width = 120;
 
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -75,11 +75,11 @@ Here is the Child QDataGrid...
 
 
 			$team_array = $this->objProject->GetPersonAsTeamMemberArray
-												(QQ::Clause($this->dtgRecordsSummary->OrderByClause));
+												(\QCubed\Query\QQ::Clause($this->dtgRecordsSummary->OrderByClause));
 			$this->dtgRecordsSummary->TotalItemCount = count($team_array);
 
 			$this->dtgRecordsSummary->DataSource = $this->objProject->GetPersonAsTeamMemberArray
-												(QQ::Clause($this->dtgRecordsSummary->OrderByClause), $objClauses);
+												(\QCubed\Query\QQ::Clause($this->dtgRecordsSummary->OrderByClause), $objClauses);
 
 		}
           

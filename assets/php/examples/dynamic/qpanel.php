@@ -1,7 +1,7 @@
 <?php
 	require_once('../qcubed.inc.php');
 	
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		// Declare the panel
 		// Notice how we don't declare the textboxes that we will display
 		// We do this to demonstrate that the panel can render its own set of dynamically created controls
@@ -13,13 +13,13 @@
 		// For this example, show how the panel can display this strMessage
 		public $strMessage = 'Hello, world!';
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Define the Panel
-			$this->pnlPanel = new QPanel($this);
+			$this->pnlPanel = new \QCubed\Control\Panel($this);
 			$this->pnlPanel->Width = 300;
 			$this->pnlPanel->BackColor = '#dddddd';
 			$this->pnlPanel->Padding = '10px 0px';
-			$this->pnlPanel->HorizontalAlign = QHorizontalAlign::Center;
+			$this->pnlPanel->TextAlign = \QCubed\Css\TextAlign::CENTER;
 
 			// Define a Template to make it Pretty
 			$this->pnlPanel->Text = 'Text Here Goes First';
@@ -33,12 +33,12 @@
 			for ($intIndex = 1; $intIndex <= 10; $intIndex++) {
 				// The parent must be the panel, because the panel is going to be responsible
 				// for rendering it.
-				$txtTextbox = new QTextBox($this->pnlPanel);
+				$txtTextbox = new \QCubed\Project\Control\TextBox($this->pnlPanel);
 				$txtTextbox->Text = sprintf('Textbox #%s', $intIndex);
 				$txtTextbox->Width = 250;
 			}
 
-			$this->pnlFieldset = new QFieldset ($this);
+			$this->pnlFieldset = new \QCubed\Control\Fieldset ($this);
 			$this->pnlFieldset->Legend = 'Fieldset Example';
 			$this->pnlFieldset->AutoRenderChildren = true;
 			$this->pnlFieldset->Width = 300;
@@ -48,7 +48,7 @@
 			for ($intIndex = 1; $intIndex <= 5; $intIndex++) {
 				// The parent must be the fields, because the fieldset is going to be responsible
 				// for rendering it.
-				$chkCheckbox = new QCheckBox($this->pnlFieldset);
+				$chkCheckbox = new \QCubed\Project\Control\Checkbox($this->pnlFieldset);
 				$chkCheckbox->Text = sprintf('Checkbox #%s', $intIndex);
 				$chkCheckbox->Width = 250;
 			}

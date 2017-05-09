@@ -4,31 +4,31 @@
 <div id="instructions">
 	<h1>QCubed Query Clauses</h1>
 
-	<p>All <strong>QCubed Query</strong> method calls take in an optional set of <strong>QQ Clauses</strong>. <strong>QQ Clauses</strong> allow you
+	<p>All <strong>QCubed Query</strong> method calls take in an optional set of <strong>\QCubed\Query\QQ Clauses</strong>. <strong>\QCubed\Query\QQ Clauses</strong> allow you
 	alter the result set by performing the equivalents of most of your major SQL clauses, including JOIN, ORDER BY,
 	GROUP BY and DISTINCT.</p>
 
-	<p>The following is the list of QQ Clause classes and what parameters they take:</p>
+	<p>The following is the list of \QCubed\Query\QQ Clause classes and what parameters they take:</p>
 	<ul>
-		<li>QQ::OrderBy(array/list of QQNodes or QQConditions)</li>
-		<li>QQ::GroupBy(array/list of QQNodes)</li>
-		<li>QQ::Having(QQSubSqlNode)</li>
-		<li>QQ::Count(QQNode, string)</li>
-		<li>QQ::Minimum(QQNode, string)</li>
-		<li>QQ::Maximum(QQNode, string)</li>
-		<li>QQ::Average(QQNode, string)</li>
-		<li>QQ::Sum(QQNode, string)</li>
-		<li>QQ::Expand(QQNode)</li>
-		<li>QQ::ExpandAsArray(QQNode for an Association Table)</li>
-		<li>QQ::LimitInfo(integer[, integer = 0])</li>
-		<li>QQ::Distinct()</li>
+		<li>\QCubed\Query\QQ::OrderBy(array/list of QQNodes or QQConditions)</li>
+		<li>\QCubed\Query\QQ::GroupBy(array/list of QQNodes)</li>
+		<li>\QCubed\Query\QQ::Having(QQSubSqlNode)</li>
+		<li>\QCubed\Query\QQ::Count(\QCubed\Query\Node\NodeBase, string)</li>
+		<li>\QCubed\Query\QQ::Minimum(\QCubed\Query\Node\NodeBase, string)</li>
+		<li>\QCubed\Query\QQ::Maximum(\QCubed\Query\Node\NodeBase, string)</li>
+		<li>\QCubed\Query\QQ::Average(\QCubed\Query\Node\NodeBase, string)</li>
+		<li>\QCubed\Query\QQ::Sum(\QCubed\Query\Node\NodeBase, string)</li>
+		<li>\QCubed\Query\QQ::Expand(\QCubed\Query\Node\NodeBase)</li>
+		<li>\QCubed\Query\QQ::ExpandAsArray(\QCubed\Query\Node\NodeBase for an Association Table)</li>
+		<li>\QCubed\Query\QQ::LimitInfo(integer[, integer = 0])</li>
+		<li>\QCubed\Query\QQ::Distinct()</li>
 	</ul>
 
 	<p><strong>OrderBy</strong> and <strong>GroupBy</strong> follow the conventions of SQL ORDER BY and GROUP BY.  It takes in a
-	list of one or more <strong>QQ Column Nodes</strong>. This list could be a parameterized list and/or an array.</p>
+	list of one or more <strong>\QCubed\Query\QQ Column Nodes</strong>. This list could be a parameterized list and/or an array.</p>
 
-	<p>Specifically for <strong>OrderBy</strong>, to specify a <strong>QQ Node</strong> that you wish to order by in descending
-	order, add a "false" after the QQ Node.  So for example, <strong>QQ::OrderBy(QQN::Person()->LastName, false,
+	<p>Specifically for <strong>OrderBy</strong>, to specify a <strong>\QCubed\Query\QQ Node</strong> that you wish to order by in descending
+	order, add a "false" after the \QCubed\Query\QQ Node.  So for example, <strong>\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, false,
 	QQN::Person()->FirstName)</strong> will do the SQL equivalent of "ORDER BY last_name DESC, first_name ASC".</p>
 
 	<p><strong>Count</strong>, <strong>Minimum</strong>, <strong>Maximum </strong>, <strong>Average</strong> and <strong>Sum</strong> are aggregation-related clauses, and
@@ -48,19 +48,19 @@
 
 	<p>And finally, <strong>Distinct</strong> will cause the query to be called with SELECT DISTINCT.</p>
 
-	<p>All clauses must be wrapped around a single <strong>QQ::Clause()</strong> call, which takes in any
+	<p>All clauses must be wrapped around a single <strong>\QCubed\Query\QQ::Clause()</strong> call, which takes in any
 	number of clause classes for your query.</p>
 </div>
 
 <div id="demoZone">
 	<h2>Select all People, Ordered by Last Name then First Name</h2>
-	<p><em>Note now QQ::OrderBy gets two parameters here</em></p>
+	<p><em>Note now \QCubed\Query\QQ::OrderBy gets two parameters here</em></p>
 	<ul>
 <?php
 	$objPersonArray = Person::QueryArray(
-		QQ::All(),
-		QQ::Clause(
-			QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
+		\QCubed\Query\QQ::All(),
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
 		)
 	);
 
@@ -70,14 +70,14 @@
 ?>
 	</ul>
 	<h2>Select all People, Ordered by Last Name then First Name, Limited to the first 4 results</h2>
-	<p><em>Combining QQ::OrderBy and QQ::LimitInfo</em></p>
+	<p><em>Combining \QCubed\Query\QQ::OrderBy and \QCubed\Query\QQ::LimitInfo</em></p>
 	<ul>
 <?php
 	$objPersonArray = Person::QueryArray(
-		QQ::All(),
-		QQ::Clause(
-			QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName),
-			QQ::LimitInfo(4)
+		\QCubed\Query\QQ::All(),
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName),
+			\QCubed\Query\QQ::LimitInfo(4)
 		)
 	);
 
@@ -87,13 +87,13 @@
 ?>
 	</ul>
 	<h2>Select all People, those with last name Smith first, then ordered by First Name</h2>
-	<p><em>Using a QQ::Condition as an ORDER BY clause</em></p>
+	<p><em>Using a \QCubed\Query\QQ::Condition as an ORDER BY clause</em></p>
 	<ul>
 <?php
 	$objPersonArray = Person::QueryArray(
-		QQ::All(),
-		QQ::Clause(
-			QQ::OrderBy(QQ::NotEqual(QQN::Person()->LastName, 'Smith'), QQN::Person()->FirstName)
+		\QCubed\Query\QQ::All(),
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::OrderBy(\QCubed\Query\QQ::NotEqual(QQN::Person()->LastName, 'Smith'), QQN::Person()->FirstName)
 		)
 	);
 
@@ -107,10 +107,10 @@
 	<ul>
 <?php
 	$objProjectArray = Project::QueryArray(
-		QQ::All(),
-		QQ::Clause(
-			QQ::GroupBy(QQN::Project()->Id),
-			QQ::Count(QQN::Project()->PersonAsTeamMember->PersonId, 'team_member_count')
+		\QCubed\Query\QQ::All(),
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::GroupBy(QQN::Project()->Id),
+			\QCubed\Query\QQ::Count(QQN::Project()->PersonAsTeamMember->PersonId, 'team_member_count')
 		)
 	);
 
@@ -125,11 +125,11 @@
 	<ul>
 <?php
 	$objProjectArray = Project::QueryArray(
-		QQ::All(),
-		QQ::Clause(
-			QQ::GroupBy(QQN::Project()->Id),
-			QQ::Count(QQN::Project()->PersonAsTeamMember->PersonId, 'team_member_count'),
-			QQ::Having (QQ::SubSql('COUNT({1}) > 5', QQN::Project()->PersonAsTeamMember->PersonId))
+		\QCubed\Query\QQ::All(),
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::GroupBy(QQN::Project()->Id),
+			\QCubed\Query\QQ::Count(QQN::Project()->PersonAsTeamMember->PersonId, 'team_member_count'),
+			\QCubed\Query\QQ::Having (\QCubed\Query\QQ::SubSql('COUNT({1}) > 5', QQN::Project()->PersonAsTeamMember->PersonId))
 		)
 	);
 

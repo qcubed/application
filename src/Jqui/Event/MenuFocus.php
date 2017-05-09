@@ -29,7 +29,8 @@ namespace QCubed\Jqui\Event;
  * 	* item Type: jQuery The currently active menu item.
  * 
  *
- * @was QMenu_Focus */
+ * @was QMenu_FocusEvent
+ */
 class MenuFocus extends EventBase
 {
     const EVENT_NAME = 'menufocus';

@@ -36,7 +36,8 @@ namespace QCubed\Jqui\Event;
  * and label properties for each item.
  * 
  *
- * @was QAutocomplete_Response */
+ * @was QAutocomplete_ResponseEvent
+ */
 class AutocompleteResponse extends EventBase
 {
     const EVENT_NAME = 'autocompleteresponse';

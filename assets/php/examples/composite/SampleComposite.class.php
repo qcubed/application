@@ -1,7 +1,7 @@
 <?php
 /**
  * This is a completely custom QControl and it is also a composite control,
- * meaning it utilizes several individual QControls (e.g. a QLabel and two
+ * meaning it utilizes several individual QControls (e.g. a \QCubed\Control\Label and two
  * QButtons) to make one larger control.
  */
 class SampleComposite extends QControl {
@@ -29,16 +29,16 @@ class SampleComposite extends QControl {
 		// First, call the parent to do most of the basic setup
 		try {
 			parent::__construct($objParentObject, $strControlId);
-		} catch (QCallerException $objExc) {
+		} catch (\QCubed\Exception\Caller $objExc) {
 			$objExc->IncrementOffset();
 			throw $objExc;
 		}
 
 		// Next, we'll create our local subcontrols.  Make sure to set "this" as these
 		// subcontrols' parent.
-		$this->lblMessage = new QLabel($this);
-		$this->btnIncrement = new QButton($this);
-		$this->btnDecrement = new QButton($this);
+		$this->lblMessage = new \QCubed\Control\Label($this);
+		$this->btnIncrement = new \QCubed\Project\Jqui\Button($this);
+		$this->btnDecrement = new \QCubed\Project\Jqui\Button($this);
 
 		// Let's setup these button controls
 		$this->btnIncrement->Text = '>>';
@@ -50,19 +50,19 @@ class SampleComposite extends QControl {
 
 	protected function SetupButtonActions() {
 		// In case any actions are setup already, let's remove them
-		$this->btnIncrement->RemoveAllActions(QClickEvent::EventName);
-		$this->btnDecrement->RemoveAllActions(QClickEvent::EventName);
+		$this->btnIncrement->RemoveAllActions(\QCubed\Event\Click::EVENT_NAME);
+		$this->btnDecrement->RemoveAllActions(\QCubed\Event\Click::EVENT_NAME);
 
 		// Notice how, instead of Server or Ajax actions, we use Server-
 		// or Ajax- CONTROL actions.  This is because the actual PHP method
 		// we want to run is in this CONTROL, instead of on the form.  We must specify
 		// which control has the method we want to run, or in this case, $this.
 		if ($this->blnUseAjax) {
-			$this->btnIncrement->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnIncrement_Click'));
-			$this->btnDecrement->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnDecrement_Click'));
+			$this->btnIncrement->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnIncrement_Click'));
+			$this->btnDecrement->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnDecrement_Click'));
 		} else {
-			$this->btnIncrement->AddAction(new QClickEvent(), new QServerControlAction($this, 'btnIncrement_Click'));
-			$this->btnDecrement->AddAction(new QClickEvent(), new QServerControlAction($this, 'btnDecrement_Click'));
+			$this->btnIncrement->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ServerControl($this, 'btnIncrement_Click'));
+			$this->btnDecrement->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ServerControl($this, 'btnDecrement_Click'));
 		}
 	}
 
@@ -127,7 +127,7 @@ class SampleComposite extends QControl {
 			default:
 				try {
 					return parent::__get($strName);
-				} catch (QCallerException $objExc) {
+				} catch (\QCubed\Exception\Caller $objExc) {
 					$objExc->IncrementOffset();
 					throw $objExc;
 				}
@@ -140,10 +140,10 @@ class SampleComposite extends QControl {
 
 		try {
 			switch ($strName) {
-				case 'Value': return ($this->intValue = QType::Cast($mixValue, QType::Integer));
-				case 'Padding': return ($this->strPadding = QType::Cast($mixValue, QType::String));
+				case 'Value': return ($this->intValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER));
+				case 'Padding': return ($this->strPadding = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
 				case 'UseAjax':
-					$blnToReturn = ($this->blnUseAjax = QType::Cast($mixValue, QType::Boolean));
+					$blnToReturn = ($this->blnUseAjax = \QCubed\Type::Cast($mixValue, \QCubed\Type::BOOLEAN));
 
 					// Whenever we change UseAjax, we must be sure to update our two buttons
 					// and their defined actions.
@@ -154,7 +154,7 @@ class SampleComposite extends QControl {
 				default:
 					return (parent::__set($strName, $mixValue));
 			}
-		} catch (QCallerException $objExc) {
+		} catch (\QCubed\Exception\Caller $objExc) {
 			$objExc->IncrementOffset();
 			throw $objExc;
 		}

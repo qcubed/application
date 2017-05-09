@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see DialogBase
  * @was QDialog
  */
-
 class Dialog extends Q\Jqui\DialogBase
 {
 }

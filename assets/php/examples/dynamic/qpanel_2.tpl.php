@@ -1,19 +1,19 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Moving Controls Between Panels</h1>
 
-	<p>With the concept of a <strong>QLabel</strong> or <strong>QPanel</strong> being able to have an arbitrary
+	<p>With the concept of a <strong>\QCubed\Control\Label</strong> or <strong>\QCubed\Control\Panel</strong> being able to have an arbitrary
 	number of child controls, we use this example to show how you can dynamically
 	change a control's parent, to essentially "move" a control from one panel to the next.</p>
 
-	<p>The example below has two <strong>QPanel</strong> controls, as well as ten <strong>QTextBox</strong> controls
+	<p>The example below has two <strong>\QCubed\Control\Panel</strong> controls, as well as ten <strong>\QCubed\Project\Control\TextBox</strong> controls
 	who's parents are one of the panels.  The buttons have <strong>QAjaxActions</strong> which will
 	move the textboxes back and forth between the panels, or remove the textbox altogether.</p>
 
-	<p>Again, note that we are not hard coding a <strong>QTextBox->Render</strong> <i>anywhere</i> in our code.  We
-	are simply using the concept of <strong>ParentControls</strong> and using the two <strong>QBlockControl</strong> controls'
+	<p>Again, note that we are not hard coding a <strong>\QCubed\Project\Control\TextBox->Render</strong> <i>anywhere</i> in our code.  We
+	are simply using the concept of <strong>ParentControls</strong> and using the two <strong>\QCubed\Control\BlockControl</strong> controls'
 	<strong>AutoRenderChildren</strong> functionality to dynamically render the textboxes in the
 	appropriate places.</p>
 
@@ -37,5 +37,5 @@
 	</table>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

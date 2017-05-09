@@ -1,8 +1,8 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Dynamically Adding QControls to QHtmlTable</h1>
+	<h1>Dynamically Adding QControls to \QCubed\Project\Control\Table</h1>
 
 	<p>This example illustrates a technique for creating QControls and placing them in
 		a simple table dynamically, during the time each row is drawn. </p>
@@ -30,7 +30,7 @@
 		refresh, for example). If that control doesn't exist yet &mdash; and it won't the first time the datagrid is
 		rendered &mdash; we create the QImageControl, and give it the right Control ID.</p>
 
-	<p><strong>The Edit Column</strong>: i.e. the column with a custom Edit QButton &mdash; is quite
+	<p><strong>The Edit Column</strong>: i.e. the column with a custom Edit \QCubed\Project\Jqui\Button &mdash; is quite
 		similar in its structure to the Image column. Note that we are using an
 		ActionParameter to help the click handler determine which row the user clicked on.</p>
 </div>
@@ -39,5 +39,5 @@
 	<?php $this->dtgPersons->Render(); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

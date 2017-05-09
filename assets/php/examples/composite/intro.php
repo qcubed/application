@@ -2,8 +2,8 @@
 require_once('../qcubed.inc.php');
 require('SampleComposite.class.php');
 
-// Define the Qform with all our Qcontrols
-class ExamplesForm extends QForm {
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExamplesForm extends \QCubed\Project\Control\FormBase {
 
 	// Local declarations of our Qcontrols
 	protected $lblMessage;
@@ -14,14 +14,14 @@ class ExamplesForm extends QForm {
 	protected $objCounter3;
 
 	// Initialize our Controls during the Form Creation process
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the Label
-		$this->lblMessage = new QLabel($this);
+		$this->lblMessage = new \QCubed\Control\Label($this);
 		$this->lblMessage->Text = '';
 		$this->lblMessage->HtmlEntities = false;
 
 		// Define the Button
-		$this->btnButton = new QButton($this);
+		$this->btnButton = new \QCubed\Project\Jqui\Button($this);
 		$this->btnButton->Text = 'Add the Values';
 
 		// Define our Custom Composite Controls
@@ -43,7 +43,7 @@ class ExamplesForm extends QForm {
 
 		// Add a Click event handler to the main "Add the Values" button
 		// And, just for variety, lets keep it as a server action
-		$this->btnButton->AddAction(new QClickEvent(), new QServerAction('btnButton_Click'));
+		$this->btnButton->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('btnButton_Click'));
 	}
 
 	// The "btnButton_Click" Event handler
@@ -55,6 +55,6 @@ class ExamplesForm extends QForm {
 }
 
 // Run the Form we have defined
-// The QForm engine will look to intro.tpl.php to use as its HTML template include file
+// The \QCubed\Project\Control\FormBase engine will look to intro.tpl.php to use as its HTML template include file
 ExamplesForm::Run('ExamplesForm');
 ?>

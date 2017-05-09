@@ -9,6 +9,7 @@
 
 namespace QCubed\Control;
 
+use QCubed\Css\Display;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Type;
@@ -30,8 +31,8 @@ class Fieldset extends BlockControl
 {
     /** @var string HTML tag to the used for the Block Control */
     protected $strTagName = 'fieldset';
-    /** @var string Default display style for the control. See QDisplayStyle class for available list */
-    protected $strDefaultDisplayStyle = QDisplayStyle::Block;
+    /** @var string Default display style for the control. See QCubed\Css\Display class for available list */
+    protected $strDefaultDisplayStyle = Display::BLOCK;
     /** @var bool Is the control a block element? */
     protected $blnIsBlockElement = true;
     /** @var bool Use htmlentities for the control? */

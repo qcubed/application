@@ -1,14 +1,14 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
 	// Declare the DataGrid
 	protected $dtgPersons;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid
-		$this->dtgPersons = new QHtmlTable($this);
+		$this->dtgPersons = new \QCubed\Project\Control\Table($this);
 
 		$col = $this->dtgPersons->CreateCallableColumn('Full Name', [$this, 'renderFullName']);
 		$col->HtmlEntities = false;
@@ -53,10 +53,10 @@ class ExampleForm extends QForm {
 		$objControlId = "editButton" . $objPerson->Id;
 
 		if (!$objControl = $this->GetControl($objControlId)) {
-			$objControl = new QButton($this->dtgPersons, $objControlId);
+			$objControl = new \QCubed\Project\Jqui\Button($this->dtgPersons, $objControlId);
 			$objControl->Text = "Edit Person #" . $objPerson->Id;
 
-			$objControl->AddAction(new QClickEvent(), new QAjaxAction("renderButton_Click"));
+			$objControl->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax("renderButton_Click"));
 			$objControl->ActionParameter = $objPerson->Id;
 		}
 
@@ -68,10 +68,10 @@ class ExampleForm extends QForm {
 	public function renderButton_Click($strFormId, $strControlId, $strParameter) {
 		$intPersonId = intval($strParameter);
 
-		QApplication::DisplayAlert("In a real application, you'd be redirected to the page that edits person #" . $intPersonId);
+		\QCubed\Project\Application::DisplayAlert("In a real application, you'd be redirected to the page that edits person #" . $intPersonId);
 
 		// You'd do something like this in a real application:
-		// QApplication::Redirect("person_edit.php?intPersonId=" . $intPersonId);
+		// \QCubed\Project\Application::Redirect("person_edit.php?intPersonId=" . $intPersonId);
 	}
 
 	protected function dtgPersons_Bind() {

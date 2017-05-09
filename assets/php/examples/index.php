@@ -1,7 +1,7 @@
 <?php
 require_once('qcubed.inc.php');
 // show first section by default
-$intSectionToShow = (!QApplication::PathInfo(0)) ? 1 : QApplication::PathInfo(0);
+$intSectionToShow = (!\QCubed\Project\Application::instance()->context()->pathItem(0)) ? 1 : \QCubed\Project\Application::instance()->context()->pathItem(0);
 // Used to distinguish the home page in the header
 $mainPage = true;
 require('includes/header.inc.php');
@@ -14,7 +14,7 @@ require('includes/header.inc.php');
 		discussed in prior ones, which allows the Examples site to be viewed as a quasi-tutorial.
 		However, you should still feel free to check out any of the examples as you wish.</p>
 
-	<p>The Examples are broken into three main parts: the <strong>Code Generator</strong>, the <strong>QForm and QControl Library</strong>, and
+	<p>The Examples are broken into three main parts: the <strong>Code Generator</strong>, the <strong>\QCubed\Project\Control\FormBase and QControl Library</strong>, and
 		<strong>Other QCubed Functionality</strong>.</p>
 
 	<p class="bodySmall">* Some of the examples (marked with a "*") use the <strong>Examples Site Database</strong>.
@@ -24,11 +24,11 @@ require('includes/header.inc.php');
 </div>
 
 <div class="main-navigator ui-widget ui-corner-all">
-	<a id="link1" href="<?php _p(QApplication::$ScriptName) ?>" onclick="return DisplayPart('1')" class="<?php _p(($intSectionToShow == 1) ? "selected" : "nav-link"); ?>">The Code Generator</a>
+	<a id="link1" href="<?php _p(\QCubed\Project\Application::instance()->context()->scriptName()) ?>" onclick="return DisplayPart('1')" class="<?php _p(($intSectionToShow == 1) ? "selected" : "nav-link"); ?>">The Code Generator</a>
 	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-	<a id="link2" href="<?php _p(QApplication::$ScriptName) ?>/2" onclick="return DisplayPart('2')" class="<?php _p(($intSectionToShow == 2) ? "selected" : "nav-link"); ?>">The QForm and QControl Library</a>
+	<a id="link2" href="<?php _p(\QCubed\Project\Application::instance()->context()->scriptName()) ?>/2" onclick="return DisplayPart('2')" class="<?php _p(($intSectionToShow == 2) ? "selected" : "nav-link"); ?>">The \QCubed\Project\Control\FormBase and QControl Library</a>
 	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-	<a id="link3" href="<?php _p(QApplication::$ScriptName) ?>/3" onclick="return DisplayPart('3')" class="<?php _p(($intSectionToShow == 3) ? "selected" : "nav-link"); ?>">Other QCubed Functionality</a>
+	<a id="link3" href="<?php _p(\QCubed\Project\Application::instance()->context()->scriptName()) ?>/3" onclick="return DisplayPart('3')" class="<?php _p(($intSectionToShow == 3) ? "selected" : "nav-link"); ?>">Other QCubed Functionality</a>
 </div>
 
 <?php
@@ -58,7 +58,7 @@ for ($intIndex = 0; $intIndex < count(Examples::$Categories); $intIndex++) {
 			<p><em>QForms</em> is a <strong>stateful, event-driven architecture for web-based forms</strong>, providing the display and
 				presentation functionality for QCubed.  Basically, it is your "V" and "C" of the MVC architecture.</p>
 
-			<p>Sections 4 - 10 are examples on how to use the <strong>QForm</strong> and <strong>QControl</strong> libraries
+			<p>Sections 4 - 10 are examples on how to use the <strong>\QCubed\Project\Control\FormBase</strong> and <strong>QControl</strong> libraries
 				within the QCubed Development Framework.</p>
 		</div>
 		<blockquote>
@@ -71,7 +71,7 @@ for ($intIndex = 0; $intIndex < count(Examples::$Categories); $intIndex++) {
 	</div>
 	<div id="part3" <?php if ($intSectionToShow != 3) { _p('style="display: none;"', false); } ?>>
 		<div class="main-info">
-			<p>Beyond the <strong>Code Generator</strong> and the <strong>QForm Library</strong>, QCubed also has many other modules and features
+			<p>Beyond the <strong>Code Generator</strong> and the <strong>\QCubed\Project\Control\FormBase Library</strong>, QCubed also has many other modules and features
 				that are useful for web application developers.</p>
 		</div>
 		<blockquote>

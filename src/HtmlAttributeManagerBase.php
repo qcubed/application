@@ -9,6 +9,7 @@
 
 namespace QCubed;
 
+use QCubed\Css\Display;
 use QCubed\Exception\InvalidCast;
 use QCubed\Exception\Caller;
 use QCubed\Js;
@@ -34,15 +35,15 @@ use QCubed\Js;
  * @property string $BackColor sets the CSS background-color of the control
  * @property string $BorderColor sets the CSS border-color of the control
  * @property string $BorderWidth sets the CSS border-width of the control
- * @property string $BorderStyle is used to set CSS border-style by {@link QBorderStyle}
+ * @property string $BorderStyle is used to set CSS border-style by {@link QCubed\Css\BorderStyle}
  * @property string $BorderCollapse    defines the BorderCollapse css style for a table
  * @property string $CssClass sets or returns the CSS class for this control. When setting, if you precede the class name
  *  with a plus sign (+), it will add the class(es) to the currently existing classes, rather than replace them. Can add or
  *  set more than one class at once by separating names with a space.
- * @property string $Cursor is used to set CSS cursor property by {@link QCursor}
+ * @property string $Cursor is used to set CSS cursor property by {@link QCubed\Css\Cursor}
  * @property boolean $Display shows or hides the control using the CSS display property.  In either case, the control is
  *  still rendered on the page. See the Visible property if you wish to not render a control.
- * @property string $DisplayStyle is used to set CSS display property by {@link QDisplayStyle}
+ * @property string $DisplayStyle is used to set CSS display property by {@link QCubed\Css\Display}
  * @property boolean $Enabled specifies whether or not this is enabled (it will grey out the control and make it
  *  inoperable if set to true)
  * @property boolean $FontBold sets the font bold or normal
@@ -56,13 +57,13 @@ use QCubed\Js;
  * @property string $Height
  * @property string $Left CSS left property
  * @property integer $Opacity sets the opacity of the control (0-100)
- * @property string $Overflow is used to set CSS overflow property by {@link QOverflow}
- * @property string $Position is used to set CSS position property by {@link QPosition}
+ * @property string $Overflow is used to set CSS overflow property by {@link QCubed\Css\Overflow}
+ * @property string $Position is used to set CSS position property by {@link QCubed\Css\Position}
  * @property integer $TabIndex specifies the index/tab order on a form
  * @property string $ToolTip specifies the text to be displayed when the mouse is hovering over the control
  * @property string $Top
  * @property string $Width
- * @property string $HorizontalAlign sets the CSS text-align property
+ * @property string $TextAlign sets the CSS text-align property
  * @property string $VerticalAlign sets the CSS vertical-align property
  * @property-write mixed $Padding sets the CSS padding property. Will accepts a string, which is passed verbatim, or
  *  an array, either numerically indexed, in which case it is in top, right, bottom, left order, or keyed with the
@@ -492,7 +493,7 @@ class HtmlAttributeManagerBase extends ObjectBase {
 			case "BorderStyle": return $this->getCssStyle('border-style');
 			case "BorderWidth": return $this->getCssStyle('border-width');
 			case "BorderCollapse": return $this->getCssStyle('border-collapse');
-			case "Display": return !($this->getCssStyle('display') === QDisplayStyle::None);
+			case "Display": return !($this->getCssStyle('display') === Display::NONE);
 			case "DisplayStyle": return $this->getCssStyle('display');
 			case "FontBold": return $this->getCssStyle('font-weight') == 'bold';
 			case "FontItalic": return $this->getCssStyle('font-style') == 'italic';
@@ -510,7 +511,7 @@ class HtmlAttributeManagerBase extends ObjectBase {
 			case "Position": return $this->getCssStyle('position');
 			case "Top": return $this->getCssStyle('top');
 			case "Left": return $this->getCssStyle('left');
-			case "HorizontalAlign": return $this->getCssStyle('text-align');
+			case "TextAlign": return $this->getCssStyle('text-align');
 			case "VerticalAlign": return $this->getCssStyle('vertical-align');
 			case "Wrap": throw new Exception ("Wrap is deprecated. Use NoWrap instead");
 			case "NoWrap": return $this->getCssStyle('white-space') == 'nowrap';
@@ -593,14 +594,14 @@ class HtmlAttributeManagerBase extends ObjectBase {
 					throw $objExc;
 				}
 
-			case "Display": // QControl changes the meaning of this to a boolean
+			case "Display":
 			case "DisplayStyle":
 				if (is_bool($mixValue)) {
 					if ($mixValue) {
 						$this->removeCssStyle('display'); // do the default
 					}
 					else {
-						$this->setCssStyle('display', QDisplayStyle::None);
+						$this->setCssStyle('display', Display::NONE);
 					}
 				} else {
 					try {
@@ -751,7 +752,7 @@ class HtmlAttributeManagerBase extends ObjectBase {
 					$objExc->incrementOffset();
 					throw $objExc;
 				}
-			case "HorizontalAlign":
+			case "TextAlign":
 				try {
 					$this->setCssStyle('text-align', Type::cast($mixValue, Type::STRING));
 					break;

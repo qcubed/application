@@ -1,10 +1,10 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Other Client-Side Action Types</h1>
 	
-	<p>Below is a sampling of just <i>some</i> of the other <b>QAction</b> types that are available to you
+	<p>Below is a sampling of just <i>some</i> of the other <b>\QCubed\Action\ActionBase</b> types that are available to you
 	as part of the core QCubed distribution.</p>
 	
 	<p>Notice that all of these <b>QActions</b> simply render out JavaScript to perform the action,
@@ -22,7 +22,7 @@
 	
 	<table>
 		<tr>
-			<td colspan="2"><b>Set the Focus / Select to the Textbox</b> (Note that Select only works on QTextBox)</td>
+			<td colspan="2"><b>Set the Focus / Select to the Textbox</b> (Note that Select only works on \QCubed\Project\Control\TextBox)</td>
 		</tr>
 		<tr>
 			<td style="width:250px;"><?php $this->btnFocus->Render(); ?> <?php $this->btnSelect->Render(); ?></td>
@@ -45,9 +45,9 @@
 	</table>
 
 	<p><?php $this->pnlHover->Render(); ?></p>
-	<p>Override a single CSS property using <b>QCssAction</b>:</p>
+	<p>Override a single CSS property using <b>\QCubed\Action\CssAction</b>:</p>
 	<p><?php $this->btnCssAction->Render(); ?></p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

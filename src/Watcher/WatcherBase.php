@@ -11,6 +11,7 @@ namespace QCubed\Watcher;
 
 use QCubed\Exception\Caller;
 use QCubed\ObjectBase;
+use QCubed\Query\Node\NodeBase;
 
 /**
  * Class QWatcherBase
@@ -68,7 +69,7 @@ abstract class WatcherBase extends ObjectBase
      * @param \QCubed\Query\Node\Base $objNode
      * @throws Caller
      */
-    public function watch(\QCubed\Query\Node\Base $objNode)
+    public function watch(NodeBase $objNode)
     {
         $strClassName = $objNode->_ClassName;
 

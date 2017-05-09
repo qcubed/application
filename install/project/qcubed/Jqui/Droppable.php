@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see DroppableBase
  * @was QDroppable
  */
-
 class Droppable extends Q\Jqui\DroppableBase
 {
 }

@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Making Events Conditional</h1>
@@ -15,8 +15,8 @@
 	are written as custom javascript code into the Event constructor itself.</p>
 
 	<p>In this example, we explicitly name the textbox's ControlId as "txtItem" so that we can
-	write custom javascript as conditionals to the button's <b>QClickEvent</b> and the textbox's
-	<b>QEnterKeyEvent</b>.</p>
+	write custom javascript as conditionals to the button's <b>\QCubed\Event\Click</b> and the textbox's
+	<b>\QCubed\Event\EnterKey</b>.</p>
 </div>
 
 <div id="demoZone">
@@ -29,5 +29,5 @@
 	<?php $this->lblSelected->RenderWithName(); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

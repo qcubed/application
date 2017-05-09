@@ -1,10 +1,10 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Automatic Refreshing and the QWatcher Classes</h1>
+	<h1>Automatic Refreshing and the \QCubed\Project\Watcher\Watcher Classes</h1>
 
-	<p>The <strong>QWatcher</strong> class is used to connect a control to a database table or tables so that
+	<p>The <strong>\QCubed\Project\Watcher\Watcher</strong> class is used to connect a control to a database table or tables so that
 		whenever that database changes, the control automatically refreshes. This can save you from having to
 		setup callbacks between edit forms and dialogs in order to refresh a control that is viewing data. In addition,
 		in a multi-user environment, when one user changes the data, the other user will automatically see the
@@ -16,9 +16,9 @@
 		inactivity, but still should see the results of activity from other users, you can do a couple of things:
 		<ul>
 		<li>
-			Set up a QJsTimer to generate periodic events. See the <a href="../other_controls/timer_js.php">QJsTimer example page</a> for help. In that
+			Set up a \QCubed\Project\Control\JsTimer to generate periodic events. See the <a href="../other_controls/timer_js.php">\QCubed\Project\Control\JsTimer example page</a> for help. In that
 			example page, it discusses adding actions to the timer. For purposes of generating opportunities for
-			the QWatcher to look at the database, you will add a null ajax action to the timer.
+			the \QCubed\Project\Watcher\Watcher to look at the database, you will add a null ajax action to the timer.
 		</li>
 		<li>
 			The other option, which is currently not implemented in QCubed, is create a direct connection between the
@@ -28,7 +28,7 @@
 		</ul></p>
 
 	<p>To make watcher work, you must edit
-		the project/includes/controls/QWatcher.class.php file so that the QWatcher class inherits from
+		the project/includes/controls/\QCubed\Project\Watcher\Watcher.class.php file so that the \QCubed\Project\Watcher\Watcher class inherits from
 		the watcher type you want. Available types currently let you use a database to track changes, or
 		use a QCacheProvider subclass.</p>
 
@@ -49,5 +49,5 @@
 	<?php $this->btnNew->Render(); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

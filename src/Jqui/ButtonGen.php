@@ -64,7 +64,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * displayed, but the icon option must be used, otherwise the showLabel
  * option will be ignored.
  *
- * @was QButtonGen
+ * @was QJqButtonGen
 
  */
 

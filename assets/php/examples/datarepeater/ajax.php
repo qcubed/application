@@ -1,24 +1,24 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class DataRepeaterExample extends QForm {
+class DataRepeaterExample extends \QCubed\Project\Control\FormBase {
 
 	protected $dtrPersons;
 	protected $dtrBig;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 
 		/*--- Using a Template ---*/
-		$this->dtrPersons = new QDataRepeater($this);
+		$this->dtrPersons = new \QCubed\Control\DataRepeater($this);
 
 		// Let's set up pagination -- note that the form is the parent
 		// of the paginator here, because it's on the form where we
 		// make the call toe $this->dtrPersons->Paginator->Render()
-		$this->dtrPersons->Paginator = new QPaginator($this);
+		$this->dtrPersons->Paginator = new \QCubed\Project\Control\Paginator($this);
 		$this->dtrPersons->ItemsPerPage = 6;
 
 		// Let's create a second paginator
-		$this->dtrPersons->PaginatorAlternate = new QPaginator($this);
+		$this->dtrPersons->PaginatorAlternate = new \QCubed\Project\Control\Paginator($this);
 
 		// DataRepeaters use Templates to define how the repeated
 		// item is rendered
@@ -28,8 +28,8 @@ class DataRepeaterExample extends QForm {
 		$this->dtrPersons->SetDataBinder('dtrPersons_Bind');
 
 		/*--- Using a callback ---*/
-		$this->dtrBig = new QDataRepeater($this);
-		$this->dtrBig->Paginator = new QPaginator($this);
+		$this->dtrBig = new \QCubed\Control\DataRepeater($this);
+		$this->dtrBig->Paginator = new \QCubed\Project\Control\Paginator($this);
 		$this->dtrBig->ItemsPerPage = 10;
 		$this->dtrBig->SetDataBinder('dtrBig_Bind');
 		$this->dtrBig->TagName = 'ul';
@@ -40,7 +40,7 @@ class DataRepeaterExample extends QForm {
 	protected function dtrPersons_Bind() {
 		// This function defines how we load the data source into the Data Repeater
 		$this->dtrPersons->TotalItemCount = Person::CountAll();
-		$this->dtrPersons->DataSource = Person::LoadAll(QQ::Clause($this->dtrPersons->LimitClause));
+		$this->dtrPersons->DataSource = Person::LoadAll(\QCubed\Query\QQ::Clause($this->dtrPersons->LimitClause));
 	}
 
 	protected function dtrBig_Bind() {

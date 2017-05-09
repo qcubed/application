@@ -61,10 +61,6 @@ abstract class ActionBase extends ObjectBase
                     throw new Exception('Invalid Action Event in this entry in the ActionArray');
                 }
 
-                if ($objAction->objEvent instanceof AbstractProperty) {
-                    $strJqUiProperty = $objAction->objEvent->JqProperty;
-                }
-
                 if ($objAction->objEvent->Delay > 0) {
                     $strCode = sprintf(" qcubed.setTimeout('%s', \$j.proxy(function(){%s},this), %s);",
                         $objControl->ControlId,
@@ -94,13 +90,7 @@ abstract class ActionBase extends ObjectBase
             $strToReturn = _nl() . _indent($strToReturn);
 
 
-            if ($strJqUiProperty) {
-                $strOut = sprintf('$j("#%s").%s("option", {%s: function(event, ui){%s}});',
-                    $objControl->getJqControlId(),
-                    $objControl->getJqSetupFunction(),
-                    $strJqUiProperty,
-                    $strToReturn);
-            } elseif ($objControl instanceof Proxy) {
+            if ($objControl instanceof \QCubed\Control\Proxy) {
                 $strOut = sprintf('$j("#%s").on("%s", "[data-qpxy=\'%s\']", function(event, ui){%s});',
                     $objControl->Form->FormId, $strEventName, $objControl->ControlId, $strToReturn);
             } else {

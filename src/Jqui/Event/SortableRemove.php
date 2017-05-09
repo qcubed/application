@@ -41,7 +41,8 @@ namespace QCubed\Jqui\Event;
  * element being used as a placeholder.
  * 
  *
- * @was QSortable_Remove */
+ * @was QSortable_RemoveEvent
+ */
 class SortableRemove extends EventBase
 {
     const EVENT_NAME = 'sortremove';

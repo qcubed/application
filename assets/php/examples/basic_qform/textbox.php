@@ -1,8 +1,8 @@
 <?php
 require_once('../qcubed.inc.php');
 
-// Define the Qform with all our Qcontrols
-class ExamplesForm extends QForm {
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExamplesForm extends \QCubed\Project\Control\FormBase {
 
 	// Local declarations of our Qcontrols
 	protected $txtBasic;
@@ -15,26 +15,26 @@ class ExamplesForm extends QForm {
 	protected $btnValidate;
 
 	// Initialize our Controls during the Form Creation process
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define our Label
-		$this->txtBasic = new QTextBox($this);
-		$this->txtBasic->Name = QApplication::Translate("Basic");
+		$this->txtBasic = new \QCubed\Project\Control\TextBox($this);
+		$this->txtBasic->Name = t("Basic");
 
-		$this->txtBasic = new QTextBox($this);
+		$this->txtBasic = new \QCubed\Project\Control\TextBox($this);
 		$this->txtBasic->MaxLength = 5;
 
-		$this->txtInt = new QIntegerTextBox($this);
+		$this->txtInt = new \QCubed\Control\IntegerTextBox($this);
 		$this->txtInt->Maximum = 10;
 
-		$this->txtFlt = new QFloatTextBox($this);
+		$this->txtFlt = new \QCubed\Control\FloatTextBox($this);
 
-		$this->txtList = new QCsvTextBox($this);
+		$this->txtList = new \QCubed\Control\CsvTextBox($this);
 		$this->txtList->MinItemCount = 2;
 		$this->txtList->MaxItemCount = 5;
 
-		$this->txtEmail = new QEmailTextBox($this);
-		$this->txtUrl = new QUrlTextBox($this);
-		$this->txtCustom = new QTextBox($this);
+		$this->txtEmail = new \QCubed\Control\EmailTextBox($this);
+		$this->txtUrl = new \QCubed\Control\UrlTextBox($this);
+		$this->txtCustom = new \QCubed\Project\Control\TextBox($this);
 
 		// These parameters are fed into filter_var. See PHP doc on filter_var() for more info.
 		$this->txtCustom->ValidateFilter = FILTER_VALIDATE_REGEXP;
@@ -42,15 +42,15 @@ class ExamplesForm extends QForm {
 
 		$this->txtCustom->LabelForInvalid = 'Hex value required.';
 
-		$this->btnValidate = new QButton ($this);
+		$this->btnValidate = new \QCubed\Project\Jqui\Button ($this);
 		$this->btnValidate->Text = "Filter and Validate";
-		$this->btnValidate->AddAction (new QClickEvent(), new QServerAction()); // just validates
+		$this->btnValidate->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\Server()); // just validates
 		$this->btnValidate->CausesValidation = true;
 	}
 
 }
 
 // Run the Form we have defined
-// The QForm engine will look to intro.tpl.php to use as its HTML template include file
+// The \QCubed\Project\Control\FormBase engine will look to intro.tpl.php to use as its HTML template include file
 ExamplesForm::Run('ExamplesForm');
 ?>

@@ -1,10 +1,10 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Customizing How FormState is Saved</h1>
 
-	<p>By default, the <strong>QForm</strong> engine will store the state of the actual <strong>QForm</strong> objects as a rather
+	<p>By default, the <strong>\QCubed\Project\Control\FormBase</strong> engine will store the state of the actual <strong>\QCubed\Project\Control\FormBase</strong> objects as a rather
 		long <strong>Base64</strong> encoded string.  While this is a very simple, straightforward and very maintenance-free
 		approach, it does cause some complications, especially for more enterprise-level application
 		architectures:</p>
@@ -20,12 +20,12 @@
 		the formstate data in PHP Sessions or you can store the formstate data directly on the
 		filesystem.  For both methods, you end up only passing a small key back to the user.  Moreover, the formstate,
 		itself, or the key can even be encrypted, using the
-		<strong><a href="../communication/crypto.php" class="bodyLink">QCryptography</a></strong> class.</p>
+		<strong><a href="../communication/crypto.php" class="bodyLink">\QCubed\Cryptography</a></strong> class.</p>
 
 	<p>Finally, because the FormState handler is encapsulated in its own class, you can even define your own formstate
 		handler, to store the formstate data on a shared server, in a database, or even in server memory.</p>
 
-	<p>In our example below, we use <strong>QSessionFormStateHandler</strong> to store the formstate data in PHP Session, and we
+	<p>In our example below, we use <strong>\QCubed\FormState\SessionHandler</strong> to store the formstate data in PHP Session, and we
 		will only store the session key (in this case, just a simple integer) on the page as a hidden form variable.
 		For an added level of security, we will also encrypt the key.</p>
 
@@ -44,5 +44,5 @@
 	<p><?php $this->btnButton->Render(); ?></p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

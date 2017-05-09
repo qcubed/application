@@ -30,7 +30,8 @@ namespace QCubed\Jqui\Event;
  * Otherwise the property is null.
  * 
  *
- * @was QAutocomplete_Change */
+ * @was QAutocomplete_ChangeEvent
+ */
 class AutocompleteChange extends EventBase
 {
     const EVENT_NAME = 'autocompletechange';

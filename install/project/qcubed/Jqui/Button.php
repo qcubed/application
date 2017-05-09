@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see ButtonBase
  * @was QJqButton
  */
-
 class Button extends Q\Jqui\ButtonBase
 {
 }

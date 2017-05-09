@@ -30,7 +30,8 @@ namespace QCubed\Jqui\Event;
  * 	* selected Type: Element The selectable item that has been selected.
  * 
  *
- * @was QSelectable_Selected */
+ * @was QSelectable_SelectedEvent
+ */
 class SelectableSelected extends EventBase
 {
     const EVENT_NAME = 'selectableselected';

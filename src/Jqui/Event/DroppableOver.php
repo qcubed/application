@@ -37,7 +37,8 @@ namespace QCubed\Jqui\Event;
  * helper as { top, left } object.
  * 
  *
- * @was QDroppable_Over */
+ * @was QDroppable_OverEvent
+ */
 class DroppableOver extends EventBase
 {
     const EVENT_NAME = 'dropover';

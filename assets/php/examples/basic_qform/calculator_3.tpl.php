@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Custom Renderers and Control Properties</h1>
@@ -8,7 +8,7 @@
 		as well as use control properties to change the appearance of your QControls.</p>
 
 	<p>The QCubed distribution includes a sample custom renderer, <strong>RenderWithName</strong>, which is
-		defined in your QControl custom class (which is at /includes/qform/QControl.inc).
+		defined in your QControl custom class (which is at /includes/\QCubed\Project\Control\FormBase/QControl.inc).
 		We'll use this <strong>RenderWithName</strong> for our calculator's textboxes and listbox.  We've also
 		made sure to assign <strong>Name</strong> properties to these QControls.</p>
 
@@ -37,5 +37,5 @@
 	<?php $this->lblResult->Render('FontSize=20px', 'FontItalic=true'); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QResizable_Create */
+ * @was QResizable_CreateEvent
+ */
 class ResizableCreate extends EventBase
 {
     const EVENT_NAME = 'resizecreate';

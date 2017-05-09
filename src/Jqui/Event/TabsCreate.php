@@ -31,7 +31,8 @@ namespace QCubed\Jqui\Event;
  * 	* panel Type: jQuery The active panel.
  * 
  *
- * @was QTabs_Create */
+ * @was QTabs_CreateEvent
+ */
 class TabsCreate extends EventBase
 {
     const EVENT_NAME = 'tabscreate';

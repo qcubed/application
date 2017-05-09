@@ -51,7 +51,7 @@
 	$objMessage->From = 'ACME Reporting Service <reporting@acme.com>';
 	$objMessage->To = 'John Doe <jdoe@acme.com>, Jane Doe <jdoe2@acme.com>';
 	$objMessage->Bcc = 'audit-system@acme.com';
-	$objMessage->Subject = 'Report for ' . QDateTime::NowToString(QDateTime::FormatDisplayDate);
+	$objMessage->Subject = 'Report for ' . \QCubed\QDateTime::NowToString(\QCubed\QDateTime::FORMAT_DISPLAY_DATE);
 	
 	// Setup Plaintext Message
 	$strBody = "Dear John and Jane Doe,\r\n\r\n";

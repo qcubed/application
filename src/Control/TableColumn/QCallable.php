@@ -46,7 +46,7 @@ class QCallable extends Data
     {
         parent::__construct($strName);
         if ($objCallable instanceof Closure) {
-            throw new InvalidArgumentException('Cannot be a Closure.');
+            throw new Caller('Cannot be a Closure.');
         }
         $this->callback = $objCallable;
         $this->mixParams = $mixParams;

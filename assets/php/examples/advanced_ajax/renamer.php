@@ -1,40 +1,40 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class SelectableLabel extends QLabel {
+class SelectableLabel extends \QCubed\Control\Label {
 	// For Simplicity -- We made this a public member variable
 	// In the future, you might want to make it protected, and make public get/set accessors
 	public $Selected;
 
 }
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
 	protected $lblArray;
 	protected $txtArray;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		for ($intIndex = 0; $intIndex < 10; $intIndex++) {
 			// Create the Label
 			$this->lblArray[$intIndex] = new SelectableLabel($this);
 			$this->lblArray[$intIndex]->Text = 'This is a Test for Item #' . ($intIndex + 1);
 			$this->lblArray[$intIndex]->CssClass = 'renamer_item';
 			$this->lblArray[$intIndex]->ActionParameter = $intIndex;
-			$this->lblArray[$intIndex]->AddAction(new QClickEvent(), new QAjaxAction('lblArray_Click'));
+			$this->lblArray[$intIndex]->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('lblArray_Click'));
 
 			// Create the Textbox (hidden)
-			$this->txtArray[$intIndex] = new QTextBox($this);
+			$this->txtArray[$intIndex] = new \QCubed\Project\Control\TextBox($this);
 			$this->txtArray[$intIndex]->Visible = false;
 			$this->txtArray[$intIndex]->ActionParameter = $intIndex;
 
 			// Create Actions to Save Textbox on Blur or on "Enter" Key
-			$this->txtArray[$intIndex]->AddAction(new QBlurEvent(), new QAjaxAction('TextItem_Save'));
-			$this->txtArray[$intIndex]->AddAction(new QEnterKeyEvent(), new QAjaxAction('TextItem_Save'));
-			$this->txtArray[$intIndex]->AddAction(new QEnterKeyEvent(), new QTerminateAction());
+			$this->txtArray[$intIndex]->AddAction(new \QCubed\Event\Blur(), new \QCubed\Action\Ajax('TextItem_Save'));
+			$this->txtArray[$intIndex]->AddAction(new \QCubed\Event\EnterKey(), new \QCubed\Action\Ajax('TextItem_Save'));
+			$this->txtArray[$intIndex]->AddAction(new \QCubed\Event\EnterKey(), new \QCubed\Action\Terminate());
 
 			// Create Action to CANCEL/Revert Textbox on "Escape" Key
-			$this->txtArray[$intIndex]->AddAction(new QEscapeKeyEvent(), new QAjaxAction('TextItem_Cancel'));
-			$this->txtArray[$intIndex]->AddAction(new QEscapeKeyEvent(), new QTerminateAction());
+			$this->txtArray[$intIndex]->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Ajax('TextItem_Cancel'));
+			$this->txtArray[$intIndex]->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Terminate());
 		}
 	}
 
@@ -44,9 +44,9 @@ class ExampleForm extends QForm {
 			// It's already selected -- go ahead and replace it with the textbox
 			$this->lblArray[$strParameter]->Visible = false;
 			$this->txtArray[$strParameter]->Visible = true;
-			$this->txtArray[$strParameter]->Text = html_entity_decode($this->lblArray[$strParameter]->Text, ENT_COMPAT, QApplication::$EncodingType);
-			QApplication::ExecuteControlCommand($this->txtArray[$strParameter]->ControlId, 'select');
-			QApplication::ExecuteControlCommand($this->txtArray[$strParameter]->ControlId, 'focus');
+			$this->txtArray[$strParameter]->Text = html_entity_decode($this->lblArray[$strParameter]->Text, ENT_COMPAT, \QCubed\Project\Application::encodingType());
+			\QCubed\Project\Application::ExecuteControlCommand($this->txtArray[$strParameter]->ControlId, 'select');
+			\QCubed\Project\Application::ExecuteControlCommand($this->txtArray[$strParameter]->ControlId, 'focus');
 		} else {
 			// Nope -- not yet selected
 			// First, unselect everything else

@@ -1,22 +1,22 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Introduction to QPanel and QLabel</h1>
+	<h1>Introduction to \QCubed\Control\Panel and \QCubed\Control\Label</h1>
 	
-	<p>It may seem funny that we are "introducing" the <strong>QPanel</strong> and <strong>QLabel</strong> controls
+	<p>It may seem funny that we are "introducing" the <strong>\QCubed\Control\Panel</strong> and <strong>\QCubed\Control\Label</strong> controls
 	now, especially since we have already been using them a lot throughout the examples.</p>
 
-	<p>On the surface, it may seem that <strong>QLabel</strong> is very simple -- you specify the <strong>Text</strong>
+	<p>On the surface, it may seem that <strong>\QCubed\Control\Label</strong> is very simple -- you specify the <strong>Text</strong>
 	that you want it to display and maybe some styles around it, and then you can just <strong>Render</strong>
-	it out.  And while <strong>QLabel</strong> and <strong>QPanel</strong> controls should certainly be used for 
+	it out.  And while <strong>\QCubed\Control\Label</strong> and <strong>\QCubed\Control\Panel</strong> controls should certainly be used for 
 	that purpose, they also offer a lot more in functionality.</p>
 
-	<p>Both the <strong>QLabel</strong> and <strong>QPanel</strong> controls extend from the <strong>QBlockControl</strong> class.
+	<p>Both the <strong>\QCubed\Control\Label</strong> and <strong>\QCubed\Control\Panel</strong> controls extend from the <strong>\QCubed\Control\BlockControl</strong> class.
 	The only difference between the two is that labels will render as a &lt;span&gt; and panels will render
 	as a &lt;div&gt;.  And in fact, because in HTML there is very little difference between &lt;span&gt;
-	and &lt;div&gt; anyway, it is safe to say that a <strong>QLabel</strong> with its <strong>DisplayStyle</strong> set to
-	"block" will be equivalent to a <strong>QPanel</strong> with its <strong>DisplayStyle</strong> set to "inline".</p>
+	and &lt;div&gt; anyway, it is safe to say that a <strong>\QCubed\Control\Label</strong> with its <strong>DisplayStyle</strong> set to
+	"block" will be equivalent to a <strong>\QCubed\Control\Panel</strong> with its <strong>DisplayStyle</strong> set to "inline".</p>
 
 	<p>In addition to defining the <strong>Text</strong> to display, these controls can also use a <strong>Template</strong> file.
 	Moreover, these controls can also have any of its unrendered child controls auto-rendered out.  This offers
@@ -31,18 +31,18 @@
 		that have not been rendered yet</li>
 	</ul>
 
-	<p>In our example below, we define a <strong>QPanel</strong> and assign textboxes as child controls.  We specify
+	<p>In our example below, we define a <strong>\QCubed\Control\Panel</strong> and assign textboxes as child controls.  We specify
 	a <strong>Text</strong> value and also setup a <strong>Template</strong>.  Finally, we render that entire panel out (complete
 	with the text, template and child controls) with a single <strong>Render</strong> call.</p>
 
-	<p>Note that even though 10 textboxes are being rendered, we never explicitly code a <strong>QTextBox->Render</strong>
+	<p>Note that even though 10 textboxes are being rendered, we never explicitly code a <strong>\QCubed\Project\Control\TextBox->Render</strong>
 	call <em>anywhere</em> in our code.</p>
 
 	<p>Within the template file, the <em>$this</em> variable refers to the control being rendered.</em></p>
 
 
-	<p>Another type of block control to mention here is the  <strong>QFieldset</strong>
-		which draws a panel as an html fieldset, and has a legend. Otherwise, it is the same as a QPanel.</p>
+	<p>Another type of block control to mention here is the  <strong>\QCubed\Control\Fieldset</strong>
+		which draws a panel as an html fieldset, and has a legend. Otherwise, it is the same as a \QCubed\Control\Panel.</p>
 
 
 </div>
@@ -52,5 +52,5 @@
 	<?php $this->pnlFieldset->Render(); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

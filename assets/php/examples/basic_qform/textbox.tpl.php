@@ -1,10 +1,10 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 	<div id="instructions">
-		<h1>The QTextBox Family of Controls</h1>
+		<h1>The \QCubed\Project\Control\TextBox Family of Controls</h1>
 
-		<p><strong>QTextBox</strong> controls handle basic user input.  Different flavors of controls
+		<p><strong>\QCubed\Project\Control\TextBox</strong> controls handle basic user input.  Different flavors of controls
 			are available for various forms of basic user input.</p>
 
 		<p>The last few controls, the <strong>Email</strong>, <strong>Url</strong> and <strong>Custom</strong>
@@ -25,5 +25,5 @@
 		<p><?php $this->btnValidate->Render(); ?></p>
 	</div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

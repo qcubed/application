@@ -29,7 +29,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QDroppable_Out */
+ * @was QDroppable_OutEvent
+ */
 class DroppableOut extends EventBase
 {
     const EVENT_NAME = 'dropout';

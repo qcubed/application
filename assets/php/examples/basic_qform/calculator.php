@@ -1,7 +1,7 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class CalculatorForm extends QForm {
+class CalculatorForm extends \QCubed\Project\Control\FormBase {
 
 	// Our Calculator needs 2 Textboxes (one for each operand)
 	// A listbox of operations to choose from
@@ -14,22 +14,22 @@ class CalculatorForm extends QForm {
 	protected $lblResult;
 
 	// Define all the QContrtol objects for our Calculator
-	protected function Form_Create() {
-		$this->txtValue1 = new QTextBox($this);
+	protected function formCreate() {
+		$this->txtValue1 = new \QCubed\Project\Control\TextBox($this);
 
-		$this->txtValue2 = new QTextBox($this);
+		$this->txtValue2 = new \QCubed\Project\Control\TextBox($this);
 
-		$this->lstOperation = new QListBox($this);
+		$this->lstOperation = new \QCubed\Project\Control\ListBox($this);
 		$this->lstOperation->AddItem('+', 'add');
 		$this->lstOperation->AddItem('-', 'subtract');
 		$this->lstOperation->AddItem('*', 'multiply');
 		$this->lstOperation->AddItem('/', 'divide');
 
-		$this->btnCalculate = new QButton($this);
+		$this->btnCalculate = new \QCubed\Project\Jqui\Button($this);
 		$this->btnCalculate->Text = 'Calculate';
-		$this->btnCalculate->AddAction(new QClickEvent(), new QServerAction('btnCalculate_Click'));
+		$this->btnCalculate->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('btnCalculate_Click'));
 
-		$this->lblResult = new QLabel($this);
+		$this->lblResult = new \QCubed\Control\Label($this);
 		$this->lblResult->HtmlEntities = false;
 	}
 

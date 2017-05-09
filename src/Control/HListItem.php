@@ -37,7 +37,7 @@ class HListItem extends ListItemBase
     protected $strAnchor;
     /** @var  string|null  a custom tag to draw the item with. */
     protected $strTag;
-    /** @var  QTagStyler for styling the subtag if needed. */
+    /** @var  TagStyler for styling the subtag if needed. */
     protected $objSubTagStyler;
 
 
@@ -96,8 +96,8 @@ class HListItem extends ListItemBase
     }
 
     /**
-     * Returns a QTagStyler for styling the sub tag.
-     * @return QTagStyler
+     * Returns a TagStyler for styling the sub tag.
+     * @return TagStyler
      */
     public function getSubTagStyler()
     {

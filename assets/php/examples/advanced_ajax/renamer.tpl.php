@@ -1,10 +1,10 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Making Renameable Labels</h1>
 
-	<p>With the use of <strong>QLabel</strong> and <strong>QTextBox</strong> controls that can show, hide and change
+	<p>With the use of <strong>\QCubed\Control\Label</strong> and <strong>\QCubed\Project\Control\TextBox</strong> controls that can show, hide and change
 		<strong>CssClass</strong> names depending on what action we must execute, we use
 		<strong>QAjaxActions</strong> and various events to create
 		a list of "renameable labels", where the interaction is similar to how files
@@ -24,5 +24,5 @@
 <?php } ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

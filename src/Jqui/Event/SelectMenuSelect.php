@@ -29,7 +29,8 @@ namespace QCubed\Jqui\Event;
  * 	* item Type: jQuery The selected item.
  * 
  *
- * @was QSelectmenu_Select */
+ * @was QSelectMenu_SelectEvent
+ */
 class SelectMenuSelect extends EventBase
 {
     const EVENT_NAME = 'selectmenuselect';

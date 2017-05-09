@@ -31,7 +31,8 @@ namespace QCubed\Jqui\Event;
  * response.
  * 
  *
- * @was QTabs_Load */
+ * @was QTabs_LoadEvent
+ */
 class TabsLoad extends EventBase
 {
     const EVENT_NAME = 'tabsload';

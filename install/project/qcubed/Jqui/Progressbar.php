@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see ProgressbarBase
  * @was QProgressbar
  */
-
 class Progressbar extends Q\Jqui\ProgressbarBase
 {
 }

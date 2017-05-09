@@ -31,7 +31,8 @@ namespace QCubed\Jqui\Event;
  * unselected.
  * 
  *
- * @was QSelectable_Unselected */
+ * @was QSelectable_UnselectedEvent
+ */
 class SelectableUnselected extends EventBase
 {
     const EVENT_NAME = 'selectableunselected';

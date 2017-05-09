@@ -1,7 +1,7 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class ComplexColumn extends QHtmlTableIndexedColumn {
+class ComplexColumn extends \QCubed\Control\TableColumn\Indexed {
 	public function RenderHeaderCell() {
 		if ($this->objParentTable->CurrentHeaderRowIndex == 0 &&
 				$this->Index > 1) {
@@ -36,20 +36,20 @@ class ComplexColumn extends QHtmlTableIndexedColumn {
 }
 
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
-	/** @var QHtmlTable */
+	/** @var \QCubed\Project\Control\Table */
 	protected $tblPersons;
 
-	/** @var QHtmlTable */
+	/** @var \QCubed\Project\Control\Table */
 	protected $tblReport;
 
-	/** @var QHtmlTable */
+	/** @var \QCubed\Project\Control\Table */
 	protected $tblComplex;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid
-		$this->tblPersons = new QHtmlTable($this);
+		$this->tblPersons = new \QCubed\Project\Control\Table($this);
 		$this->tblPersons->CssClass = 'simple_table';
 		$this->tblPersons->RowCssClass = 'odd_row';
 		$this->tblPersons->AlternateRowCssClass = 'even_row';
@@ -57,7 +57,7 @@ class ExampleForm extends QForm {
 
 		// Define Columns
 		// This demonstrates how to first create a column, and then add it to the table
-		$objColumn = new QHtmlTableCallableColumn('Full Name', [$this, 'getFullName']);
+		$objColumn = new \QCubed\Control\TableColumn\QCallable('Full Name', [$this, 'getFullName']);
 		$this->tblPersons->AddColumn($objColumn);
 
 		// The second column demonstrates using a property name for fetching the data
@@ -75,7 +75,7 @@ class ExampleForm extends QForm {
 		// to render itself.
 		$this->tblPersons->SetDataBinder('tblPersons_Bind');
 
-		$this->tblReport = new QHtmlTable($this);
+		$this->tblReport = new \QCubed\Project\Control\Table($this);
 		$this->tblReport->CssClass = 'simple_table';
 		$this->tblReport->RowCssClass = 'odd_row';
 		$this->tblReport->AlternateRowCssClass = 'even_row';
@@ -92,7 +92,7 @@ class ExampleForm extends QForm {
 
 		$this->tblReport->SetDataBinder('tblReport_Bind');
 
-		$this->tblComplex = new QHtmlTable($this);
+		$this->tblComplex = new \QCubed\Project\Control\Table($this);
 		$this->tblComplex->CssClass = 'simple_table';
 		$this->tblComplex->RowCssClass = 'odd_row';
 		$this->tblComplex->AlternateRowCssClass = 'even_row';

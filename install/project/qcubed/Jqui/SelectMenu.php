@@ -12,9 +12,8 @@ use QCubed as Q;
  * to make changes to this file.
  *
  * @see SelectMenuBase
- * @was QSelectmenu
+ * @was QSelectMenu
  */
-
 class SelectMenu extends Q\Jqui\SelectMenuBase
 {
 }

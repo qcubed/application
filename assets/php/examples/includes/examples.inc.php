@@ -42,10 +42,10 @@
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Querying in QCubed';
 			Examples::$Categories[$intIndex]['description'] = 'Ad Hoc Queries, Custom Load Methods, and QCubed Query';
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/qq.php * QCubed Query: Object Oriented Database Querying');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqnode.php * QCubed Query: The QQ Node Classes');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqcondition.php * QCubed Query: The QQ Condition Classes');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqclause.php * QCubed Query: The QQ Clause Classes');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/\QCubed\Query\QQ.php * QCubed Query: Object Oriented Database Querying');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/\QCubed\Query\Node\NodeBase.php * QCubed Query: The \QCubed\Query\QQ Node Classes');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/\QCubed\Query\Condition\ConditionBase.php * QCubed Query: The \QCubed\Query\QQ Condition Classes');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqclause.php * QCubed Query: The \QCubed\Query\QQ Clause Classes');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/conditional_expand.php * QCubed Query: Conditional Joins');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/association.php * QCubed Query: Handling Association Tables');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/reverse.php * QCubed Query: Handling Reverse Relationships');
@@ -70,7 +70,7 @@
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator_3.php Calculator Example with &quot;Design&quot;');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/listbox.php * Introduction to \QCubed\Control\ListControl');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/hlist.php * Generating Html Lists');
-			self::AddCoreExampleFile($intIndex, '/basic_qform/textbox.php * Introduction to QTextBoxControls');
+			self::AddCoreExampleFile($intIndex, '/basic_qform/textbox.php * Introduction to TextBox Controls');
 			
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
@@ -83,7 +83,7 @@
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'More About Events and Actions';
-			Examples::$Categories[$intIndex]['description'] = 'Looking more in depth at the capabilities of the QEvent and QAction libraries';
+			Examples::$Categories[$intIndex]['description'] = 'Looking more in depth at the capabilities of the \QCubed\Event\EventBase and \QCubed\Action\ActionBase libraries';
 			self::AddCoreExampleFile($intIndex, '/events_actions/editable_listbox.php Editable ListBox');
 			self::AddCoreExampleFile($intIndex, '/events_actions/editable_listbox_2.php Conditional Events');
 			self::AddCoreExampleFile($intIndex, '/events_actions/delayed.php Trigger-Delayed Events');
@@ -125,13 +125,13 @@
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Advanced Controls Manipulation';
 			Examples::$Categories[$intIndex]['description'] = 'Dynamically creating controls, Implementing custom controls';
-			self::AddCoreExampleFile($intIndex, '/dynamic/qpanel.php Introduction to QBlockControls');
+			self::AddCoreExampleFile($intIndex, '/dynamic/\QCubed\Control\Panel.php Introduction to QBlockControls');
 			self::AddCoreExampleFile($intIndex, '/dynamic/qpanel_2.php Dynamically Changing a Control\'s Parent');
 			self::AddCoreExampleFile($intIndex, '/other_controls/persist.php Persistent Controls: Performance for Reusable Components');
 			self::AddCoreExampleFile($intIndex, '/other_controls/sample.php Creating Your Own Control');
 			self::AddCoreExampleFile($intIndex, '/composite/intro.php Creating a Composite Control');
 			self::AddCoreExampleFile($intIndex, '/multiple_qform/intro.php "Multiple QForms" Functionality via Custom QPanels');
-			self::AddCoreReferencedFile('/dynamic/qpanel.php', 'pnl_panel.tpl.php');
+			self::AddCoreReferencedFile('/dynamic/\QCubed\Control\Panel.php', 'pnl_panel.tpl.php');
 			self::AddCoreReferencedFile('/other_controls/sample.php', '__CORE_CONTROL__QSampleControl.class.php');
 			self::AddCoreReferencedFile('/composite/intro.php', 'SampleComposite.class.php');
 			self::AddCoreReferencedFile('/multiple_qform/intro.php', array(
@@ -503,7 +503,7 @@
 				return $strToReturn;
 			}
 			else {
-				QApplication::CloseWindow();
+				\QCubed\Project\Application::CloseWindow();
 			}
 		}
 

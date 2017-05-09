@@ -1,22 +1,22 @@
 <?php
 	require_once('../qcubed.inc.php');
 
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		protected $lstFont;
 		protected $lblMessage;
 		protected $txtMessage1;
 		protected $txtMessage2;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			// First, we'll scan the QCubed Fonts directory for all the available
 			// PFB (Adobe Type 1) font files, and create a listbox of them.
-			$this->lstFont = new QListBox($this);
+			$this->lstFont = new \QCubed\Project\Control\ListBox($this);
 			$objFontDirectory = opendir(__QCUBED_CORE__ . '/fonts');
 			while ($strFile = readdir($objFontDirectory))
 				if ($intPosition = strpos($strFile, '.ttf'))
-					$this->lstFont->AddItem(new QListItem(substr($strFile, 0, $intPosition), $strFile));
+					$this->lstFont->AddItem(new \QCubed\Control\ListItem(substr($strFile, 0, $intPosition), $strFile));
 			$this->lstFont->SelectedIndex = 0;
-			$this->lstFont->AddAction(new QChangeEvent(), new QAjaxAction('lstFont_Change'));
+			$this->lstFont->AddAction(new \QCubed\Event\Change(), new \QCubed\Action\Ajax('lstFont_Change'));
 
 
 
@@ -31,7 +31,7 @@
 			// a TrueType font file (.ttf) or it can be a PostScript Type 1 typeface (.pfb).  PostScript
 			// Type 1 typefaces must also have the accompanying .afm file (font metrics file).  Font Files
 			// can either be placed in the current directory, or it can be placed in
-			// /includes/qform/fonts
+			// /includes/\QCubed\Project\Control\FormBase/fonts
 			$this->lblMessage->FontNames = $this->lstFont->SelectedValue;
 
 			// FontSmoothing -- only for PostScript Type 1 files (this is ignored for TrueType)
@@ -63,13 +63,13 @@
 			// specify a Horizontal or Vertical alignment of "NotSet" in order for QImageLabel
 			// to recognize the X- or Y- coordinate preference.  Otherwise, the X-/Y- coordinate
 			// will be dynamically calculated.
-//			$this->lblMessage->HorizontalAlign = QHorizontalAlign::Center;
+//			$this->lblMessage->TextAlign = \QCubed\Css\TextAlign::CENTER;
 //			$this->lblMessage->VerticalAlign = QVerticalAlign::NotSet;
 //			$this->lblMessage->YCoordinate = 30;
 
 			// Just like any QControl, we can even specify events/actions.  Let's add a ClickEvent action.
-			$this->lblMessage->AddAction(new QClickEvent(), new QAjaxAction('lblMessage_Click'));
-			$this->lblMessage->Cursor = QCursor::Pointer;
+			$this->lblMessage->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('lblMessage_Click'));
+			$this->lblMessage->Cursor = \QCubed\Css\Cursor::POINTER;
 
 			// And finally, let's specify a CacheFolder so that the images are cached
 			// Notice that this CacheFolder path is a complete web-accessible relative-to-docroot path
@@ -79,11 +79,11 @@
 
 
 			// Add a couple of other textboxes for fun
-			$this->txtMessage1 = new QTextBox($this);
+			$this->txtMessage1 = new \QCubed\Project\Control\TextBox($this);
 			$this->txtMessage1->Text = 'Click me to toggle my message.';
 			$this->txtMessage1->MaxLength = 50;
 
-			$this->txtMessage2 = new QTextBox($this);
+			$this->txtMessage2 = new \QCubed\Project\Control\TextBox($this);
 			$this->txtMessage2->Text = 'Hello, World!';
 			$this->txtMessage2->MaxLength = 50;
 		}

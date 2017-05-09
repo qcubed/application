@@ -48,7 +48,7 @@ use QCubed\Project\Application;
  * </code>
  *
  *
- * Since QDialog is a descendant of QPanel, you can do anything you can to a normal QPanel,
+ * Since Dialog is a descendant of Panel, you can do anything you can to a normal Panel,
  * including add QControls and use a template. When you want to hide the dialog, call <code>Close()</code>
  *
  * @property boolean $HasCloseButton Disables (false) or enables (true) the close X in the upper right corner of the title. Can be set when initializing the dialog.
@@ -59,7 +59,7 @@ use QCubed\Project\Application;
  * @link http://jqueryui.com/dialog/
  * @was QDialogBase
  */
-class DialogBase extends DialogGen
+class DialogBase extends DialogGen implements Q\Control\DialogInterface
 {
     // enumerations
 
@@ -274,10 +274,10 @@ class DialogBase extends DialogGen
         $strJS .= sprintf('
             {
                 qcubed.recordControlModification("%s", "_ClickedButton", "%s");
-                $j("#%s").trigger("QDialog_Button", $j(event.currentTarget).data("btnid"));
+                $j("#%s").trigger("%s", $j(event.currentTarget).data("btnid"));
             }
             event.preventDefault();
-            ', $controlId, $strButtonId, $controlId);
+            ', $controlId, $strButtonId, $controlId, addslashes(Q\Event\DialogButton::EVENT_NAME));
 
         $btnOptions = array(
             'text' => $strButtonName,
@@ -377,14 +377,14 @@ class DialogBase extends DialogGen
 
     /**
      * Create a message dialog. Automatically adds an OK button that closes the dialog. To detect the close,
-     * add an action on the QDialog_CloseEvent. To change the message, use the return value and set ->Text.
-     * To detect a button click, add a QDialog_ButtonEvent.
+     * add an action on the Q\JqUi\Event\DialogClose. To change the message, use the return value and set ->Text.
+     * To detect a button click, add a Q\Event\DialogButton.
      *
      * If you specify no buttons, a close box in the corner will be created that will just close the dialog. If you
      * specify just a string in $strButtons, or just one string in the button array, one button will be shown that will just close the message.
      *
      * If you specify more than one button, the first button will be the default button (the one pressed if the user presses the return key). In
-     * this case, you will need to detect the button by adding a QDialog_ButtonEvent. You will also be responsible for calling "Close()" on
+     * this case, you will need to detect the button by adding a Q\Event\DialogButton. You will also be responsible for calling "Close()" on
      * the dialog after detecting a button.
      *
      * @param string $strMessage // The message
@@ -463,7 +463,7 @@ class DialogBase extends DialogGen
     public function close()
     {
         Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close",
-            QJsPriority::Last);
+            \QCubed\ApplicationBase::PRIORITY_LAST);
     }
 
     /**

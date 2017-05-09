@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 	
 	<div id="instructions">
 		<h1>Dynamically Created Image Labels</h1>
@@ -13,9 +13,9 @@
 		will require the <strong>FreeType</strong> library, and rendering <strong>PostScript Type 1</strong> will require the
 		<strong>T1Lib</strong> library.  See the <strong><a href="http://www.php.net/" class="bodyLink">PHP Documentation</a></strong>
 		for more information.  The typeface files can either be put in the current directory, or it can be placed in
-		<strong>/includes/qform/fonts</strong>.</p>
+		<strong>/includes/\QCubed\Project\Control\FormBase/fonts</strong>.</p>
 		
-		<p>Note that events/actions can be defined on the image label, as we have defined a <strong>QClickEvent</strong> in our
+		<p>Note that events/actions can be defined on the image label, as we have defined a <strong>\QCubed\Event\Click</strong> in our
 		example <strong>QImageLabel</strong> below.</p>
 		
 		<p>Finally, the <strong>QImageLabel</strong> provides a great deal of functionality to help layout the text string <em>within</em>
@@ -55,5 +55,5 @@
 	</div>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

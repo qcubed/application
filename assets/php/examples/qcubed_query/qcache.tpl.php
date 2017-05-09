@@ -28,12 +28,12 @@
 </div>
 
 <div id="demoZone">
-	<?php $this->RenderBegin(); ?>
+	<?php $this->renderBegin(); ?>
 	<p><?php $this->btnReloadPage->Render() ?>&nbsp;<?php $this->btnClearCache->Render(); ?></p>
 	<p><?php $this->lblMessage->Render(); ?></p>
 <?php 
-	QApplication::$Database[1]->EnableProfiling();
-	$arrObjects = Person::QueryArrayCached(QQ::All());
+	\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
+	$arrObjects = Person::QueryArrayCached(\QCubed\Query\QQ::All());
 ?>
 	<p><strong>Items in the Persons table:</strong></p>
 	<ul>
@@ -43,8 +43,8 @@
 	}
 ?>
 	</ul>
-	<?php $this->RenderEnd(); ?>
-	<p><?php QApplication::$Database[1]->OutputProfiling();?></p>
+	<?php $this->renderEnd(); ?>
+	<p><?php \QCubed\Database\Service::getDatabase(1)->OutputProfiling();?></p>
 </div>
 
 <?php require('../includes/footer.inc.php'); ?>

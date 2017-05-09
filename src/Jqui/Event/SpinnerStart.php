@@ -29,7 +29,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QSpinner_Start */
+ * @was QSpinner_StartEvent
+ */
 class SpinnerStart extends EventBase
 {
     const EVENT_NAME = 'spinstart';

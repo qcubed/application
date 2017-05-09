@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see TabsBase
  * @was QTabs
  */
-
 class Tabs extends Q\Jqui\TabsBase
 {
 }

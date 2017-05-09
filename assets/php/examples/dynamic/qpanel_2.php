@@ -1,7 +1,7 @@
 <?php
 	require_once('../qcubed.inc.php');
 	
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		// Declare the panels and the buttons
 		// Notice how we don't declare the textboxes that we will be moving back and forth.
 		// We do this to demonstrate that the panel can manage its own set of dynamically controls
@@ -12,13 +12,13 @@
 		protected $btnMoveRight;
 		protected $btnDeleteLeft;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Define the Panels
-			$this->pnlLeft = new QPanel($this);
+			$this->pnlLeft = new \QCubed\Control\Panel($this);
 			$this->pnlLeft->CssClass = 'textbox_panel';
 			$this->pnlLeft->Width = 250;
 
-			$this->pnlRight = new QPanel($this);
+			$this->pnlRight = new \QCubed\Control\Panel($this);
 			$this->pnlRight->CssClass = 'textbox_panel';
 			$this->pnlRight->Width = 250;
 
@@ -27,25 +27,25 @@
 			$this->pnlRight->AutoRenderChildren = true;
 
 			// Define the Buttons
-			$this->btnMoveLeft = new QButton($this);
+			$this->btnMoveLeft = new \QCubed\Project\Jqui\Button($this);
 			$this->btnMoveLeft->Text = '<<';
-			$this->btnMoveLeft->AddAction(new QClickEvent(), new QAjaxAction('MoveTextbox'));
+			$this->btnMoveLeft->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('MoveTextbox'));
 			$this->btnMoveLeft->ActionParameter = 'left';
 
-			$this->btnMoveRight = new QButton($this);
+			$this->btnMoveRight = new \QCubed\Project\Jqui\Button($this);
 			$this->btnMoveRight->Text = '>>';
-			$this->btnMoveRight->AddAction(new QClickEvent(), new QAjaxAction('MoveTextbox'));
+			$this->btnMoveRight->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('MoveTextbox'));
 			$this->btnMoveRight->ActionParameter = 'right';
 
-			$this->btnDeleteLeft = new QButton($this);
+			$this->btnDeleteLeft = new \QCubed\Project\Jqui\Button($this);
 			$this->btnDeleteLeft->Text = 'Delete One From Left';
-			$this->btnDeleteLeft->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteLeft_Click'));
+			$this->btnDeleteLeft->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnDeleteLeft_Click'));
 
 			// Define a bunch of textboxes, and put it into the left Panel
 			for ($intIndex = 1; $intIndex <= 10; $intIndex++) {
 				// The parent must be the panel, because the panel is going to be responsible
 				// for rendering it.
-				$txtTextbox = new QTextBox($this->pnlLeft);
+				$txtTextbox = new \QCubed\Project\Control\TextBox($this->pnlLeft);
 				$txtTextbox->Text = sprintf('Textbox #%s', $intIndex);
 				$txtTextbox->Width = 250;
 			}

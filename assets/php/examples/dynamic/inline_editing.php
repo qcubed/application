@@ -1,7 +1,7 @@
 <?php
 	require_once('../qcubed.inc.php');
 	
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		// Declare the DataGrid, and the buttons and textboxes for inline editing
 		protected $dtgPersons;
 		protected $txtFirstName;
@@ -13,9 +13,9 @@
 		// This value is either a Person->Id, "null" (if nothing is being edited), or "-1" (if creating a new Person)
 		protected $intEditPersonId = null;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Define the DataGrid
-			$this->dtgPersons = new QDataGrid($this);
+			$this->dtgPersons = new \QCubed\Project\Control\DataGrid($this);
 
 			// Define Columns -- we will define render helper methods to help with the rendering
 			// of the HTML for most of these columns
@@ -42,43 +42,43 @@
 			// the datagrid as the parent.  If they hit the escape key, let's perform a Cancel.
 			// Note that we need to terminate the action on the escape key event, too, b/c
 			// many browsers will perform additional processing that we won't not want.
-			$this->txtFirstName = new QTextBox($this->dtgPersons);
+			$this->txtFirstName = new \QCubed\Project\Control\TextBox($this->dtgPersons);
 			$this->txtFirstName->Required = true;
 			$this->txtFirstName->MaxLength = 50;
 			$this->txtFirstName->Width = 200;
-			$this->txtFirstName->AddAction(new QEscapeKeyEvent(), new QAjaxAction('btnCancel_Click'));
-			$this->txtFirstName->AddAction(new QEscapeKeyEvent(), new QTerminateAction());
+			$this->txtFirstName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Ajax('btnCancel_Click'));
+			$this->txtFirstName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Terminate());
 
-			$this->txtLastName = new QTextBox($this->dtgPersons);
+			$this->txtLastName = new \QCubed\Project\Control\TextBox($this->dtgPersons);
 			$this->txtLastName->Required = true;
 			$this->txtLastName->MaxLength = 50;
 			$this->txtLastName->Width = 200;
-			$this->txtLastName->AddAction(new QEscapeKeyEvent(), new QAjaxAction('btnCancel_Click'));
-			$this->txtLastName->AddAction(new QEscapeKeyEvent(), new QTerminateAction());
+			$this->txtLastName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Ajax('btnCancel_Click'));
+			$this->txtLastName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Terminate());
 
 			// We want the Save button to be Primary, so that the save will perform if the 
 			// user hits the enter key in either of the textboxes.
-			$this->btnSave = new QButton($this->dtgPersons);
+			$this->btnSave = new \QCubed\Project\Jqui\Button($this->dtgPersons);
 			$this->btnSave->Text = 'Save';
-			$this->btnSave->AddAction(new QClickEvent(), new QAjaxAction('btnSave_Click'));
+			$this->btnSave->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnSave_Click'));
 			$this->btnSave->PrimaryButton = true;
 			$this->btnSave->CausesValidation = true;
 
 			// Make sure we turn off validation on the Cancel button
-			$this->btnCancel = new QButton($this->dtgPersons);
+			$this->btnCancel = new \QCubed\Project\Jqui\Button($this->dtgPersons);
 			$this->btnCancel->Text = 'Cancel';
-			$this->btnCancel->AddAction(new QClickEvent(), new QAjaxAction('btnCancel_Click'));		
+			$this->btnCancel->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnCancel_Click'));		
 			$this->btnCancel->CausesValidation = false;
 
 			// Finally, let's add a "New" button
-			$this->btnNew = new QButton($this);
+			$this->btnNew = new \QCubed\Project\Jqui\Button($this);
 			$this->btnNew->Text = 'New';
-			$this->btnNew->AddAction(new QClickEvent(), new QAjaxAction('btnNew_Click'));		
+			$this->btnNew->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnNew_Click'));		
 			$this->btnNew->CausesValidation = false;
 		}
 
 		protected function dtgPersons_Bind() {
-			$objPersonArray = $this->dtgPersons->DataSource = Person::LoadAll(QQ::Clause(
+			$objPersonArray = $this->dtgPersons->DataSource = Person::LoadAll(\QCubed\Query\QQ::Clause(
 				$this->dtgPersons->OrderByClause,
 				$this->dtgPersons->LimitClause
 			));
@@ -92,7 +92,7 @@
 		}
 
 		// When we Render, we need to see if we are currently editing someone
-		protected function Form_PreRender() {
+		protected function formPreRender() {
 			// We want to force the datagrid to refresh on EVERY button click
 			// Normally, the datagrid won't re-render on the ajaxactions because nothing
 			// in the datagrid, itself, is being modified.  But considering that every ajax action
@@ -117,7 +117,7 @@
 			else
 				// Because we are rendering with HtmlEntities set to false on this column
 				// we need to make sure to escape the value
-				return QApplication::HtmlEntities($objPerson->FirstName);
+				return \QCubed\QString::htmlEntities($objPerson->FirstName);
 		}
 
 		// If the person for the row we are rendering is currently being edited,
@@ -129,7 +129,7 @@
 			else
 				// Because we are rendering with HtmlEntities set to false on this column
 				// we need to make sure to escape the value
-				return QApplication::HtmlEntities($objPerson->LastName);
+				return \QCubed\QString::htmlEntities($objPerson->LastName);
 		}
 
 		// If the person for the row we are rendering is currently being edited,
@@ -148,10 +148,10 @@
 				if (!$btnEdit) {
 					// Create the Edit button for this row in the DataGrid
 					// Use ActionParameter to specify the ID of the person
-					$btnEdit = new QButton($this->dtgPersons, $strControlId);
+					$btnEdit = new \QCubed\Project\Jqui\Button($this->dtgPersons, $strControlId);
 					$btnEdit->Text = 'Edit This Person';
 					$btnEdit->ActionParameter = $objPerson->Id;
-					$btnEdit->AddAction(new QClickEvent(), new QAjaxAction('btnEdit_Click'));
+					$btnEdit->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnEdit_Click'));
 					$btnEdit->CausesValidation = false;
 				}
 
@@ -176,7 +176,7 @@
 			$this->txtLastName->Text = $objPerson->LastName;
 
 			// Let's put the focus on the FirstName Textbox
-			QApplication::ExecuteControlCommand($this->txtFirstName->ControlId, 'focus');
+			\QCubed\Project\Application::ExecuteControlCommand($this->txtFirstName->ControlId, 'focus');
 		}
 
 		// Handle the action for the Save button being clicked.

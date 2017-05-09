@@ -33,7 +33,8 @@ namespace QCubed\Jqui\Event;
  * 	* value Type: Number The current value of the slider.
  * 
  *
- * @was QSlider_Start */
+ * @was QSlider_StartEvent
+ */
 class SliderStart extends EventBase
 {
     const EVENT_NAME = 'slidestart';

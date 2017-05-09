@@ -11,10 +11,10 @@
 
 
 		protected function Form_Create() {
-			$this->a = [new QHListItem ('A', 1),
-				new QHListItem ('B', 2),
-				new QHListItem ('C', 3),
-				new QHListItem ('D', 4)
+			$this->a = [new HListItem ('A', 1),
+				new HListItem ('B', 2),
+				new HListItem ('C', 3),
+				new HListItem ('D', 4)
 			];
 
 			$this->list1 = new QHListControl($this);

@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QSelectmenu_Create */
+ * @was QSelectMenu_CreateEvent
+ */
 class SelectMenuCreate extends EventBase
 {
     const EVENT_NAME = 'selectmenucreate';

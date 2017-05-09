@@ -5,14 +5,14 @@
 		<h1>Introduction to QQuery</h1>
 		
 		<p>The querying logic behind all the Load methods in your ORM classes is powered by <strong>QQuery</strong>,
-		or <strong>QQ</strong> for short.  Put simply, <strong>QQ</strong> is a completely object oriented API to perform any SELECT-based
+		or <strong>\QCubed\Query\QQ</strong> for short.  Put simply, <strong>\QCubed\Query\QQ</strong> is a completely object oriented API to perform any SELECT-based
 		query on your database to return any result or hierarchy of your ORM objects.</p>
 
 		<p>While the ORM classes utilize basic, straightforward SELECT statements in its Load methods,
-		<strong>QQ</strong> is capable of much more complex queries. </p>
+		<strong>\QCubed\Query\QQ</strong> is capable of much more complex queries. </p>
 
-		<p>At its core, any <strong>QQ</strong> query will return a collection of objects of the same type (e.g. a collection of
-		Person objects).  But the power of <strong>QQ</strong> is that we can branch beyond this core collection by bringing in
+		<p>At its core, any <strong>\QCubed\Query\QQ</strong> query will return a collection of objects of the same type (e.g. a collection of
+		Person objects).  But the power of <strong>\QCubed\Query\QQ</strong> is that we can branch beyond this core collection by bringing in
 		any related objects, performing any SQL-based clause (including WHERE, ORDER BY, JOIN, aggregations, etc.) on both
 		the core set of Person rows <i>and</i> any of these related objects rows.</p>
 
@@ -23,16 +23,16 @@
 			<li><strong>QueryCount</strong>: to perform a QCubed Query to return an integer of the count of rows (e.g. "COUNT (*)")</li>
 		</ul>
 
-		<p>All three QCubed Query methods expect two parameters, a <strong>QQ Condition</strong> and an optional set of <strong>QQ Clauses</strong>.
-		<strong>QQ Conditions</strong> are typically conditions that you would expect to find in a SQL WHERE clause, including <strong>Equal</strong>,
-		<strong>GreaterThan</strong>, <strong>IsNotNull</strong>, etc.  <strong>QQ Clauses</strong> are additional clauses that you could add to alter
+		<p>All three QCubed Query methods expect two parameters, a <strong>\QCubed\Query\QQ Condition</strong> and an optional set of <strong>\QCubed\Query\QQ Clauses</strong>.
+		<strong>\QCubed\Query\QQ Conditions</strong> are typically conditions that you would expect to find in a SQL WHERE clause, including <strong>Equal</strong>,
+		<strong>GreaterThan</strong>, <strong>IsNotNull</strong>, etc.  <strong>\QCubed\Query\QQ Clauses</strong> are additional clauses that you could add to alter
 		your SQL statement, including methods to perform SQL equivalents of JOIN, DISTINCT, GROUP BY, ORDER BY and LIMIT.</p>
 
-		<p>And finally, both <strong>QQ Condition</strong> and <strong>QQ Clause</strong> objects will expect <strong>QQ Node</strong> parameters.  <strong>QQ Nodes</strong> can
-		either be tables, individual columns within the tables, or even association tables.  <strong>QQ Node</strong> classes for your
+		<p>And finally, both <strong>\QCubed\Query\QQ Condition</strong> and <strong>\QCubed\Query\QQ Clause</strong> objects will expect <strong>\QCubed\Query\QQ Node</strong> parameters.  <strong>\QCubed\Query\QQ Nodes</strong> can
+		either be tables, individual columns within the tables, or even association tables.  <strong>\QCubed\Query\QQ Node</strong> classes for your
 		entire ORM is code generated for you.</p>
 		
-		<p>The next few examples will examine all three major constructs (<strong>QQ Node</strong>, <strong>QQ Condition</strong> and <strong>QQ Clause</strong>) in greater
+		<p>The next few examples will examine all three major constructs (<strong>\QCubed\Query\QQ Node</strong>, <strong>\QCubed\Query\QQ Condition</strong> and <strong>\QCubed\Query\QQ Clause</strong>) in greater
 		detail.</p>
 		
 		<p>And as a final note, notice that <strong>QCubed Query</strong> doesn't have any construct to describe what would normally be your SELECT clause.
@@ -48,7 +48,7 @@
 	<p>
 <?php
 	$objPerson = Person::QuerySingle(
-		QQ::Equal(QQN::Person()->Id, 1)
+		\QCubed\Query\QQ::Equal(QQN::Person()->Id, 1)
 	);
 
 	// Notice that QuerySingle returned just a single Person object
@@ -59,7 +59,7 @@
 	<ul>
 <?php
 	$objPersonArray = Person::QueryArray(
-		QQ::In(QQN::Person()->Id, array(5, 6, 8))
+		\QCubed\Query\QQ::In(QQN::Person()->Id, array(5, 6, 8))
 	);
 
 	// Notice that QueryArray returns an array of Person objects... this will
@@ -73,7 +73,7 @@
 	<p>
 <?php
 	$intCount = Person::QueryCount(
-		QQ::In(QQN::Person()->Id, array(5, 6, 8))
+		\QCubed\Query\QQ::In(QQN::Person()->Id, array(5, 6, 8))
 	);
 
 	// Notice that QueryCount returns an integer

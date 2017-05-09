@@ -55,7 +55,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * will be set for the width, allowing the width to be set in a
  * stylesheet.
  *
- * @was QSelectmenuGen
+ * @was QSelectMenuGen
 
  */
 

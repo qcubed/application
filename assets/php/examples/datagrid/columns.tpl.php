@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 <style type="text/css">
 	tr.odd_row {
 		background-color: #f6f6f6;
@@ -25,32 +25,32 @@
 </style>
 
 <div id="instructions">
-	<h1>QHtmlTable Columns</h1>
+	<h1>\QCubed\Project\Control\Table Columns</h1>
 	<h2>ColumnTypes</h2>
-	<p>The following is a quick overview of each column type you can add to a <strong>QHtmlTable</strong>.</p>
+	<p>The following is a quick overview of each column type you can add to a <strong>\QCubed\Project\Control\Table</strong>.</p>
 	<ul>
-		<li><strong>QHtmlTableCallableColumn</strong>: this is the most versatile of the column types, and lets you
+		<li><strong>\QCubed\Control\TableColumn\QCallable</strong>: this is the most versatile of the column types, and lets you
 			specify a callback which returns the text of each cell in the column. The callback must be a valid PHP
 			<a href="http://php.net/manual/en/language.types.callable.php">callable callback function</a>.
 			The one caveat is that you cannot use PHP <strong>Closures</strong>strong> here,
 			because QCubed needs to serialize everything in the form to preserve its state, and closures cannot
 			be serialized.</li>
-		<li><strong>QHtmlTablePropertyColumn</strong>: this is useful when the data source is an array of objects,
+		<li><strong>\QCubed\Control\TableColumn\Property</strong>: this is useful when the data source is an array of objects,
 			and cell data can be fetched by simply calling a property on each item. A property can be a member
 			variable, or a property returned by the <strong>__get</strong> PHP magic method. Properites can be chained.</li>
-		<li><strong>QHtmlTableIndexedColumn</strong>: this is useful when the DataSource is an array of arrays.
+		<li><strong>\QCubed\Control\TableColumn\Indexed</strong>: this is useful when the DataSource is an array of arrays.
 			You can specify which item in the array should be drawn in the column.</li>
-		<li><strong>QHtmlTableNodeColumn</strong>: If the DataSource is an array of database objects, like the array
+		<li><strong>\QCubed\Control\TableColumn\Node</strong>: If the DataSource is an array of database objects, like the array
 			returned by the <strong>QueryArray</strong> method, you can
 			specify what data should be displayed using a QCubed node object. For example, to display the first name of
 			a person, you would enter <strong>QQN::Person()->FirstName</strong>. Nodes are chainable.</li>
-		<li><strong>QVirtualAttributeColumn</strong>: If the DataSource is an array of database objects, and those
-			objects also have <strong>QVirtualAttributes</strong> in them, a QVirtualAttributeColumn lets
+		<li><strong>\QCubed\Control\TableColumn\VirtualAttribute</strong>: If the DataSource is an array of database objects, and those
+			objects also have <strong>QVirtualAttributes</strong> in them, a \QCubed\Control\TableColumn\VirtualAttribute lets
 			you easily display the value of the attribute.</li>
-		<li><strong>QHtmlTableCheckBoxColumn</strong>: This column lets you display a column of checkboxes that the
+		<li><strong>\QCubed\Control\TableColumn\Checkbox</strong>: This column lets you display a column of checkboxes that the
 			user can select, and then query later. Checkbox columns can be complex, and is described more fully in
 			another example.</li>
-		<li><strong>QHtmlTableLinkColumn</strong>: This column lets you display an html link (anchor tag), or a button, whose
+		<li><strong>\QCubed\Control\TableColumn\Link</strong>: This column lets you display an html link (anchor tag), or a button, whose
 			contents are dependent on the values in the DataSource row. Link columns can have many options for how to
 			set them up, and are described more in a different example.</li>
 
@@ -58,7 +58,7 @@
 	</ul>
 
 	<p>Each of these columns can be created and then added to the table, and most can also be created and added in
-		one step using the following shortcuts in QHtmlTable:</p>
+		one step using the following shortcuts in \QCubed\Project\Control\Table:</p>
 	<ul>
 		<li>CreateCallableColumn()</li>
 		<li>CreateIndexedColumn()</li>
@@ -68,7 +68,7 @@
 		<li>CreateLinkColumn()</li>
 	</ul>
 
-	<p>QHtmlTable lets you build quite complex HTML tables, and can also serve as a base class for fully JavaScript
+	<p>\QCubed\Project\Control\Table lets you build quite complex HTML tables, and can also serve as a base class for fully JavaScript
 		datagrid controls such as the <a href="http://www.trirand.com/blog/">jqGrid</a> and <a href="http://datatables.net/">DataTables</a> jQuery
 		plugins.</p>
 
@@ -121,5 +121,5 @@
 	</div>
 <div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

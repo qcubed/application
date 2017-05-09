@@ -38,7 +38,8 @@ namespace QCubed\Jqui\Event;
  * 	* oldPanel Type: jQuery The panel that was just deactivated.
  * 
  *
- * @was QTabs_Activate */
+ * @was QTabs_ActivateEvent
+ */
 class TabsActivate extends EventBase
 {
     const EVENT_NAME = 'tabsactivate';

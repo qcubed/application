@@ -14,6 +14,7 @@ use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\ObjectBase;
 use QCubed\Project\Application;
+use QCubed\TagStyler;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\ControlBase as QControl;
@@ -37,9 +38,9 @@ use QCubed\Control\TableBase;
  * @property-write TableBase $_ParentTable   Parent table of this column
  * @property-write callable $CellParamsCallback A callback to set the html parameters of a generated cell
  * @property boolean                $Visible        Whether the column will be drawn. Defaults to true.
- * @property-read Q\TagStyler		$CellStyler		The tag styler for the cells in the column
- * @property-read Q\TagStyler		$HeaderCellStyler		The tag styler for the header cells in the column
- * @property-read Q\TagStyler		$ColStyler		The tag styler for the col tag in the column
+ * @property-read TagStyler		$CellStyler		The tag styler for the cells in the column
+ * @property-read TagStyler		$HeaderCellStyler		The tag styler for the header cells in the column
+ * @property-read TagStyler		$ColStyler		The tag styler for the col tag in the column
  * @was QAbstractHtmlTableColumn
  * @package QCubed\Control\TableColumn
  */
@@ -65,11 +66,11 @@ abstract class TableColumnBase extends ObjectBase
     protected $blnVisible = true;
     /** @var callable Callback to modify the html attributes of the generated cell. */
     protected $cellParamsCallback = null;
-    /** @var Q\TagStyler Styles for each cell. Usually this should be done in css for efficient code generation. */
+    /** @var TagStyler Styles for each cell. Usually this should be done in css for efficient code generation. */
     protected $objCellStyler;
-    /** @var Q\TagStyler Styles for each header cell. Usually this should be done in css for efficient code generation. */
+    /** @var TagStyler Styles for each header cell. Usually this should be done in css for efficient code generation. */
     protected $objHeaderCellStyler;
-    /** @var Q\TagStyler Styles for each col. Usually this should be done in css for efficient code generation. */
+    /** @var TagStyler Styles for each col. Usually this should be done in css for efficient code generation. */
     protected $objColStyler;
 
     /**
@@ -343,17 +344,17 @@ abstract class TableColumnBase extends ObjectBase
                 return $this->blnVisible;
             case 'CellStyler':
                 if (!$this->objCellStyler) {
-                    $this->objCellStyler = new QTagStyler();
+                    $this->objCellStyler = new TagStyler();
                 }
                 return $this->objCellStyler;
             case 'HeaderCellStyler':
                 if (!$this->objHeaderCellStyler) {
-                    $this->objHeaderCellStyler = new QTagStyler();
+                    $this->objHeaderCellStyler = new TagStyler();
                 }
                 return $this->objHeaderCellStyler;
             case 'ColStyler':
                 if (!$this->objColStyler) {
-                    $this->objColStyler = new QTagStyler();
+                    $this->objColStyler = new TagStyler();
                 }
                 return $this->objColStyler;
 

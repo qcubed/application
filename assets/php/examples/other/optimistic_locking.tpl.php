@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Integrating Optimistic Locking into QForms</h1>
@@ -22,7 +22,7 @@
 		view the data.  But once one user tries to update one of the <strong>Person</strong> objects,
 		the other <strong>Person</strong> object is recognized as "stale" (because of a TIMESTAMP
 		mismatch).  Any subsequent call to <strong>Save</strong> on the "stale" <strong>Person</strong> will throw
-		an exception.  We catch this <strong>QOptimsiticLockingException</strong> in our <strong>QForm</strong>
+		an exception.  We catch this <strong>OptimsiticLockingException</strong> in our <strong>\QCubed\Project\Control\FormBase</strong>
 		in order to present a more graceful response to the user, allowing the user the option to
 		override the changes made by the previous <strong>Save</strong> call, forcing the update.</p>
 </div>
@@ -59,5 +59,5 @@
 	</table>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

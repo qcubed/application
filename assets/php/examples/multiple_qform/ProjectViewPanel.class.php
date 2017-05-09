@@ -1,5 +1,5 @@
 <?php
-	class ProjectViewPanel extends QPanel {
+	class ProjectViewPanel extends \QCubed\Control\Panel {
 		// Child Controls must be Publically Accessible so that they can be rendered in the template
 		// Typically, you would want to do this by having public __getters for each control
 		// But for simplicity of this demo, we'll simply make the child controls public, themselves.
@@ -15,7 +15,7 @@
 		// can make changes to the right panel on the page
 		protected $strPanelRightControlId;
 
-		// Specify the Template File for this custom QPanel
+		// Specify the Template File for this custom \QCubed\Control\Panel
 		protected $strTemplate = 'ProjectViewPanel.tpl.php';
 
 		// Customize the Look/Feel
@@ -23,12 +23,12 @@
 		protected $strBackColor = '#fefece';
 
 		// We Create a new __constructor that takes in the Project we are "viewing"
-		// The functionality of __construct in a custom QPanel is similar to the QForm's Form_Create() functionality
+		// The functionality of __construct in a custom \QCubed\Control\Panel is similar to the \QCubed\Project\Control\FormBase's formCreate() functionality
 		public function __construct($objParentObject, $objProject, $strPanelRightControlId, $strControlId = null) {
 			// First, let's call the Parent's __constructor
 			try {
 				parent::__construct($objParentObject, $strControlId);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -58,16 +58,16 @@
 
 			// Let's set up some other local child control
 			// Notice that we define the child controls' parents to be "this", which is this ProjectViewPanel object.
-			$this->pnlTitle = new QPanel($this);
+			$this->pnlTitle = new \QCubed\Control\Panel($this);
 			$this->pnlTitle->Text = $objProject->Name;
 			$this->pnlTitle->CssClass = 'projectTitle';
 
-			$this->btnEditProject = new QButton($this);
+			$this->btnEditProject = new \QCubed\Project\Jqui\Button($this);
 			$this->btnEditProject->Text = 'Edit Project Name';
-			$this->btnEditProject->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnEditProject_Click'));
+			$this->btnEditProject->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnEditProject_Click'));
 
 			// Now, let's set up this custom panel's child controls
-			$this->dtgMembers = new QDataGrid($this);
+			$this->dtgMembers = new \QCubed\Project\Control\DataGrid($this);
 			$col = $this->dtgMembers->CreateNodeColumn('ID', QQN::Person()->Id);
 			$col->CellStyler->Width = 30;
 			$col = $this->dtgMembers->CreateNodeColumn('First Name', QQN::Person()->FirstName);
@@ -87,9 +87,9 @@
 		}
 		
 		// This is the method that will perform the actual databinding on the dtgMembers datagrid
-		// Note that because it is called by the QForm, this needs to be public
+		// Note that because it is called by the \QCubed\Project\Control\FormBase, this needs to be public
 		public function dtgMembers_Bind() {
-			$this->dtgMembers->DataSource = $this->objProject->GetPersonAsTeamMemberArray(QQ::Clause($this->dtgMembers->OrderByClause));
+			$this->dtgMembers->DataSource = $this->objProject->GetPersonAsTeamMemberArray(\QCubed\Query\QQ::Clause($this->dtgMembers->OrderByClause));
 		}
 
 		// DataGrid Render Handlers Below
@@ -100,12 +100,12 @@
 			$btnEdit = $this->objForm->GetControl($strControlId);
 			if (!$btnEdit) {
 				// Only create/instantiate a new Edit button for this Row if it doesn't yet exist
-				$btnEdit = new QButton($this->dtgMembers, $strControlId);
+				$btnEdit = new \QCubed\Project\Jqui\Button($this->dtgMembers, $strControlId);
 				$btnEdit->Text = 'Edit';
 
 				// Define an Event Handler on the Button
-				// Because the event handler, itself, is defined in the control, we use QAjaxControlAction instead of QAjaxAction
-				$btnEdit->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnEditPerson_Click'));
+				// Because the event handler, itself, is defined in the control, we use \QCubed\Action\AjaxControl instead of \QCubed\Action\Ajax
+				$btnEdit->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnEditPerson_Click'));
 			}
 
 			// Finally, update the Actionparameter for our button to store the $objPerson's ID.

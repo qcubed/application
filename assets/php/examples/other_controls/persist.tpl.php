@@ -8,8 +8,8 @@
 			various forms, it can be very frustrating to have to manually change the controls to the previous values
 			just to get back to the data you were viewing.</p>
 
-		<p>For example, if you have a <b>QDataGrid</b> showing multiple pages, and the user is on page 3, and then clicks
-			on an item to edit it, and then saves or cancels, your application should take the user back to page 3 of the <b>QDataGrid</b>,
+		<p>For example, if you have a <b>\QCubed\Project\Control\DataGrid</b> showing multiple pages, and the user is on page 3, and then clicks
+			on an item to edit it, and then saves or cancels, your application should take the user back to page 3 of the <b>\QCubed\Project\Control\DataGrid</b>,
 			and not page 1, the default.</p>
 
 		<p>To get a control to restore its prior state, simply set its <b>SaveState</b> attribute to <b>true</b>.
@@ -40,7 +40,7 @@
 	</div>
 
 	<div id="demoZone">
-		<?php $this->RenderBegin(); ?>
+		<?php $this->renderBegin(); ?>
 		<fieldset>
 			<legend>SavedState = false</legend>
 			<?php $this->ddnProjectPicker1->Render(); ?></p>
@@ -53,7 +53,7 @@
 		</fieldset>
 		<?php $this->btnReload->Render(); ?></p>
 
-		<?php $this->RenderEnd(); ?>
+		<?php $this->renderEnd(); ?>
 	</div>
 
 <?php require('../includes/footer.inc.php'); ?>

@@ -8,12 +8,12 @@
 	 * of "redirecting" to a List page.  (Delete was removed for purposes of the demo).  To implement
 	 * this, we updated btnSave_Create() and btnCancel_Create() to execute QAjaxControlActions instead of
 	 * QServerActions.  And then the event handlers themselves calls the Form's MethodCallback instead of
-	 * QApplication::Redirect().
+	 * \QCubed\Project\Application::Redirect().
 	 *
 	 * Also, the template file was modified so that $_CONTROL-> is used instead of $this->
 	 */
 
-	class PersonEditPanel extends QPanel {
+	class PersonEditPanel extends \QCubed\Control\Panel {
 		// General Form Variables
 		protected $objPerson;
 		public $strTitleVerb;
@@ -48,11 +48,11 @@
 			// Otherwise, we're creating a new one
 			if ($objPerson) {
 				$this->objPerson = $objPerson;
-				$this->strTitleVerb = QApplication::Translate('Edit');
+				$this->strTitleVerb = t('Edit');
 				$this->blnEditMode = true;
 			} else {
 				$this->objPerson = new Person();
-				$this->strTitleVerb = QApplication::Translate('Create');
+				$this->strTitleVerb = t('Create');
 				$this->blnEditMode = false;
 			}
 		}
@@ -61,7 +61,7 @@
 			// Call the Parent
 			try {
 				parent::__construct($objParentObject, $strControlId);
-			} catch (QCallerException $objExc) {
+			} catch (\QCubed\Exception\Caller $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
 			}
@@ -90,8 +90,8 @@
 		// Protected Create Methods
 		// Create and Setup lblId
 		protected function lblId_Create() {
-			$this->lblId = new QLabel($this);
-			$this->lblId->Name = QApplication::Translate('Id');
+			$this->lblId = new \QCubed\Control\Label($this);
+			$this->lblId->Name = t('Id');
 			if ($this->blnEditMode)
 				$this->lblId->Text = $this->objPerson->Id;
 			else
@@ -100,28 +100,28 @@
 
 		// Create and Setup txtFirstName
 		protected function txtFirstName_Create() {
-			$this->txtFirstName = new QTextBox($this);
-			$this->txtFirstName->Name = QApplication::Translate('First Name');
+			$this->txtFirstName = new \QCubed\Project\Control\TextBox($this);
+			$this->txtFirstName->Name = t('First Name');
 			$this->txtFirstName->Text = $this->objPerson->FirstName;
 			$this->txtFirstName->Required = true;
 		}
 
 		// Create and Setup txtLastName
 		protected function txtLastName_Create() {
-			$this->txtLastName = new QTextBox($this);
-			$this->txtLastName->Name = QApplication::Translate('Last Name');
+			$this->txtLastName = new \QCubed\Project\Control\TextBox($this);
+			$this->txtLastName->Name = t('Last Name');
 			$this->txtLastName->Text = $this->objPerson->LastName;
 			$this->txtLastName->Required = true;
 		}
 
 		// Create and Setup lstLogin
 		protected function lstLogin_Create() {
-			$this->lstLogin = new QListBox($this);
-			$this->lstLogin->Name = QApplication::Translate('Login');
-			$this->lstLogin->AddItem(QApplication::Translate('- Select One -'), null);
+			$this->lstLogin = new \QCubed\Project\Control\ListBox($this);
+			$this->lstLogin->Name = t('Login');
+			$this->lstLogin->AddItem(t('- Select One -'), null);
 			$objLoginArray = Login::LoadAll();
 			if ($objLoginArray) foreach ($objLoginArray as $objLogin) {
-				$objListItem = new QListItem($objLogin->__toString(), $objLogin->Id);
+				$objListItem = new \QCubed\Control\ListItem($objLogin->__toString(), $objLogin->Id);
 				if ($objLogin->PersonId == $this->objPerson->Id)
 					$objListItem->Selected = true;
 				$this->lstLogin->AddItem($objListItem);
@@ -133,13 +133,13 @@
 
 		// Create and Setup lstProjectsAsTeamMember
 		protected function lstProjectsAsTeamMember_Create() {
-			$this->lstProjectsAsTeamMember = new QListBox($this);
-			$this->lstProjectsAsTeamMember->Name = QApplication::Translate('Projects As Team Member');
-			$this->lstProjectsAsTeamMember->SelectionMode = QSelectionMode::Multiple;
+			$this->lstProjectsAsTeamMember = new \QCubed\Project\Control\ListBox($this);
+			$this->lstProjectsAsTeamMember->Name = t('Projects As Team Member');
+			$this->lstProjectsAsTeamMember->SelectionMode = \QCubed\ListBoxBase::SELECTION_MODE_MULTIPLE;
 			$objAssociatedArray = $this->objPerson->GetProjectAsTeamMemberArray();
 			$objProjectArray = Project::LoadAll();
 			if ($objProjectArray) foreach ($objProjectArray as $objProject) {
-				$objListItem = new QListItem($objProject->__toString(), $objProject->Id);
+				$objListItem = new \QCubed\Control\ListItem($objProject->__toString(), $objProject->Id);
 				foreach ($objAssociatedArray as $objAssociated) {
 					if ($objAssociated->Id == $objProject->Id)
 						$objListItem->Selected = true;
@@ -151,18 +151,18 @@
 
 		// Setup btnSave
 		protected function btnSave_Create() {
-			$this->btnSave = new QButton($this);
-			$this->btnSave->Text = QApplication::Translate('Save');
-			$this->btnSave->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnSave_Click'));
+			$this->btnSave = new \QCubed\Project\Jqui\Button($this);
+			$this->btnSave->Text = t('Save');
+			$this->btnSave->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnSave_Click'));
 			$this->btnSave->PrimaryButton = true;
 			$this->btnSave->CausesValidation = true;
 		}
 
 		// Setup btnCancel
 		protected function btnCancel_Create() {
-			$this->btnCancel = new QButton($this);
-			$this->btnCancel->Text = QApplication::Translate('Cancel');
-			$this->btnCancel->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnCancel_Click'));
+			$this->btnCancel = new \QCubed\Project\Jqui\Button($this);
+			$this->btnCancel->Text = t('Cancel');
+			$this->btnCancel->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnCancel_Click'));
 			$this->btnCancel->CausesValidation = false;
 		}
 

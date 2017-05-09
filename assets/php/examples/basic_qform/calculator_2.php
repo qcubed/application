@@ -1,7 +1,7 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class CalculatorForm extends QForm {
+class CalculatorForm extends \QCubed\Project\Control\FormBase {
 
 	// Our Calculator needs 2 Textboxes (one for each operand)
 	// A listbox of operations to choose from
@@ -15,38 +15,38 @@ class CalculatorForm extends QForm {
 
 	// Define all the QContrtol objects for our Calculator
 	// Make our textboxes IntegerTextboxes and make them required
-	protected function Form_Create() {
-		$this->txtValue1 = new QIntegerTextBox($this);
+	protected function formCreate() {
+		$this->txtValue1 = new \QCubed\Control\IntegerTextBox($this);
 		$this->txtValue1->Required = true;
 
-		$this->txtValue2 = new QIntegerTextBox($this);
+		$this->txtValue2 = new \QCubed\Control\IntegerTextBox($this);
 		$this->txtValue2->Required = true;
 
-		$this->lstOperation = new QListBox($this);
+		$this->lstOperation = new \QCubed\Project\Control\ListBox($this);
 		$this->lstOperation->AddItem('+', 'add');
 		$this->lstOperation->AddItem('-', 'subtract');
 		$this->lstOperation->AddItem('*', 'multiply');
 		$this->lstOperation->AddItem('/', 'divide');
 
-		$this->btnCalculate = new QButton($this);
+		$this->btnCalculate = new \QCubed\Project\Jqui\Button($this);
 		$this->btnCalculate->Text = 'Calculate';
-		$this->btnCalculate->AddAction(new QClickEvent(), new QServerAction('btnCalculate_Click'));
+		$this->btnCalculate->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('btnCalculate_Click'));
 
-		// With btnCalculate being responsible for the action, we set this QButton's CausesValidation to true
+		// With btnCalculate being responsible for the action, we set this \QCubed\Project\Jqui\Button's CausesValidation to true
 		// so that validation will occur on the form when click the button.
 		// But if you set it to false, you'll see that integers and null entries would instead be always allowed.
 		$this->btnCalculate->CausesValidation = true;
 
-		$this->lblResult = new QLabel($this);
+		$this->lblResult = new \QCubed\Control\Label($this);
 		$this->lblResult->HtmlEntities = false;
 	}
 
-	protected function Form_Load() {
+	protected function formLoad() {
 		// Let's always clear the Result label
 		$this->lblResult->Text = '';
 	}
 
-	protected function Form_Validate() {
+	protected function formValidate() {
 		// Add a Custom Form Validation rule here
 		// If we are Dividing and if the divisor is 0, then this is not valid
 		if (($this->lstOperation->SelectedValue == 'divide') &&
@@ -54,7 +54,7 @@ class CalculatorForm extends QForm {
 			// Warnings and Errors are rendered the same way by RenderWithError()
 			$this->txtValue2->Warning = 'Cannot Divide by Zero';
 
-			// We need to make sure the QForm knows that this form is not valid
+			// We need to make sure the \QCubed\Project\Control\FormBase knows that this form is not valid
 			// We do this by returning false
 			return false;
 		}

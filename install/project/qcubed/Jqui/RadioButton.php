@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see RadioButtonBase
  * @was QJqRadioButton
  */
-
 class RadioButton extends Q\Jqui\RadioButtonBase
 {
 }

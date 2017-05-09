@@ -1,14 +1,14 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
-	/** @var QHtmlTable */
+	/** @var \QCubed\Project\Control\Table */
 	protected $tblProjects;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid
-		$this->tblProjects = new QHtmlTable($this);
+		$this->tblProjects = new \QCubed\Project\Control\Table($this);
 
 		// This css class is used to style alternate rows and the header, all in css
 		$this->tblProjects->CssClass = 'simple_table';
@@ -39,11 +39,11 @@ class ExampleForm extends QForm {
 	/**
 	 * Bind the Projects table to the html table.
 	 *
-	 * @throws QCallerException
+	 * @throws \QCubed\Exception\Caller
 	 */
 	protected function tblProjects_Bind() {
 		// Expand the PersonAsTeamMember node as an array so that it will be included in each item sent to the columns.
-		$clauses = QQ::ExpandAsArray(QQN::Project()->PersonAsTeamMember);
+		$clauses = \QCubed\Query\QQ::ExpandAsArray(QQN::Project()->PersonAsTeamMember);
 
 		// We load the data source, and set it to the datagrid's DataSource parameter
 		$this->tblProjects->DataSource = Project::LoadAll($clauses);

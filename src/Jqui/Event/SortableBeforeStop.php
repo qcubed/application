@@ -43,7 +43,8 @@ namespace QCubed\Jqui\Event;
  * element being used as a placeholder.
  * 
  *
- * @was QSortable_BeforeStop */
+ * @was QSortable_BeforeStopEvent
+ */
 class SortableBeforeStop extends EventBase
 {
     const EVENT_NAME = 'sortbeforestop';

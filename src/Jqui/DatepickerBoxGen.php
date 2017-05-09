@@ -300,7 +300,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * @property string $YearSuffix
  * Additional text to display after the year in the month headers.
  *
- * @was QDatepickerGen
+ * @was QDatepickerBoxGen
 
  */
 

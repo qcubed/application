@@ -4,35 +4,35 @@
 	<div id="instructions">
 		<h1>QCubed Query Conditions</h1>
 		
-		<p>All <strong>QCubed Query</strong> method calls require a <strong>QQ Condition</strong>. <strong>QQ Conditions</strong> allow you
+		<p>All <strong>QCubed Query</strong> method calls require a <strong>\QCubed\Query\QQ Condition</strong>. <strong>\QCubed\Query\QQ Conditions</strong> allow you
 		to create a nested/hierarchical set of conditions to describe what essentially becomes your
 		WHERE clause in a SQL query statement.</p>
 
-		<p>The following is the list of QQ Condition classes and what parameters they take:</p>
+		<p>The following is the list of \QCubed\Query\QQ Condition classes and what parameters they take:</p>
 		<ul>
-			<li>QQ::All()</li>
-			<li>QQ::None()</li>
-			<li>QQ::Equal(QQNode, Value)</li>
-			<li>QQ::NotEqual(QQNode, Value)</li>
-			<li>QQ::GreaterThan(QQNode, Value)</li>
-			<li>QQ::LessThan(QQNode, Value)</li>
-			<li>QQ::GreaterOrEqual(QQNode, Value)</li>
-			<li>QQ::LessOrEqual(QQNode, Value)</li>
-			<li>QQ::IsNull(QQNode)</li>
-			<li>QQ::IsNotNull(QQNode)</li>
-			<li>QQ::In(QQNode, array of string/int/datetime)</li>
-			<li>QQ::Like(QQNode, string)</li>
+			<li>\QCubed\Query\QQ::All()</li>
+			<li>\QCubed\Query\QQ::None()</li>
+			<li>\QCubed\Query\QQ::Equal(\QCubed\Query\Node\NodeBase, Value)</li>
+			<li>\QCubed\Query\QQ::NotEqual(\QCubed\Query\Node\NodeBase, Value)</li>
+			<li>\QCubed\Query\QQ::GreaterThan(\QCubed\Query\Node\NodeBase, Value)</li>
+			<li>\QCubed\Query\QQ::LessThan(\QCubed\Query\Node\NodeBase, Value)</li>
+			<li>\QCubed\Query\QQ::GreaterOrEqual(\QCubed\Query\Node\NodeBase, Value)</li>
+			<li>\QCubed\Query\QQ::LessOrEqual(\QCubed\Query\Node\NodeBase, Value)</li>
+			<li>\QCubed\Query\QQ::IsNull(\QCubed\Query\Node\NodeBase)</li>
+			<li>\QCubed\Query\QQ::IsNotNull(\QCubed\Query\Node\NodeBase)</li>
+			<li>\QCubed\Query\QQ::In(\QCubed\Query\Node\NodeBase, array of string/int/datetime)</li>
+			<li>\QCubed\Query\QQ::Like(\QCubed\Query\Node\NodeBase, string)</li>
 		</ul>
 		
-		<p>For almost all of the above <strong>QQ Conditions</strong>, you are comparing a column with some value.  The <strong>QQ Node</strong> parameter
+		<p>For almost all of the above <strong>\QCubed\Query\QQ Conditions</strong>, you are comparing a column with some value.  The <strong>\QCubed\Query\QQ Node</strong> parameter
 		represents that column.  However, value can be either a static value (like an integer, a string, a datetime, etc.)
-		<i>or</i> it can be another <strong>QQ Node</strong>.</p>
+		<i>or</i> it can be another <strong>\QCubed\Query\QQ Node</strong>.</p>
 		
-		<p>And finally, there are three special <strong>QQ Condition</strong> classes which take in any number of additional <strong>QQ Condition</strong> classes:</p>
+		<p>And finally, there are three special <strong>\QCubed\Query\QQ Condition</strong> classes which take in any number of additional <strong>\QCubed\Query\QQ Condition</strong> classes:</p>
 		<ul>
-			<li>QQ::AndCondition()</li>
-			<li>QQ::OrCondition()</li>
-			<li>QQ::Not() - "Not" can only take in one <strong>QQ Condition</strong> class</li>
+			<li>\QCubed\Query\QQ::AndCondition()</li>
+			<li>\QCubed\Query\QQ::OrCondition()</li>
+			<li>\QCubed\Query\QQ::Not() - "Not" can only take in one <strong>\QCubed\Query\QQ Condition</strong> class</li>
 		</ul>
 		<p>(conditions can be passed in as parameters and/or as arrays)</p>
 		
@@ -46,8 +46,8 @@
 	<ul>
 <?php
 	$objPersonArray = Person::QueryArray(
-		// Notice how we are comparing to QQ Column Nodes together
-		QQ::GreaterThan(QQN::Person()->FirstName, QQN::Person()->LastName)
+		// Notice how we are comparing to \QCubed\Query\QQ Column Nodes together
+		\QCubed\Query\QQ::GreaterThan(QQN::Person()->FirstName, QQN::Person()->LastName)
 	);
 
 	foreach ($objPersonArray as $objPerson){
@@ -59,9 +59,9 @@
 	<ul>
 <?php
 	$objProjectArray = Project::QueryArray(
-		QQ::OrCondition(
-			QQ::GreaterThan(QQN::Project()->ManagerPerson->FirstName, QQN::Project()->ManagerPerson->LastName),
-			QQ::Like(QQN::Project()->Name, '%Website%')
+		\QCubed\Query\QQ::OrCondition(
+			\QCubed\Query\QQ::GreaterThan(QQN::Project()->ManagerPerson->FirstName, QQN::Project()->ManagerPerson->LastName),
+			\QCubed\Query\QQ::Like(QQN::Project()->Name, '%Website%')
 		)
 	);
 
@@ -74,12 +74,12 @@
 	<ul>
 <?php
 	$objProjectArray = Project::QueryArray(
-		QQ::AndCondition(
-			QQ::OrCondition(
-				QQ::GreaterThan(QQN::Project()->ManagerPerson->FirstName, QQN::Project()->ManagerPerson->LastName),
-				QQ::Like(QQN::Project()->Name, '%Website%')
+		\QCubed\Query\QQ::AndCondition(
+			\QCubed\Query\QQ::OrCondition(
+				\QCubed\Query\QQ::GreaterThan(QQN::Project()->ManagerPerson->FirstName, QQN::Project()->ManagerPerson->LastName),
+				\QCubed\Query\QQ::Like(QQN::Project()->Name, '%Website%')
 			),
-			QQ::LessOrEqual(QQN::Project()->Id, 2)
+			\QCubed\Query\QQ::LessOrEqual(QQN::Project()->Id, 2)
 		)
 	);
 

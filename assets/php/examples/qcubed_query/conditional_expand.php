@@ -2,7 +2,7 @@
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions">
-	<h1>Conditional Joins with QQ::Expand() and QQ::ExpandAsArray()</h1>
+	<h1>Conditional Joins with \QCubed\Query\QQ::Expand() and \QCubed\Query\QQ::ExpandAsArray()</h1>
 
 	<p>Sometimes, you find yourself in a situation when you want to issue a
 	query for ALL items in a given table, and only some information in
@@ -28,9 +28,9 @@
 	</ol>
 
 	<p>As you'd expect, there's a better way. Introducing conditional joins: when
-	you use <strong>QQ::Expand</strong>, you can specify conditions on the table with
+	you use <strong>\QCubed\Query\QQ::Expand</strong>, you can specify conditions on the table with
 	which you want to join, and get only those values that you care about.
-	Remember that a <strong>QQ::Expand</strong> is always a
+	Remember that a <strong>\QCubed\Query\QQ::Expand</strong> is always a
 	<a href="http://en.wikipedia.org/wiki/Join_(SQL)#Left_outer_join">left
 	join</a> - so if a row of a table with which you are joining does not
 	have a matching record, the left side of your join will still be there,
@@ -44,24 +44,24 @@
 	<h2>Names of every person, their username, and open projects they are managing.</h2>
 	<ul>
 <?php
-	QApplication::$Database[1]->EnableProfiling();
+	\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
 	$objPersonArray = Person::QueryArray(
 		// We want *every single person*
-		QQ::All(),
+		\QCubed\Query\QQ::All(),
 		array(
-			QQ::Expand(
+			\QCubed\Query\QQ::Expand(
 				// We also want the login information for each person
 				QQN::Person()->Login,
 
 				// But only the login information for folks that have
 				// their logins ON; for everyone else, just the Person
-				QQ::Equal(QQN::Person()->Login->IsEnabled, 1)
+				\QCubed\Query\QQ::Equal(QQN::Person()->Login->IsEnabled, 1)
 			),
-			QQ::ExpandAsArray(
+			\QCubed\Query\QQ::ExpandAsArray(
 				// We also want the proejcts that are managed by each person
 				QQN::Person()->ProjectAsManager,
 				// but only if the project is open
-				QQ::Equal(QQN::Person()->ProjectAsManager->ProjectStatusTypeId, ProjectStatusType::Open)
+				\QCubed\Query\QQ::Equal(QQN::Person()->ProjectAsManager->ProjectStatusTypeId, ProjectStatusType::Open)
 			)
 		)
 	);
@@ -89,7 +89,7 @@
 
 ?>
 	</ul>
-	<p><?php QApplication::$Database[1]->OutputProfiling(); ?></p>
+	<p><?php \QCubed\Database\Service::getDatabase(1)->OutputProfiling(); ?></p>
 </div>
 
 <?php require('../includes/footer.inc.php'); ?>

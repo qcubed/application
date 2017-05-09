@@ -4,7 +4,7 @@
 <div id="instructions">
 	<h1>Manipulating LoadAll and LoadArrayBy Results</h1>
 
-	<p>(Note: for more information about "QQ::"-related classes (a.k.a. <strong>QCubed Query</strong>), please refer to section 3 of the
+	<p>(Note: for more information about "\QCubed\Query\QQ::"-related classes (a.k.a. <strong>QCubed Query</strong>), please refer to section 3 of the
 	Examples Site.)</p>
 
 	<p>All Code Generated <strong>LoadAll</strong> and <strong>LoadArrayBy...</strong> methods take in an optional
@@ -13,12 +13,12 @@
 	and <strong>Object Expansion</strong>.  We will
 	discuss <strong>Object Expansion</strong> in the examples that deal with <strong>Late Binding</strong>
 	and <strong>Early Binding</strong>.  But for this example, we'll focus on using
-	using <strong>QQ::OrderBy()</strong> and <strong>QQ::LimitInfo()</strong> to manipulate how the results come out of the database.</p>
+	using <strong>\QCubed\Query\QQ::OrderBy()</strong> and <strong>\QCubed\Query\QQ::LimitInfo()</strong> to manipulate how the results come out of the database.</p>
 
 	<p><strong>OrderBy</strong> and <strong>LimitInfo</strong> are actually really straightforward to use.  Order By takes
 	in any number of QCubed Query Node columns, followed by an optional boolean (to specify ascending/descending),
 	which will be used in a SQL ORDER BY clause in the SELECT statement.  So you can simply say
-	<strong>QQ::OrderBy(QQN::Person()->LastName)</strong> to sort all the Person objects by last name.</p>
+	<strong>\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName)</strong> to sort all the Person objects by last name.</p>
 
 	<p><strong>LimitInfo</strong> takes in a Maximum Row Count, followed by an optional offset.
 	So if you specified "10, 4", the result set would contain at most 10 rows, starting with row #5
@@ -35,8 +35,8 @@
 
 <?php
 	// Load the Person array, sorted
-	$objPersonArray = Person::LoadAll(QQ::Clause(
-		QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
+	$objPersonArray = Person::LoadAll(\QCubed\Query\QQ::Clause(
+		\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
 	));
 	foreach ($objPersonArray as $objPerson) {
 		_p($objPerson->LastName . ', ' . $objPerson->FirstName . ' (ID #' . $objPerson->Id . ')');
@@ -49,9 +49,9 @@
 <?php
 	// Load the Person array, sorted and limited
 	// Note that because we want to start with row #3, we need to define "2" as the offset
-	$objPersonArray = Person::LoadAll(QQ::Clause(
-		QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName),
-		QQ::LimitInfo(5, 2)
+	$objPersonArray = Person::LoadAll(\QCubed\Query\QQ::Clause(
+		\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName),
+		\QCubed\Query\QQ::LimitInfo(5, 2)
 	));
 	foreach ($objPersonArray as $objPerson) {
 		_p($objPerson->LastName . ', ' . $objPerson->FirstName . ' (ID #' . $objPerson->Id . ')');

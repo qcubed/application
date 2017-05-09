@@ -2,27 +2,27 @@
 	require_once('qcubed.inc.php');
 	require('includes/examples.inc.php');
 
-	$strCategoryId = QApplication::PathInfo(0);
-	$strExampleId = QApplication::PathInfo(1);
+	$strCategoryId = \QCubed\Project\Application::instance()->context()->pathItem(0);
+	$strExampleId = \QCubed\Project\Application::instance()->context()->pathItem(1);
 	if ($strCategoryId == 'plugin') {
-		$strSubId = QApplication::PathInfo(2);
-		$strScript = QApplication::PathInfo(3);
+		$strSubId = \QCubed\Project\Application::instance()->context()->pathItem(2);
+		$strScript = \QCubed\Project\Application::instance()->context()->pathItem(3);
 	} else {
 		$strSubId = null;
-		$strScript = QApplication::PathInfo(2);
+		$strScript = \QCubed\Project\Application::instance()->context()->pathItem(2);
 	}
 
 	$strReference = Examples::GetExampleScriptPath($strCategoryId, $strExampleId);
 	$strName = Examples::GetExampleName($strCategoryId, $strExampleId);
 
 	if (!$strScript) {
-		$strUrl = QApplication::$RequestUri . substr($strReference, strrpos($strReference, '/'));
-		QApplication::Redirect($strUrl, true);
+		$strUrl = \QCubed\Project\Application::instance()->context()->requestUri() . substr($strReference, strrpos($strReference, '/'));
+		\QCubed\Project\Application::Redirect($strUrl, true);
 	}
 ?>
 <html>
 	<head>
-		<meta charset="<?php _p(QApplication::$EncodingType); ?>" />
+		<meta charset="<?php _p(\QCubed\Project\Application::encodingType()); ?>" />
 		<title>QCubed PHP 5 Development Framework - View Source</title>
 		<link rel="stylesheet" type="text/css" href="<?php _p(__VIRTUAL_DIRECTORY__ . __CSS_ASSETS__ . '/styles.css'); ?>" />
 		<link rel="stylesheet" type="text/css" href="<?php _p(__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . '/includes/examples.css'); ?>" />

@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QProgressbar_Complete */
+ * @was QProgressbar_CompleteEvent
+ */
 class ProgressbarComplete extends EventBase
 {
     const EVENT_NAME = 'progressbarcomplete';

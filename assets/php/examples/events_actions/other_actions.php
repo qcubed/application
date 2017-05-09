@@ -1,7 +1,7 @@
 <?php
 	require_once('../qcubed.inc.php');
 
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		protected $btnFocus;
 		protected $btnSelect;
 		protected $txtFocus;
@@ -16,51 +16,51 @@
 		
 		protected $btnCssAction;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Define the Textboxes
-			$this->txtFocus = new QTextBox($this);
+			$this->txtFocus = new \QCubed\Project\Control\TextBox($this);
 			$this->txtFocus->Text = 'Example Text Here';
-			$this->txtDisplay = new QTextBox($this);
+			$this->txtDisplay = new \QCubed\Project\Control\TextBox($this);
 			$this->txtDisplay->Text = 'Example Text Here';
-			$this->txtEnable = new QTextBox($this);
+			$this->txtEnable = new \QCubed\Project\Control\TextBox($this);
 			$this->txtEnable->Text = 'Example Text Here';
 
-			// QFocusControlAction example
-			$this->btnFocus = new QButton($this);
+			// \QCubed\Action\FocusControl example
+			$this->btnFocus = new \QCubed\Project\Jqui\Button($this);
 			$this->btnFocus->Text = 'Set Focus';
-			$this->btnFocus->AddAction(new QClickEvent(), new QFocusControlAction($this->txtFocus));
+			$this->btnFocus->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\FocusControl($this->txtFocus));
 
-			// QSelectControlAction example
-			$this->btnSelect = new QButton($this);
+			// \QCubed\Action\SelectControl example
+			$this->btnSelect = new \QCubed\Project\Jqui\Button($this);
 			$this->btnSelect->Text = 'Select All in Textbox';
-			$this->btnSelect->AddAction(new QClickEvent(), new QSelectControlAction($this->txtFocus));
+			$this->btnSelect->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\SelectControl($this->txtFocus));
 
-			// QToggleDisplayAction example
-			$this->btnToggleDisplay = new QButton($this);
+			// \QCubed\Action\ToggleDisplay example
+			$this->btnToggleDisplay = new \QCubed\Project\Jqui\Button($this);
 			$this->btnToggleDisplay->Text = 'Toggle the Display (show/hide)';
-			$this->btnToggleDisplay->AddAction(new QClickEvent(), new QToggleDisplayAction($this->txtDisplay));
+			$this->btnToggleDisplay->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ToggleDisplay($this->txtDisplay));
 
-			// QToggleEnableAction example
-			$this->btnToggleEnable = new QButton($this);
+			// \QCubed\Action\ToggleEnable example
+			$this->btnToggleEnable = new \QCubed\Project\Jqui\Button($this);
 			$this->btnToggleEnable->Text = 'Toggle the Enable (enabled/disabled)';
-			$this->btnToggleEnable->AddAction(new QClickEvent(), new QToggleEnableAction($this->txtEnable));
+			$this->btnToggleEnable->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ToggleEnable($this->txtEnable));
 
-			// QCssClassAction example
-			$this->pnlHover = new QPanel($this);
+			// \QCubed\Action\CssClass example
+			$this->pnlHover = new \QCubed\Control\Panel($this);
 			$this->pnlHover->HtmlEntities = false;
-			$this->pnlHover->Text = 'Change the CSS class of a control using <b>QCssClassAction</b>:<br /><br />(Uses QMouseOver and QMouseOut to Temporarily Override the Panel\'s CSS Style)';
+			$this->pnlHover->Text = 'Change the CSS class of a control using <b>\QCubed\Action\CssClass</b>:<br /><br />(Uses QMouseOver and QMouseOut to Temporarily Override the Panel\'s CSS Style)';
 
 			// Set a Default Style
 			$this->pnlHover->CssClass = 'panelHover';
 
 			// Add QMouseOver and QMouseOut actions to set and then reset temporary style overrides
 			// Setting the TemporaryCssClass to "null" will "reset" the style back to the default
-			$this->pnlHover->AddAction(new QMouseOverEvent(), new QCssClassAction('panelHighlight', true));
-			$this->pnlHover->AddAction(new QMouseOutEvent(), new QCssClassAction());
+			$this->pnlHover->AddAction(new \QCubed\Event\MouseOver(), new \QCubed\Action\CssClass('panelHighlight', true));
+			$this->pnlHover->AddAction(new \QCubed\Event\MouseOut(), new \QCubed\Action\CssClass());
 			
-			$this->btnCssAction = new QButton($this);
+			$this->btnCssAction = new \QCubed\Project\Jqui\Button($this);
 			$this->btnCssAction->Text = "click me to change my background color!";
-			$this->btnCssAction->AddAction(new QClickEvent(), new QCssAction("background", "green"));
+			$this->btnCssAction->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\CssAction("background", "green"));
 		}
 	}
 

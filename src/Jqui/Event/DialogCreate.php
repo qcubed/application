@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QDialog_Create */
+ * @was QDialog_CreateEvent
+ */
 class DialogCreate extends EventBase
 {
     const EVENT_NAME = 'dialogcreate';

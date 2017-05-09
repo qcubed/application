@@ -2,10 +2,10 @@
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions">
-	<h1>QQ and Association Tables (Many-to-Many Relationships)</h1>
+	<h1>\QCubed\Query\QQ and Association Tables (Many-to-Many Relationships)</h1>
 
 	<p>One key feature of <strong>QCubed Query</strong> is its ability to treat relationships in Association tables just like
-	any other foreign key relationship.  <strong>QQ</strong> has the ability to perform the full set of <strong>QQ</strong> functionality
+	any other foreign key relationship.  <strong>\QCubed\Query\QQ</strong> has the ability to perform the full set of <strong>\QCubed\Query\QQ</strong> functionality
 	(including conditions, expansions, ordering, grouping, etc.) on tables related via association tables
 	just as it would on tables related via a direct foreign key.</p>
 
@@ -15,7 +15,7 @@
 	<strong>QQN::Person()->ProjectAsTeamMember</strong> will refer to the "team_member_project_assn" association table joined against
 	the "person" table.</p>
 
-	<p>And again, because all the <strong>QQ Nodes</strong> are linked together, you can go from there to pull the project table, itself, as
+	<p>And again, because all the <strong>\QCubed\Query\QQ Nodes</strong> are linked together, you can go from there to pull the project table, itself, as
 	well as any columns from that project table.  In fact, the linkages can go indefinitely.
 	<code>QQN::Person()->ProjectAsTeamMember->Project->ManagerPerson->FirstName</code> refers to the "first name of the manager
 	of any project that this person is a team member of."</p>
@@ -34,13 +34,13 @@
 	<ul>
 <?php
 	$objPersonArray = Person::QueryArray(
-		QQ::Equal(QQN::Person()->ProjectAsTeamMember->Project->ManagerPersonId, 7),
+		\QCubed\Query\QQ::Equal(QQN::Person()->ProjectAsTeamMember->Project->ManagerPersonId, 7),
 		// Because we are doing a join on a many-to-many relationship, we may end up with repeats (e.g. someone
 		// who is a team member of more than one project that is managed by karen wolfe).  Therefore, we declare this as DISTINCT
 		// to get rid of the redundant entries
-		QQ::Clause(
-			QQ::Distinct(),
-			QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::Distinct(),
+			\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
 		)
 	);
 
@@ -55,20 +55,20 @@
 	<ul>
 <?php
 	$objPersonArray = Person::QueryArray(
-		QQ::Equal(QQN::Person()->ProjectAsTeamMember->Project->ManagerPersonId, 7),
+		\QCubed\Query\QQ::Equal(QQN::Person()->ProjectAsTeamMember->Project->ManagerPersonId, 7),
 		// Let's expand on the Project, itself
-		QQ::Clause(
-			QQ::Expand(QQN::Person()->ProjectAsTeamMember->Project),
-			QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::Expand(QQN::Person()->ProjectAsTeamMember->Project),
+			\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
 		)
 	);
 
 	foreach ($objPersonArray as $objPerson) {
 		printf('<li>%s %s (via the "%s" project)</li>',
-			QApplication::HtmlEntities($objPerson->FirstName),
-			QApplication::HtmlEntities($objPerson->LastName),
+			\QCubed\QString::htmlEntities($objPerson->FirstName),
+			\QCubed\QString::htmlEntities($objPerson->LastName),
 			// Use the _ProjectAsTeamMember virtual attribute, which gives us the Project object
-			QApplication::HtmlEntities($objPerson->_ProjectAsTeamMember->Name));
+			\QCubed\QString::htmlEntities($objPerson->_ProjectAsTeamMember->Name));
 	}
 ?>
 	</ul>
@@ -77,13 +77,13 @@
 	<p><i>Notice how each person is only listed once... but each person has an internal/virtual <strong>_ProjectAsTeamMemberArray</strong> which may list more than one project.</i></p>
 <?php
 	$objPersonArray = Person::QueryArray(
-		QQ::Equal(QQN::Person()->ProjectAsTeamMember->Project->ManagerPersonId, 7),
-		QQ::Clause(
+		\QCubed\Query\QQ::Equal(QQN::Person()->ProjectAsTeamMember->Project->ManagerPersonId, 7),
+		\QCubed\Query\QQ::Clause(
 			// Let's ExpandArray on the Association Table, itself
-			QQ::ExpandAsArray(QQN::Person()->ProjectAsTeamMember),
+			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsTeamMember),
 			// ExpandArray dictates that the PRIMARY sort MUST be on the root object (in this case, QQN::Person())
 			// Any secondary sort can follow
-			QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName, QQN::Person()->ProjectAsTeamMember->Project->Name)
+			\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName, QQN::Person()->ProjectAsTeamMember->Project->Name)
 		)
 	);
 
@@ -94,7 +94,7 @@
 		// the _ProjectAsTeamMemberArray virtual attribute, which gives us an array of Project objects
 		$strProjectNameArray = array();
 		foreach ($objPerson->_ProjectAsTeamMemberArray as $objProject){
-			array_push($strProjectNameArray, QApplication::HtmlEntities($objProject->Name));
+			array_push($strProjectNameArray, \QCubed\QString::htmlEntities($objProject->Name));
 		}
 		printf(' via: %s</li>', implode(', ', $strProjectNameArray));
 	}

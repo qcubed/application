@@ -1,6 +1,6 @@
 <?php require_once('../qcubed.inc.php');
 
-class PersistentExampleForm extends QForm {
+class PersistentExampleForm extends \QCubed\Project\Control\FormBase {
 	// We will persist this control in the $_SESSION
 	protected $ddnProjectPicker1;
 	protected $ddnProjectPicker2;
@@ -9,26 +9,26 @@ class PersistentExampleForm extends QForm {
 
 	protected $btnReload;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 
 		$this->ddnProjectPicker1 = new ProjectPickerListBox ($this);
 		$this->ddnProjectPicker2 = new ProjectPickerListBox ($this);
 		$this->ddnProjectPicker2->SaveState = true;
 
-		$this->fld1 = new QTextBox($this);
+		$this->fld1 = new \QCubed\Project\Control\TextBox($this);
 		$this->fld1->Text = 'Change Me';
-		$this->fld2 = new QTextBox($this);
+		$this->fld2 = new \QCubed\Project\Control\TextBox($this);
 		$this->fld2->Text = 'Change Me';
 		$this->fld2->SaveState = true;
 
-		$this->btnReload = new QButton($this);
+		$this->btnReload = new \QCubed\Project\Jqui\Button($this);
 		$this->btnReload->Text = 'Reload the Page';
 		// Any action will trigger the communication from the client to the server to record changes on the client side.
-		$this->btnReload->AddAction (new QClickEvent(), new QAjaxAction('btnReload_Click'));
+		$this->btnReload->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnReload_Click'));
 	}
 
 	protected function btnReload_Click() {
-		QApplication::Redirect('persist.php');
+		\QCubed\Project\Application::Redirect('persist.php');
 	}
 }
 
@@ -36,7 +36,7 @@ class PersistentExampleForm extends QForm {
  * This class encapsulates the logic of populating a list box
  * with a set of projects.
  */
-class ProjectPickerListBox extends QListBox {
+class ProjectPickerListBox extends \QCubed\Project\Control\ListBox {
 
 	/**
 	 * This constructor will only be executed once - afterwards,
@@ -47,8 +47,8 @@ class ProjectPickerListBox extends QListBox {
 		parent::__construct($objParentObject);
 
 		$projects = Project::QueryArray(
-			QQ::All(),
-			QQ::OrderBy(QQN::Project()->Name)
+			\QCubed\Query\QQ::All(),
+			\QCubed\Query\QQ::OrderBy(QQN::Project()->Name)
 		);
 
 		foreach ($projects as $project) {

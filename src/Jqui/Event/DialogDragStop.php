@@ -30,7 +30,8 @@ namespace QCubed\Jqui\Event;
  * 	* offset Type: Object The current offset position of the dialog.
  * 
  *
- * @was QDialog_DragStop */
+ * @was QDialog_DragStopEvent
+ */
 class DialogDragStop extends EventBase
 {
     const EVENT_NAME = 'dialogdragstop';

@@ -12,12 +12,13 @@ namespace QCubed\Control;
 require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
+use QCubed\Css\TextAlign;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\QString;
 use QCubed\Type;
-use QCubed\TagStyler as QTagStyler;
+use QCubed\TagStyler;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
 use QCubed\Html;
 
@@ -45,8 +46,8 @@ class CheckboxBase extends QControl
     // APPEARANCE
     /** @var string Text opposite to the checkbox */
     protected $strText = null;
-    /** @var QTextAlign|string the alignment of the string */
-    protected $strTextAlign = QTextAlign::Right;
+    /** @var TextAlign|string the alignment of the string */
+    protected $strTextAlign = TextAlign::RIGHT;
 
     // BEHAVIOR
     /** @var bool Should the htmlentities function be run on the control's text (strText)? */
@@ -57,7 +58,7 @@ class CheckboxBase extends QControl
     protected $blnChecked = false;
 
     /**
-     * @var  QTagStyler for labels of checkboxes. If side-by-side labeling, the styles will be applied to a
+     * @var  TagStyler for labels of checkboxes. If side-by-side labeling, the styles will be applied to a
      * span that wraps both the checkbox and the label.
      */
     protected $objLabelStyle;
@@ -131,12 +132,12 @@ class CheckboxBase extends QControl
 
     /**
      * Return a styler to style the label that surrounds the control if the control has text.
-     * @return QTagStyler
+     * @return TagStyler
      */
     public function getCheckLabelStyler()
     {
         if (!$this->objLabelStyle) {
-            $this->objLabelStyle = new QTagStyler();
+            $this->objLabelStyle = new TagStyler();
         }
         return $this->objLabelStyle;
     }
@@ -150,7 +151,7 @@ class CheckboxBase extends QControl
      */
     protected function renderLabelAttributes()
     {
-        $objStyler = new QTagStyler();
+        $objStyler = new TagStyler();
         $attributes = $this->getHtmlAttributes(null, null, ['title']); // copy tooltip to wrapping label
         $objStyler->setAttributes($attributes);
         $objStyler->override($this->getCheckLabelStyler());
@@ -341,8 +342,8 @@ class CheckboxBase extends QControl
             new QModelConnectorParam (get_called_class(), 'TextAlign', 'Left or right alignment of label',
                 QModelConnectorParam::SELECTION_LIST,
                 array(
-                    '\\QCubed\\Html::TEXT_ALIGN_RIGHT' => '\\QCubed\\Html::TEXT_ALIGN_RIGHT',
-                    '\\QCubed\\Html::TEXT_ALIGN_LEFT' => '\\QCubed\\Html::TEXT_ALIGN_LEFT'
+                    '\\QCubed\\Css\\TextAlign::RIGHT' => 'Right',
+                    '\\QCubed\\Css\\TextAlign::LEFT' => 'Left'
                 )),
             new QModelConnectorParam (get_called_class(), 'HtmlEntities', 'Whether to apply HTML entities on the label',
                 Type::BOOLEAN),

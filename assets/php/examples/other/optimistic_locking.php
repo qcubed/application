@@ -1,8 +1,8 @@
 <?php
 require_once('../qcubed.inc.php');
 
-// Define the Qform with all our Qcontrols
-class ExampleForm extends QForm {
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
 	// Local declarations of our Qcontrols
 	protected $lblMessage;
@@ -23,56 +23,56 @@ class ExampleForm extends QForm {
 	protected $objPersonReference;
 
 	// Initialize our Controls during the Form Creation process
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Pull two instances of the same object -- PersonWithLock with ID #5
 		$this->objPerson1 = PersonWithLock::Load(5);
 		$this->objPerson2 = PersonWithLock::Load(5);
 
 		// Define the controls
-		$this->lblMessage = new QLabel($this);
+		$this->lblMessage = new \QCubed\Control\Label($this);
 		$this->lblMessage->HtmlEntities = false;
 
-		$this->txtFirstName1 = new QTextBox($this);
+		$this->txtFirstName1 = new \QCubed\Project\Control\TextBox($this);
 		$this->txtFirstName1->Text = $this->objPerson1->FirstName;
 
-		$this->txtLastName1 = new QTextBox($this);
+		$this->txtLastName1 = new \QCubed\Project\Control\TextBox($this);
 		$this->txtLastName1->Text = $this->objPerson1->LastName;
 
-		$this->lblTimestamp1 = new QLabel($this);
+		$this->lblTimestamp1 = new \QCubed\Control\Label($this);
 		$this->lblTimestamp1->Text = $this->objPerson1->SysTimestamp;
 		$this->lblTimestamp1->HtmlEntities = false;
 
-		$this->txtFirstName2 = new QTextBox($this);
+		$this->txtFirstName2 = new \QCubed\Project\Control\TextBox($this);
 		$this->txtFirstName2->Text = $this->objPerson2->FirstName;
 
-		$this->txtLastName2 = new QTextBox($this);
+		$this->txtLastName2 = new \QCubed\Project\Control\TextBox($this);
 		$this->txtLastName2->Text = $this->objPerson2->LastName;
 
-		$this->lblTimestamp2 = new QLabel($this);
+		$this->lblTimestamp2 = new \QCubed\Control\Label($this);
 		$this->lblTimestamp2->Text = $this->objPerson2->SysTimestamp;
 		$this->lblTimestamp2->HtmlEntities = false;
 
 		// Define the Buttons
-		$this->btnSave1 = new QButton($this);
+		$this->btnSave1 = new \QCubed\Project\Jqui\Button($this);
 		$this->btnSave1->ActionParameter = '1';
 
-		$this->btnForceUpdate1 = new QButton($this);
+		$this->btnForceUpdate1 = new \QCubed\Project\Jqui\Button($this);
 		$this->btnForceUpdate1->ActionParameter = '1';
 
-		$this->btnSave2 = new QButton($this);
+		$this->btnSave2 = new \QCubed\Project\Jqui\Button($this);
 		$this->btnSave2->ActionParameter = '2';
 
-		$this->btnForceUpdate2 = new QButton($this);
+		$this->btnForceUpdate2 = new \QCubed\Project\Jqui\Button($this);
 		$this->btnForceUpdate2->ActionParameter = '2';
 
 		// Add a Click event handlers
-		$this->btnSave1->AddAction(new QClickEvent(), new QServerAction('SavePerson'));
-		$this->btnForceUpdate1->AddAction(new QClickEvent(), new QServerAction('SavePersonForceUpdate'));
-		$this->btnSave2->AddAction(new QClickEvent(), new QServerAction('SavePerson'));
-		$this->btnForceUpdate2->AddAction(new QClickEvent(), new QServerAction('SavePersonForceUpdate'));
+		$this->btnSave1->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('SavePerson'));
+		$this->btnForceUpdate1->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('SavePersonForceUpdate'));
+		$this->btnSave2->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('SavePerson'));
+		$this->btnForceUpdate2->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('SavePersonForceUpdate'));
 	}
 
-	protected function Form_PreRender() {
+	protected function formPreRender() {
 		// Update the Reference Person on every pre render
 		$this->objPersonReference = PersonWithLock::Load(5);
 
@@ -88,7 +88,7 @@ class ExampleForm extends QForm {
 			$this->lblTimestamp2->Text = $this->objPerson2->SysTimestamp;
 	}
 
-	protected function Form_Load() {
+	protected function formLoad() {
 		// Clear the Message (if applicable)
 		$this->lblMessage->Text = '';
 	}

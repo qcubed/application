@@ -13,6 +13,7 @@ require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
 use QCubed as Q;
+use QCubed\Css\TextAlign;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
@@ -154,7 +155,7 @@ class RadioButtonList extends ListControl
 
         $strHtml = Q\Html::renderLabeledInput(
             $strLabelText,
-            $this->strTextAlign == QTextAlign::Left,
+            $this->strTextAlign == TextAlign::LEFT,
             $objStyles->renderHtmlAttributes(),
             $objLabelStyles->renderHtmlAttributes(),
             $blnWrapLabel);
@@ -244,7 +245,7 @@ class RadioButtonList extends ListControl
                 // Iterate through Table Columns
                 $strRowHtml = '';
                 for ($intColIndex = 0; $intColIndex < $intColCount; $intColIndex++) {
-                    if ($this->strRepeatDirection == QRepeatDirection::Horizontal) {
+                    if ($this->strRepeatDirection == self::REPEAT_HORIZONTAL) {
                         $intIndex = $intColIndex + $this->intRepeatColumns * $intRowIndex;
                     } else {
                         $intIndex = (floor($this->ItemCount / $this->intRepeatColumns) * $intColIndex)
@@ -483,8 +484,8 @@ class RadioButtonList extends ListControl
             new QModelConnectorParam(get_called_class(), 'TextAlign', '', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    'QTextAlign::Left' => 'Left',
-                    'QTextAlign::Right' => 'Right'
+                    '\\QCubed\\Css\\TextAlign::LEFT' => 'Left',
+                    '\\QCubed\\Css\\TextAlign::RIGHT' => 'Right'
                 )),
             new QModelConnectorParam(get_called_class(), 'HtmlEntities',
                 'Set to false to have the browser interpret the labels as HTML', Type::BOOLEAN),
@@ -494,15 +495,15 @@ class RadioButtonList extends ListControl
                 'Whether to repeat horizontally or vertically', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    'QRepeatDirection::Horizontal' => 'Horizontal',
-                    'QRepeatDirection::Vertical' => 'Vertical'
+                    '\\QCubed\\Control\\RadioButtonList::REPEAT_HORIZONTAL' => 'Horizontal',
+                    '\\QCubed\\Control\\RadioButtonList::REPEAT_VERTICAL' => 'Vertical'
                 )),
             new QModelConnectorParam(get_called_class(), 'ButtonMode', 'How to display the buttons',
                 QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    'QRadioButtonList::BUTTON_MODE_JQ' => 'JQuery UI Buttons',
-                    'QRadioButtonList::BUTTON_MODE_SET' => 'JQuery UI Buttonset'
+                    '\\QCubed\\Control\\RadioButtonList::BUTTON_MODE_JQ' => 'JQuery UI Buttons',
+                    '\\QCubed\\Control\\RadioButtonList::BUTTON_MODE_SET' => 'JQuery UI Buttonset'
                 )),
             new QModelConnectorParam(get_called_class(), 'MaxHeight',
                 'If set, will wrap it in a scrollable pane with the given max height', Type::INTEGER)

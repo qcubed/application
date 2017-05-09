@@ -3,8 +3,8 @@ require_once('../qcubed.inc.php');
 
 if (!defined('__DESIGN_MODE__')) define ('__DESIGN_MODE__', 1); // normally, you would define this in your config file
 
-// Define the Qform with all our Qcontrols
-class ExamplesForm extends QForm {
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExamplesForm extends \QCubed\Project\Control\FormBase {
 
 	// Local declarations of our Qcontrols
 	//protected $lblFirstName;
@@ -19,13 +19,13 @@ class ExamplesForm extends QForm {
 	protected $mctPerson;
 
 	// Initialize our Controls during the Form Creation process
-	protected function Form_Create() {
+	protected function formCreate() {
 		// For now, let's load Person of ID #1
 		// Remember that $this is the Model Connector's parent, because every QControl
 		// we get from PersonConnector should have $this as its parent.
 		$this->mctPerson = PersonConnector::Create($this, 1);
 
-		// Instead of manually defining and setting up each QLabel and QTextBox,
+		// Instead of manually defining and setting up each \QCubed\Control\Label and \QCubed\Project\Control\TextBox,
 		// we utilize the ModelConnector's _create() functionality to create them
 		// for us.
 		//$this->lblFirstName = $this->mctPerson->lblFirstName_Create();
@@ -36,30 +36,30 @@ class ExamplesForm extends QForm {
 		$this->lstPersonTypes = $this->mctPerson->lstPersonTypes_Create();
 
 		// We can of course also define any additional controls we wish
-		$this->btnSave = new QButton($this);
+		$this->btnSave = new \QCubed\Project\Jqui\Button($this);
 		$this->btnSave->Text = 'Save';
 		$this->btnSave->Visible = false;
-		$this->btnCancel = new QButton($this);
+		$this->btnCancel = new \QCubed\Project\Jqui\Button($this);
 		$this->btnCancel->Text = 'Cancel';
 		$this->btnCancel->Visible = false;
 
 		// Finally, we can define all of our actions
 		// ON some of these, we can override and set a CausesValidation handler
-		$this->btnSave->AddAction(new QClickEvent(), new QAjaxAction('btnSave_Click', 'default', true));
-		$this->btnCancel->AddAction(new QClickEvent(), new QAjaxAction('btnCancel_Click'));
+		$this->btnSave->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnSave_Click', 'default', true));
+		$this->btnCancel->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnCancel_Click'));
 
-		//$this->lblFirstName->AddAction(new QClickEvent(), new QAjaxAction('lblFirstName_Click'));
-		//$this->lblLastName->AddAction(new QClickEvent(), new QAjaxAction('lblLastName_Click'));
+		//$this->lblFirstName->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('lblFirstName_Click'));
+		//$this->lblLastName->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('lblLastName_Click'));
 
-		$this->txtFirstName->AddAction(new QEnterKeyEvent(), new QAjaxAction('btnSave_Click', 'default', true));
-		$this->txtFirstName->AddAction(new QEnterKeyEvent(), new QTerminateAction());
-		$this->txtFirstName->AddAction(new QEscapeKeyEvent(), new QAjaxAction('btnCancel_Click', 'default', true));
-		$this->txtFirstName->AddAction(new QEscapeKeyEvent(), new QTerminateAction());
+		$this->txtFirstName->AddAction(new \QCubed\Event\EnterKey(), new \QCubed\Action\Ajax('btnSave_Click', 'default', true));
+		$this->txtFirstName->AddAction(new \QCubed\Event\EnterKey(), new \QCubed\Action\Terminate());
+		$this->txtFirstName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Ajax('btnCancel_Click', 'default', true));
+		$this->txtFirstName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Terminate());
 
-		$this->txtLastName->AddAction(new QEnterKeyEvent(), new QAjaxAction('btnSave_Click', 'default', true));
-		$this->txtLastName->AddAction(new QEnterKeyEvent(), new QTerminateAction());
-		$this->txtLastName->AddAction(new QEscapeKeyEvent(), new QAjaxAction('btnCancel_Click', 'default', true));
-		$this->txtLastName->AddAction(new QEscapeKeyEvent(), new QTerminateAction());
+		$this->txtLastName->AddAction(new \QCubed\Event\EnterKey(), new \QCubed\Action\Ajax('btnSave_Click', 'default', true));
+		$this->txtLastName->AddAction(new \QCubed\Event\EnterKey(), new \QCubed\Action\Terminate());
+		$this->txtLastName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Ajax('btnCancel_Click', 'default', true));
+		$this->txtLastName->AddAction(new \QCubed\Event\EscapeKey(), new \QCubed\Action\Terminate());
 	}
 
 	// Define the Event Handlers
@@ -119,7 +119,7 @@ class ExamplesForm extends QForm {
 		$this->btnCancel->Visible = true;
 	}
 
-	protected function Form_Validate() {
+	protected function formValidate() {
 		// Blink and FOcus any errant control
 		foreach ($this->GetErrorControls() as $objControl) {
 			$objControl->Focus();

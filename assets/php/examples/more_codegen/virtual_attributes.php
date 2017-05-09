@@ -50,7 +50,7 @@
 
 	// Iterate through the Project array
 	foreach ($objProjectArray as $objProject) {
-		_p(QApplication::HtmlEntities($objProject->Name) . ' has ' . $objProject->GetVirtualAttribute('team_member_count') . ' team members.');
+		_p(\QCubed\QString::htmlEntities($objProject->Name) . ' has ' . $objProject->GetVirtualAttribute('team_member_count') . ' team members.');
 		_p('<br/>', false);
 	}
 ?>

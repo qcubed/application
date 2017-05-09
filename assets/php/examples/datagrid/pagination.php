@@ -1,14 +1,14 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class ExampleForm extends QForm {
+class ExampleForm extends \QCubed\Project\Control\FormBase {
 
 	// Declare the DataGrid
 	protected $dtgPersons;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid
-		$this->dtgPersons = new QDataGrid($this);
+		$this->dtgPersons = new \QCubed\Project\Control\DataGrid($this);
 
 		// Using Ajax for Pagination
 		$this->dtgPersons->UseAjax = true;
@@ -16,7 +16,7 @@ class ExampleForm extends QForm {
 		// To create pagination, we will create a new paginator, and specify the datagrid
 		// as the paginator's parent.  (We do this because the datagrid is the control
 		// who is responsible for rendering the paginator, as opposed to the form.)
-		$objPaginator = new QPaginator($this->dtgPersons);
+		$objPaginator = new \QCubed\Project\Control\Paginator($this->dtgPersons);
 		$this->dtgPersons->Paginator = $objPaginator;
 
 		// Now, with a paginator defined, we can set up some additional properties on

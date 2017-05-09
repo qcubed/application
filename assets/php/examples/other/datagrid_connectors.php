@@ -1,8 +1,8 @@
 <?php
 require_once('../qcubed.inc.php');
 
-// Define the Qform with all our Qcontrols
-class ExamplesForm extends QForm {
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExamplesForm extends \QCubed\Project\Control\FormBase {
 
 	// Local declarations of the DataGrid
 	protected $dtgProjects;
@@ -10,25 +10,25 @@ class ExamplesForm extends QForm {
 	protected $objAdditionalConditions;
 	protected $objAdditionalClauses;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the DataGrid -- note that the DataGrid Connector is a DataGrid, itself --
 		// so let's just use it as a datagrid
 		$this->dtgProjects = new ProjectList($this);
 		$this->dtgProjects->SetDataBinder('DefaultDataBinder', $this);
 
 		// Only show projects whose status is "open"
-		$this->objAdditionalConditions = QQ::Equal(QQN::Project()->ProjectStatusTypeId, ProjectStatusType::Open);
+		$this->objAdditionalConditions = \QCubed\Query\QQ::Equal(QQN::Project()->ProjectStatusTypeId, ProjectStatusType::Open);
 
 		//expand on the ManagerPerson's login, since we're displaying it
 		$this->objAdditionalClauses = array(
-			QQ::Expand(QQN::Project()->ManagerPerson),
-			QQ::Expand(QQN::Project()->ManagerPerson->Login)
+			\QCubed\Query\QQ::Expand(QQN::Project()->ManagerPerson),
+			\QCubed\Query\QQ::Expand(QQN::Project()->ManagerPerson->Login)
 		);
 
 		// DataBinding is already configured -- so we do not need to worry about it
 		// But remember that dtgProjects is just a regular datagrid, as well
 		// So we can configure as we see fit, e.g. adding pagination or styling
-		$this->dtgProjects->Paginator = new QPaginator($this->dtgProjects);
+		$this->dtgProjects->Paginator = new \QCubed\Project\Control\Paginator($this->dtgProjects);
 		$this->dtgProjects->ItemsPerPage = 6;
 		$this->dtgProjects->AlternateRowCssClass = 'alternate';
 
@@ -53,8 +53,8 @@ class ExamplesForm extends QForm {
 		$colStatus->HtmlEntities = false;
 		$colStatus->Format = '<strong>%s</strong>';
 
-		$this->pxyExample = new QControlProxy($this);
-		$this->pxyExample->AddAction(new QClickEvent(), new QAjaxAction('pxyExample_Click'));
+		$this->pxyExample = new \QCubed\Control\Proxy($this);
+		$this->pxyExample->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('pxyExample_Click'));
 	}
 
 	public function GetUserNameCellParams(Project $item){
@@ -71,7 +71,7 @@ class ExamplesForm extends QForm {
 	// Instead of actually redirecting you to an example edit project page, we'll
 	// use a DisplayAlert() call as a stub function.  Hopefully, you get the idea. =)
 	protected function pxyExample_Click($strFormId, $strControlId, $strParameter) {
-		QApplication::DisplayAlert('Pretending to edit Project #' . $strParameter);
+		\QCubed\Project\Application::DisplayAlert('Pretending to edit Project #' . $strParameter);
 	}
 }
 

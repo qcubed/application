@@ -6,7 +6,7 @@
 		public $Items;
 	}
 	
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		// Declare the DataGrid
 		protected $dtgOrders;
         public $objOrdersArray = array();
@@ -23,7 +23,7 @@
 
 		protected $objRandomProductsArray = array();
 
-		protected function Form_Create() {
+		protected function formCreate() {
 
 			$this->objRandomProductsArray[0] = '1x Sandwich, 2x Coke, 1x Big Pekahuna Burger';
 			$this->objRandomProductsArray[1] = '2x French fries, 3x Burritos, 1x Hot Dog';
@@ -31,20 +31,20 @@
 			$this->objRandomProductsArray[3] = '3x Socks, 3x Shorts';
 
 			// Define the DataGrid
-			$this->dtgOrders = new QDataGrid($this);
+			$this->dtgOrders = new \QCubed\Project\Control\DataGrid($this);
 			$this->dtgOrders->UseAjax = true;
 
 			//button to simulate a server action
-			$this->btnServerAction = new QButton($this);
+			$this->btnServerAction = new \QCubed\Project\Jqui\Button($this);
 			$this->btnServerAction->SetCustomStyle('float','right');
 
-			//button for switching the 'RestartOnServer' capability of QJsTimer on/off
-			$this->btnRestartOnServerAction = new QButton($this);
-			$this->btnStop = new QButton($this);
-			$this->btnStart = new QButton($this);
+			//button for switching the 'RestartOnServer' capability of \QCubed\Project\Control\JsTimer on/off
+			$this->btnRestartOnServerAction = new \QCubed\Project\Jqui\Button($this);
+			$this->btnStop = new \QCubed\Project\Jqui\Button($this);
+			$this->btnStart = new \QCubed\Project\Jqui\Button($this);
 
 			//create the timer: parent = $this, $time = 3000ms, periodic = true, autostart=true
-			$this->ctlTimer = new QJsTimer($this,3000,true,true);
+			$this->ctlTimer = new \QCubed\Project\Control\JsTimer($this,3000,true,true);
 
 
 			$this->dtgOrders->CreatePropertyColumn('Order-Id', 'Id');
@@ -53,17 +53,17 @@
 			$col->HtmlEntities = false;
 			$this->dtgOrders->SetDataBinder('dtgOrders_Bind');
 
-			$this->btnServerAction->AddAction(new QClickEvent(),new QServerAction('OnServerAction'));
+			$this->btnServerAction->AddAction(new \QCubed\Event\Click(),new \QCubed\Action\Server('OnServerAction'));
 			$this->btnServerAction->Text = "Server Action";
 
-			$this->btnRestartOnServerAction->AddAction(new QClickEvent(),new QAjaxAction('OnToggleRestartOnServerAction'));
+			$this->btnRestartOnServerAction->AddAction(new \QCubed\Event\Click(),new \QCubed\Action\Ajax('OnToggleRestartOnServerAction'));
 			$this->btnRestartOnServerAction->Text = "Restart On Server Action [off]";
 
 
-			$this->ctlTimer->AddAction(new QTimerExpiredEvent(), new QAjaxAction('OnUpdateDtg'));
+			$this->ctlTimer->AddAction(new \QCubed\Event\TimerExpired(), new \QCubed\Action\Ajax('OnUpdateDtg'));
 
-			$this->btnStart->AddAction(new QClickEvent(),new QAjaxControlAction($this->ctlTimer,'Start'));
-			$this->btnStop->AddAction(new QClickEvent(),new QAjaxControlAction($this->ctlTimer,'Stop'));
+			$this->btnStart->AddAction(new \QCubed\Event\Click(),new \QCubed\Action\AjaxControl($this->ctlTimer,'Start'));
+			$this->btnStop->AddAction(new \QCubed\Event\Click(),new \QCubed\Action\AjaxControl($this->ctlTimer,'Stop'));
 			$this->btnStart->Text = 'Start';
 			$this->btnStop->Text = 'Stop';
 
@@ -106,10 +106,10 @@
 			$objControlId = "removeButton" . $item->Id;
             $objControl = $this->GetControl($objControlId);
 			if (!$objControl) {
-				$objControl = new QJqButton($this->dtgOrders, $objControlId);
+				$objControl = new \QCubed\Project\Jqui\Button($this->dtgOrders, $objControlId);
 				$objControl->Text = true;
 				$objControl->ActionParameter = $item->Id;
-				$objControl->AddAction(new QClickEvent(), new QAjaxAction("removeButton_Click"));
+				$objControl->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax("removeButton_Click"));
 			}
                         
 			$objControl->Label = "Remove";

@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Rollover Images using QImageRollover</h1>
@@ -20,5 +20,5 @@
 
 <div id="demoZone"><?php $this->imgMyRolloverImage->Render(); ?></div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

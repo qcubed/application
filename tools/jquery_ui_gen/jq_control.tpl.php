@@ -17,7 +17,6 @@ use QCubed as Q;
  * @was <?= $objJqDoc->strOldClass ?>
 
  */
-
 class <?= $objJqDoc->strQcClass ?> extends Q\Jqui\<?= $objJqDoc->strQcClass ?>Base
 {
 }

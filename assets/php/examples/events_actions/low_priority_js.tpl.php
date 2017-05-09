@@ -1,13 +1,13 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Executing Javascript with low/high priority</h1>
 	
-	<p>In this example you learn about executing javascript with <b>QApplication::ExecuteJsFunction</b> and
-		<b>QApplication::ExecuteSelectorFunction</b> with different priority levels.</p>
+	<p>In this example you learn about executing javascript with <b>\QCubed\Project\Application::ExecuteJsFunction</b> and
+		<b>\QCubed\Project\Application::ExecuteSelectorFunction</b> with different priority levels.</p>
 
-	<p>You can execute JavaScript using one of three priority-levels: <b> QJsPriority::Low , QJsPriority::Standard and QJsPriority::High</b>
+	<p>You can execute JavaScript using one of three priority-levels: <b> \QCubed\ApplicationBase::PRIORITY_LOW , \QCubed\ApplicationBase::PRIORITY_STANDARD and \QCubed\ApplicationBase::PRIORITY_HIGH</b>
 	Scripts with higher priority-level will be placed in the javascript execution-queue before scripts with lower ones 
 	and scripts with equal priority level are executed in the order you send them. </p>
 	
@@ -15,10 +15,10 @@
 	
 	<ul>
 		<li>Render/update html</li>
-		<li>Execute JavaScript functions with <b>QJsPriority::High</b>
+		<li>Execute JavaScript functions with <b>\QCubed\ApplicationBase::PRIORITY_HIGH</b>
 		<li>Execute QActions attached to controls with QEvents</li>
-		<li>Execute JavaScript functions with <b>QJsPriority::Standard</b>
-		<li>Execute JavaScript functions with <b>QJsPriority::Low</b>
+		<li>Execute JavaScript functions with <b>\QCubed\ApplicationBase::PRIORITY_STANDARD</b>
+		<li>Execute JavaScript functions with <b>\QCubed\ApplicationBase::PRIORITY_LOW</b>
 	</ul>
 
 	<p>Take a look at the example below. By clicking on one of the buttons the
@@ -29,7 +29,7 @@
 	<p>In these methods the datagrid is marked as modified (render it again, including all the buttons),
 	some JavaScript alert boxes will show up and the color of the buttons changes due to
 	adding a css class via JavaScript.
-	The parameter <b>QJsPriority::Low</b> forces the script to be executed after all scripts with higher priority.</p>
+	The parameter <b>\QCubed\ApplicationBase::PRIORITY_LOW</b> forces the script to be executed after all scripts with higher priority.</p>
 	
 	
 	<p>When the buttons are (re)rendered they get their standard color applied (and the JavaScript returned by GetEndScript is executed again).
@@ -40,8 +40,8 @@
 	all scripts are executed with standard priority.</p>
 
 	<h2>Strategies for executing Javascript</h2>
-	The <b>QApplication::ExecuteJsFunction</b>, <b>QApplication::ExecuteSelectorFunction</b> and
-	<b>QApplication::ExecuteControlCommand</b> functions are available to use invoke javascript in a number of ways.
+	The <b>\QCubed\Project\Application::ExecuteJsFunction</b>, <b>\QCubed\Project\Application::ExecuteSelectorFunction</b> and
+	<b>\QCubed\Project\Application::ExecuteControlCommand</b> functions are available to use invoke javascript in a number of ways.
 	If these are not adequate, we recommend you put your javascript in a file, and invoke that javascript using one of the
 	above functions.
 </div>
@@ -51,5 +51,5 @@
 	<?php $this->dtgButtons->Render(); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

@@ -1,7 +1,7 @@
 <?php
 	require_once('../qcubed.inc.php');
 
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		protected $dtxDateTimeTextBox;
 		protected $btnDateTimeTextBox;
 
@@ -16,42 +16,42 @@
 
 		protected $lblResult;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			
-			$this->calQJQCalendar = new QCalendar($this);
+			$this->calQJQCalendar = new \QCubed\Control\Calendar($this);
 			
-			$this->dtxDateTimeTextBox = new QDateTimeTextBox($this);
+			$this->dtxDateTimeTextBox = new \QCubed\Control\DateTimeTextBox($this);
 
-			// QDateTimePicker can have different "Types"
-			$this->dtpDatePicker = new QDateTimePicker($this);
-			$this->dtpDatePicker->DateTimePickerType = QDateTimePickerType::Date;
+			// \QCubed\Control\DateTimePicker can have different "Types"
+			$this->dtpDatePicker = new \QCubed\Control\DateTimePicker($this);
+			$this->dtpDatePicker->DateTimePickerType = \QCubed\Control\DateTimePicker::SHOW_DATE;
 
-			$this->dtpDateTimePicker = new QDateTimePicker($this);
-			$this->dtpDateTimePicker->DateTimePickerType = QDateTimePickerType::DateTime;
+			$this->dtpDateTimePicker = new \QCubed\Control\DateTimePicker($this);
+			$this->dtpDateTimePicker->DateTimePickerType = \QCubed\Control\DateTimePicker::SHOW_DATE_TIME;
 
 			// To View the "Results"
-			$this->lblResult = new QLabel($this);
+			$this->lblResult = new \QCubed\Control\Label($this);
 			$this->lblResult->Text = 'Results...';
 
 			// Various Buttons
-			$this->btnQJQCalendar = new QButton($this);
+			$this->btnQJQCalendar = new \QCubed\Project\Control\Button($this);
 			$this->btnQJQCalendar->Text = 'Update';
-			$this->btnQJQCalendar->AddAction(new QClickEvent(), new QAjaxAction('btnUpdate_Click'));
+			$this->btnQJQCalendar->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
 			$this->btnQJQCalendar->ActionParameter = $this->calQJQCalendar->ControlId;
 			
-			$this->btnDateTimeTextBox = new QButton($this);
+			$this->btnDateTimeTextBox = new \QCubed\Project\Control\Button($this);
 			$this->btnDateTimeTextBox->Text = 'Update';
-			$this->btnDateTimeTextBox->AddAction(new QClickEvent(), new QAjaxAction('btnUpdate_Click'));
+			$this->btnDateTimeTextBox->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
 			$this->btnDateTimeTextBox->ActionParameter = $this->dtxDateTimeTextBox->ControlId;
 
-			$this->btnDatePicker = new QButton($this);
+			$this->btnDatePicker = new \QCubed\Project\Control\Button($this);
 			$this->btnDatePicker->Text = 'Update';
-			$this->btnDatePicker->AddAction(new QClickEvent(), new QAjaxAction('btnUpdate_Click'));
+			$this->btnDatePicker->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
 			$this->btnDatePicker->ActionParameter = $this->dtpDatePicker->ControlId;
 
-			$this->btnDateTimePicker = new QButton($this);
+			$this->btnDateTimePicker = new \QCubed\Project\Control\Button($this);
 			$this->btnDateTimePicker->Text = 'Update';
-			$this->btnDateTimePicker->AddAction(new QClickEvent(), new QAjaxAction('btnUpdate_Click'));
+			$this->btnDateTimePicker->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
 			$this->btnDateTimePicker->ActionParameter = $this->dtpDateTimePicker->ControlId;
 		}
 
@@ -61,7 +61,7 @@
 
 			// If a DateTime value is NOT selected or is INVALID, then this will be NULL
 			if ($dttDateTime) {
-				$this->lblResult->Text = 'QDateTime object:<br/>';
+				$this->lblResult->Text = '\QCubed\QDateTime object:<br/>';
 				if (!$dttDateTime->IsDateNull())
 					$this->lblResult->Text .= 'Date: <strong>' . $dttDateTime->qFormat('DDD MMM D YYYY') . '</strong><br/>';
 				else
@@ -71,7 +71,7 @@
 				else
 					$this->lblResult->Text .= 'Time: <strong>Null</strong>';
 			} else {
-				$this->lblResult->Text = 'QDateTime object: <strong>Null</strong>';
+				$this->lblResult->Text = '\QCubed\QDateTime object: <strong>Null</strong>';
 			}
 		}
 	}

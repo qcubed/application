@@ -5,7 +5,7 @@
 	<h1>About Sections 1 - 3</h1>
 
 	<p>Sections 1 through 3 are dedicated to just the <strong>Code Generator</strong>.  In order
-		to focus on just the code generated functionality, no <strong>QForm</strong> or <strong>QControl</strong>
+		to focus on just the code generated functionality, no <strong>\QCubed\Project\Control\FormBase</strong> or <strong>QControl</strong>
 		components are included in these examples.</p>
 
 	<p>In order to illustrate what is going on in these objects, many of the examples will

@@ -29,7 +29,8 @@ namespace QCubed\Jqui\Event;
  * 	* item Type: jQuery The currently active menu item.
  * 
  *
- * @was QMenu_Blur */
+ * @was QMenu_BlurEvent
+ */
 class MenuBlur extends EventBase
 {
     const EVENT_NAME = 'menublur';

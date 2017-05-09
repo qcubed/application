@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QSelectable_Stop */
+ * @was QSelectable_StopEvent
+ */
 class SelectableStop extends EventBase
 {
     const EVENT_NAME = 'selectablestop';

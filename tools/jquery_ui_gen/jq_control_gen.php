@@ -44,9 +44,24 @@ class HtmlJqDoc extends JqDoc {
 			$strJqClass = preg_replace('/ .*/', '', $nodes[0]->plaintext);
 		}
 
-        $strOldClass = 'Q' . $strJqClass;
+		if ($strQcClass) {
+            if ($strQcClass == 'Button') {
+                $strOldClass = 'QJqButton';
+            } elseif ($strQcClass == 'Checkbox') {
+                $strOldClass = 'QJqCheckBox';
+            } elseif ($strQcClass == 'RadioButton') {
+                $strOldClass = 'QJqRadioButton';
+            }
+            else {
+                $strOldClass = 'Q' . $strQcClass;
+            }
+        } else {
+            $strOldClass = 'Q' . $strJqClass;
+        }
 
-		parent::__construct($strOldClass, $strJqClass, $strJqSetupFunc, $strQcClass, $strQcBaseClass);
+
+
+        parent::__construct($strOldClass, $strJqClass, $strJqSetupFunc, $strQcClass, $strQcBaseClass);
 
 		$htmlOptions = $html->find('section[id=options] div.api-item');
 

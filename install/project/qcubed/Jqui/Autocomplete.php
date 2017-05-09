@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see AutocompleteBase
  * @was QAutocomplete
  */
-
 class Autocomplete extends Q\Jqui\AutocompleteBase
 {
 }

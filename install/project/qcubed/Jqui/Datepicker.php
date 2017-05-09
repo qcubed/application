@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see DatepickerBase
  * @was QDatepicker
  */
-
 class Datepicker extends Q\Jqui\DatepickerBase
 {
 }

@@ -456,7 +456,7 @@ class CheckboxList extends ListControl
             case "ItemStyle":
                 try {
                     $this->blnModified = true;
-                    $this->objItemStyle = Type::cast($mixValue, "QTagStyler");
+                    $this->objItemStyle = Type::cast($mixValue, "\\QCubed\\TagStyler");
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
@@ -511,8 +511,10 @@ class CheckboxList extends ListControl
             new QModelConnectorParam(get_called_class(), 'TextAlign', '', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    'QTextAlign::Left' => 'Left',
-                    'QTextAlign::Right' => 'Right'
+                    '\\QCubed\\Css\\TextAlign::LEFT' => 'Left',
+                    '\\QCubed\\Css\\TextAlign::RIGHT' => 'Right',
+                    '\\QCubed\\Css\\TextAlign::CENTER' => 'Center'
+
                 )),
             new QModelConnectorParam(get_called_class(), 'HtmlEntities',
                 'Set to false to have the browser interpret the labels as HTML', Type::BOOLEAN),
@@ -522,15 +524,15 @@ class CheckboxList extends ListControl
                 'Whether to repeat horizontally or vertically', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    'self::REPEAT_HORIZONTAL' => 'Horizontal',
-                    'self::REPEAT_VERTICAL' => 'Vertical'
+                    '\\QCubed\\Control\\CheckboxList::REPEAT_HORIZONTAL' => 'Horizontal',
+                    '\\QCubed\\Control\\CheckboxList::REPEAT_VERTICAL' => 'Vertical'
                 )),
             new QModelConnectorParam(get_called_class(), 'ButtonMode', 'How to display the buttons',
                 QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    'QCheckBoxList::BUTTON_MODE_JQ' => 'JQuery UI Buttons',
-                    'QCheckBoxList::BUTTON_MODE_SET' => 'JQuery UI Buttonset'
+                    '\\QCubed\\Control\\CheckboxList::BUTTON_MODE_JQ' => 'JQuery UI Buttons',
+                    '\\QCubed\\Control\\CheckboxList::BUTTON_MODE_SET' => 'JQuery UI Buttonset'
                 )),
             new QModelConnectorParam(get_called_class(), 'MaxHeight',
                 'If set, will wrap it in a scrollable pane with the given max height', Type::INTEGER)

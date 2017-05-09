@@ -30,7 +30,8 @@ namespace QCubed\Jqui\Event;
  * 	* offset Type: Object The current offset position of the dialog.
  * 
  *
- * @was QDialog_Drag */
+ * @was QDialog_DragEvent
+ */
 class DialogDrag extends EventBase
 {
     const EVENT_NAME = 'dialogdrag';

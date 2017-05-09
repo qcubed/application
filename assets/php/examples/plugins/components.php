@@ -10,7 +10,7 @@
 	<p>Start by familiarizing yourself with the various plugins currently written. Take a look
 		at their source code and how the directories are structured. Also take a look at the QCubed
 		core files that are implementations of <a href="http://jqueryui.com">JQueryUI</a> components, like the
-		QAutocomplete component.
+		\QCubed\Project\Jqui\Autocomplete component.
 		You will notice that there are three files associated with a typical control:.</p>
 
 	<ul>
@@ -44,8 +44,8 @@
 			of your <strong>QControl</strong> wil be. For example, if your javascript widget attaches to a
 
 
-		&lt;div&gt; block, you should have your control extend from the <strong>QPanel</strong> class, because the
-			<strong>QPanel</strong> outputs a &lt;div&gt;. If you have additional HTML that you need to output,
+		&lt;div&gt; block, you should have your control extend from the <strong>\QCubed\Control\Panel</strong> class, because the
+			<strong>\QCubed\Control\Panel</strong> outputs a &lt;div&gt;. If you have additional HTML that you need to output,
 			implement a <strong>GetControlHtml</strong> method in your control.</p>
 		<p>QCubed includes <a href="http://www.jquery.com">jQuery</a> and uses it for much of its internal function.
 			However, it changes the '$' variable to '$j'. So,   to refer to your control for example, you would output
@@ -61,7 +61,7 @@
 			widget to the HTML you created. This is also the place where you would output any class member variables of
 			your PHP in such a way that the javascript will read it. Whenever your control is completely redrawn, all the HTML and
 			the javascript in <strong>GetEndScript</strong> will be drawn again, updating the control to the current
-			data in PHP. To cause a redraw, call the <strong>Refresh</strong> method, which it inherits from <strong>QControlBase</strong>.
+			data in PHP. To cause a redraw, call the <strong>Refresh</strong> method, which it inherits from <strong>\QCubed\Control\ControlBase</strong>.
 			See examples of this is done in the various Gen classes in the qcubed/qcubed/includes/base_controls directory.</p>
 	
 	
@@ -85,14 +85,14 @@
         <ul>
           <li>Atttach your control to a standard html form element, like a textbox or checkbox and on the PHP side, make
 			  your <strong>QControl</strong> a subclass of the corresponding <strong>QControl</strong> type. The data
-			  will automatically be updated in QCubed.</li> See <strong>QJqCheckBox</strong> for an example of this method.
+			  will automatically be updated in QCubed.</li> See <strong>\QCubed\Project\Jqui\Checkbox</strong> for an example of this method.
           <li>Create a hidden input element and store the data that the javascript widget represents into the hidden
 			  element. Update that hidden element in javascript whenever the data changes, but also trigger the
 			  <strong>qformObjChanged</strong> event to notify QCubed that the control changed. For the hidden input(s),
 			  give them an id that is the same as the parent control, followed by an underscore and whatever text you
 			  need to uniquely identify it. This will associated the hidden control with the parent control. Implement the
 			  <strong>ParsePostData</strong> method within your control to read the data in the post variable and put
-			  it into your <strong>QControl</strong>.See the <strong>QImageButton</strong> control source for an
+			  it into your <strong>QControl</strong>.See the <strong>\QCubed\Control\ImageButton</strong> control source for an
 			  example of this method.</li>
 		  <li>Whenever your control changes, call <strong>qcubed.setAdditionalPostVar(name, val)</strong>. This will add
 				the name adn value to the list of variables posted. <strong>val</strong> can be a string, array or object.  If you cannot detect a change for
@@ -106,17 +106,17 @@
 			control property, and a new value for the property. The control property is a property in your PHP control
 			that you can set through the <strong>__set</strong> magic method. Calling <strong>recordControlModification</strong>
 			in javascript will cause QCubed to pass that value to your PHP control through that property.</p> See the
-			<strong>QAccordion</strong> control for an example of this method.
+			<strong>\QCubed\Project\Jqui\Accordion</strong> control for an example of this method.
         <p>QEvents can also be used to read data from the control during the processing of a specific event as discussed
 			in the <a href="../other_controls/js_return_param_example.php">jQuery Controls: Adding Actions</a> example.</p>
         <p>Many javascript controls these days use  ajax or javascript mechanisms to read data in real time. Connecting
 			these controls to QCubed is  more complicated, and is dependent on the specific implementation. Here are
 			some examples:</p>
         <ul>
-          <li>Use a special NoScript ajax action to link a javascript function with a PHP <strong>QEvent</strong>. The
+          <li>Use a special NoScript ajax action to link a javascript function with a PHP <strong>\QCubed\Event\EventBase</strong>. The
 			  event gets triggered when the javascript widget wants data. Within that event, execute a
-			  <strong>QApplication::ExecuteJavascript</strong> command to send the data back to the widget. This is how
-			  the <strong>QAutocomplete</strong> widget works as well as the datatables plugin.</li>
+			  <strong>\QCubed\Project\Application::ExecuteJavascript</strong> command to send the data back to the widget. This is how
+			  the <strong>\QCubed\Project\Jqui\Autocomplete</strong> widget works as well as the datatables plugin.</li>
           <li>Create a php file that outputs json data that you want to send to the javascript widget. Set the name of
 			  the php file in the javascript widget as being the source of its data. If you initialize QCubed within
 			  that php file, you will have all of the QCubed functionality available for generating the json file.</li>
@@ -129,7 +129,7 @@
 			your control to include it in the code generation process to make it easier for other users to bind your
 			control to fields in the database.</p>
         <p>If you have based your control on a type that binds to a pre-existing control, you might not need to do
-			anything extra. The <strong>QSelectMenu</strong> control is an example of this, which is simply a javascript
+			anything extra. The <strong>\QCubed\Project\Jqui\SelectMenu</strong> control is an example of this, which is simply a javascript
 			overlay on a list box. </p>
         <p>However, if your interface is a unique way of editing data, you will need to create a new class
 			called ${PLUGIN_CONTROL_CLASS}_CodeGenerator that extends AbstractControl_CodeGenerator (or more likely QControl_CodeGenerator)

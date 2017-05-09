@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 <style type="text/css">
 	table.simple_table td, table.simple_table th {
 		padding: 5px;
@@ -29,13 +29,13 @@
 </style>
 
 <div id="instructions">
-	<h1>Styling and Formatting QHtmlTable Column Values</h1>
+	<h1>Styling and Formatting \QCubed\Project\Control\Table Column Values</h1>
 	<h2>Post-processing Column Values</h2>
 	<p>Sometimes the value of the data for a particular column is not displayable, or you would like to further process
 	the value before displaying it. All QHtmlTableColumn types have the ability for you to specify the following:</p>
 	<ul>
 		<li><strong>Format</strong>: If the column returns a string, will apply the Format string as an
-			sprintf format string. If the column is a QDateTime type, it will apply it as a qFormat string.</li>
+			sprintf format string. If the column is a \QCubed\QDateTime type, it will apply it as a qFormat string.</li>
 		<li><strong>PostMethod</strong>: If the value of the column is an object, will call the given method
 		on the object, and the new value of the column will become the return value of the method.</li>
 		<li><strong>PostCallback</strong>: If given, the PostCallback function will be called with the column value
@@ -46,7 +46,7 @@
 		it will be converted to HTML and displayed correctly in a browser. However, if your column is already returning html,
 		you can turn off this processing by setting <strong>HtmlEntities</strong> to false.</p>
 	<h2>Styling</h2>
-	<p>There are a variety of ways to style a QHtmlTable:</p>
+	<p>There are a variety of ways to style a \QCubed\Project\Control\Table:</p>
 	<ul>
 		<li>Use <strong>AddCssClass()</strong> to add a class to the control, and use css to style the html table. Modern
 			css can now do most things that used to be done using row classes and javascript, including alternating
@@ -72,5 +72,5 @@
 	</div>
 <div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

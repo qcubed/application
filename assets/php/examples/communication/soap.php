@@ -16,7 +16,7 @@
 		<ul>
 		<li>Full, Automatic WSDL Generation</li>
 		<li>Supports parameters that are Pass By Reference</li>
-		<li>Supports <b>QDateTime</b>, arrays and other input/output parameters that
+		<li>Supports <b>\QCubed\QDateTime</b>, arrays and other input/output parameters that
 		are complex data structures</li>
 		<li>And of course, full support for code generated data objects</li>
 		</ul>
@@ -66,7 +66,7 @@
 		<b>GetDate(12, 25, 2007):</b>
 		<blockquote><div>
 			<?php _p($objClient->GetDate(12, 25, 2007)); ?>
-			<br/>(notice how the resulting QDateTime has been converted to a SOAP-compliant dateTime)
+			<br/>(notice how the resulting \QCubed\QDateTime has been converted to a SOAP-compliant dateTime)
 		</div></blockquote>
 
 		<b>GetPeople('Smith'):</b>

@@ -156,12 +156,18 @@ abstract class TableBase extends PaginatedControl
      * @param mixed $objNodes
      * @param int $intColumnIndex
      * @return Column\Node
+     * @throws Caller
      */
     public function createNodeColumn($strName, $objNodes, $intColumnIndex = -1)
     {
-        $objColumn = new Column\Node($strName, $objNodes);
-        $this->addColumnAt($intColumnIndex, $objColumn);
-        return $objColumn;
+        try {
+            $objColumn = new Column\Node($strName, $objNodes);
+            $this->addColumnAt($intColumnIndex, $objColumn);
+            return $objColumn;
+        } catch (Caller $e) {
+            $e->incrementOffset();
+            throw $e;
+        }
     }
 
     /**
@@ -173,12 +179,20 @@ abstract class TableBase extends PaginatedControl
      * @param mixed $mixParams extra parameters to pass to the closure callback.
      *
      * @return Column\QCallable
+     * @throws Caller
      */
     public function createCallableColumn($strName, $objCallable, $intColumnIndex = -1, $mixParams = null)
     {
-        $objColumn = new Column\QCallable($strName, $objCallable, $mixParams);
-        $this->addColumnAt($intColumnIndex, $objColumn);
-        return $objColumn;
+        try {
+
+            $objColumn = new Column\QCallable($strName, $objCallable, $mixParams);
+            $this->addColumnAt($intColumnIndex, $objColumn);
+            return $objColumn;
+        } catch (Caller $e) {
+            $e->incrementOffset();
+            throw $e;
+        }
+
     }
 
     /**

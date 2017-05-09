@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see AccordionBase
  * @was QAccordion
  */
-
 class Accordion extends Q\Jqui\AccordionBase
 {
 }

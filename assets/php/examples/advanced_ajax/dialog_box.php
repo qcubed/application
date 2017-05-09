@@ -2,8 +2,8 @@
 	require_once('../qcubed.inc.php');
 	require('CalculatorWidget.class.php');
 
-	// Define the Qform with all our Qcontrols
-	class ExamplesForm extends QForm {
+	// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+	class ExamplesForm extends \QCubed\Project\Control\FormBase {
 		// Local declarations of our Qcontrols
 		protected $dlgSimpleMessage;
 		protected $btnDisplaySimpleMessage;
@@ -27,9 +27,9 @@
 
 
 		// Initialize our Controls during the Form Creation process
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Define the Simple Message Dialog Box
-			$this->dlgSimpleMessage = new QDialog($this);
+			$this->dlgSimpleMessage = new \QCubed\Project\Jqui\Dialog($this);
 			$this->dlgSimpleMessage->Title = "Hello World!";
 			$this->dlgSimpleMessage->Text = '<p><em>Hello, world!</em></p><p>This is a standard, no-frills dialog box.</p><p>Notice how the contents of the dialog '.
 				'box can scroll, and notice how everything else in the application is grayed out.</p><p>Because we set <strong>MatteClickable</strong> to <strong>true</strong> ' .
@@ -38,45 +38,46 @@
 			$this->dlgSimpleMessage->AutoOpen = false;
 
 			// Make sure this Dialog Box is "hidden"
-			// Like any other QPanel or QControl, this can be toggled using the "Display" or the "Visible" property
+			// Like any other \QCubed\Control\Panel or QControl, this can be toggled using the "Display" or the "Visible" property
 			$this->dlgSimpleMessage->Display = false;
 
 			// The First "Display Simple Message" button will utilize an AJAX call to Show the Dialog Box
-			$this->btnDisplaySimpleMessage = new QButton($this);
-			$this->btnDisplaySimpleMessage->Text = QApplication::Translate('Display Simple Message QDialog');
-			$this->btnDisplaySimpleMessage->AddAction(new QClickEvent(), new QAjaxAction('btnDisplaySimpleMessage_Click'));
+			$this->btnDisplaySimpleMessage = new \QCubed\Project\Jqui\Button($this);
+			$this->btnDisplaySimpleMessage->Text = t('Display Simple Message \QCubed\Project\Jqui\Dialog');
+			$this->btnDisplaySimpleMessage->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnDisplaySimpleMessage_Click'));
 
 			// The Second "Display Simple Message" button will utilize Client Side-only JavaScripts to Show the Dialog Box
 			// (No postback/postajax is used)
-			$this->btnDisplaySimpleMessageJsOnly = new QButton($this);
-			$this->btnDisplaySimpleMessageJsOnly->Text = 'Display Simple Message QDialog (ClientSide Only)';
-			$this->btnDisplaySimpleMessageJsOnly->AddAction(new QClickEvent(), new QShowDialog($this->dlgSimpleMessage));
+			$this->btnDisplaySimpleMessageJsOnly = new \QCubed\Project\Jqui\Button($this);
+			$this->btnDisplaySimpleMessageJsOnly->Text = 'Display Simple Message \QCubed\Project\Jqui\Dialog (ClientSide Only)';
+			$this->btnDisplaySimpleMessageJsOnly->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ShowDialog($this->dlgSimpleMessage));
 
-			$this->pnlAnswer = new QPanel($this);
+			$this->pnlAnswer = new \QCubed\Control\Panel($this);
 			$this->pnlAnswer->Text = 'Hmmm';
 			
-			$this->btnDisplayYesNo = new QButton($this);
-			$this->btnDisplayYesNo->Text = QApplication::Translate('Do you love me?');
-			$this->btnDisplayYesNo->AddAction(new QClickEvent(), new QAjaxAction('showYesNoClick'));
+			$this->btnDisplayYesNo = new \QCubed\Project\Jqui\Button($this);
+			$this->btnDisplayYesNo->Text = t('Do you love me?');
+			$this->btnDisplayYesNo->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('showYesNoClick'));
 			
 			
 			// Define the CalculatorWidget example. passing in the Method Callback for whenever the Calculator is Closed
-			// This is  example uses QButton's instead of the JQuery UI buttons
-			$this->dlgCalculatorWidget = new CalculatorWidget('btnCalculator_Close', $this);
+			// This is  example uses \QCubed\Project\Jqui\Button's instead of the JQuery UI buttons
+			$this->dlgCalculatorWidget = new CalculatorWidget($this);
+			$this->dlgCalculatorWidget->setCloseCallback('btnCalculator_Close');
 			$this->dlgCalculatorWidget->Title = "Calculator Widget";
 			$this->dlgCalculatorWidget->AutoOpen = false;
 			$this->dlgCalculatorWidget->Resizable = false;
 			$this->dlgCalculatorWidget->Modal = false;
 
 			// Setup the Value Textbox and Button for this example
-			$this->txtValue = new QTextBox($this);
+			$this->txtValue = new \QCubed\Project\Control\TextBox($this);
 
-			$this->btnCalculator = new QButton($this);
+			$this->btnCalculator = new \QCubed\Project\Jqui\Button($this);
 			$this->btnCalculator->Text = 'Show Calculator Widget';
-			$this->btnCalculator->AddAction(new QClickEvent(), new QAjaxAction('btnCalculator_Click'));
+			$this->btnCalculator->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnCalculator_Click'));
 
 			// Validate on JQuery UI buttons
-			$this->dlgValidation = new QDialog($this);
+			$this->dlgValidation = new \QCubed\Project\Jqui\Dialog($this);
 			$this->dlgValidation->AddButton ('OK', 'ok', true, true); // specify that this button causes validation and is the default button
 			$this->dlgValidation->AddButton ('Cancel', 'cancel');
 
@@ -85,28 +86,28 @@
 			$this->dlgValidation->AddButton ('Confirm', 'confirm', true, false, 'Are you sure?', array('class'=>'ui-button-left'));
 			$this->dlgValidation->Width = 400; // Need extra room for buttons
 
-			$this->dlgValidation->AddAction (new QDialog_ButtonEvent(), new QAjaxAction('dlgValidate_Click'));
+			$this->dlgValidation->AddAction (new \QCubed\Event\DialogButton(), new \QCubed\Action\Ajax('dlgValidate_Click'));
 			$this->dlgValidation->Title = 'Enter a number';
 
 			// Set up a field to be auto rendered, so no template is needed
 			$this->dlgValidation->AutoRenderChildren = true;
-			$this->txtFloat = new QFloatTextBox($this->dlgValidation);
+			$this->txtFloat = new \QCubed\Control\FloatTextBox($this->dlgValidation);
 			$this->txtFloat->Placeholder = 'Float only';
 			$this->txtFloat->PreferredRenderMethod = 'RenderWithError'; // Tell the panel to use this method when rendering
 
-			$this->btnValidation = new QButton($this);
+			$this->btnValidation = new \QCubed\Project\Jqui\Button($this);
 			$this->btnValidation->Text = 'Show Validation Example';
-			$this->btnValidation->AddAction(new QClickEvent(), new QShowDialog($this->dlgValidation));
+			$this->btnValidation->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ShowDialog($this->dlgValidation));
 
 			/*** Alert examples  ***/
 
-			$this->btnErrorMessage = new QButton($this);
+			$this->btnErrorMessage = new \QCubed\Project\Jqui\Button($this);
 			$this->btnErrorMessage->Text = 'Show Error';
-			$this->btnErrorMessage->AddAction(new QClickEvent(), new QAjaxAction('btnErrorMessage_Click'));
+			$this->btnErrorMessage->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnErrorMessage_Click'));
 
-			$this->btnInfoMessage = new QButton($this);
+			$this->btnInfoMessage = new \QCubed\Project\Jqui\Button($this);
 			$this->btnInfoMessage->Text = 'Get Info';
-			$this->btnInfoMessage->AddAction(new QClickEvent(), new QAjaxAction('btnGetInfo_Click'));
+			$this->btnInfoMessage->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnGetInfo_Click'));
 		}
 
 		protected function btnDisplaySimpleMessage_Click($strFormId, $strControlId, $strParameter) {
@@ -154,9 +155,9 @@
 			 * With one button, no close box will be displayed, but the single button will close the dialog.
 			 */
 
-			$dlg = QDialog::Alert("Don't do that!");
+			$dlg = \QCubed\Project\Jqui\Dialog::Alert("Don't do that!");
 			$dlg->Title = 'Error'; // Optional title for the alert.
-			$dlg->DialogState = QDialog::StateError; // Optional error styling.
+			$dlg->DialogState = \QCubed\Project\Jqui\Dialog::STATE_ERROR; // Optional error styling.
 		}
 
 		/**
@@ -168,10 +169,10 @@
 			 * With two or more buttons, we must detect a button click and close the dialog if a button is clicked.
 			 */
 
-			$dlg = QDialog::Alert("Which do you want?", ['This', 'That']);
-			$dlg->DialogState = QDialog::StateHighlight;
+			$dlg = \QCubed\Project\Jqui\Dialog::Alert("Which do you want?", ['This', 'That']);
+			$dlg->DialogState = \QCubed\Project\Jqui\Dialog::STATE_HIGHLIGHT;
 			$dlg->Title = 'Info';
-			$dlg->AddAction(new QDialog_ButtonEvent(), new QAjaxAction('infoClick')); // Add the action to detect a button click.
+			$dlg->AddAction(new \QCubed\Event\DialogButton(), new \QCubed\Action\Ajax('infoClick')); // Add the action to detect a button click.
 		}
 
 		/**
@@ -180,7 +181,7 @@
 		protected function infoClick($strFormId, $strControlId, $strParameter) {
 			$dlg = $this->GetControl($strControlId);	// get the dialog object from the form.
 			$dlg->Close(); // close the dialog. Note that you could detect which button was clicked and only close on some of the buttons.
-			QDialog::Alert($strParameter . ' was clicked.', ['OK']);
+			\QCubed\Project\Jqui\Dialog::Alert($strParameter . ' was clicked.', ['OK']);
 		}
 
 		/**
@@ -189,12 +190,12 @@
 		 */
 		protected function showYesNoClick() {
 
-			$dlgYesNo = new QDialog();	// Note here there is no "$this" as the first parameter. By leaving this off, you
+			$dlgYesNo = new \QCubed\Project\Jqui\Dialog();	// Note here there is no "$this" as the first parameter. By leaving this off, you
 										// are telling QCubed to manage the dialog.
-			$dlgYesNo->Text = QApplication::Translate("Do you like QCubed?");
+			$dlgYesNo->Text = t("Do you like QCubed?");
 			$dlgYesNo->AddButton ('Yes');
 			$dlgYesNo->AddButton ('No');
-			$dlgYesNo->AddAction (new QDialog_ButtonEvent(), new QAjaxAction ('dlgYesNo_Button'));
+			$dlgYesNo->AddAction (new \QCubed\Event\DialogButton(), new \QCubed\Action\Ajax ('dlgYesNo_Button'));
 			$dlgYesNo->Resizable = false;
 			$dlgYesNo->HasCloseButton = false;
 		}
@@ -202,9 +203,9 @@
 		protected function dlgYesNo_Button($strFormId, $strControlId, $strParameter) {
 			$dlg = $this->GetControl($strControlId);	// get the dialog object from the form.
 			if ($strParameter == 'Yes') {
-				$this->pnlAnswer->Text = QApplication::Translate('They love me');
+				$this->pnlAnswer->Text = t('They love me');
 			} else {
-				$this->pnlAnswer->Text = QApplication::Translate('They love me not');
+				$this->pnlAnswer->Text = t('They love me not');
 			}
 			$dlg->Close();
 		}

@@ -1,15 +1,15 @@
 <?php
 	require_once('../qcubed.inc.php');
 	
-	class ExampleForm extends QForm {
+	class ExampleForm extends \QCubed\Project\Control\FormBase {
 		// Declare the DataGrid
 		protected $dtgButtons;
                 public $arRows=array();
                 protected $intHitCnt;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 			// Define the DataGrid
-			$this->dtgButtons = new QDataGrid($this);
+			$this->dtgButtons = new \QCubed\Project\Control\DataGrid($this);
 
                         $this->dtgButtons->UseAjax=true;
                         $this->intHitCnt=0;
@@ -35,10 +35,10 @@
 			$objControlId = "editButton" . $row . "lowPriority";
                         $objControl = $this->GetControl($objControlId);
 			if (!$objControl) {
-				$objControl = new QJqButton($this->dtgButtons, $objControlId);
+				$objControl = new \QCubed\Project\Jqui\Button($this->dtgButtons, $objControlId);
                                 $objControl->Text = true;
 
-				$objControl->AddAction(new QClickEvent(), new QAjaxAction("renderLowPriorityButton_Click"));
+				$objControl->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax("renderLowPriorityButton_Click"));
 			}
                         $objControl->Label = "update & low priority alert " . $this->intHitCnt;
 
@@ -51,10 +51,10 @@
 			$objControlId = "editButton" . $row;
                         $objControl = $this->GetControl($objControlId);
 			if (!$objControl) {
-				$objControl = new QJqButton($this->dtgButtons, $objControlId);
+				$objControl = new \QCubed\Project\Jqui\Button($this->dtgButtons, $objControlId);
                                 $objControl->Text = true;
 
-				$objControl->AddAction(new QClickEvent(), new QAjaxAction("renderButton_Click"));
+				$objControl->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax("renderButton_Click"));
 			}
                         $objControl->Label = "update & alert " . $this->intHitCnt;
 
@@ -66,25 +66,25 @@
 		public function renderButton_Click($strFormId, $strControlId, $strParameter) {
 			$this->intHitCnt++;
 			$this->dtgButtons->MarkAsModified();
-			QApplication::ExecuteJsFunction('alert', 'alert 2: a standard priority script');
-			QApplication::ExecuteJsFunction('alert', 'alert 1: a standard priority script');
-			QApplication::ExecuteJsFunction('alert', 'Just updated the datagrid: the javascript for adding the css class to the buttons is not executed yet!');
-			QApplication::ExecuteSelectorFunction(".ui-button", 'addClass', "ui-state-error");
+			\QCubed\Project\Application::ExecuteJsFunction('alert', 'alert 2: a standard priority script');
+			\QCubed\Project\Application::ExecuteJsFunction('alert', 'alert 1: a standard priority script');
+			\QCubed\Project\Application::ExecuteJsFunction('alert', 'Just updated the datagrid: the javascript for adding the css class to the buttons is not executed yet!');
+			\QCubed\Project\Application::ExecuteSelectorFunction(".ui-button", 'addClass', "ui-state-error");
 		}
 
         public function renderLowPriorityButton_Click($strFormId, $strControlId, $strParameter) {
 			$this->intHitCnt++;
 			$this->dtgButtons->MarkAsModified();
 
-			QApplication::ExecuteJsFunction('alert', 'alert 2: a low priority script',  QJsPriority::Low);
-			QApplication::ExecuteJsFunction('alert', 'alert 1: a low priority script',  QJsPriority::Low);
-			QApplication::ExecuteJsFunction('alert', 'Just updated the datagrid: --> the javascript for adding the css class to the buttons is executed first!',  QJsPriority::Low);
-			QApplication::ExecuteSelectorFunction(".ui-button", 'addClass', "ui-state-error");
+			\QCubed\Project\Application::ExecuteJsFunction('alert', 'alert 2: a low priority script',  \QCubed\ApplicationBase::PRIORITY_LOW);
+			\QCubed\Project\Application::ExecuteJsFunction('alert', 'alert 1: a low priority script',  \QCubed\ApplicationBase::PRIORITY_LOW);
+			\QCubed\Project\Application::ExecuteJsFunction('alert', 'Just updated the datagrid: --> the javascript for adding the css class to the buttons is executed first!',  \QCubed\ApplicationBase::PRIORITY_LOW);
+			\QCubed\Project\Application::ExecuteSelectorFunction(".ui-button", 'addClass', "ui-state-error");
 
-/*			QApplication::ExecuteJavaScript("alert('alert 3: a low priority script')",  QJsPriority::Low);
-			QApplication::ExecuteJavaScript("alert('alert 1: a low priority script')", QJsPriority::Low);
-			QApplication::ExecuteJavaScript("alert('Just updated the datagrid: --> the javascript for adding the css class to the buttons is executed first!')",  QJsPriority::Low);
-			QApplication::ExecuteJavaScript('$j(".ui-button").addClass("ui-state-error")'); //change the button color: this is executed with standard priority
+/*			\QCubed\Project\Application::ExecuteJavaScript("alert('alert 3: a low priority script')",  \QCubed\ApplicationBase::PRIORITY_LOW);
+			\QCubed\Project\Application::ExecuteJavaScript("alert('alert 1: a low priority script')", \QCubed\ApplicationBase::PRIORITY_LOW);
+			\QCubed\Project\Application::ExecuteJavaScript("alert('Just updated the datagrid: --> the javascript for adding the css class to the buttons is executed first!')",  \QCubed\ApplicationBase::PRIORITY_LOW);
+			\QCubed\Project\Application::ExecuteJavaScript('$j(".ui-button").addClass("ui-state-error")'); //change the button color: this is executed with standard priority
 */
 		}
 

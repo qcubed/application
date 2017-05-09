@@ -24,7 +24,7 @@ namespace QCubed\Jqui\Event;
  * as reference.
 <?= jq_indent($event->description, 0, true); ?>
  *
- * @was <?= $event->oldEventClassName ?>
+ * @was <?= $event->oldEventClassName ?>Event
  */
 class <?= $event->eventClassName ?> extends EventBase
 {

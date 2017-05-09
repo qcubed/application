@@ -29,7 +29,8 @@ namespace QCubed\Jqui\Event;
  * 	* item Type: jQuery The focused item.
  * 
  *
- * @was QSelectmenu_Focus */
+ * @was QSelectMenu_FocusEvent
+ */
 class SelectMenuFocus extends EventBase
 {
     const EVENT_NAME = 'selectmenufocus';

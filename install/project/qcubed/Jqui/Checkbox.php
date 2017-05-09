@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see CheckboxBase
  * @was QJqCheckBox
  */
-
 class Checkbox extends Q\Jqui\CheckboxBase
 {
 }

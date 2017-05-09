@@ -45,7 +45,8 @@ namespace QCubed\Jqui\Event;
  * element being used as a placeholder.
  * 
  *
- * @was QSortable_Out */
+ * @was QSortable_OutEvent
+ */
 class SortableOut extends EventBase
 {
     const EVENT_NAME = 'sortout';

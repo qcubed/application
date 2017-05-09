@@ -12,7 +12,7 @@
 		$strFile = Examples::GetPluginFile();
 		$strUrl .= '/' . $strFile . '/' . $strFile;
 	} else {
-		$strUrl .= '/' . basename(QApplication::$ScriptName);
+		$strUrl .= '/' . basename(\QCubed\Project\Application::instance()->context()->scriptName());
 	}
 ?>
 <?php	if(!isset($mainPage)) { ?>

@@ -45,7 +45,8 @@ namespace QCubed\Jqui\Event;
  * jQuery.ajax to request the content.
  * 
  *
- * @was QTabs_BeforeLoad */
+ * @was QTabs_BeforeLoadEvent
+ */
 class TabsBeforeLoad extends EventBase
 {
     const EVENT_NAME = 'tabsbeforeload';

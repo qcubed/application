@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QButton_Create */
+ * @was QJqButton_CreateEvent
+ */
 class ButtonCreate extends EventBase
 {
     const EVENT_NAME = 'buttoncreate';

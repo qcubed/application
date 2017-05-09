@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see ResizableBase
  * @was QResizable
  */
-
 class Resizable extends Q\Jqui\ResizableBase
 {
 }

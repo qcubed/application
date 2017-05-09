@@ -43,7 +43,8 @@ namespace QCubed\Jqui\Event;
  * element being used as a placeholder.
  * 
  *
- * @was QSortable_Change */
+ * @was QSortable_ChangeEvent
+ */
 class SortableChange extends EventBase
 {
     const EVENT_NAME = 'sortchange';

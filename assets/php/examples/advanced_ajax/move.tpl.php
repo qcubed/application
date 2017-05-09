@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Making a Control Moveable</h1>
@@ -20,9 +20,9 @@
 		handle".  And in this case, the "move handle" is targeted to move itself as well as the
 		window it is connected to.</p>
 
-	<p>In this example, we define a simple <strong>QPanel</strong> and make it Moveable. 
-		We also have a <strong>QTextBox</strong> paired with a move handle. 
-		If we just made the QTextBox movable, we would no longer be able to click
+	<p>In this example, we define a simple <strong>\QCubed\Control\Panel</strong> and make it Moveable. 
+		We also have a <strong>\QCubed\Project\Control\TextBox</strong> paired with a move handle. 
+		If we just made the \QCubed\Project\Control\TextBox movable, we would no longer be able to click
 		in it and edit the text in the box.</p>
 
 	<p>When you make a control Moveable, you can then access the <strong>DragObj</strong> attribute of
@@ -34,5 +34,5 @@
 	<?php $this->pnlParent->Render(); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

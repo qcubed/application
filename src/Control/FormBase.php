@@ -119,9 +119,6 @@ abstract class FormBase extends ObjectBase
     protected $strCustomAttributeArray = null;
 
 
-    ///////////////////////////
-    // Form Preferences
-    ///////////////////////////
     /**
      * @var null|string The key to encrypt the formstate
      *              when saving and retrieving from the chosen FormState handler
@@ -136,10 +133,6 @@ abstract class FormBase extends ObjectBase
      */
     public static $FormStateHandler = 'QFormStateHandler';
 
-
-    /////////////////////////
-    // Helpers for ControlId Generation
-    /////////////////////////
 
     /**
      * Generates Control ID used to keep track of those QControls whose ID was not explicitly set.
@@ -1186,7 +1179,7 @@ abstract class FormBase extends ObjectBase
             }
 
             // Evaluate the new template
-            ob_start('__QForm_EvaluateTemplate_ObHandler');
+            ob_start('\\QCubed\\Control\\FormBase::EvaluateTemplate_ObHandler');
             require($strTemplate);
             $strTemplateEvaluated = ob_get_contents();
             ob_end_clean();
@@ -2085,10 +2078,15 @@ abstract class FormBase extends ObjectBase
         }
     }
 
+    /**
+     * A helper function for buffering templates
+     *
+     * @param string $strBuffer
+     * @return string
+     */
+    public static function EvaluateTemplate_ObHandler($strBuffer)
+    {
+        return $strBuffer;
+    }
 
-}
-
-function __QForm_EvaluateTemplate_ObHandler($strBuffer)
-{
-    return $strBuffer;
 }

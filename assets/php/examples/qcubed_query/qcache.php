@@ -1,21 +1,21 @@
 <?php
 	require_once('../qcubed.inc.php');
 
-	class ExamplesForm extends QForm {
+	class ExamplesForm extends \QCubed\Project\Control\FormBase {
 		protected $lblMessage;
 		protected $btnReloadPage;
 		protected $btnClearCache;
 
-		protected function Form_Create() {
-			$this->lblMessage = new QLabel($this);
+		protected function formCreate() {
+			$this->lblMessage = new \QCubed\Control\Label($this);
 
-			$this->btnReloadPage = new QButton($this);
+			$this->btnReloadPage = new \QCubed\Project\Jqui\Button($this);
 			$this->btnReloadPage->Text = 'Reload this page';
-			$this->btnReloadPage->AddAction(new QClickEvent(), new QJavaScriptAction('document.location.reload();'));
+			$this->btnReloadPage->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\JavaScript('document.location.reload();'));
 			
-			$this->btnClearCache = new QButton($this);
+			$this->btnClearCache = new \QCubed\Project\Jqui\Button($this);
 			$this->btnClearCache->Text = 'Clear the cache';
-			$this->btnClearCache->AddAction(new QClickEvent(), new QAjaxAction('btnClearCache_Click'));
+			$this->btnClearCache->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnClearCache_Click'));
 		}
 		
 		protected function btnClearCache_Click($strFormId, $strControlId, $strParameter) {

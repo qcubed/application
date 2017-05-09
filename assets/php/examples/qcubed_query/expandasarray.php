@@ -21,7 +21,7 @@
 	<p>Well, no more pain. <strong>ExpandAsArray</strong> to your rescue. Note that this
 	is a somewhat advanced topic - so if you're not comfortable with the
 	concepts of <a href="../more_codegen/early_bind.php">QCubed Early Binding</a> and
-	<a href="qqclause.php">QQ::Clauses</a>, read up on those first. </p>
+	<a href="qqclause.php">\QCubed\Query\QQ::Clauses</a>, read up on those first. </p>
 
 	<p>We'll issue one mega-powerful query that will allow you to get BOTH the
 	<strong>Address</strong> and the <strong>Project</strong> data (with the related info on
@@ -34,10 +34,10 @@
 
 	<p>Here's that magical expression:</p>
 
-	<pre><code>$arrPersons = Person::LoadAll(QQ::Clause(
-QQ::ExpandAsArray(QQN::Person()->Address),
-QQ::ExpandAsArray(QQN::Person()->ProjectAsManager),
-QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
+	<pre><code>$arrPersons = Person::LoadAll(\QCubed\Query\QQ::Clause(
+\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->Address),
+\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager),
+\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
 ));</code></pre>
 
 	<p>The resulting <strong>$arrPersons</strong> will be an array of objects of type
@@ -66,13 +66,13 @@ QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
 <div id="demoZone">
 	<h2>Projects and Addresses for each Person</h2>
 <?php
-	QApplication::$Database[1]->EnableProfiling();
+	\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
 
 	$people = Person::LoadAll(
-		QQ::Clause(
-			QQ::ExpandAsArray(QQN::Person()->Address),
-			QQ::ExpandAsArray(QQN::Person()->ProjectAsManager),
-			QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->Address),
+			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager),
+			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
 		)
 	);
 
@@ -109,7 +109,7 @@ QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
 		echo "<br />";
 	}
 
-	QApplication::$Database[1]->OutputProfiling();
+	\QCubed\Database\Service::getDatabase(1)->OutputProfiling();
 ?>
 </div>
 

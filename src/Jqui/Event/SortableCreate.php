@@ -28,7 +28,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QSortable_Create */
+ * @was QSortable_CreateEvent
+ */
 class SortableCreate extends EventBase
 {
     const EVENT_NAME = 'sortcreate';

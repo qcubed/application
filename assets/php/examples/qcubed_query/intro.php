@@ -9,7 +9,7 @@
 		
 		The framework offers multiple ways for performing your own custom SQL queries, from completely free
 		form queries using just the database adapter, itself, to completely structured object-oriented queries
-		using <strong>QCubed Query</strong>, or <strong>QQ</strong> for short.
+		using <strong>QCubed Query</strong>, or <strong>\QCubed\Query\QQ</strong> for short.
 
 		In general, there are three main ways to perform queries, with pros and cons for each:
 		<ul><li><p><strong>Ad Hoc Queries</strong>: Completely custom, ad hoc queries can be executed by accessing the
@@ -28,9 +28,9 @@
 		
 		<li><p><strong>QCubed Query</strong>: This is a fully structure, object-oriented approach to performing SQL SELECT queries,
 		without needing to write a single line of SQL code.  Utilizing code generated code and per-table-specific QCubed Query
-		nodes, the <strong>QQ</strong> API offers almost the full set of functionality that free form <strong>Custom Load Queries</strong> provide,
+		nodes, the <strong>\QCubed\Query\QQ</strong> API offers almost the full set of functionality that free form <strong>Custom Load Queries</strong> provide,
 		but with the added advantage that whenever you make changes to your data model and re-code generate, you do not have
-		to worry about updating any hard-coded SQL statements in your code.  Of course, the drawback is that <strong>QQ</strong> is
+		to worry about updating any hard-coded SQL statements in your code.  Of course, the drawback is that <strong>\QCubed\Query\QQ</strong> is
 		a new methodology for performing queries, so there will be a learning curve.</p></li>
 		</ul>
 		
@@ -71,11 +71,11 @@
 		ORDER BY
 			project.name";
 
-	// Call on QApplication to get to the instantiated/active Database Adapter that you want to query
+	// Call on \QCubed\Project\Application to get to the instantiated/active Database Adapter that you want to query
 	// Be sure to specify the database index (as you defined in configuration.inc.php)
 	// For purposes of this example, we're assuming that the "Examples" database connection string is defined
 	// in the DB_CONNECTION_1 constant.
-	$objDatabase = QApplication::$Database[1];
+	$objDatabase = \QCubed\Database\Service::getDatabase(1);
 
 	// Perform the Query
 	$objDbResult = $objDatabase->Query($strQuery);
@@ -121,14 +121,14 @@
 	<h2>QCubed Query: Select all Projects which have a Budget over $5000 and under $10000, ordered by Descending Budget</h2>
 <?php
 	// Perform the Query using Project::QueryArray, which will return an array of Project objects
-	// given a QQ Condition, and any optional QQ Clauses.
+	// given a \QCubed\Query\QQ Condition, and any optional \QCubed\Query\QQ Clauses.
 	$objProjectArray = Project::QueryArray(
-		QQ::AndCondition(
-			QQ::GreaterThan(QQN::Project()->Budget, 5000),
-			QQ::LessThan(QQN::Project()->Budget, 10000)
+		\QCubed\Query\QQ::AndCondition(
+			\QCubed\Query\QQ::GreaterThan(QQN::Project()->Budget, 5000),
+			\QCubed\Query\QQ::LessThan(QQN::Project()->Budget, 10000)
 		),
-		QQ::Clause(
-			QQ::OrderBy(QQN::Project()->Budget, false)
+		\QCubed\Query\QQ::Clause(
+			\QCubed\Query\QQ::OrderBy(QQN::Project()->Budget, false)
 		)
 	);
 

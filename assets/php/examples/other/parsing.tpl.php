@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Parsing using QLexer and QRegex</h1>
@@ -8,7 +8,7 @@
 		is a QCubed component that may save you some time. QLexer allows you to
 		create a simple parser using regular expressions.</p>
 
-	<p>In this example, you will see a multiline <strong>QTextBox</strong>
+	<p>In this example, you will see a multiline <strong>\QCubed\Project\Control\TextBox</strong>
 		that accepts user input in the <a
 			href="http://en.wikipedia.org/wiki/BBCode">BBCode format</a> - the
 		format that's frequently used on bulletin boards to prevent script
@@ -74,5 +74,5 @@
 		<?php $this->lblResultFormatted->Render(); ?></p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

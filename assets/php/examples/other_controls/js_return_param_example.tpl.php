@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 		<h1>jQuery Controls: Adding Actions</h1>
@@ -10,35 +10,35 @@
 		
 		<p>In the <a href="jq_example.php">previous example</a>, you saw the breadth of these controls; now let's dive in and see how to use them.</p>
 		
-		<p>These widgets are still QCubed controls - for example, the fancy-looking <b>QJqButton</b> is still 
-		a <b>QButton</b>, and you can easily attach event handlers to it using <b>AddAction()</b>. The following examples show possibilities to post 
+		<p>These widgets are still QCubed controls - for example, the fancy-looking <b>\QCubed\Project\Jqui\Button</b> is still 
+		a <b>\QCubed\Project\Jqui\Button</b>, and you can easily attach event handlers to it using <b>AddAction()</b>. The following examples show possibilities to post 
 		data back to the server.</p>
 
 		<p>There are three ways to return JavaScript objects / arrays to the server side on Ajax/Server actions:</p>
 		<ol>
-			<li>Use a <b>QJsClosure</b> as an <b>ActionParameter</b>: pass a string containing the JavaScript to 
-				return an object/array to the constructor of <b>QJsClosure</b>. Note that a <b>QJsClosure</b> actually creates a function - so a return statement 
+			<li>Use a <b>\QCubed\Js\Closure</b> as an <b>ActionParameter</b>: pass a string containing the JavaScript to 
+				return an object/array to the constructor of <b>\QCubed\Js\Closure</b>. Note that a <b>\QCubed\Js\Closure</b> actually creates a function - so a return statement 
 				should be included! For example:
 				 <div style="padding-left: 50px">
-					<code>$objControl->ActionParameter = new QJsClosure("return this.id;");</code>
+					<code>$objControl->ActionParameter = new \QCubed\Js\Closure("return this.id;");</code>
 				</div>
 			</li>
-			<li style="margin-top: 10px; margin-bottom: 10px">Pass the string defining the JavaScript object to QAjaxAction, QServerAction, QAjaxControlAction or 
-				QServerControlAction as the last parameter. For example: 
+			<li style="margin-top: 10px; margin-bottom: 10px">Pass the string defining the JavaScript object to \QCubed\Action\Ajax, \QCubed\Action\Server, \QCubed\Action\AjaxControl or 
+				\QCubed\Action\ServerControl as the last parameter. For example: 
 				 <div style="padding-left: 50px">
 					<code>
 				$strJsParam = '{<br>
 					&nbsp;&nbsp;&nbsp;&nbsp;"width": $j("#' . $this->Resizable->ControlId . '").width(), <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;"height": $j("#' . $this->Resizable->ControlId . '").height() <br>
 				}';<br>
-				$objControl->AddAction(new QResizable_StopEvent(), new QAjaxAction("onResize", "default", null, $strJsParam));	<br>
+				$objControl->AddAction(new \QCubed\Jqui\Event\ResizableStop(), new \QCubed\Action\Ajax("onResize", "default", null, $strJsParam));	<br>
 					</code>
 				</div>
 			</li>
-			<li>Create a custom event derived from QEvent that has a constant property called <b>JsReturnParam</b>, e.g.		    
-			 <pre><code>class MyQSlider_ChangeEvent extends QEvent {<br>
-	const EventName = 'slidechange';<br>
-	const JsReturnParam = 'arguments[1].value';<br>
+			<li>Create a custom event derived from \QCubed\Event\EventBase that has a constant property called <b>JsReturnParam</b>, e.g.		    
+			 <pre><code>class MyQSlider_ChangeEvent extends \QCubed\Event\EventBase {<br>
+	const EVENT_NAME = 'slidechange';<br>
+	const JS_RETURN_PARAM = 'arguments[1].value';<br>
 }</code></pre>
 			</li>
 		</ol>	
@@ -100,5 +100,5 @@
 	</div>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

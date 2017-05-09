@@ -45,7 +45,8 @@ namespace QCubed\Jqui\Event;
  * positioned. Useful for custom resizing logic.
  * 
  *
- * @was QResizable_Resize */
+ * @was QResizable_ResizeEvent
+ */
 class ResizableResize extends EventBase
 {
     const EVENT_NAME = 'resize';

@@ -1,13 +1,13 @@
 <?php require('../includes/header.inc.php'); ?>
-	<?php $this->RenderBegin(); ?>
+	<?php $this->renderBegin(); ?>
 
 	<div id="instructions">
 		<h1>AJAX Calculator</h1>
 
-		<p>To show the ease of Ajax in a slightly more complex QForm, we take our <strong>Calculator Example
+		<p>To show the ease of Ajax in a slightly more complex \QCubed\Project\Control\FormBase, we take our <strong>Calculator Example
 		with Validation</strong> from before... and we only change <em>one word</em>.</p>
 		
-		<p>We change the <strong>QServerAction</strong> call to a <strong>QAjaxAction</strong> call, and now, we've
+		<p>We change the <strong>\QCubed\Action\Server</strong> call to a <strong>\QCubed\Action\Ajax</strong> call, and now, we've
 		created an Ajax-based calculator.  Note that even things like validation messages, etc.,
 		will appear via Ajax and without a page refresh.</p>
 	</div>
@@ -24,5 +24,5 @@
 		<?php $this->lblResult->Render(); ?>
 	</div>
 
-	<?php $this->RenderEnd(); ?>
+	<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

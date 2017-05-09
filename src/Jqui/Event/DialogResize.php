@@ -34,7 +34,8 @@ namespace QCubed\Jqui\Event;
  * 	* size Type: Object The current size of the dialog.
  * 
  *
- * @was QDialog_Resize */
+ * @was QDialog_ResizeEvent
+ */
 class DialogResize extends EventBase
 {
     const EVENT_NAME = 'dialogresize';

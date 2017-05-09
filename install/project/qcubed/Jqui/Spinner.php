@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see SpinnerBase
  * @was QSpinner
  */
-
 class Spinner extends Q\Jqui\SpinnerBase
 {
 }

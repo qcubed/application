@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see SliderBase
  * @was QSlider
  */
-
 class Slider extends Q\Jqui\SliderBase
 {
 }

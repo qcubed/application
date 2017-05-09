@@ -43,7 +43,7 @@
 	// Enable Profiling (we're assuming the Examples Site Database is at index 1)
 	// NOTE: Profiling should only be enabled when you are actively wanting to profile a specific PHP script.
 	// Because of SIGNIFICANT performance degradation, it should otherwise always be off.
-	QApplication::$Database[1]->EnableProfiling();
+	\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
 
 	// Load the Project array
 	// Note how even though we make two calls to ManagerPerson PER project, only ONE call to
@@ -57,7 +57,7 @@
 	}
 	_p('</ul>', false);
 	// Output Profiling Data
-	QApplication::$Database[1]->OutputProfiling();
+	\QCubed\Database\Service::getDatabase(1)->OutputProfiling();
 ?>
 </div>
 

@@ -14,7 +14,7 @@ use QCubed\Project\Control\ControlBase as QControl;
 /**
  * Class HideDialog
  *
- * Hiding a JQuery UI Dialog (QDialog)
+ * Hiding a JQuery UI Dialog (Dialog)
  *
  * @was QHideDialog
  * @package QCubed\Action

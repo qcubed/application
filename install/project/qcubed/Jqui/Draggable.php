@@ -14,7 +14,6 @@ use QCubed as Q;
  * @see DraggableBase
  * @was QDraggable
  */
-
 class Draggable extends Q\Jqui\DraggableBase
 {
 }

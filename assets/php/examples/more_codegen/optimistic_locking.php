@@ -47,7 +47,7 @@
 
 <div id="demoZone">
 	<h2>Object Save and Double Saves on the PersonWithLock Object</h2>
-	<form method="post" action="<?php _p(QApplication::$ScriptName); ?>">
+	<form method="post" action="<?php _p(\QCubed\Project\Application::instance()->context()->scriptName()); ?>">
 		<p>Saving a Single Object will perform the save normally<br />
 		<input type="submit" id="single" name="single" value="Save 1 Object"/></p>
 
@@ -67,9 +67,9 @@
 	// Note: on most web applications, because Optimistic Locking are more application user-
 	// level constraints instead of systematic ones, this delay is inherit with the web
 	// application paradigm.  The following delay is just to simulate that paradigm.
-	$dttNow = new QDateTime(QDateTime::Now);
-	while ($objPerson1->SysTimestamp == $dttNow->qFormat(QDateTime::FormatIso)) {
-		$dttNow = new QDateTime(QDateTime::Now);
+	$dttNow = new \QCubed\QDateTime(\QCubed\QDateTime::NOW);
+	while ($objPerson1->SysTimestamp == $dttNow->qFormat(\QCubed\QDateTime::FORMAT_ISO)) {
+		$dttNow = new \QCubed\QDateTime(\QCubed\QDateTime::NOW);
 	}
 
 	// Make Changes to the Object so that the Save Will Update Something
@@ -100,7 +100,7 @@
 				_p('Person Id #' . $objPerson2->Id . ' saved.  Name is now ' . $objPerson2->FirstName);
 				_p('.<br/>', false);
 			} catch (QOptimisticLockingException $ex) {
-				QApplication::DisplayAlert('The optimistic locking exception was caught: ' . $ex->getMessage());
+				\QCubed\Project\Application::DisplayAlert('The optimistic locking exception was caught: ' . $ex->getMessage());
 			}
 			break;
 

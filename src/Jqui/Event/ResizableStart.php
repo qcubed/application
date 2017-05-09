@@ -42,7 +42,8 @@ namespace QCubed\Jqui\Event;
  * }
  * 
  *
- * @was QResizable_Start */
+ * @was QResizable_StartEvent
+ */
 class ResizableStart extends EventBase
 {
     const EVENT_NAME = 'resizestart';

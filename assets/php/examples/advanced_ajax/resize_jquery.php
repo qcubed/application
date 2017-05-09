@@ -2,17 +2,17 @@
 
 require_once('../qcubed.inc.php');
 
-// Define the Qform with all our Qcontrols
-class ExamplesForm extends QForm {
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExamplesForm extends \QCubed\Project\Control\FormBase {
 
 	// Local declarations of our QPanels to Resize
 	protected $pnlLeftTop;
 	protected $txtTextbox;
 
 	// Initialize our Controls during the Form Creation process
-	protected function Form_Create() {
+	protected function formCreate() {
 		// Define the main panel that will resize.
-		$this->pnlLeftTop = new QPanel($this);
+		$this->pnlLeftTop = new \QCubed\Control\Panel($this);
 		$this->pnlLeftTop->Width = 400;
 		$this->pnlLeftTop->Height = 200;
 
@@ -26,8 +26,8 @@ class ExamplesForm extends QForm {
 		$this->pnlLeftTop->ResizeObj->Animate = true;
 		$this->pnlLeftTop->ResizeObj->Helper = 'ui-resizable-helper';
 
-		$this->txtTextbox = new QTextBox($this);
-		$this->txtTextbox->TextMode = QTextMode::MultiLine;
+		$this->txtTextbox = new \QCubed\Project\Control\TextBox($this);
+		$this->txtTextbox->TextMode = \QCubed\Control\TextBoxBase::MULTI_LINE;
 		$this->txtTextbox->Width = 400;
 		$this->txtTextbox->Height = 200;
 		$this->txtTextbox->Resizable = true;

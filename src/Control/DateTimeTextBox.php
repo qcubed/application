@@ -12,18 +12,24 @@ namespace QCubed\Control;
 require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
+use QCubed\Exception\Caller;
+use QCubed\Exception\InvalidCast;
+use QCubed\Project\Control\TextBox;
+use QCubed\QDateTime;
+use QCubed\Type;
+
 /**
  * Class DateTimeTextBox
  *
- * @property \QCubed\QDateTime $Maximum
- * @property \QCubed\QDateTime $Minimum
+ * @property QDateTime $Maximum
+ * @property QDateTime $Minimum
  * @property string $DateTimeFormat
- * @property \QCubed\QDateTime $DateTime
+ * @property QDateTime $DateTime
  * @property string $LabelForInvalid
  * @was QDateTimeTextBox
  * @package QCubed\Control
  */
-class DateTimeTextBox extends \QCubed\Project\Control\TextBox
+class DateTimeTextBox extends TextBox
 {
     ///////////////////////////
     // Private Member Variables
@@ -42,16 +48,16 @@ class DateTimeTextBox extends \QCubed\Project\Control\TextBox
     // Methods
     //////////
 
-    public function ParsePostData()
+    public function parsePostData()
     {
         // Check to see if this Control's Value was passed in via the POST data
         if (array_key_exists($this->strControlId, $_POST)) {
-            parent::ParsePostData();
-            $this->dttDateTime = QDateTimeTextBox::ParseForDateTimeValue($this->strText);
+            parent::parsePostData();
+            $this->dttDateTime = self::parseForDateTimeValue($this->strText);
         }
     }
 
-    public static function ParseForDateTimeValue($strText)
+    public static function parseForDateTimeValue($strText)
     {
         // Trim and Clean
         $strText = strtolower(trim($strText));
@@ -67,8 +73,8 @@ class DateTimeTextBox extends \QCubed\Project\Control\TextBox
             (strpos($strText, 'pm') === false)
         ) {
             // There is NO TIME VALUE
-            $dttToReturn = new \QCubed\QDateTime($strText);
-            if ($dttToReturn->IsDateNull()) {
+            $dttToReturn = new QDateTime($strText);
+            if ($dttToReturn->isDateNull()) {
                 return null;
             } else {
                 return $dttToReturn;
@@ -94,19 +100,19 @@ class DateTimeTextBox extends \QCubed\Project\Control\TextBox
             }
         }
 
-        $dttToReturn = new \QCubed\QDateTime($strText);
-        if ($dttToReturn->IsDateNull()) {
+        $dttToReturn = new QDateTime($strText);
+        if ($dttToReturn->isDateNull()) {
             return null;
         } else {
             return $dttToReturn;
         }
     }
 
-    public function Validate()
+    public function validate()
     {
-        if (parent::Validate()) {
+        if (parent::validate()) {
             if ($this->strText != "") {
-                $dttTest = QDateTimeTextBox::ParseForDateTimeValue($this->strText);
+                $dttTest = self::parseForDateTimeValue($this->strText);
 
                 if (!$dttTest) {
                     $this->ValidationError = $this->strLabelForInvalid;
@@ -114,30 +120,30 @@ class DateTimeTextBox extends \QCubed\Project\Control\TextBox
                 }
 
                 if (!is_null($this->dttMinimum)) {
-                    if ($this->dttMinimum == \QCubed\QDateTime::NOW) {
-                        $dttToCompare = new \QCubed\QDateTime(QDateTime::Now);
+                    if ($this->dttMinimum == QDateTime::NOW) {
+                        $dttToCompare = new QDateTime(QDateTime::NOW);
                         $strError = t('in the past');
                     } else {
                         $dttToCompare = $this->dttMinimum;
-                        $strError = t('before ') . $dttToCompare->__toString();
+                        $strError = t('before ') . (string)$dttToCompare;
                     }
 
-                    if ($dttTest->IsEarlierThan($dttToCompare)) {
+                    if ($dttTest->isEarlierThan($dttToCompare)) {
                         $this->ValidationError = t('Date cannot be ') . $strError;
                         return false;
                     }
                 }
 
                 if (!is_null($this->dttMaximum)) {
-                    if ($this->dttMaximum == \QCubed\QDateTime::NOW) {
-                        $dttToCompare = new \QCubed\QDateTime(QDateTime::Now);
+                    if ($this->dttMaximum == QDateTime::NOW) {
+                        $dttToCompare = new QDateTime(QDateTime::NOW);
                         $strError = t('in the future');
                     } else {
                         $dttToCompare = $this->dttMaximum;
-                        $strError = t('after ') . $dttToCompare->__toString();
+                        $strError = t('after ') . (string)$dttToCompare;
                     }
 
-                    if ($dttTest->IsLaterThan($dttToCompare)) {
+                    if ($dttTest->isLaterThan($dttToCompare)) {
                         $this->ValidationError = t('Date cannot be ') . $strError;
                         return false;
                     }
@@ -171,16 +177,20 @@ class DateTimeTextBox extends \QCubed\Project\Control\TextBox
             default:
                 try {
                     return parent::__get($strName);
-                } catch (\QCubed\Exception\Caller $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
         }
     }
 
-    /////////////////////////
-    // Public Properties: SET
-    /////////////////////////
+    /**
+     * @param string $strName
+     * @param string $mixValue
+     * @return void
+     * @throws Caller
+     * @throws InvalidCast
+     */
     public function __set($strName, $mixValue)
     {
         $this->blnModified = true;
@@ -189,81 +199,89 @@ class DateTimeTextBox extends \QCubed\Project\Control\TextBox
             // MISC
             case 'Maximum':
                 try {
-                    if ($mixValue == \QCubed\QDateTime::NOW) {
-                        $this->dttMaximum = \QCubed\QDateTime::NOW;
+                    if ($mixValue == QDateTime::NOW) {
+                        $this->dttMaximum = QDateTime::NOW;
                     } else {
-                        $this->dttMaximum = \QCubed\Type::Cast($mixValue, \QCubed\Type::DATE_TIME);
+                        $this->dttMaximum = Type::cast($mixValue, Type::DATE_TIME);
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (InvalidCast $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case 'Minimum':
                 try {
-                    if ($mixValue == \QCubed\QDateTime::NOW) {
-                        $this->dttMinimum = \QCubed\QDateTime::NOW;
+                    if ($mixValue == QDateTime::NOW) {
+                        $this->dttMinimum = QDateTime::NOW;
                     } else {
-                        $this->dttMinimum = \QCubed\Type::Cast($mixValue, \QCubed\Type::DATE_TIME);
+                        $this->dttMinimum = Type::cast($mixValue, Type::DATE_TIME);
                     }
                     break;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (InvalidCast $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case 'DateTimeFormat':
                 try {
-                    $this->strDateTimeFormat = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING);
+                    $this->strDateTimeFormat = Type::cast($mixValue, Type::STRING);
                     // trigger an update to reformat the text with the new format
                     $this->DateTime = $this->dttDateTime;
-                    return $this->strDateTimeFormat;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (InvalidCast $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
+                break;
 
             case 'DateTime':
                 try {
-                    $this->dttDateTime = \QCubed\Type::Cast($mixValue, \QCubed\Type::DATE_TIME);
+                    $this->dttDateTime = Type::cast($mixValue, Type::DATE_TIME);
                     if (!$this->dttDateTime || !$this->strDateTimeFormat) {
                         parent::__set('Text', '');
                     } else {
                         parent::__set('Text', $this->dttDateTime->qFormat($this->strDateTimeFormat));
                     }
-                    return $this->dttDateTime;
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (InvalidCast $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
+                break;
 
             case 'Text':
-                $this->dttDateTime = QDateTimeTextBox::ParseForDateTimeValue($this->strText);
-                return parent::__set('Text', $mixValue);
+                $this->dttDateTime = self::parseForDateTimeValue($this->strText);
+                parent::__set('Text', $mixValue);
+                break;
+
 
             case 'LabelForInvalid':
                 try {
-                    return ($this->strLabelForInvalid = \QCubed\Type::Cast($mixValue, \QCubed\Type::STRING));
-                } catch (\QCubed\Exception\InvalidCast $objExc) {
-                    $objExc->IncrementOffset();
+                    $this->strLabelForInvalid = Type::cast($mixValue, Type::STRING);
+                } catch (InvalidCast $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
+                break;
 
             default:
                 try {
                     parent::__set($strName, $mixValue);
-                } catch (\QCubed\Exception\Caller $objExc) {
-                    $objExc->IncrementOffset();
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
                     throw $objExc;
                 }
                 break;
         }
     }
 
-    /**** Codegen Helpers, used during the Codegen process only. ****/
 
-    public static function Codegen_VarName($strPropName)
+    /**
+     * Codegen Helper, used during the Codegen process only.
+     *
+     * @param string $strPropName
+     * @return string
+     */
+    public static function codegen_VarName($strPropName)
     {
         return 'cal' . $strPropName;
     }

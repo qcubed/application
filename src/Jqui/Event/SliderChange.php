@@ -34,7 +34,8 @@ namespace QCubed\Jqui\Event;
  * 	* value Type: Number The current value of the slider.
  * 
  *
- * @was QSlider_Change */
+ * @was QSlider_ChangeEvent
+ */
 class SliderChange extends EventBase
 {
     const EVENT_NAME = 'slidechange';

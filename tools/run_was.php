@@ -56,6 +56,7 @@ $regexReplace = [];
  *  \QControl, or
  *   \QCubed\QControl
  *
+ * Classes must be processed before consts.
  */
 if (isset($patterns['class'])) {
     $find = array_map(function ($was) {

@@ -30,7 +30,7 @@ class Node extends Property
     {
         if ($objNodes instanceof QQNode\NodeBase) {
             $objNodes = [$objNodes];
-        } elseif (empty($objNodes) || !is_array($objNodes) || !$objNodes[0] instanceof QQNode\Base) {
+        } elseif (empty($objNodes) || !is_array($objNodes) || !$objNodes[0] instanceof QQNode\NodeBase) {
             throw new Caller('Pass either a QQNode\\NodeBase node or an array of Nodes only');
         }
 

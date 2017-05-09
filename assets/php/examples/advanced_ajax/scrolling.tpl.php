@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Automatic Scrolling</h1>
@@ -34,5 +34,5 @@
 	<?php $this->pnlPanel->Render('Cursor=move', 'BackColor=#f6f6f6', 'Width=130', 'Height=50', 'Padding=10', 'BorderWidth=1'); ?>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

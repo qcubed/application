@@ -29,7 +29,8 @@ namespace QCubed\Jqui\Event;
  * _Note: The ui object is empty but included for consistency with other
  * events._
  *
- * @was QAutocomplete_Close */
+ * @was QAutocomplete_CloseEvent
+ */
 class AutocompleteClose extends EventBase
 {
     const EVENT_NAME = 'autocompleteclose';

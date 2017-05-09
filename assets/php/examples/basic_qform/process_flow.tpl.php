@@ -1,18 +1,18 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Understanding the QForm Process Flow</h1>
+	<h1>Understanding the \QCubed\Project\Control\FormBase Process Flow</h1>
 
 	<p>First of all, don't adjust your screen. =)</p>
 
 	<p>The "Form_blah called" messages you see are
-		showing up to illustrate how the <strong>QForm</strong> process flow works.</p>
+		showing up to illustrate how the <strong>\QCubed\Project\Control\FormBase</strong> process flow works.</p>
 
-	<p>As we mentioned earlier, <strong>QForm</strong> objects are stateful, with the state persisting through
-		all the user interactions (e.g. ServerActions, etc.).  But note that <strong>QForm</strong> objects are also
+	<p>As we mentioned earlier, <strong>\QCubed\Project\Control\FormBase</strong> objects are stateful, with the state persisting through
+		all the user interactions (e.g. ServerActions, etc.).  But note that <strong>\QCubed\Project\Control\FormBase</strong> objects are also
 		event-driven.  This is why the we state that QForms is a "stateful, event-driven architecture
-		for web-based forms."  On every execution of a <strong>QForm</strong>, the following actions happen:</p>
+		for web-based forms."  On every execution of a <strong>\QCubed\Project\Control\FormBase</strong>, the following actions happen:</p>
 
 	<ol>
 		<li>The first thing the Form object does is internally determine if we are viewing this
@@ -27,9 +27,9 @@
 			re-posted back to the page.</li>
 		<li>Next, if we are viewing the page fresh (e.g. not via a post back), the <strong>Form_Create</strong>
 			method (if defined) will be run (<strong>Form_Create</strong> is typically where you would define and
-			instantiate your various <strong>QForm</strong> controls).  Otherwise, the <strong>Form_Load</strong> (if defined) will
+			instantiate your various <strong>\QCubed\Project\Control\FormBase</strong> controls).  Otherwise, the <strong>Form_Load</strong> (if defined) will
 			be run.</li>
-		<li>Next, if we're posted back because of a <strong>QServerAction</strong> or <strong>QAjaxAction</strong> that points to a
+		<li>Next, if we're posted back because of a <strong>\QCubed\Action\Server</strong> or <strong>\QCubed\Action\Ajax</strong> that points to a
 			specific PHP method, then the following will happen:
 			<ul>
 				<li>First, if the control that triggered the event has its <strong>CausesValidation</strong> property set, then
@@ -45,8 +45,8 @@
 		<li>And finally, the <strong>Form_Exit</strong> (if defined) is run after the HTML has been completely outputted.</li>
 	</ol>
 
-	<p>So, basically, a <strong>QForm</strong> can have any combination of the five following methods defined to help
-		customize <strong>QForm</strong> and <strong>QControl</strong> processing:</p>
+	<p>So, basically, a <strong>\QCubed\Project\Control\FormBase</strong> can have any combination of the five following methods defined to help
+		customize <strong>\QCubed\Project\Control\FormBase</strong> and <strong>QControl</strong> processing:</p>
 	<ul>
 		<li>Form_Run</li>
 		<li>Form_Load</li>
@@ -62,5 +62,5 @@
 	<p><?php $this->btnButton->Render(); ?></p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>

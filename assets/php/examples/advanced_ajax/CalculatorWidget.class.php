@@ -4,8 +4,8 @@
 	// values or setting them to zero.
 	//
 	// Obviously, not completely accurate -- but this is really just an example dialog box, and hopefully
-	// this example will give you enough to understand how QDialog works overall. =)
-	class CalculatorWidget extends QDialog {
+	// this example will give you enough to understand how \QCubed\Project\Jqui\Dialog works overall. =)
+	class CalculatorWidget extends \QCubed\Project\Jqui\Dialog {
 		// PUBLIC Child Controls
 		public $pnlValueDisplay;
 		public $pxyNumberControl;
@@ -33,43 +33,46 @@
 		protected $strCurrentOperation;
 		protected $blnNextClears;
 
-		public function __construct($strCloseCallback, $objParentObject, $strControlId = null) {
+		public function __construct($objParentObject, $strControlId = null) {
 			parent::__construct($objParentObject, $strControlId);
-			$this->strCloseCallback = $strCloseCallback;
 			$this->DialogClass = $this->strCssClass;
 			
 			// Define local child controls
-			$this->pnlValueDisplay = new QPanel($this);
+			$this->pnlValueDisplay = new \QCubed\Control\Panel($this);
 			//$this->pnlValueDisplay->Text = '0';
 			$this->pnlValueDisplay->CssClass = 'calculator_display';
 
 			// Define the Proxy
-			$this->pxyNumberControl = new QControlProxy($this);
-			$this->pxyNumberControl->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'pxyNumber_Click'));
+			$this->pxyNumberControl = new \QCubed\Control\Proxy($this);
+			$this->pxyNumberControl->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'pxyNumber_Click'));
 
-			$this->pxyOperationControl = new QControlProxy($this);
-			$this->pxyOperationControl->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'pxyOperation_Click'));
+			$this->pxyOperationControl = new \QCubed\Control\Proxy($this);
+			$this->pxyOperationControl->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'pxyOperation_Click'));
 
-			$this->btnEqual = new QButton($this);
+			$this->btnEqual = new \QCubed\Project\Jqui\Button($this);
 			$this->btnEqual->Text = '=';
-			$this->btnEqual->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnEqual_Click'));
+			$this->btnEqual->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnEqual_Click'));
 
-			$this->btnPoint = new QButton($this);
+			$this->btnPoint = new \QCubed\Project\Jqui\Button($this);
 			$this->btnPoint->Text = '.';
-			$this->btnPoint->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnPoint_Click'));
+			$this->btnPoint->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnPoint_Click'));
 
-			$this->btnClear = new QButton($this);
+			$this->btnClear = new \QCubed\Project\Jqui\Button($this);
 			$this->btnClear->Text = 'C';
-			$this->btnClear->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnClear_Click'));
+			$this->btnClear->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnClear_Click'));
 			
-			$this->btnUpdate = new QButton($this);
+			$this->btnUpdate = new \QCubed\Project\Jqui\Button($this);
 			$this->btnUpdate->Text = 'Save';
-			$this->btnUpdate->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnUpdate_Click'));
+			$this->btnUpdate->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnUpdate_Click'));
 			
-			$this->btnCancel = new QButton($this);
+			$this->btnCancel = new \QCubed\Project\Jqui\Button($this);
 			$this->btnCancel->Text = 'Cancel';
-			$this->btnCancel->AddAction(new QClickEvent(), new QAjaxControlAction($this, 'btnCancel_Click'));
+			$this->btnCancel->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\AjaxControl($this, 'btnCancel_Click'));
 		}
+
+		public function setCloseCallback($callback) {
+            $this->strCloseCallback = $callback;
+        }
 
 		public function pxyNumber_Click($strFormId, $strControlId, $strParameter) {
 			if ($this->blnNextClears) {
@@ -99,10 +102,10 @@
 			if (strpos($this->pnlValueDisplay->Text, '.') !== false)
 				$this->pnlValueDisplay->Text .= '0';
 
-			$this->fltInternalValue = QType::Cast($this->pnlValueDisplay->Text, QType::Float);
+			$this->fltInternalValue = \QCubed\Type::Cast($this->pnlValueDisplay->Text, \QCubed\Type::FLOAT);
 			try {
-				$this->fltInternalValue = QType::Cast($this->pnlValueDisplay->Text, QType::Integer);
-			} catch (QInvalidCastException $objExc) {}
+				$this->fltInternalValue = \QCubed\Type::Cast($this->pnlValueDisplay->Text, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {}
 			
 			$this->pnlValueDisplay->Text = $this->fltInternalValue;
 		}
@@ -112,10 +115,10 @@
 
 			if (strpos($this->pnlValueDisplay->Text, '.') !== false)
 				$this->pnlValueDisplay->Text .= '0';
-			$fltOtherValue = QType::Cast($this->pnlValueDisplay->Text, QType::Float);
+			$fltOtherValue = \QCubed\Type::Cast($this->pnlValueDisplay->Text, \QCubed\Type::FLOAT);
 			try {
-				$fltOtherValue = QType::Cast($this->pnlValueDisplay->Text, QType::Integer);
-			} catch (QInvalidCastException $objExc) {}
+				$fltOtherValue = \QCubed\Type::Cast($this->pnlValueDisplay->Text, \QCubed\Type::INTEGER);
+			} catch (\QCubed\Exception\InvalidCast $objExc) {}
 
 			switch ($this->strCurrentOperation) {
 				case '+':
@@ -166,15 +169,6 @@
 			$this->blnNextClears = true;
 			$this->strCurrentOperation = null;
 		}
-		
-		public function ShowDialogBox() {
-			parent::ShowDialogBox();
-			$this->pnlValueDisplay->Text = ($this->fltValue) ? $this->fltValue : '0';
-
-			$this->fltInternalValue = 0;
-			$this->blnNextClears = true;
-			$this->strCurrentOperation = null;
-		}
 
 		public function __get($strName) {
 			switch ($strName) {
@@ -183,7 +177,7 @@
 				default:
 					try {
 						return parent::__get($strName);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}
@@ -199,19 +193,19 @@
 					// It will try to cast to Integer if possible, otherwise Float, otherwise just 0
 					$this->fltValue = 0;
 					try {					
-						$this->fltValue = QType::Cast($mixValue, QType::Float);
+						$this->fltValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::FLOAT);
 						break;
-					} catch (QInvalidCastException $objExc) {}
+					} catch (\QCubed\Exception\InvalidCast $objExc) {}
 					try {
-						$this->fltValue = QType::Cast($mixValue, QType::Integer);
+						$this->fltValue = \QCubed\Type::Cast($mixValue, \QCubed\Type::INTEGER);
 						break;
-					} catch (QInvalidCastException $objExc) {}
+					} catch (\QCubed\Exception\InvalidCast $objExc) {}
 					break;
 
 				default:
 					try {
 						parent::__set($strName, $mixValue);
-					} catch (QCallerException $objExc) {
+					} catch (\QCubed\Exception\Caller $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
 					}

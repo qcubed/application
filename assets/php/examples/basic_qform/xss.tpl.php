@@ -1,5 +1,5 @@
 <?php require('../includes/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 
 <div id="instructions">
 	<h1>Security: Cross-Site Scripting (XSS) Prevention</h1>
@@ -12,19 +12,12 @@
 	<p>QCubed comes with two layers of protection against XSS. Both of these are enabled by default, and you don't
 		need to do anything to make use of them.</p>
 
-	<p>The first layer is around filtering input - particularly in <strong>QTextbox</strong> controls. This is about filtering
+	<p>The first layer is around filtering input - particularly in <strong>\QCubed\Project\Control\TextBox</strong> controls. This is about filtering
 		the input that the user has placed into the text box, and rejecting or removing any potential script and tags from it.
 		By default QCubed . However this behaviour
-		can be changed per QTextBox instance by setting its <strong>CrossScripting</strong>
+		can be changed per \QCubed\Project\Control\TextBox instance by setting its <strong>CrossScripting</strong>
 		property to one of the following values:</p>
 	<ul>
-		<li><strong>QCrossScripting::Deny</strong> (aka <strong>QCrossScripting::Legacy</strong>) uses an internal regular expression matching algorithm
-			to reject the submitted input if it contains
-			any potentially harmful tags or attributes, such as <strong>&lt;script&gt;</strong> or <strong>onclick=</strong>.
-			It does not do any filtering, it simply throws an exception if a match is found.
-			For backward compatibility reasons this is the default value used when creating QTextBox instances.
-			However this default can be changed (see below).
-		</li>
 		<li><strong>QCrossScripting::Allow</strong> completely disables any checks and filtering and would let any posted data through. This is the most
 			insecure option and should be avoided unless you have very good reasons for it.</li>
 		<li><strong>QCrossScripting::HtmlEntities</strong> simply calls PHP's htmlentities() function on the submitted text. This will protect against
@@ -42,8 +35,8 @@
 		</li>
 	</ul>
 
-	<p>As mentioned above the default value used for creating QTextBox instances can be altered by setting
-		<strong>QApplication::$DefaultCrossScriptingMode</strong> to one of the values above.</p>
+	<p>As mentioned above the default value used for creating \QCubed\Project\Control\TextBox instances can be altered by setting
+		<strong>\QCubed\Project\Application::$DefaultCrossScriptingMode</strong> to one of the values above.</p>
 
 	<p>The second layer is about escaping output - so that if a piece of undesirable JavaScript somehow made it into
 		the database, QCubed will run it through the HTMLEntities function, escaping each possible entity (such as
@@ -89,5 +82,5 @@
 	<p>&nbsp;<?php $this->lblLabel5->Render() ?></p>
 </div>
 
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../includes/footer.inc.php'); ?>
