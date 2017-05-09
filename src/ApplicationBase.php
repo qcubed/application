@@ -13,6 +13,7 @@ use QCubed\Exception\Caller;
 use QCubed\Project\Application;
 use QCubed\Js;
 use QCubed\Database\Service as DatabaseService;
+use QCubed as Q;
 
 /**
  * Class ApplicationBase
@@ -413,7 +414,7 @@ abstract class ApplicationBase extends ObjectBase
      * of specific commands sent to the client.
      *
      * @static
-     * @deprecated Will be eventually removed. If you need to do something in javascript, add it to QAjaxResponse.
+     *  Will be eventually removed. If you need to do something in javascript, add it to AjaxResponse.
      * @param string $strJavaScript the javascript to execute
      * @param string $strPriority
      * @throws QCallerException
@@ -508,7 +509,7 @@ abstract class ApplicationBase extends ObjectBase
     {
         global $_FORM;
 
-        if (\QCubed\Error\Manager::isError() ||
+        if (Q\Error\Manager::isError() ||
             Application::isAjax() ||
             empty($_FORM) ||
             !Application::instance()->blnProcessOutput
@@ -591,9 +592,9 @@ abstract class ApplicationBase extends ObjectBase
     /**
      * Print an ajax response to the browser.
      *
-     * @param array $strResponseArray An array keyed with QAjaxResponse items. These items will be read by the qcubed.js
+     * @param array $strResponseArray An array keyed with AjaxResponse items. These items will be read by the qcubed.js
      * ajax success function and operated on. The goals is to eventually have all possible response types represented
-     * in the QAjaxResponse so that we can remove the "eval" in qcubed.js.
+     * in the AjaxResponse so that we can remove the "eval" in qcubed.js.
      */
     public static function sendAjaxResponse(array $strResponseArray)
     {

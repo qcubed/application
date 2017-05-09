@@ -55,7 +55,7 @@ abstract class TableColumnBase extends ObjectBase
     protected $blnHtmlEntities = true;
     /** @var boolean */
     protected $blnRenderAsHeader = false;
-    /** @var QHtmlTableBase */
+    /** @var TableBase */
     protected $objParentTable = null;
     /** @var integer */
     protected $intSpan = 1;
@@ -316,7 +316,7 @@ abstract class TableColumnBase extends ObjectBase
      *
      * @param string $strName
      *
-     * @return bool|int|mixed|QHtmlTableBase|string
+     * @return mixed
      * @throws Exception
      * @throws Caller
      */
@@ -463,7 +463,7 @@ abstract class TableColumnBase extends ObjectBase
 
             case "_ParentTable":
                 try {
-                    $this->objParentTable = Type::cast($mixValue, 'QHtmlTableBase');
+                    $this->objParentTable = Type::cast($mixValue, 'QCubed\Control\TableBase');
                     break;
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();

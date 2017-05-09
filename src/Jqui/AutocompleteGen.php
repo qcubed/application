@@ -343,7 +343,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'AutoFocus':
                 try {
-                    $this->blnAutoFocus = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoFocus = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoFocus', $this->blnAutoFocus);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -358,7 +358,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'Delay':
                 try {
-                    $this->intDelay = Type::Cast($mixValue, QType::Integer);
+                    $this->intDelay = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'delay', $this->intDelay);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -368,7 +368,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -378,7 +378,7 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
 
             case 'MinLength':
                 try {
-                    $this->intMinLength = Type::Cast($mixValue, QType::Integer);
+                    $this->intMinLength = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'minLength', $this->intMinLength);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -421,10 +421,10 @@ class AutocompleteGen extends QCubed\Project\Control\TextBox
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'AutoFocus', 'If set to true the first item will automatically be focused when themenu is shown.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Delay', 'The delay in milliseconds between when a keystroke occurs and when asearch is performed. A zero-delay makes sense for local data (moreresponsive), but can produce a lot of load for remote data, whilebeing less responsive.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the autocomplete if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'MinLength', 'The minimum number of characters a user must type before a search isperformed. Zero is useful for local data with just a few items, but ahigher value should be used when a single character search could matcha few thousand items.', QType::Integer),
+            new QModelConnectorParam (get_called_class(), 'AutoFocus', 'If set to true the first item will automatically be focused when themenu is shown.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Delay', 'The delay in milliseconds between when a keystroke occurs and when asearch is performed. A zero-delay makes sense for local data (moreresponsive), but can produce a lot of load for remote data, whilebeing less responsive.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the autocomplete if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'MinLength', 'The minimum number of characters a user must type before a search isperformed. Zero is useful for local data with just a few items, but ahigher value should be used when a single character search could matcha few thousand items.', Type::INTEGER),
         ));
     }
 }

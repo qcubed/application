@@ -296,7 +296,7 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 
             case 'ActiveClass':
                 try {
-                    $this->strActiveClass = Type::Cast($mixValue, QType::String);
+                    $this->strActiveClass = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'activeClass', $this->strActiveClass);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -306,7 +306,7 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 
             case 'AddClasses':
                 try {
-                    $this->blnAddClasses = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnAddClasses = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'addClasses', $this->blnAddClasses);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -321,7 +321,7 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -331,7 +331,7 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 
             case 'Greedy':
                 try {
-                    $this->blnGreedy = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnGreedy = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'greedy', $this->blnGreedy);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -341,7 +341,7 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 
             case 'HoverClass':
                 try {
-                    $this->strHoverClass = Type::Cast($mixValue, QType::String);
+                    $this->strHoverClass = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'hoverClass', $this->strHoverClass);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -351,7 +351,7 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 
             case 'Scope':
                 try {
-                    $this->strScope = Type::Cast($mixValue, QType::String);
+                    $this->strScope = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'scope', $this->strScope);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -361,7 +361,7 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 
             case 'Tolerance':
                 try {
-                    $this->strTolerance = Type::Cast($mixValue, QType::String);
+                    $this->strTolerance = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'tolerance', $this->strTolerance);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -394,13 +394,13 @@ abstract class DroppableGen extends QCubed\Project\Control\ControlBase
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'ActiveClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being dragged.The activeClass option has been deprecated in favor of the classesoption, using the ui-droppable-active property.(version deprecated: 1.12)', QType::String),
-            new QModelConnectorParam (get_called_class(), 'AddClasses', 'If set to false, will prevent the ui-droppable class from being added.This may be desired as a performance optimization when calling.droppable() init on hundreds of elements.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the droppable if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Greedy', 'By default, when an element is dropped on nested droppables, eachdroppable will receive the element. However, by setting this option totrue, any parent droppables will not receive the element. The dropevent will still bubble normally, but the event.target can be checkedto see which droppable received the draggable element.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'HoverClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being hovered over the droppable.The hoverClass option has been deprecated in favor of the classesoption, using the ui-droppable-hover property.(version deprecated: 1.12)', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Scope', 'Used to group sets of draggable and droppable items, in addition tothe accept option. A draggable with the same scope value as adroppable will be accepted.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether a draggable ishovering over a droppable. Possible values: 	* \"fit\": Draggable overlaps the droppable entirely.	* \"intersect\": Draggable overlaps the droppable at least 50% in bothdirections.	* \"pointer\": Mouse pointer overlaps the droppable.	* \"touch\": Draggable overlaps the droppable any amount.', QType::String),
+            new QModelConnectorParam (get_called_class(), 'ActiveClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being dragged.The activeClass option has been deprecated in favor of the classesoption, using the ui-droppable-active property.(version deprecated: 1.12)', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'AddClasses', 'If set to false, will prevent the ui-droppable class from being added.This may be desired as a performance optimization when calling.droppable() init on hundreds of elements.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the droppable if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Greedy', 'By default, when an element is dropped on nested droppables, eachdroppable will receive the element. However, by setting this option totrue, any parent droppables will not receive the element. The dropevent will still bubble normally, but the event.target can be checkedto see which droppable received the draggable element.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'HoverClass', 'If specified, the class will be added to the droppable while anacceptable draggable is being hovered over the droppable.The hoverClass option has been deprecated in favor of the classesoption, using the ui-droppable-hover property.(version deprecated: 1.12)', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Scope', 'Used to group sets of draggable and droppable items, in addition tothe accept option. A draggable with the same scope value as adroppable will be accepted.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether a draggable ishovering over a droppable. Possible values: 	* \"fit\": Draggable overlaps the droppable entirely.	* \"intersect\": Draggable overlaps the droppable at least 50% in bothdirections.	* \"pointer\": Mouse pointer overlaps the droppable.	* \"touch\": Draggable overlaps the droppable any amount.', Type::STRING),
         ));
     }
 }

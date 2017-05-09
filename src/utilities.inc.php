@@ -116,7 +116,7 @@ function _nl($strText = null) {
  * @return string
  */
 function _indent($strText, $intCount = 1) {
-	if (!defined('__CODE_GENERATING__') && Application::instance()->minimze()) {
+	if (!defined('__CODE_GENERATING__') && Application::instance()->minimize()) {
 		return $strText;
 	} else {
 		if (defined ('__CODE_GENERATING__')) {

@@ -50,11 +50,11 @@ class ListItemBase extends ObjectBase
     // Methods
     /////////////////////////
     /**
-     * Creates a QListItem
+     * Creates a ListItem
      *
      * @param string $strName is the displayed Name or Text of the Item
      * @param string|null $strValue is any text that represents the value of the ListItem (e.g. maybe a DB Id)
-     * @param null|QListItemStyle $objItemStyle is the item style. If provided here, it is referenced and shared with other items.
+     * @param null|ListItemStyle $objItemStyle is the item style. If provided here, it is referenced and shared with other items.
      *
      * @throws Exception|Caller
      */
@@ -73,7 +73,7 @@ class ListItemBase extends ObjectBase
     public function getStyle()
     {
         if (!$this->objItemStyle) {
-            $this->objItemStyle = new QListItemStyle();
+            $this->objItemStyle = new ListItemStyle();
         }
         return $this->objItemStyle;
     }
@@ -200,7 +200,7 @@ class ListItemBase extends ObjectBase
                 }
             case "ItemStyle":
                 try {
-                    $this->objItemStyle = Type::cast($mixValue, "QListItemStyle");
+                    $this->objItemStyle = Type::cast($mixValue, "\QCubed\Control\ListItemStyle");
                     break;
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();

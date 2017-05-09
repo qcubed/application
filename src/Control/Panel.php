@@ -9,17 +9,14 @@
 
 namespace QCubed\Control;
 
+use QCubed\Css\Display;
+
 /**
  * Class Panel
  *
  * Panels can be used to create composite controls which are to be rendered as blocks (not inline)
  *
  * @was QPanel
- * @package QCubed\Control
- */
-
-/**
- * Class Panel
  * @package QCubed\Control
  */
 class Panel extends BlockControl
@@ -29,8 +26,8 @@ class Panel extends BlockControl
     ///////////////////////////
     /** @var string HTML tag to the used for the Block Control */
     protected $strTagName = 'div';
-    /** @var string Default display style for the control. See QDisplayStyle class for available list */
-    protected $strDefaultDisplayStyle = QDisplayStyle::Block;
+    /** @var string Default display style for the control */
+    protected $strDefaultDisplayStyle = Display::BLOCK;
     /** @var bool Is the control a block element? */
     protected $blnIsBlockElement = true;
     /** @var bool Use htmlentities for the control? */

@@ -12,6 +12,7 @@ namespace QCubed\Control;
 use QCubed as Q;
 use QCubed\Context;
 use QCubed\Exception\Caller;
+use QCubed\Exception\DataBind;
 use QCubed\Html;
 use QCubed\ObjectBase;
 use QCubed\Project\Control\ControlBase as QControl;
@@ -702,7 +703,7 @@ abstract class FormBase extends ObjectBase
         try {
             call_user_func($callable, $objPaginatedControl);
         } catch (Caller $objExc) {
-            throw new QDataBindException($objExc);
+            throw new DataBind($objExc);
         }
     }
 
@@ -811,7 +812,7 @@ abstract class FormBase extends ObjectBase
         }
 
         if ($strControlIdToRegister) {
-            $aResponse[QAjaxResponse::RegC] = $strControlIdToRegister;
+            $aResponse[Q\JsResponse::REG_C] = $strControlIdToRegister;
         }
 
 
@@ -828,8 +829,8 @@ abstract class FormBase extends ObjectBase
         // Add in the form state
         $strFormState = QForm::serialize($this);
         $aResponse[Q\JsResponse::CONTROLS][] = [
-        Q\JsResponse::ID => self::POST_FORM_STATE,
-        Q\JsResponse::VALUE => $strFormState
+            Q\JsResponse::ID => self::POST_FORM_STATE,
+            Q\JsResponse::VALUE => $strFormState
         ];
 
         $strContents = trim(ob_get_contents());
@@ -860,7 +861,7 @@ abstract class FormBase extends ObjectBase
 
         // Figure Out if we need to store state for back-button purposes
         $blnBackButtonFlag = true;
-        if ($strPreviousRequestMode == QRequestMode::Ajax) {
+        if ($strPreviousRequestMode == Context::REQUEST_MODE_QCUBED_AJAX) {
             $blnBackButtonFlag = false;
         }
 
@@ -1280,10 +1281,10 @@ abstract class FormBase extends ObjectBase
                             if (count($arrTemp) == 2) {
                                 $strAjaxActionId = $arrTemp[1];
                             }
-                            $objActions = $objActionControl->getAllActions($strEvent, 'QAjaxAction');
+                            $objActions = $objActionControl->getAllActions($strEvent, 'QCubed\\Action\\Ajax');
                             break;
                         case Context::REQUEST_MODE_QCUBED_SERVER:
-                            $objActions = $objActionControl->getAllActions($strEvent, 'QServerAction');
+                            $objActions = $objActionControl->getAllActions($strEvent, 'QCubed\\Action\\Server');
                             break;
                         default:
                             throw new Exception('Unknown request mode: ' . Application::instance()->context()->requestMode());
@@ -1327,7 +1328,7 @@ abstract class FormBase extends ObjectBase
 
                             // Validate All the Controls on the Form
                         } else {
-                            if ($mixCausesValidation === QCausesValidation::AllControls) {
+                            if ($mixCausesValidation === QControl::CAUSES_VALIDATION_ALL) {
                                 foreach ($this->getChildControls($this) as $objControl) {
                                     // Only Enabled and Visible and Rendered controls that are children of this form should be validated
                                     if (($objControl->Visible) && ($objControl->Enabled) && ($objControl->RenderMethod) && ($objControl->OnPage)) {
@@ -1337,9 +1338,8 @@ abstract class FormBase extends ObjectBase
                                     }
                                 }
 
-                                // CausesValidation specifed by QCausesValidation directive
                             } else {
-                                if ($mixCausesValidation == QCausesValidation::SiblingsAndChildren) {
+                                if ($mixCausesValidation == QControl::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN) {
                                     // Get only the Siblings of the ActionControl's ParentControl
                                     // If not ParentControl, then the parent is the form itself
                                     if (!($objParentObject = $objActionControl->ParentControl)) {
@@ -1355,10 +1355,8 @@ abstract class FormBase extends ObjectBase
                                             }
                                         }
                                     }
-
-                                    // CausesValidation specifed by QCausesValidation directive
                                 } else {
-                                    if ($mixCausesValidation == QCausesValidation::SiblingsOnly) {
+                                    if ($mixCausesValidation == QControl::CAUSES_VALIDATION_SIBLINGS_ONLY) {
                                         // Get only the Siblings of the ActionControl's ParentControl
                                         // If not ParentControl, tyhen the parent is the form itself
                                         if (!($objParentObject = $objActionControl->ParentControl)) {
@@ -1414,7 +1412,7 @@ abstract class FormBase extends ObjectBase
                     }
                 } else {
                     // Nope -- Throw an exception
-                    throw new Exception(sprintf('Control passed by Qform__FormControl does not exist: %s',
+                    throw new \Exception(sprintf('Control passed by Qform__FormControl does not exist: %s',
                         $strControlId));
                 }
             }
@@ -1954,7 +1952,9 @@ abstract class FormBase extends ObjectBase
         $strHtml .= sprintf('<input type="hidden" name="Qform__FormControl" id="Qform__FormControl" value="" />') . _nl();
         $strHtml .= sprintf('<input type="hidden" name="Qform__FormEvent" id="Qform__FormEvent" value="" />') . _nl();
         $strHtml .= sprintf('<input type="hidden" name="Qform__FormParameter" id="Qform__FormParameter" value="" />') . _nl();
-        $strHtml .= Html::renderTag('input', ['type'=>'hidden', 'name'=>self::POST_CALL_TYPE, 'id'=>self::POST_CALL_TYPE, 'value'=>''], null, true);
+        $strHtml .= Html::renderTag('input',
+            ['type' => 'hidden', 'name' => self::POST_CALL_TYPE, 'id' => self::POST_CALL_TYPE, 'value' => ''], null,
+            true);
         $strHtml .= sprintf('<input type="hidden" name="Qform__FormUpdates" id="Qform__FormUpdates" value="" />') . _nl();
         $strHtml .= sprintf('<input type="hidden" name="Qform__FormCheckableControls" id="Qform__FormCheckableControls" value="" />') . _nl();
 

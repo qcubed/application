@@ -238,7 +238,7 @@ class RadioButtonGen extends QCubed\Project\Control\RadioButton
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -248,7 +248,7 @@ class RadioButtonGen extends QCubed\Project\Control\RadioButton
 
             case 'Icon':
                 try {
-                    $this->blnIcon = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnIcon = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'icon', $this->blnIcon);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -258,7 +258,7 @@ class RadioButtonGen extends QCubed\Project\Control\RadioButton
 
             case 'Label':
                 try {
-                    $this->strLabel = Type::Cast($mixValue, QType::String);
+                    $this->strLabel = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'label', $this->strLabel);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -291,9 +291,9 @@ class RadioButtonGen extends QCubed\Project\Control\RadioButton
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the checkboxradio if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Icon', 'Whether to show the checkbox or radio icon, depending on the inputstype.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Label', 'Text to show in the button. When not specified (null), the HTMLcontent of the associated <label> element is used.', QType::String),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the checkboxradio if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Icon', 'Whether to show the checkbox or radio icon, depending on the inputstype.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Label', 'Text to show in the button. When not specified (null), the HTMLcontent of the associated <label> element is used.', Type::STRING),
         ));
     }
 }

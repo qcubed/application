@@ -28,28 +28,28 @@ class Node extends Property
 {
     public function __construct($strName, $objNodes)
     {
-        if ($objNodes instanceof QQNode\Base) {
+        if ($objNodes instanceof QQNode\NodeBase) {
             $objNodes = [$objNodes];
         } elseif (empty($objNodes) || !is_array($objNodes) || !$objNodes[0] instanceof QQNode\Base) {
-            throw new Caller('Pass either a an Base node or an array of QQNodes only');
+            throw new Caller('Pass either a QQNode\\NodeBase node or an array of Nodes only');
         }
 
         $objNode = $objNodes[0]; // First node is the data node, the rest are for sorting.
 
         if (!$objNode->_ParentNode) {
-            throw new Caller('First QQNode\Base cannot be a Top Level Node');
+            throw new Caller('First QQNode\\NodeBase cannot be a Top Level Node');
         }
         if (($objNode instanceof QQNode\ReverseReference) && !$objNode->isUnique()) {
-            throw new Caller('Content QQNode\Base cannot go through any "To Many" association nodes.');
+            throw new Caller('Content QQNode\\NodeBase cannot go through any "To Many" association nodes.');
         }
 
         $properties = array($objNode->_PropertyName);
         while ($objNode = $objNode->_ParentNode) {
-            if (!($objNode instanceof QQNode\Base)) {
-                throw new Caller('QQNode\Base cannot go through any "To Many" association nodes.');
+            if (!($objNode instanceof QQNode\NodeBase)) {
+                throw new Caller('QQNode\\NodeBase cannot go through any "To Many" association nodes.');
             }
             if (($objNode instanceof QQNode\ReverseReference) && !$objNode->isUnique()) {
-                throw new Caller('QQNode\Base cannot go through any "To Many" association nodes.');
+                throw new Caller('QQNode\\NodeBase cannot go through any "To Many" association nodes.');
             }
             if ($strPropName = $objNode->_PropertyName) {
                 $properties[] = $strPropName;

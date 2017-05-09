@@ -420,7 +420,7 @@ class SpinnerGen extends QCubed\Project\Control\TextBox
 
             case 'Culture':
                 try {
-                    $this->strCulture = Type::Cast($mixValue, QType::String);
+                    $this->strCulture = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'culture', $this->strCulture);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -430,7 +430,7 @@ class SpinnerGen extends QCubed\Project\Control\TextBox
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -460,7 +460,7 @@ class SpinnerGen extends QCubed\Project\Control\TextBox
 
             case 'NumberFormat':
                 try {
-                    $this->strNumberFormat = Type::Cast($mixValue, QType::String);
+                    $this->strNumberFormat = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'numberFormat', $this->strNumberFormat);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -470,7 +470,7 @@ class SpinnerGen extends QCubed\Project\Control\TextBox
 
             case 'Page':
                 try {
-                    $this->intPage = Type::Cast($mixValue, QType::Integer);
+                    $this->intPage = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'page', $this->intPage);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -508,10 +508,10 @@ class SpinnerGen extends QCubed\Project\Control\TextBox
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Culture', 'Sets the culture to use for parsing and formatting the value. If null,the currently set culture in Globalize is used, see Globalize docs foravailable cultures. Only relevant if the numberFormat option is set.Requires Globalize to be included.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the spinner if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'NumberFormat', 'Format of numbers passed to Globalize, if available. Most common are\"n\" for a decimal number and \"C\" for a currency value. Also see theculture option.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Page', 'The number of steps to take when paging via the pageUp/pageDownmethods.', QType::Integer),
+            new QModelConnectorParam (get_called_class(), 'Culture', 'Sets the culture to use for parsing and formatting the value. If null,the currently set culture in Globalize is used, see Globalize docs foravailable cultures. Only relevant if the numberFormat option is set.Requires Globalize to be included.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the spinner if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'NumberFormat', 'Format of numbers passed to Globalize, if available. Most common are\"n\" for a decimal number and \"C\" for a currency value. Also see theculture option.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Page', 'The number of steps to take when paging via the pageUp/pageDownmethods.', Type::INTEGER),
         ));
     }
 }

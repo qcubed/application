@@ -405,7 +405,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -420,7 +420,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Items':
                 try {
-                    $this->strItems = Type::Cast($mixValue, QType::String);
+                    $this->strItems = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'items', $this->strItems);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -430,7 +430,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Menus':
                 try {
-                    $this->strMenus = Type::Cast($mixValue, QType::String);
+                    $this->strMenus = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'menus', $this->strMenus);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -445,7 +445,7 @@ class MenuGen extends QCubed\Control\Panel
 
             case 'Role':
                 try {
-                    $this->strRole = Type::Cast($mixValue, QType::String);
+                    $this->strRole = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'role', $this->strRole);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -478,10 +478,10 @@ class MenuGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the menu if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Items', 'Selector for the elements that serve as the menu items.Note: The items option should not be changed after initialization.(version added: 1.11.0)', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Menus', 'Selector for the elements that serve as the menu container, includingsub-menus.Note: The menus option should not be changed after initialization.Existing submenus will not be updated.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Role', 'Customize the ARIA roles used for the menu and menu items. The defaultuses \"menuitem\" for items. Setting the role option to \"listbox\" willuse \"option\" for items. If set to null, no roles will be set, which isuseful if the menu is being controlled by another element that ismaintaining focus.Note: The role option should not be changed after initialization.Existing (sub)menus and menu items will not be updated.', QType::String),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the menu if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Items', 'Selector for the elements that serve as the menu items.Note: The items option should not be changed after initialization.(version added: 1.11.0)', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Menus', 'Selector for the elements that serve as the menu container, includingsub-menus.Note: The menus option should not be changed after initialization.Existing submenus will not be updated.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Role', 'Customize the ARIA roles used for the menu and menu items. The defaultuses \"menuitem\" for items. Setting the role option to \"listbox\" willuse \"option\" for items. If set to null, no roles will be set, which isuseful if the menu is being controlled by another element that ismaintaining focus.Note: The role option should not be changed after initialization.Existing (sub)menus and menu items will not be updated.', Type::STRING),
         ));
     }
 }

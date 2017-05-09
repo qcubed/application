@@ -262,7 +262,7 @@ class ControlgroupGen extends QCubed\Control\Panel
 
             case 'Direction':
                 try {
-                    $this->strDirection = Type::Cast($mixValue, QType::String);
+                    $this->strDirection = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'direction', $this->strDirection);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -272,7 +272,7 @@ class ControlgroupGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -287,7 +287,7 @@ class ControlgroupGen extends QCubed\Control\Panel
 
             case 'OnlyVisible':
                 try {
-                    $this->blnOnlyVisible = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnOnlyVisible = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'onlyVisible', $this->blnOnlyVisible);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -320,9 +320,9 @@ class ControlgroupGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Direction', 'By default, controlgroup displays its controls in a horizontal layout.Use this option to use a vertical layout instead.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the controlgroup if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'OnlyVisible', 'Sets whether to exclude invisible children in the assignment ofrounded corners. When set to false, all children of a controlgroup aretaken into account when assigning rounded corners, including hiddenchildren. Thus, if, for example, the controlgroups first child ishidden and the default horizontal layout is applied, the controlgroupwill, in effect, not have rounded corners on the left edge. Likewise,if the controlgroup has a vertical layout and its first child ishidden, the controlgroup will not have rounded corners on the topedge.', QType::Boolean),
+            new QModelConnectorParam (get_called_class(), 'Direction', 'By default, controlgroup displays its controls in a horizontal layout.Use this option to use a vertical layout instead.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the controlgroup if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'OnlyVisible', 'Sets whether to exclude invisible children in the assignment ofrounded corners. When set to false, all children of a controlgroup aretaken into account when assigning rounded corners, including hiddenchildren. Thus, if, for example, the controlgroups first child ishidden and the default horizontal layout is applied, the controlgroupwill, in effect, not have rounded corners on the left edge. Likewise,if the controlgroup has a vertical layout and its first child ishidden, the controlgroup will not have rounded corners on the topedge.', Type::BOOLEAN),
         ));
     }
 }

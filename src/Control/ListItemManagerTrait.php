@@ -18,7 +18,7 @@ use QCubed\Type;
  * Class ListItemManagerTrait
  *
  * This is a trait that presents an interface for managing an item list. It is used by the QListControl, QHListControl,
- * and the QHListItem classes, the latter because a QHListItem can itself contain a list of other items.
+ * and the HListItem classes, the latter because a HListItem can itself contain a list of other items.
  *
  * Note that some abstract methods are declared here that must be implemented by the using class:
  * GetId()    - returns the id

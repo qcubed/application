@@ -12,7 +12,7 @@ use QCubed as Q;
  * to make changes to this file.
  *
  * @see CheckboxBase
- * @was QCheckboxradio
+ * @was QJqCheckBox
  */
 
 class Checkbox extends Q\Jqui\CheckboxBase

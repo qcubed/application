@@ -120,7 +120,7 @@ class Server extends ActionBase
     public function renderScript(QControl $objControl)
     {
         return sprintf("qc.pB('%s', '%s', '%s', %s);",
-            $objControl->Form->FormId, $objControl->ControlId, get_class($this->objEvent),
+            $objControl->Form->FormId, $objControl->ControlId, addslashes(get_class($this->objEvent)),
             $this->getActionParameter($objControl));
     }
 }

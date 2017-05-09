@@ -320,7 +320,7 @@ class AccordionGen extends QCubed\Control\Panel
 
             case 'Collapsible':
                 try {
-                    $this->blnCollapsible = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnCollapsible = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'collapsible', $this->blnCollapsible);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -330,7 +330,7 @@ class AccordionGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -340,7 +340,7 @@ class AccordionGen extends QCubed\Control\Panel
 
             case 'Event':
                 try {
-                    $this->strEvent = Type::Cast($mixValue, QType::String);
+                    $this->strEvent = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'event', $this->strEvent);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -355,7 +355,7 @@ class AccordionGen extends QCubed\Control\Panel
 
             case 'HeightStyle':
                 try {
-                    $this->strHeightStyle = Type::Cast($mixValue, QType::String);
+                    $this->strHeightStyle = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'heightStyle', $this->strHeightStyle);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -393,10 +393,10 @@ class AccordionGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Collapsible', 'Whether all the sections can be closed at once. Allows collapsing theactive section.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the accordion if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Event', 'The event that accordion headers will react to in order to activatethe associated panel. Multiple events can be specified, separated by aspace.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the accordion and each panel. Possible values:	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the accordionsparent height.	* \"content\": Each panel will be only as tall as its content.', QType::String),
+            new QModelConnectorParam (get_called_class(), 'Collapsible', 'Whether all the sections can be closed at once. Allows collapsing theactive section.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the accordion if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Event', 'The event that accordion headers will react to in order to activatethe associated panel. Multiple events can be specified, separated by aspace.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the accordion and each panel. Possible values:	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the accordionsparent height.	* \"content\": Each panel will be only as tall as its content.', Type::STRING),
         ));
     }
 }

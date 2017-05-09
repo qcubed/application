@@ -20,7 +20,6 @@ use QCubed\Project\Application;
  * html page (for Server requests), or that is a json response to an Ajax query that will get unpacked and executed in qcubed.js
  *
  * @package QCubed
- * @internal
  */
 class JsResponse
 {
@@ -78,7 +77,7 @@ class JsResponse
      * of specific commands sent to the client.
      *
      * @static
-     * @deprecated Will be eventually removed. If you need to do something in javascript, add it to QAjaxResponse.
+     * @deprecated Will be eventually removed. If you need to do something in javascript, add it to AjaxResponse.
      * @param string $strJavaScript the javascript to execute
      * @param string $strPriority
      * @throws QCallerException

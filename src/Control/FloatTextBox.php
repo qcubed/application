@@ -21,7 +21,7 @@ use QCubed\Type;
  * A subclass of QNumericTextBox -- Validate will also ensure
  * that the Text is a valid float and (if applicable) is in the range of Minimum <= x <= Maximum
  *
- * We do not use the sanitize capability of QTextBox here. Sanitizing the data will change the data, and
+ * We do not use the sanitize capability of TextBox here. Sanitizing the data will change the data, and
  * if the user does not type in a valid float, we will not be able to put up a warning telling the user they made
  * a mistake. You can easily change this behavior by setting the following:
  *    SanitizeFilter = FILTER_SANITIZE_NUMBER_FLOAT

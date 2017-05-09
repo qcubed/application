@@ -10,7 +10,7 @@
 namespace QCubed\FormState;
 
 use QCubed\ObjectBase;
-use QCubed\Control\FormBase;
+use \QCubed\Project\Control\FormBase as QForm;
 use QCubed\Cryptography;
 
 /**
@@ -56,7 +56,7 @@ class SessionHandler extends ObjectBase
 
             if (!is_null(QForm::$EncryptionKey)) {
                 // Use \QCubed\Cryptography to Decrypt
-                $objCrypto = new Cryptography(FormBase::$EncryptionKey, true);
+                $objCrypto = new Cryptography(QForm::$EncryptionKey, true);
                 $strPriorState = $objCrypto->Decrypt($strPriorState);
             }
 
@@ -102,7 +102,7 @@ class SessionHandler extends ObjectBase
         // Return StateIndex
         if (!is_null(QForm::$EncryptionKey)) {
             // Use \QCubed\Cryptography to Encrypt
-            $objCrypto = new Cryptography(FormBase::$EncryptionKey, true);
+            $objCrypto = new Cryptography(QForm::$EncryptionKey, true);
             return $objCrypto->encrypt($strPostDataState);
         } else {
             return $strPostDataState;
@@ -114,7 +114,7 @@ class SessionHandler extends ObjectBase
         // Pull Out intStateIndex
         if (!is_null(QForm::$EncryptionKey)) {
             // Use \QCubed\Cryptography to Decrypt
-            $objCrypto = new Cryptography(FormBase::$EncryptionKey, true);
+            $objCrypto = new Cryptography(QForm::$EncryptionKey, true);
             $strPostDataState = $objCrypto->decrypt($strPostDataState);
         }
 

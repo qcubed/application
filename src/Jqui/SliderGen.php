@@ -355,7 +355,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -365,7 +365,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Max':
                 try {
-                    $this->intMax = Type::Cast($mixValue, QType::Integer);
+                    $this->intMax = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'max', $this->intMax);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -375,7 +375,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Min':
                 try {
-                    $this->intMin = Type::Cast($mixValue, QType::Integer);
+                    $this->intMin = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'min', $this->intMin);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -385,7 +385,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Orientation':
                 try {
-                    $this->strOrientation = Type::Cast($mixValue, QType::String);
+                    $this->strOrientation = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'orientation', $this->strOrientation);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -400,7 +400,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Step':
                 try {
-                    $this->intStep = Type::Cast($mixValue, QType::Integer);
+                    $this->intStep = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'step', $this->intStep);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -410,7 +410,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Value':
                 try {
-                    $this->intValue = Type::Cast($mixValue, QType::Integer);
+                    $this->intValue = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'value', $this->intValue);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -420,7 +420,7 @@ class SliderGen extends QCubed\Control\Panel
 
             case 'Values':
                 try {
-                    $this->arrValues = Type::Cast($mixValue, QType::ArrayType);
+                    $this->arrValues = Type::Cast($mixValue, Type::ARRAY_TYPE);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'values', $this->arrValues);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -453,13 +453,13 @@ class SliderGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the slider if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Max', 'The maximum value of the slider.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Min', 'The minimum value of the slider.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Orientation', 'Determines whether the slider handles move horizontally (min on left,max on right) or vertically (min on bottom, max on top). Possiblevalues: \"horizontal\", \"vertical\".', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Step', 'Determines the size or amount of each interval or step the slidertakes between the min and max. The full specified value range of theslider (max - min) should be evenly divisible by the step.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Value', 'Determines the value of the slider, if theres only one handle. Ifthere is more than one handle, determines the value of the firsthandle.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Values', 'This option can be used to specify multiple handles. If the rangeoption is set to true, the length of values should be 2.', QType::ArrayType),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the slider if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Max', 'The maximum value of the slider.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Min', 'The minimum value of the slider.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Orientation', 'Determines whether the slider handles move horizontally (min on left,max on right) or vertically (min on bottom, max on top). Possiblevalues: \"horizontal\", \"vertical\".', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Step', 'Determines the size or amount of each interval or step the slidertakes between the min and max. The full specified value range of theslider (max - min) should be evenly divisible by the step.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Value', 'Determines the value of the slider, if theres only one handle. Ifthere is more than one handle, determines the value of the firsthandle.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Values', 'This option can be used to specify multiple handles. If the rangeoption is set to true, the length of values should be 2.', Type::ARRAY_TYPE),
         ));
     }
 }

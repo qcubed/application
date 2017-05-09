@@ -444,7 +444,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'AutoOpen':
                 try {
-                    $this->blnAutoOpen = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoOpen = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoOpen', $this->blnAutoOpen);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -464,7 +464,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'CloseOnEscape':
                 try {
-                    $this->blnCloseOnEscape = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnCloseOnEscape = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'closeOnEscape', $this->blnCloseOnEscape);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -474,7 +474,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'CloseText':
                 try {
-                    $this->strCloseText = Type::Cast($mixValue, QType::String);
+                    $this->strCloseText = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'closeText', $this->strCloseText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -484,7 +484,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'DialogClass':
                 try {
-                    $this->strDialogClass = Type::Cast($mixValue, QType::String);
+                    $this->strDialogClass = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dialogClass', $this->strDialogClass);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -494,7 +494,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Draggable':
                 try {
-                    $this->blnDraggable = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDraggable = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'draggable', $this->blnDraggable);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -514,7 +514,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MaxHeight':
                 try {
-                    $this->intMaxHeight = Type::Cast($mixValue, QType::Integer);
+                    $this->intMaxHeight = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'maxHeight', $this->intMaxHeight);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -524,7 +524,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MaxWidth':
                 try {
-                    $this->intMaxWidth = Type::Cast($mixValue, QType::Integer);
+                    $this->intMaxWidth = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'maxWidth', $this->intMaxWidth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -534,7 +534,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MinHeight':
                 try {
-                    $this->intMinHeight = Type::Cast($mixValue, QType::Integer);
+                    $this->intMinHeight = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'minHeight', $this->intMinHeight);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -544,7 +544,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'MinWidth':
                 try {
-                    $this->intMinWidth = Type::Cast($mixValue, QType::Integer);
+                    $this->intMinWidth = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'minWidth', $this->intMinWidth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -554,7 +554,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Modal':
                 try {
-                    $this->blnModal = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnModal = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'modal', $this->blnModal);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -569,7 +569,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Resizable':
                 try {
-                    $this->blnResizable = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnResizable = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'resizable', $this->blnResizable);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -584,7 +584,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Title':
                 try {
-                    $this->strTitle = Type::Cast($mixValue, QType::String);
+                    $this->strTitle = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'title', $this->strTitle);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -594,7 +594,7 @@ class DialogGen extends QCubed\Control\Panel
 
             case 'Width':
                 try {
-                    $this->intWidth = Type::Cast($mixValue, QType::Integer);
+                    $this->intWidth = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'width', $this->intWidth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -622,19 +622,19 @@ class DialogGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'AutoOpen', 'If set to true, the dialog will automatically open uponinitialization. If false, the dialog will stay hidden until the open()method is called.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'CloseOnEscape', 'Specifies whether the dialog should close when it has focus and theuser presses the escape (ESC) key.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'CloseText', 'Specifies the text for the close button. Note that the close text isvisibly hidden when using a standard theme.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'DialogClass', 'The specified class name(s) will be added to the dialog, foradditional theming.The dialogClass option has been deprecated in favor of the classesoption, using the ui-dialog property.(version deprecated: 1.12)', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Draggable', 'If set to true, the dialog will be draggable by the title bar.Requires the jQuery UI Draggable widget to be included.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'MaxHeight', 'The maximum height to which the dialog can be resized, in pixels.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'MaxWidth', 'The maximum width to which the dialog can be resized, in pixels.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'MinHeight', 'The minimum height to which the dialog can be resized, in pixels.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'MinWidth', 'The minimum width to which the dialog can be resized, in pixels.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Modal', 'If set to true, the dialog will have modal behavior; other items onthe page will be disabled, i.e., cannot be interacted with. Modaldialogs create an overlay below the dialog but above other pageelements.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Resizable', 'If set to true, the dialog will be resizable. Requires the jQuery UIResizable widget to be included.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Title', 'Specifies the title of the dialog. If the value is null, the titleattribute on the dialog source element will be used.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Width', 'The width of the dialog, in pixels.', QType::Integer),
+            new QModelConnectorParam (get_called_class(), 'AutoOpen', 'If set to true, the dialog will automatically open uponinitialization. If false, the dialog will stay hidden until the open()method is called.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'CloseOnEscape', 'Specifies whether the dialog should close when it has focus and theuser presses the escape (ESC) key.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'CloseText', 'Specifies the text for the close button. Note that the close text isvisibly hidden when using a standard theme.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'DialogClass', 'The specified class name(s) will be added to the dialog, foradditional theming.The dialogClass option has been deprecated in favor of the classesoption, using the ui-dialog property.(version deprecated: 1.12)', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Draggable', 'If set to true, the dialog will be draggable by the title bar.Requires the jQuery UI Draggable widget to be included.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'MaxHeight', 'The maximum height to which the dialog can be resized, in pixels.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'MaxWidth', 'The maximum width to which the dialog can be resized, in pixels.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'MinHeight', 'The minimum height to which the dialog can be resized, in pixels.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'MinWidth', 'The minimum width to which the dialog can be resized, in pixels.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Modal', 'If set to true, the dialog will have modal behavior; other items onthe page will be disabled, i.e., cannot be interacted with. Modaldialogs create an overlay below the dialog but above other pageelements.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Resizable', 'If set to true, the dialog will be resizable. Requires the jQuery UIResizable widget to be included.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Title', 'Specifies the title of the dialog. If the value is null, the titleattribute on the dialog source element will be used.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Width', 'The width of the dialog, in pixels.', Type::INTEGER),
         ));
     }
 }

@@ -273,7 +273,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -283,7 +283,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'Icon':
                 try {
-                    $this->strIcon = Type::Cast($mixValue, QType::String);
+                    $this->strIcon = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'icon', $this->strIcon);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -293,7 +293,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'IconPosition':
                 try {
-                    $this->strIconPosition = Type::Cast($mixValue, QType::String);
+                    $this->strIconPosition = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'iconPosition', $this->strIconPosition);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -303,7 +303,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'Label':
                 try {
-                    $this->strLabel = Type::Cast($mixValue, QType::String);
+                    $this->strLabel = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'label', $this->strLabel);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -313,7 +313,7 @@ class ButtonGen extends QCubed\Project\Control\Button
 
             case 'ShowLabel':
                 try {
-                    $this->blnShowLabel = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnShowLabel = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showLabel', $this->blnShowLabel);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -346,11 +346,11 @@ class ButtonGen extends QCubed\Project\Control\Button
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the button if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Icon', 'Icon to display, with or without text (see showLabel option). Bydefault, the icon is displayed on the left of the label text. Thepositioning can be controlled using the iconPosition option.The value for this option must match an icon class name, e.g.,\"ui-icon-gear\".When using an input of type button, submit or reset, icons are notsupported.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'IconPosition', 'Where to display the icon: Valid values are \"beginning\", \"end\", \"top\"and \"bottom\". In a left-to-right (LTR) display, \"beginning\" refers tothe left, in a right-to-left (RTL, e.g. in Hebrew or Arabic), itrefers to the right.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'Label', 'Text to show in the button. When not specified (null), the elementsHTML content is used, or its value attribute if the element is aninput element of type submit or reset, or the HTML content of theassociated label element if the element is an input of type radio orcheckbox.When using an input of type button, submit or reset, support islimited to plain text labels.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'ShowLabel', 'Whether to show the label. When set to false no text will bedisplayed, but the icon option must be used, otherwise the showLabeloption will be ignored.', QType::Boolean),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the button if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Icon', 'Icon to display, with or without text (see showLabel option). Bydefault, the icon is displayed on the left of the label text. Thepositioning can be controlled using the iconPosition option.The value for this option must match an icon class name, e.g.,\"ui-icon-gear\".When using an input of type button, submit or reset, icons are notsupported.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'IconPosition', 'Where to display the icon: Valid values are \"beginning\", \"end\", \"top\"and \"bottom\". In a left-to-right (LTR) display, \"beginning\" refers tothe left, in a right-to-left (RTL, e.g. in Hebrew or Arabic), itrefers to the right.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'Label', 'Text to show in the button. When not specified (null), the elementsHTML content is used, or its value attribute if the element is aninput element of type submit or reset, or the HTML content of theassociated label element if the element is an input of type radio orcheckbox.When using an input of type button, submit or reset, support islimited to plain text labels.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'ShowLabel', 'Whether to show the label. When set to false no text will bedisplayed, but the icon option must be used, otherwise the showLabeloption will be ignored.', Type::BOOLEAN),
         ));
     }
 }

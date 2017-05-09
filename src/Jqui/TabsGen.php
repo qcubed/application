@@ -401,7 +401,7 @@ class TabsGen extends QCubed\Control\Panel
 
             case 'Collapsible':
                 try {
-                    $this->blnCollapsible = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnCollapsible = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'collapsible', $this->blnCollapsible);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -416,7 +416,7 @@ class TabsGen extends QCubed\Control\Panel
 
             case 'Event':
                 try {
-                    $this->strEvent = Type::Cast($mixValue, QType::String);
+                    $this->strEvent = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'event', $this->strEvent);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -426,7 +426,7 @@ class TabsGen extends QCubed\Control\Panel
 
             case 'HeightStyle':
                 try {
-                    $this->strHeightStyle = Type::Cast($mixValue, QType::String);
+                    $this->strHeightStyle = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'heightStyle', $this->strHeightStyle);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -469,9 +469,9 @@ class TabsGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Collapsible', 'When set to true, the active panel can be closed.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Event', 'The type of event that the tabs should react to in order to activatethe tab. To activate on hover, use \"mouseover\".', QType::String),
-            new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the tabs widget and each panel. Possiblevalues: 	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the tabs parentheight.	* \"content\": Each panel will be only as tall as its content.', QType::String),
+            new QModelConnectorParam (get_called_class(), 'Collapsible', 'When set to true, the active panel can be closed.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Event', 'The type of event that the tabs should react to in order to activatethe tab. To activate on hover, use \"mouseover\".', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'HeightStyle', 'Controls the height of the tabs widget and each panel. Possiblevalues: 	* \"auto\": All panels will be set to the height of the tallest panel.	* \"fill\": Expand to the available height based on the tabs parentheight.	* \"content\": Each panel will be only as tall as its content.', Type::STRING),
         ));
     }
 }

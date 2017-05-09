@@ -47,7 +47,7 @@ class VirtualAttribute extends Data
      *
      * @param string $strName
      *
-     * @return bool|int|mixed|null|QHtmlTableBase|string
+     * @return mixed
      * @throws Exception
      * @throws Caller
      */

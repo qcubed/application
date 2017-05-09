@@ -14,6 +14,7 @@ use QCubed\Exception\InvalidCast;
 use QCubed\QDateTime;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;
+use QCubed\Project\Control\ControlBase as QControl;
 
 
 /**
@@ -119,7 +120,7 @@ abstract class Data extends TableColumnBase
      *
      * @param string $strName
      *
-     * @return bool|int|mixed|QHtmlTableBase|string
+     * @return mixed
      * @throws Exception
      * @throws Caller
      */

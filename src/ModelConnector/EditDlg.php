@@ -422,7 +422,7 @@ class EditDlg extends QDialog
             }
         }
 
-        // $controls is now an array indexed by QType, with each entry a QControl type name
+        // $controls is now an array indexed by Type, with each entry a QControl type name
 
         // Figure out what type of control we are looking for
         // For the most part, the control category types are the same as the database type

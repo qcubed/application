@@ -9,12 +9,14 @@
 
 namespace QCubed\Action;
 
+use QCubed\Exception\Caller;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Control\TextBox as QTextBox;
 
 /**
  * Class SelectControl
  *
- * Selects contents inside a QTextBox on the client-side/browser
+ * Selects contents inside a TextBox on the client-side/browser
  *
  * @was QSelectControlAction
  * @package QCubed\Action
@@ -29,12 +31,12 @@ class SelectControl extends ActionBase
      *
      * @param QTextBox $objControl
      *
-     * @throws \QCubed\Exception\Caller
+     * @throws Caller
      */
     public function __construct($objControl)
     {
         if (!($objControl instanceof QTextBox)) {
-            throw new \QCubed\Exception\Caller('First parameter of constructor is expecting an object of type QTextBox');
+            throw new Caller('First parameter of constructor is expecting an object of type TextBox');
         }
 
         $this->strControlId = $objControl->ControlId;

@@ -85,7 +85,7 @@ class QCallable extends Data
      *
      * @param string $strName
      *
-     * @return bool|callable|int|mixed|QHtmlTableBase|string
+     * @return mixed
      * @throws Exception
      * @throws Caller
      */

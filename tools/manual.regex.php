@@ -110,14 +110,14 @@ $a['const']['QModelConnectorCreateType::CreateOrEdit'] = '\\QCubed\\ModelConnect
 $a['const']['QModelConnectorCreateType::CreateOnRecordNotFound'] = '\\QCubed\\ModelConnector\\Options::CREATE_ON_RECORD_NOT_FOUND';
 $a['const']['QModelConnectorCreateType::EditOnly'] = '\\QCubed\\ModelConnector\\Options::EDIT_ONLY';
 
-$a['regex']['\\bForm_Run\\s{0,3}('] = 'formRun(';
-$a['regex']['\\bForm_Load\\s{0,3}('] = 'formLoad(';
-$a['regex']['\\bForm_Create\\s{0,3}('] = 'formCreate(';
-$a['regex']['\\bForm_PreRender\\s{0,3}('] = 'formPreRender(';
-$a['regex']['\\bForm_Initialize\\s{0,3}('] = 'formInitialize(';
-$a['regex']['\\bForm_Validate\\s{0,3}('] = 'formValidate(';
-$a['regex']['\\bForm_Invalid\\s{0,3}('] = 'formInvalid(';
-$a['regex']['\\bForm_Exit\\s{0,3}('] = 'formExit(';
+$a['regex']['\\bForm_Run\\s{0,3}\\('] = 'formRun(';
+$a['regex']['\\bForm_Load\\s{0,3}\\('] = 'formLoad(';
+$a['regex']['\\bForm_Create\\s{0,3}\\('] = 'formCreate(';
+$a['regex']['\\bForm_PreRender\\s{0,3}\\('] = 'formPreRender(';
+$a['regex']['\\bForm_Initialize\\s{0,3}\\('] = 'formInitialize(';
+$a['regex']['\\bForm_Validate\\s{0,3}\\('] = 'formValidate(';
+$a['regex']['\\bForm_Invalid\\s{0,3}\\('] = 'formInvalid(';
+$a['regex']['\\bForm_Exit\\s{0,3}\\('] = 'formExit(';
 
 $a['regex']['\\$this->RenderBegin\\('] = '$this->renderBegin(';
 $a['regex']['\\$this->RenderEnd\\('] = '$this->renderEnd(';

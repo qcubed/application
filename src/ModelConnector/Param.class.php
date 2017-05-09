@@ -15,7 +15,7 @@ use QCubed\Application\t;
 use QCubed\Exception\Caller;
 use QCubed;
 use QCubed\ObjectBase;
-use QCubed\Type as QType;
+use QCubed\Type;
 
 /**
  * Class Param
@@ -68,7 +68,7 @@ class Param extends ObjectBase
      * associated with this parameter, and caches that control so that its easy to get to.
      *
      * @param QControl|null $objParent
-     * @return null|QControl|QIntegerTextBox|QListBox|QRadioButtonList|QTextBox
+     * @return null|QControl
      */
     public function getControl($objParent = null)
     {
@@ -88,12 +88,12 @@ class Param extends ObjectBase
      * Creates the actual control that will edit the value.
      *
      * @param QControl $objParent
-     * @return QIntegerTextBox|QListBox|QRadioButtonList|QTextBox
+     * @return IntegerTextBox|ListBox|RadioButtonList|TextBox
      */
     protected function createControl(QControl $objParent)
     {
         switch ($this->controlType) {
-            case QType::BOOLEAN:
+            case Type::BOOLEAN:
                 $ctl = new RadioButtonList($objParent);
                 $ctl->addItem('True', true);
                 $ctl->addItem('False', false);
@@ -101,15 +101,15 @@ class Param extends ObjectBase
                 $ctl->RepeatColumns = 3;
                 break;
 
-            case QType::STRING:
+            case Type::STRING:
                 $ctl = new TextBox($objParent);
                 break;
 
-            case QType::INTEGER:
+            case Type::INTEGER:
                 $ctl = new IntegerTextBox($objParent);
                 break;
 
-            case QType::ARRAY_TYPE:    // an array the user will specify in a comma separated list
+            case Type::ARRAY_TYPE:    // an array the user will specify in a comma separated list
                 $ctl = new TextBox($objParent);
                 break;
 

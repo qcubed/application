@@ -27,7 +27,7 @@ class Purifier {
     }
 
     protected function config() {
-        $objHTMLPurifierConfig = HTMLPurifier_Config::createDefault();
+        $objHTMLPurifierConfig = \HTMLPurifier_Config::createDefault();
         $objHTMLPurifierConfig->set('HTML.ForbiddenElements',
             'script,applet,embed,style,link,iframe,body,object');
         $objHTMLPurifierConfig->set('HTML.ForbiddenAttributes',
@@ -48,7 +48,7 @@ class Purifier {
             $objPurifier = new HTMLPurifier($objCustomConfig);
         } else {
             if (!$this->objPurifier) {
-                $this->objPurifier = new HTMLPurifier($this->objConfig);
+                $this->objPurifier = new \HTMLPurifier($this->objConfig);
             }
             $objPurifier = $this->objPurifier;
         }

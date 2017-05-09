@@ -11,6 +11,7 @@ namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\QString;
 
 /**
  * Class JavaScript

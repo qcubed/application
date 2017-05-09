@@ -251,7 +251,7 @@ class ProgressbarGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -261,7 +261,7 @@ class ProgressbarGen extends QCubed\Control\Panel
 
             case 'Max':
                 try {
-                    $this->intMax = Type::Cast($mixValue, QType::Integer);
+                    $this->intMax = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'max', $this->intMax);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -299,8 +299,8 @@ class ProgressbarGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the progressbar if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Max', 'The maximum value of the progressbar.', QType::Integer),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the progressbar if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Max', 'The maximum value of the progressbar.', Type::INTEGER),
         ));
     }
 }

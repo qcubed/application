@@ -9,7 +9,7 @@ namespace QCubed\Project\Control;
  */
 class TextBox extends \QCubed\Control\TextBoxBase
 {
-    // Feel free to specify global display preferences/defaults for all QTextBox controls
+    // Feel free to specify global display preferences/defaults for all TextBox controls
     /** @var string Default CSS class for the textbox */
     protected $strCssClass = 'textbox';
 

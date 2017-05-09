@@ -44,7 +44,7 @@ class HList extends QControl
     protected $strTag = 'ul';
     /** @var string  item tag */
     protected $strItemTag = 'li';
-    /** @var null|QListItemStyle The common style for all elements in the list */
+    /** @var null|ListItemStyle The common style for all elements in the list */
     protected $objItemStyle = null;
     /** @var null|Cryptography the temporary cryptography object for encrypting database values sent to the client */
     protected $objCrypt = null;
@@ -54,14 +54,14 @@ class HList extends QControl
     /**
      * Adds an item to the list.
      *
-     * @param QHListItem|string $mixListItemOrName
+     * @param HListItem|string $mixListItemOrName
      * @param null|string $strValue
      * @param null|string $strAnchor
      */
     public function addItem($mixListItemOrName, $strValue = null, $strAnchor = null)
     {
         if (gettype($mixListItemOrName) == Type::OBJECT) {
-            $objListItem = Type::cast($mixListItemOrName, "QHListItem");
+            $objListItem = Type::cast($mixListItemOrName, "\QCubed\Control\HListItem");
         } else {
             $objListItem = new HListItem($mixListItemOrName, $strValue, $strAnchor);
         }
@@ -71,7 +71,7 @@ class HList extends QControl
 
     /**
      * Adds an array of items to the list. The array can also be an array of key>val pairs
-     * @param array $objItemArray An array of QHListItems or key=>val pairs to be sent to constructor.
+     * @param array $objItemArray An array of HListItems or key=>val pairs to be sent to constructor.
      */
     public function addItems($objItemArray)
     {

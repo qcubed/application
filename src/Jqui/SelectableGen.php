@@ -285,7 +285,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'AutoRefresh':
                 try {
-                    $this->blnAutoRefresh = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoRefresh = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoRefresh', $this->blnAutoRefresh);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -305,7 +305,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Delay':
                 try {
-                    $this->intDelay = Type::Cast($mixValue, QType::Integer);
+                    $this->intDelay = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'delay', $this->intDelay);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -315,7 +315,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -325,7 +325,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Distance':
                 try {
-                    $this->intDistance = Type::Cast($mixValue, QType::Integer);
+                    $this->intDistance = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'distance', $this->intDistance);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -340,7 +340,7 @@ class SelectableGen extends QCubed\Control\Panel
 
             case 'Tolerance':
                 try {
-                    $this->strTolerance = Type::Cast($mixValue, QType::String);
+                    $this->strTolerance = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'tolerance', $this->strTolerance);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -373,11 +373,11 @@ class SelectableGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'AutoRefresh', 'This determines whether to refresh (recalculate) the position and sizeof each selectee at the beginning of each select operation. If youhave many items, you may want to set this to false and call therefresh() method manually.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Delay', 'Time in milliseconds to define when the selecting should start. Thishelps prevent unwanted selections when clicking on an element.(versiondeprecated: 1.12)', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectable if set to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'Distance', 'Tolerance, in pixels, for when selecting should start. If specified,selecting will not start until the mouse has been dragged beyond thespecified distance.(version deprecated: 1.12)', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether the lasso shouldselect an item. Possible values: 	* \"fit\": Lasso overlaps the item entirely.	* \"touch\": Lasso overlaps the item by any amount.', QType::String),
+            new QModelConnectorParam (get_called_class(), 'AutoRefresh', 'This determines whether to refresh (recalculate) the position and sizeof each selectee at the beginning of each select operation. If youhave many items, you may want to set this to false and call therefresh() method manually.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Delay', 'Time in milliseconds to define when the selecting should start. Thishelps prevent unwanted selections when clicking on an element.(versiondeprecated: 1.12)', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectable if set to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'Distance', 'Tolerance, in pixels, for when selecting should start. If specified,selecting will not start until the mouse has been dragged beyond thespecified distance.(version deprecated: 1.12)', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'Tolerance', 'Specifies which mode to use for testing whether the lasso shouldselect an item. Possible values: 	* \"fit\": Lasso overlaps the item entirely.	* \"touch\": Lasso overlaps the item by any amount.', Type::STRING),
         ));
     }
 }

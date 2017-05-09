@@ -724,7 +724,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'AltFormat':
                 try {
-                    $this->strAltFormat = Type::Cast($mixValue, QType::String);
+                    $this->strAltFormat = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'altFormat', $this->strAltFormat);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -734,7 +734,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'AppendText':
                 try {
-                    $this->strAppendText = Type::Cast($mixValue, QType::String);
+                    $this->strAppendText = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'appendText', $this->strAppendText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -744,7 +744,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'AutoSize':
                 try {
-                    $this->blnAutoSize = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnAutoSize = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'autoSize', $this->blnAutoSize);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -764,7 +764,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ButtonImage':
                 try {
-                    $this->strButtonImage = Type::Cast($mixValue, QType::String);
+                    $this->strButtonImage = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'buttonImage', $this->strButtonImage);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -774,7 +774,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ButtonImageOnly':
                 try {
-                    $this->blnButtonImageOnly = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnButtonImageOnly = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'buttonImageOnly', $this->blnButtonImageOnly);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -784,7 +784,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ButtonText':
                 try {
-                    $this->strButtonText = Type::Cast($mixValue, QType::String);
+                    $this->strButtonText = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'buttonText', $this->strButtonText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -799,7 +799,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ChangeMonth':
                 try {
-                    $this->blnChangeMonth = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnChangeMonth = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'changeMonth', $this->blnChangeMonth);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -809,7 +809,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ChangeYear':
                 try {
-                    $this->blnChangeYear = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnChangeYear = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'changeYear', $this->blnChangeYear);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -819,7 +819,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'CloseText':
                 try {
-                    $this->strCloseText = Type::Cast($mixValue, QType::String);
+                    $this->strCloseText = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'closeText', $this->strCloseText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -829,7 +829,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ConstrainInput':
                 try {
-                    $this->blnConstrainInput = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnConstrainInput = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'constrainInput', $this->blnConstrainInput);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -839,7 +839,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'CurrentText':
                 try {
-                    $this->strCurrentText = Type::Cast($mixValue, QType::String);
+                    $this->strCurrentText = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'currentText', $this->strCurrentText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -849,7 +849,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'JqDateFormat':
                 try {
-                    $this->strJqDateFormat = Type::Cast($mixValue, QType::String);
+                    $this->strJqDateFormat = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dateFormat', $this->strJqDateFormat);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -859,7 +859,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'DayNames':
                 try {
-                    $this->arrDayNames = Type::Cast($mixValue, QType::ArrayType);
+                    $this->arrDayNames = Type::Cast($mixValue, Type::ARRAY_TYPE);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dayNames', $this->arrDayNames);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -869,7 +869,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'DayNamesMin':
                 try {
-                    $this->arrDayNamesMin = Type::Cast($mixValue, QType::ArrayType);
+                    $this->arrDayNamesMin = Type::Cast($mixValue, Type::ARRAY_TYPE);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dayNamesMin', $this->arrDayNamesMin);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -879,7 +879,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'DayNamesShort':
                 try {
-                    $this->arrDayNamesShort = Type::Cast($mixValue, QType::ArrayType);
+                    $this->arrDayNamesShort = Type::Cast($mixValue, Type::ARRAY_TYPE);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'dayNamesShort', $this->arrDayNamesShort);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -899,7 +899,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'FirstDay':
                 try {
-                    $this->intFirstDay = Type::Cast($mixValue, QType::Integer);
+                    $this->intFirstDay = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'firstDay', $this->intFirstDay);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -909,7 +909,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'GotoCurrent':
                 try {
-                    $this->blnGotoCurrent = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnGotoCurrent = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'gotoCurrent', $this->blnGotoCurrent);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -919,7 +919,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'HideIfNoPrevNext':
                 try {
-                    $this->blnHideIfNoPrevNext = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnHideIfNoPrevNext = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'hideIfNoPrevNext', $this->blnHideIfNoPrevNext);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -929,7 +929,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'IsRTL':
                 try {
-                    $this->blnIsRTL = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnIsRTL = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'isRTL', $this->blnIsRTL);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -949,7 +949,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'MonthNames':
                 try {
-                    $this->arrMonthNames = Type::Cast($mixValue, QType::ArrayType);
+                    $this->arrMonthNames = Type::Cast($mixValue, Type::ARRAY_TYPE);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'monthNames', $this->arrMonthNames);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -959,7 +959,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'MonthNamesShort':
                 try {
-                    $this->arrMonthNamesShort = Type::Cast($mixValue, QType::ArrayType);
+                    $this->arrMonthNamesShort = Type::Cast($mixValue, Type::ARRAY_TYPE);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'monthNamesShort', $this->arrMonthNamesShort);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -969,7 +969,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'NavigationAsDateFormat':
                 try {
-                    $this->blnNavigationAsDateFormat = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnNavigationAsDateFormat = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'navigationAsDateFormat', $this->blnNavigationAsDateFormat);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -979,7 +979,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'NextText':
                 try {
-                    $this->strNextText = Type::Cast($mixValue, QType::String);
+                    $this->strNextText = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'nextText', $this->strNextText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1009,7 +1009,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'PrevText':
                 try {
-                    $this->strPrevText = Type::Cast($mixValue, QType::String);
+                    $this->strPrevText = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'prevText', $this->strPrevText);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1019,7 +1019,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'SelectOtherMonths':
                 try {
-                    $this->blnSelectOtherMonths = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnSelectOtherMonths = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'selectOtherMonths', $this->blnSelectOtherMonths);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1034,7 +1034,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ShowAnim':
                 try {
-                    $this->strShowAnim = Type::Cast($mixValue, QType::String);
+                    $this->strShowAnim = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showAnim', $this->strShowAnim);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1044,7 +1044,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ShowButtonPanel':
                 try {
-                    $this->blnShowButtonPanel = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnShowButtonPanel = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showButtonPanel', $this->blnShowButtonPanel);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1054,7 +1054,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ShowCurrentAtPos':
                 try {
-                    $this->intShowCurrentAtPos = Type::Cast($mixValue, QType::Integer);
+                    $this->intShowCurrentAtPos = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showCurrentAtPos', $this->intShowCurrentAtPos);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1064,7 +1064,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ShowMonthAfterYear':
                 try {
-                    $this->blnShowMonthAfterYear = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnShowMonthAfterYear = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showMonthAfterYear', $this->blnShowMonthAfterYear);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1074,7 +1074,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ShowOn':
                 try {
-                    $this->strShowOn = Type::Cast($mixValue, QType::String);
+                    $this->strShowOn = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showOn', $this->strShowOn);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1089,7 +1089,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ShowOtherMonths':
                 try {
-                    $this->blnShowOtherMonths = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnShowOtherMonths = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showOtherMonths', $this->blnShowOtherMonths);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1099,7 +1099,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'ShowWeek':
                 try {
-                    $this->blnShowWeek = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnShowWeek = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'showWeek', $this->blnShowWeek);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1109,7 +1109,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'StepMonths':
                 try {
-                    $this->intStepMonths = Type::Cast($mixValue, QType::Integer);
+                    $this->intStepMonths = Type::Cast($mixValue, Type::INTEGER);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'stepMonths', $this->intStepMonths);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1119,7 +1119,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'WeekHeader':
                 try {
-                    $this->strWeekHeader = Type::Cast($mixValue, QType::String);
+                    $this->strWeekHeader = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'weekHeader', $this->strWeekHeader);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1129,7 +1129,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'YearRange':
                 try {
-                    $this->strYearRange = Type::Cast($mixValue, QType::String);
+                    $this->strYearRange = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'yearRange', $this->strYearRange);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1139,7 +1139,7 @@ class DatepickerGen extends QCubed\Control\Panel
 
             case 'YearSuffix':
                 try {
-                    $this->strYearSuffix = Type::Cast($mixValue, QType::String);
+                    $this->strYearSuffix = Type::Cast($mixValue, Type::STRING);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'yearSuffix', $this->strYearSuffix);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -1167,42 +1167,42 @@ class DatepickerGen extends QCubed\Control\Panel
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'AltFormat', 'The dateFormat to be used for the altField option. This allows onedate format to be shown to the user for selection purposes, while adifferent format is actually sent behind the scenes. For a full listof the possible formats see the formatDate function', QType::String),
-            new QModelConnectorParam (get_called_class(), 'AppendText', 'The text to display after each date field, e.g., to show the requiredformat.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'AutoSize', 'Set to true to automatically resize the input field to accommodatedates in the current dateFormat.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'ButtonImage', 'A URL of an image to use to display the datepicker when the showOnoption is set to \"button\" or \"both\". If set, the buttonText optionbecomes the alt value and is not directly displayed.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'ButtonImageOnly', 'Whether the button image should be rendered by itself instead ofinside a button element. This option is only relevant if thebuttonImage option has also been set.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'ButtonText', 'The text to display on the trigger button. Use in conjunction with theshowOn option set to \"button\" or \"both\".', QType::String),
-            new QModelConnectorParam (get_called_class(), 'ChangeMonth', 'Whether the month should be rendered as a dropdown instead of text.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'ChangeYear', 'Whether the year should be rendered as a dropdown instead of text. Usethe yearRange option to control which years are made available forselection.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'CloseText', 'The text to display for the close link. Use the showButtonPanel optionto display this button.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'ConstrainInput', 'When true, entry in the input field is constrained to those charactersallowed by the current dateFormat option.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'CurrentText', 'The text to display for the current day link. Use the showButtonPaneloption to display this button.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'JqDateFormat', 'The format for parsed and displayed dates. For a full list of thepossible formats see the formatDate function.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'DayNames', 'The list of long day names, starting from Sunday, for use as requestedvia the dateFormat option.', QType::ArrayType),
-            new QModelConnectorParam (get_called_class(), 'DayNamesMin', 'The list of minimised day names, starting from Sunday, for use ascolumn headers within the datepicker.', QType::ArrayType),
-            new QModelConnectorParam (get_called_class(), 'DayNamesShort', 'The list of abbreviated day names, starting from Sunday, for use asrequested via the dateFormat option.', QType::ArrayType),
-            new QModelConnectorParam (get_called_class(), 'FirstDay', 'Set the first day of the week: Sunday is 0, Monday is 1, etc.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'GotoCurrent', 'When true, the current day link moves to the currently selected dateinstead of today.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'HideIfNoPrevNext', 'Normally the previous and next links are disabled when not applicable(see the minDate and maxDate options). You can hide them altogether bysetting this attribute to true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'IsRTL', 'Whether the current language is drawn from right to left.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'MonthNames', 'The list of full month names, for use as requested via the dateFormatoption.', QType::ArrayType),
-            new QModelConnectorParam (get_called_class(), 'MonthNamesShort', 'The list of abbreviated month names, as used in the month header oneach datepicker and as requested via the dateFormat option.', QType::ArrayType),
-            new QModelConnectorParam (get_called_class(), 'NavigationAsDateFormat', 'Whether the currentText, prevText and nextText options should beparsed as dates by the formatDate function, allowing them to displaythe target month names for example.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'NextText', 'The text to display for the next month link. With the standardThemeRoller styling, this value is replaced by an icon.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'PrevText', 'The text to display for the previous month link. With the standardThemeRoller styling, this value is replaced by an icon.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'SelectOtherMonths', 'Whether days in other months shown before or after the current monthare selectable. This only applies if the showOtherMonths option is setto true.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'ShowAnim', 'The name of the animation used to show and hide the datepicker. Use\"show\" (the default), \"slideDown\", \"fadeIn\", any of the jQuery UIeffects. Set to an empty string to disable animation.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'ShowButtonPanel', 'Whether to display a button pane underneath the calendar. The buttonpane contains two buttons, a Today button that links to the currentday, and a Done button that closes the datepicker. The buttons textcan be customized using the currentText and closeText optionsrespectively.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'ShowCurrentAtPos', 'When displaying multiple months via the numberOfMonths option, theshowCurrentAtPos option defines which position to display the currentmonth in.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'ShowMonthAfterYear', 'Whether to show the month after the year in the header.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'ShowOn', 'When the datepicker should appear. The datepicker can appear when thefield receives focus (\"focus\"), when a button is clicked (\"button\"),or when either event occurs (\"both\").', QType::String),
-            new QModelConnectorParam (get_called_class(), 'ShowOtherMonths', 'Whether to display dates in other months (non-selectable) at the startor end of the current month. To make these days selectable use theselectOtherMonths option.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'ShowWeek', 'When true, a column is added to show the week of the year. ThecalculateWeek option determines how the week of the year iscalculated. You may also want to change the firstDay option.', QType::Boolean),
-            new QModelConnectorParam (get_called_class(), 'StepMonths', 'Set how many months to move when clicking the previous/next links.', QType::Integer),
-            new QModelConnectorParam (get_called_class(), 'WeekHeader', 'The text to display for the week of the year column heading. Use theshowWeek option to display this column.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'YearRange', 'The range of years displayed in the year drop-down: either relative totodays year (\"-nn:+nn\"), relative to the currently selected year(\"c-nn:c+nn\"), absolute (\"nnnn:nnnn\"), or combinations of theseformats (\"nnnn:-nn\"). Note that this option only affects what appearsin the drop-down, to restrict which dates may be selected use theminDate and/or maxDate options.', QType::String),
-            new QModelConnectorParam (get_called_class(), 'YearSuffix', 'Additional text to display after the year in the month headers.', QType::String),
+            new QModelConnectorParam (get_called_class(), 'AltFormat', 'The dateFormat to be used for the altField option. This allows onedate format to be shown to the user for selection purposes, while adifferent format is actually sent behind the scenes. For a full listof the possible formats see the formatDate function', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'AppendText', 'The text to display after each date field, e.g., to show the requiredformat.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'AutoSize', 'Set to true to automatically resize the input field to accommodatedates in the current dateFormat.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'ButtonImage', 'A URL of an image to use to display the datepicker when the showOnoption is set to \"button\" or \"both\". If set, the buttonText optionbecomes the alt value and is not directly displayed.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'ButtonImageOnly', 'Whether the button image should be rendered by itself instead ofinside a button element. This option is only relevant if thebuttonImage option has also been set.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'ButtonText', 'The text to display on the trigger button. Use in conjunction with theshowOn option set to \"button\" or \"both\".', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'ChangeMonth', 'Whether the month should be rendered as a dropdown instead of text.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'ChangeYear', 'Whether the year should be rendered as a dropdown instead of text. Usethe yearRange option to control which years are made available forselection.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'CloseText', 'The text to display for the close link. Use the showButtonPanel optionto display this button.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'ConstrainInput', 'When true, entry in the input field is constrained to those charactersallowed by the current dateFormat option.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'CurrentText', 'The text to display for the current day link. Use the showButtonPaneloption to display this button.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'JqDateFormat', 'The format for parsed and displayed dates. For a full list of thepossible formats see the formatDate function.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'DayNames', 'The list of long day names, starting from Sunday, for use as requestedvia the dateFormat option.', Type::ARRAY_TYPE),
+            new QModelConnectorParam (get_called_class(), 'DayNamesMin', 'The list of minimised day names, starting from Sunday, for use ascolumn headers within the datepicker.', Type::ARRAY_TYPE),
+            new QModelConnectorParam (get_called_class(), 'DayNamesShort', 'The list of abbreviated day names, starting from Sunday, for use asrequested via the dateFormat option.', Type::ARRAY_TYPE),
+            new QModelConnectorParam (get_called_class(), 'FirstDay', 'Set the first day of the week: Sunday is 0, Monday is 1, etc.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'GotoCurrent', 'When true, the current day link moves to the currently selected dateinstead of today.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'HideIfNoPrevNext', 'Normally the previous and next links are disabled when not applicable(see the minDate and maxDate options). You can hide them altogether bysetting this attribute to true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'IsRTL', 'Whether the current language is drawn from right to left.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'MonthNames', 'The list of full month names, for use as requested via the dateFormatoption.', Type::ARRAY_TYPE),
+            new QModelConnectorParam (get_called_class(), 'MonthNamesShort', 'The list of abbreviated month names, as used in the month header oneach datepicker and as requested via the dateFormat option.', Type::ARRAY_TYPE),
+            new QModelConnectorParam (get_called_class(), 'NavigationAsDateFormat', 'Whether the currentText, prevText and nextText options should beparsed as dates by the formatDate function, allowing them to displaythe target month names for example.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'NextText', 'The text to display for the next month link. With the standardThemeRoller styling, this value is replaced by an icon.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'PrevText', 'The text to display for the previous month link. With the standardThemeRoller styling, this value is replaced by an icon.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'SelectOtherMonths', 'Whether days in other months shown before or after the current monthare selectable. This only applies if the showOtherMonths option is setto true.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'ShowAnim', 'The name of the animation used to show and hide the datepicker. Use\"show\" (the default), \"slideDown\", \"fadeIn\", any of the jQuery UIeffects. Set to an empty string to disable animation.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'ShowButtonPanel', 'Whether to display a button pane underneath the calendar. The buttonpane contains two buttons, a Today button that links to the currentday, and a Done button that closes the datepicker. The buttons textcan be customized using the currentText and closeText optionsrespectively.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'ShowCurrentAtPos', 'When displaying multiple months via the numberOfMonths option, theshowCurrentAtPos option defines which position to display the currentmonth in.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'ShowMonthAfterYear', 'Whether to show the month after the year in the header.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'ShowOn', 'When the datepicker should appear. The datepicker can appear when thefield receives focus (\"focus\"), when a button is clicked (\"button\"),or when either event occurs (\"both\").', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'ShowOtherMonths', 'Whether to display dates in other months (non-selectable) at the startor end of the current month. To make these days selectable use theselectOtherMonths option.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'ShowWeek', 'When true, a column is added to show the week of the year. ThecalculateWeek option determines how the week of the year iscalculated. You may also want to change the firstDay option.', Type::BOOLEAN),
+            new QModelConnectorParam (get_called_class(), 'StepMonths', 'Set how many months to move when clicking the previous/next links.', Type::INTEGER),
+            new QModelConnectorParam (get_called_class(), 'WeekHeader', 'The text to display for the week of the year column heading. Use theshowWeek option to display this column.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'YearRange', 'The range of years displayed in the year drop-down: either relative totodays year (\"-nn:+nn\"), relative to the currently selected year(\"c-nn:c+nn\"), absolute (\"nnnn:nnnn\"), or combinations of theseformats (\"nnnn:-nn\"). Note that this option only affects what appearsin the drop-down, to restrict which dates may be selected use theminDate and/or maxDate options.', Type::STRING),
+            new QModelConnectorParam (get_called_class(), 'YearSuffix', 'Additional text to display after the year in the month headers.', Type::STRING),
         ));
     }
 }

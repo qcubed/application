@@ -31,19 +31,18 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * @property integer $Rows          specifies how many rows you want to have shown.
  * @property string $LabelForRequired
  * @property string $LabelForRequiredUnnamed
- * @property string $SelectionMode {@link QSelectionMode} specifies if this is a "Single" or "Multiple" select control.
- * @see     QSelectionMode
+ * @property string $SelectionMode SELECTION_MODE_* const specifies if this is a "Single" or "Multiple" select control.
  * @was QListBoxBase
  * @package QCubed\Control
  */
 abstract class ListBoxBase extends ListControl
 {
     /** Can select only one item. */
-    const SINGLE = 'Single';
+    const SELECTION_MODE_SINGLE = 'Single';
     /** Can select more than one */
-    const MULTIPLE = 'Multiple';
+    const SELECTION_MODE_MULTIPLE = 'Multiple';
     /** Selection mode not specified */
-    const NONE = 'None';
+    const SELECTION_MODE_NONE = 'None';
 
 ///////////////////////////
     // Private Member Variables
@@ -70,7 +69,7 @@ abstract class ListBoxBase extends ListControl
 
         $this->strLabelForRequired = t('%s is required');
         $this->strLabelForRequiredUnnamed = t('Required');
-        $this->objItemStyle = new QListItemStyle();
+        $this->objItemStyle = new ListItemStyle();
     }
 
     /**
@@ -90,7 +89,7 @@ abstract class ListBoxBase extends ListControl
             }
         } else {
             // Multiselect forms with nothing passed via $_POST means that everything was DE selected
-            if ($this->SelectionMode == QSelectionMode::Multiple) {
+            if ($this->SelectionMode == self::SELECTION_MODE_MULTIPLE) {
                 $this->unselectAllItems(false);
             }
         }
@@ -136,14 +135,14 @@ abstract class ListBoxBase extends ListControl
         // If no selection is specified, we select the first item, because once we draw this, that is what the browser
         // will consider selected on the screen.
         // We need to make sure that what we draw is mirrored in our current state
-        if ($this->SelectionMode == QSelectionMode::Single &&
+        if ($this->SelectionMode == self::SELECTION_MODE_SINGLE &&
             $this->SelectedIndex == -1 &&
             $this->ItemCount > 0
         ) {
             $this->SelectedIndex = 0;
         }
 
-        if ($this->SelectionMode == QSelectionMode::Multiple) {
+        if ($this->SelectionMode == self::SELECTION_MODE_MULTIPLE) {
             $attrOverride['name'] = $this->strControlId . "[]";
         } else {
             $attrOverride['name'] = $this->strControlId;
@@ -152,7 +151,7 @@ abstract class ListBoxBase extends ListControl
         $strToReturn = $this->renderTag('select', $attrOverride, null, $this->renderInnerHtml());
 
         // If MultiSelect and if NOT required, add a "Reset" button to deselect everything
-        if (($this->SelectionMode == QSelectionMode::Multiple) && (!$this->blnRequired) && ($this->Enabled) && ($this->blnVisible)) {
+        if (($this->SelectionMode == self::SELECTION_MODE_MULTIPLE) && (!$this->blnRequired) && ($this->Enabled) && ($this->blnVisible)) {
             $strToReturn .= $this->getResetButtonHtml();
         }
         return $strToReturn;
@@ -284,7 +283,7 @@ abstract class ListBoxBase extends ListControl
 
             // BEHAVIOR
             case "SelectionMode":
-                return $this->hasHtmlAttribute('multiple') ? QSelectionMode::Multiple : QSelectionMode::Single;
+                return $this->hasHtmlAttribute('multiple') ? self::SELECTION_MODE_MULTIPLE : self::SELECTION_MODE_SINGLE;
 
             default:
                 try {
@@ -339,7 +338,7 @@ abstract class ListBoxBase extends ListControl
             // BEHAVIOR
             case "SelectionMode":
                 try {
-                    if (Type::cast($mixValue, Type::STRING) == QSelectionMode::Multiple) {
+                    if (Type::cast($mixValue, Type::STRING) == self::SELECTION_MODE_MULTIPLE) {
                         $this->setHtmlAttribute('multiple', 'multiple');
                     } else {
                         $this->removeHtmlAttribute('multiple');
@@ -375,8 +374,8 @@ abstract class ListBoxBase extends ListControl
                 QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    'QSelectionMode::Single' => 'Single',
-                    'QSelectionMode::Multiple' => 'Multiple'
+                    'self::SELECTION_MODE_SINGLE' => 'Single',
+                    'self::SELECTION_MODE_MULTIPLE' => 'Multiple'
                 ))
         ));
     }

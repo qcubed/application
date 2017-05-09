@@ -32,8 +32,8 @@ use QCubed\Type;
  * @property mixed $SelectedValue  simply returns ListControl::SelectedItem->Value, or null if nothing is selected.
  * @property array $SelectedNames  returns an array of all selected names
  * @property array $SelectedValues returns an array of all selected values
- * @property string $ItemStyle     {@link QListItemStyle}
- * @see     QListItemStyle
+ * @property string $ItemStyle     {@link ListItemStyle}
+ * @see     ListItemStyle
  * @package Controls
  * @was QListControl
  * @package QCubed\Control
@@ -455,7 +455,7 @@ abstract class ListControl extends QControl
             case "ItemStyle":
                 try {
                     $this->blnModified = true;
-                    $this->objItemStyle = Type::cast($mixValue, "QListItemStyle");
+                    $this->objItemStyle = Type::cast($mixValue, "\QCubed\Control\ListItemStyle");
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;

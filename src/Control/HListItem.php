@@ -11,6 +11,7 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\TagStyler;
 use QCubed\Type;
 
 /**
@@ -20,7 +21,7 @@ use QCubed\Type;
  * sub-items.
  *
  * @property string $Anchor If set, the anchor text to print in the href= string when drawing as an anchored item.
- * @was QHListItem
+ * @was HListItem
  * @package QCubed\Control
  */
 class HListItem extends ListItemBase
@@ -59,15 +60,15 @@ class HListItem extends ListItemBase
     }
 
     /**
-     * Add an item by a QHListItem or a name,value pair
-     * @param string|QHListItem $mixListItemOrName
+     * Add an item by a HListItem or a name,value pair
+     * @param string|HListItem $mixListItemOrName
      * @param string|null $strValue
      * @param null|string $strAnchor
      */
     public function addItem($mixListItemOrName, $strValue = null, $strAnchor = null)
     {
         if (gettype($mixListItemOrName) == Type::OBJECT) {
-            $objListItem = Type::cast($mixListItemOrName, "QHListItem");
+            $objListItem = Type::cast($mixListItemOrName, "\QCubed\Control\HListItem");
         } else {
             $objListItem = new HListItem($mixListItemOrName, $strValue, $strAnchor);
         }
@@ -77,7 +78,7 @@ class HListItem extends ListItemBase
 
     /**
      * Adds an array of items, or an array of key=>value pairs.
-     * @param array $objItemArray An array of QHListItems or key=>val pairs to be sent to contructor.
+     * @param array $objItemArray An array of HListItems or key=>val pairs to be sent to contructor.
      */
     public function addItems($objItemArray)
     {
@@ -101,7 +102,7 @@ class HListItem extends ListItemBase
     public function getSubTagStyler()
     {
         if (!$this->objSubTagStyler) {
-            $this->objSubTagStyler = new QTagStyler();
+            $this->objSubTagStyler = new TagStyler();
         }
         return $this->objSubTagStyler;
     }

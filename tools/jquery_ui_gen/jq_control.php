@@ -107,19 +107,19 @@ class Option extends JqAttributes
         $phpType = str_replace('[]', '', $phpType);
         switch ($phpType) {
             case 'boolean':
-                return 'QType::Boolean';
+                return 'Type::BOOLEAN';
             case 'string':
-                return 'QType::String';
+                return 'Type::STRING';
             case 'mixed':
                 return null;
             case 'integer':
-                return 'QType::Integer';
+                return 'Type::INTEGER';
             case 'double':
-                return 'QType::Float';
+                return 'Type::FLOATE';
             case 'array':
-                return 'QType::ArrayType';
+                return 'Type::ARRAY_TYPE';
             case 'QDateTime':
-                return 'QType::DateTime';
+                return 'TYPE::DATE_TIME';
             default:
                 return "'" . $phpType . "'";
         }

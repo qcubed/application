@@ -295,7 +295,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
 
             case 'Disabled':
                 try {
-                    $this->blnDisabled = Type::Cast($mixValue, QType::Boolean);
+                    $this->blnDisabled = Type::Cast($mixValue, Type::BOOLEAN);
                     $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'disabled', $this->blnDisabled);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -343,7 +343,7 @@ class SelectMenuGen extends QCubed\Project\Control\ListBox
     public static function getModelConnectorParams()
     {
         return array_merge(parent::GetModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectmenu if set to true.', QType::Boolean),
+            new QModelConnectorParam (get_called_class(), 'Disabled', 'Disables the selectmenu if set to true.', Type::BOOLEAN),
         ));
     }
 }

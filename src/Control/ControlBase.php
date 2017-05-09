@@ -19,6 +19,7 @@ use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Action\ActionBase as QAction;
 use QCubed\Event\EventBase as QEvent;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Query\Node\NodeBase;
 use QCubed\TagStyler;
 use QCubed\Type;
 use QCubed\Project\Watcher\Watcher as Watcher;
@@ -113,7 +114,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  * @property boolean $Visible specifies whether or not the control should be rendered in the page.  This is in contrast to Display, which will just hide the control via CSS styling.
  * @property string $Warning is warning text that will be shown next to the control's name label {@link QControl::RenderWithName}
  * @property boolean $UseWrapper defaults to true
- * @property Q\Query\Node\NodeBase $LinkedNode A database node that this control is directly editing
+ * @property NodeBase $LinkedNode A database node that this control is directly editing
  * @property-read boolean $WrapperModified
  * @property string $WrapperCssClass
  * @property boolean $WrapLabel For checkboxes, radio buttons, and similar controls, whether to wrap the label around
@@ -294,11 +295,11 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
         if ($objParentObject instanceof QForm) {
             $this->objForm = $objParentObject;
         } else {
-            if ($objParentObject instanceof Base) {
+            if ($objParentObject instanceof QControl) {
                 $this->objParentControl = $objParentObject;
                 $this->objForm = $objParentObject->Form;
             } else {
-                throw new Exception\Caller('ParentObject must be either a QForm or QControl object');
+                throw new Exception\Caller('ParentObject must be either a FormBase or ControlBase object');
             }
         }
 
@@ -1617,7 +1618,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                 }
                 if ($strRenderMethod) {
                     $strOutput = $this->$strRenderMethod(false);
-                    $controls[] = [QAjaxResponse::Id => $this->strControlId, QAjaxResponse::Html => $strOutput];
+                    $controls[] = [Q\JsResponse::ID => $this->strControlId, Q\JsResponse::HTML => $strOutput];
                 }
             }
         }
@@ -1631,7 +1632,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             if (!isset($wrapperAttributes['style'])) {
                 $wrapperAttributes['style'] = '';    // must specifically turn off styles if none were drawn, in case the previous state had a style and it had changed
             }
-            $controls[] = [QAjaxResponse::Id => $this->getWrapperId(), QAjaxResponse::Attributes => $wrapperAttributes];
+            $controls[] = [Q\JsResponse::ID => $this->getWrapperId(), Q\JsResponse::ATTRIBUTES => $wrapperAttributes];
         }
         return $controls;
     }
@@ -2015,9 +2016,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * Watch a particular node in the database. Call this to trigger a redraw of the control
      * whenever the database table that this node points to is changed.
      *
-     * @param Q\Query\Node\Base $objNode
+     * @param NodeBase $objNode
      */
-    public function watch(Q\Query\Node\Base $objNode)
+    public function watch(NodeBase $objNode)
     {
         if (!$this->objWatcher) {
             if (defined('WATCHER_CLASS')) {

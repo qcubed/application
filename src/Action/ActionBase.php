@@ -35,7 +35,7 @@ abstract class ActionBase extends ObjectBase
      */
     abstract public function renderScript(QControl $objControl);
 
-    /** @var \QCubed\Event\Base Event object which will fire this action */
+    /** @var \QCubed\Event\EventBase Event object which will fire this action */
     protected $objEvent;
 
     /**
@@ -110,7 +110,7 @@ abstract class ActionBase extends ObjectBase
             }
 
             if (isset($strOut)) {
-                if (!Application::instance()->minimze) {
+                if (!Application::instance()->minimize()) {
                     // Render a comment
                     $strOut = _nl() . _nl() .
                         sprintf('/*** Event: %s  Control Type: %s, Control Name: %s, Control Id: %s  ***/',
@@ -140,7 +140,7 @@ abstract class ActionBase extends ObjectBase
     {
         switch ($strName) {
             case 'Event':
-                $this->objEvent = Type::cast($mixValue, '\QCubed\Event\Base');
+                $this->objEvent = Type::cast($mixValue, '\QCubed\Event\EventBase');
                 break;
 
             default:

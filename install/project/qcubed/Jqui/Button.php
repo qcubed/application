@@ -12,7 +12,7 @@ use QCubed as Q;
  * to make changes to this file.
  *
  * @see ButtonBase
- * @was QButton
+ * @was QJqButton
  */
 
 class Button extends Q\Jqui\ButtonBase

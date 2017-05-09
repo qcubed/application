@@ -12,7 +12,7 @@ use QCubed as Q;
  * to make changes to this file.
  *
  * @see RadioButtonBase
- * @was QCheckboxradio
+ * @was QJqRadioButton
  */
 
 class RadioButton extends Q\Jqui\RadioButtonBase

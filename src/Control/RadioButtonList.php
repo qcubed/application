@@ -445,7 +445,7 @@ class RadioButtonList extends ListControl
                 }
             case "ItemStyle":
                 try {
-                    $this->objItemStyle = Type::cast($mixValue, "QListItemStyle");
+                    $this->objItemStyle = Type::cast($mixValue, "\QCubed\Control\ListItemStyle");
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;

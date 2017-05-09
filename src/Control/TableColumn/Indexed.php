@@ -48,7 +48,7 @@ class Indexed extends Data
      *
      * @param string $strName
      *
-     * @return bool|int|mixed|QHtmlTableBase|string
+     * @return mixed
      * @throws Exception
      * @throws Caller
      */

@@ -16,6 +16,7 @@ use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
@@ -43,7 +44,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  * @property integer $MaxLength             is the "maxlength" html attribute (applicable for SingleLine textboxes)
  * @property integer $MinLength             is the minimum requred length to pass validation
  * @property integer $Rows                  is the "rows" html attribute (applicable for MultiLine textboxes)
- * @property string $TextMode              a QTextMode item. Determines if its a single or multi-line textbox, and the "type" property of the input.
+ * @property string $TextMode              a TextMode item. Determines if its a single or multi-line textbox, and the "type" property of the input.
  * @property boolean $AutoTrim              to automatically remove white space from beginning and end of data
  * @property integer $SanitizeFilter        PHP filter constant to apply to incoming data
  * @property mixed $SanitizeFilterOptions PHP filter constants or array to apply to SanitizeFilter option
@@ -56,7 +57,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
  */
 abstract class TextBoxBase extends QControl
 {
-    // Text types
+    // Text modes
     const SINGLE_LINE = 'text'; // Single line text inputs INPUT type="text" boxes
     const MULTI_LINE = 'MultiLine'; // Textareas
     const PASSWORD = 'password'; //Single line password inputs
@@ -121,14 +122,10 @@ abstract class TextBoxBase extends QControl
     protected $strLabelForInvalid = null;
 
 
-    //////////
-    // Methods
-    //////////
     /**
-     * Constructor for the QTextBox[Base]
-     *
+     * TextBoxBase constructor.
      * @param QControl|QForm $objParentObject
-     * @param null|string $strControlId
+     * @param null $strControlId
      */
     public function __construct($objParentObject, $strControlId = null)
     {
@@ -165,7 +162,7 @@ abstract class TextBoxBase extends QControl
 
     /**
      * Parse the data posted back via the control.
-     * This function basically test for the Crossscripting rules applied to the QTextBox
+     * This function basically test for the Crossscripting rules applied to the TextBox
      */
     public function parsePostData()
     {
@@ -255,7 +252,7 @@ abstract class TextBoxBase extends QControl
         if ($this->intMaxLength) {
             $attributeOverrides['maxlength'] = $this->intMaxLength;
         }
-        if ($this->strTextMode == QTextMode::MultiLine) {
+        if ($this->strTextMode == self::MULTI_LINE) {
             if ($this->intColumns) {
                 $attributeOverrides['cols'] = $this->intColumns;
             }
