@@ -649,14 +649,15 @@ abstract class ApplicationBase extends ObjectBase
     public static function varDump()
     {
         _p('<div class="var-dump"><strong>QCubed Settings</strong><ul>', false);
+        /*
         $arrValidationErrors = QInstallationValidator::validate();
         foreach ($arrValidationErrors as $objResult) {
             printf('<li><strong class="warning">WARNING:</strong> %s</li>', $objResult->strMessage);
-        }
+        }*/
 
         printf('<li>QCUBED_VERSION = "%s"</li>', QCUBED_VERSION);
-        printf('<li>jQuery version = "%s"</li>', __JQUERY_CORE_VERSION__);
-        printf('<li>jQuery UI version = "%s"</li>', __JQUERY_UI_VERSION__);
+        //printf('<li>jQuery version = "%s"</li>', __JQUERY_CORE_VERSION__);
+        //printf('<li>jQuery UI version = "%s"</li>', __JQUERY_UI_VERSION__);
         printf('<li>__SUBDIRECTORY__ = "%s"</li>', __SUBDIRECTORY__);
         printf('<li>__VIRTUAL_DIRECTORY__ = "%s"</li>', __VIRTUAL_DIRECTORY__);
         printf('<li>__INCLUDES__ = "%s"</li>', __INCLUDES__);
@@ -688,4 +689,21 @@ abstract class ApplicationBase extends ObjectBase
         }
         _p('</ul></div>', false);
     }
+
+    abstract public static function isAuthorized($options = null);
+
+    public static function checkAuthorized($options = null)
+    {
+        if (static::isAuthorized($options)) {
+            return;
+        }
+
+        // If we're here -- then we're not allowed to access.  Present the Error/Issue.
+        header($_SERVER['SERVER_PROTOCOL'] . ' 401 Access Denied');
+        header('Status: 401 Access Denied', true);
+        self::setProcessOutput(false);
+        // throw new QRemoteAdminDeniedException(); ?? Really, throw an exception??
+        exit();
+    }
+
 }
