@@ -68,7 +68,7 @@
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator.php Calculator Example');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator_2.php Calculator Example with Validation');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator_3.php Calculator Example with &quot;Design&quot;');
-			self::AddCoreExampleFile($intIndex, '/basic_qform/listbox.php * Introduction to QListControl');
+			self::AddCoreExampleFile($intIndex, '/basic_qform/listbox.php * Introduction to \QCubed\Control\ListControl');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/hlist.php * Generating Html Lists');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/textbox.php * Introduction to QTextBoxControls');
 			
@@ -99,25 +99,25 @@
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Paginated Controls';
-			Examples::$Categories[$intIndex]['description'] = 'The QHtmlTable, QDataGrid and QDataRepeater controls';
-			self::AddCoreExampleFile($intIndex, '/datagrid/intro.php * QHtmlTable');
-			self::AddCoreExampleFile($intIndex, '/datagrid/columns.php * QHtmlTable Columns');
-			self::AddCoreExampleFile($intIndex, '/datagrid/column_values.php * QHtmlTable Formatting and Styling');
-			self::AddCoreExampleFile($intIndex, '/datagrid/link_column.php * QHtmlTable Link Column');
-			self::AddCoreExampleFile($intIndex, '/datagrid/links_images.php * Dynamically adding Controls to QHtmlTable');
-			self::AddCoreExampleFile($intIndex, '/datagrid/sorting.php * The QDataGrid Class and Sorting');
-			self::AddCoreExampleFile($intIndex, '/datagrid/pagination.php * QDataGrid Pagination');
+			Examples::$Categories[$intIndex]['description'] = 'The \QCubed\Project\Control\Table, \QCubed\Project\Control\DataGrid and \QCubed\Control\DataRepeater controls';
+			self::AddCoreExampleFile($intIndex, '/datagrid/intro.php * \QCubed\Project\Control\Table');
+			self::AddCoreExampleFile($intIndex, '/datagrid/columns.php * \QCubed\Project\Control\Table Columns');
+			self::AddCoreExampleFile($intIndex, '/datagrid/column_values.php * \QCubed\Project\Control\Table Formatting and Styling');
+			self::AddCoreExampleFile($intIndex, '/datagrid/link_column.php * \QCubed\Project\Control\Table Link Column');
+			self::AddCoreExampleFile($intIndex, '/datagrid/links_images.php * Dynamically adding Controls to \QCubed\Project\Control\Table');
+			self::AddCoreExampleFile($intIndex, '/datagrid/sorting.php * The \QCubed\Project\Control\DataGrid Class and Sorting');
+			self::AddCoreExampleFile($intIndex, '/datagrid/pagination.php * \QCubed\Project\Control\DataGrid Pagination');
 			self::AddCoreExampleFile($intIndex, '/datagrid/rowactions.php * Detecting Row and Cell Clicks');
 
 			self::AddCoreExampleFile($intIndex, '/datagrid/qcheckboxcolumn.php * The Easy Way to Add a Checkbox Column to a Datagrid');
 			self::AddCoreExampleFile($intIndex, '/dynamic/inline_editing.php * Datagrid with Inline Editing');
 
-			self::AddCoreExampleFile($intIndex, '/master_detail/project_list.php * Nested QDataGrid');
+			self::AddCoreExampleFile($intIndex, '/master_detail/project_list.php * Nested \QCubed\Project\Control\DataGrid');
 			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__  . '/master_detail/project_list.php'] = array(
 				'records.summary.php',
 				'records.summary.tpl.php',
 				'styles.css');
-			self::AddCoreExampleFile($intIndex, '/datarepeater/ajax.php * Simple QDataRepeater using AJAX-triggered Pagination');
+			self::AddCoreExampleFile($intIndex, '/datarepeater/ajax.php * Simple \QCubed\Control\DataRepeater using AJAX-triggered Pagination');
 			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__  . '/datarepeater/ajax.php'] = array('dtr_persons.tpl.php');
 
 
@@ -175,8 +175,8 @@
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Model Connectors, DataGrid Connectors, and the Drafts';
-			Examples::$Categories[$intIndex]['description'] = 'Combining the Code Generator with the QForm Library';
-			self::AddCoreExampleFile($intIndex, '/other/formgen.php QForm and CodeGen, a Winning Combination to RAD');
+			Examples::$Categories[$intIndex]['description'] = 'Combining the Code Generator with the \QCubed\Project\Control\FormBase Library';
+			self::AddCoreExampleFile($intIndex, '/other/formgen.php \QCubed\Project\Control\FormBase and CodeGen, a Winning Combination to RAD');
 			self::AddCoreExampleFile($intIndex, '/other/model_connectors.php * Introduction to Model Connectors');
 			self::AddCoreExampleFile($intIndex, '/other/datagrid_connectors.php * Introduction to DataGrid Connectors');
 			self::AddCoreExampleFile($intIndex, '/other/form_drafts.php * Introduction to the Drafts');
@@ -188,11 +188,11 @@
 			self::AddCoreExampleFile($intIndex, '/communication/email.php Introduction to QEmailServer');
 			self::AddCoreExampleFile($intIndex, '/communication/rss.php * Introduction to QRssFeed');
 			self::AddCoreExampleFile($intIndex, '/other/parsing.php Introduction to parsing with QLexer and QRegex');
-			self::AddCoreExampleFile($intIndex, '/communication/crypto.php Introduction to QCryptography');
+			self::AddCoreExampleFile($intIndex, '/communication/crypto.php Introduction to \QCubed\Cryptography');
 			self::AddCoreExampleFile($intIndex, '/communication/i18n.php Introduction to QI18n (Internationalization)');
 			self::AddCoreExampleFile($intIndex, '/communication/advanced_intl.php Advanced Internationalization techniques');
 			self::AddCoreExampleFile($intIndex, '/communication/soap.php * Introduction to QSoapService');
-			self::AddCoreExampleFile($intIndex, '/other/timer.php * Measuring Performance using QTimer');
+			self::AddCoreExampleFile($intIndex, '/other/timer.php * Measuring Performance using \QCubed\Timer');
 			self::AddCoreReferencedFile('/communication/rss.php', 'rss_feed.php');
 			self::AddCoreReferencedFile('/communication/i18n.php', array('en.po', 'es.po'));
 			self::AddCoreReferencedFile('/communication/soap.php', 'example_service.php');
@@ -287,7 +287,7 @@
 						$intPosition = strpos($strExample, ' ');
 						$strScriptPath = substr($strExample, 0, $intPosition);
 
-						if (substr_count($strScriptPath, QApplicationBase::$ScriptName) > 0) {
+						if (substr_count($strScriptPath, \QCubed\Project\Application::instance()->context()->scriptName()) > 0) {
 							return $intCategoryIndex;
 						}
 					}
@@ -295,8 +295,8 @@
 			}
 
 			// Might be a plugin
-			$strScript = QApplicationBase::$ScriptName;
-			if ($offset = strpos (QApplicationBase::$ScriptFilename, '/plugin/')) {
+			$strScript = \QCubed\Project\Application::instance()->context()->scriptName();
+			if ($offset = strpos (\QCubed\Project\Application::instance()->context()->scriptFileName(), '/plugin/')) {
 				return 'plugin';
 			}
 
@@ -314,8 +314,8 @@
 						$strScriptPath = strtolower(substr($strExample, 0, $intPosition));
 						$strName = substr($strExample, $intPosition + 1);
 						
-						$scriptName = QApplicationBase::$ScriptName;
-						$portionOfScriptName = strtolower(substr($scriptName, strlen(QApplicationBase::$ScriptName) - strlen($strScriptPath)));
+						$scriptName = \QCubed\Project\Application::instance()->context()->scriptName();
+						$portionOfScriptName = strtolower(substr($scriptName, strlen(\QCubed\Project\Application::instance()->context()->scriptName()) - strlen($strScriptPath)));
 
 						if ($portionOfScriptName == $strScriptPath) {
 							return $intExampleIndex;					
@@ -325,10 +325,10 @@
 			}
 
 			// Might be a plugin
-			if ($offset = strpos (QApplicationBase::$ScriptFilename, '/plugin/')) {
+			if ($offset = strpos (\QCubed\Project\Application::instance()->context()->scriptFileName(), '/plugin/')) {
 				$offset += strlen ('/plugin/');
-				$endoffset = strpos (QApplicationBase::$ScriptFilename, '/', $offset);
-				$strCat = substr (QApplicationBase::$ScriptFilename, $offset, $endoffset - $offset);
+				$endoffset = strpos (\QCubed\Project\Application::instance()->context()->scriptFileName(), '/', $offset);
+				$strCat = substr (\QCubed\Project\Application::instance()->context()->scriptFileName(), $offset, $endoffset - $offset);
 
 				// Make sure it exists
 				if (!empty(Examples::$PluginExamples[$strCat])) {
@@ -340,15 +340,15 @@
 		}
 
 		public static function GetPluginFile() {
-			if ($offset = strpos (QApplicationBase::$ScriptFilename, '/plugin/')) {
+			if ($offset = strpos (\QCubed\Project\Application::instance()->context()->scriptFileName(), '/plugin/')) {
 				$offset += strlen ('/plugin/');
-				$endoffset = strpos (QApplicationBase::$ScriptFilename, '/', $offset);
-				$strCat = substr (QApplicationBase::$ScriptFilename, $offset, $endoffset - $offset);
+				$endoffset = strpos (\QCubed\Project\Application::instance()->context()->scriptFileName(), '/', $offset);
+				$strCat = substr (\QCubed\Project\Application::instance()->context()->scriptFileName(), $offset, $endoffset - $offset);
 
 				// make sure it exists (prevents cross-script attack)
 				if (!empty(Examples::$PluginExamples[$strCat])) {
-					$endoffset = strrpos (QApplicationBase::$ScriptFilename, '/', $offset);
-					$strCurFile = substr(QApplicationBase::$ScriptFilename, $endoffset + 1);
+					$endoffset = strrpos (\QCubed\Project\Application::instance()->context()->scriptFileName(), '/', $offset);
+					$strCurFile = substr(\QCubed\Project\Application::instance()->context()->scriptFileName(), $endoffset + 1);
 					for ($intExampleIndex = 0; $intExampleIndex < count(Examples::$PluginExamples[$strCat]); $intExampleIndex++) {
 						if (Examples::$PluginExamples[$strCat][$intExampleIndex] == $strCurFile) {
 							return $strCurFile;
@@ -384,7 +384,7 @@
 
 		public static function PageName($strReference = null) {
 			if (is_null($strReference))
-				$strReference = QApplication::$ScriptName;
+				$strReference = \QCubed\Project\Application::instance()->context()->scriptName();
 
 			foreach (Examples::$Categories as $objExampleCategory)
 				foreach ($objExampleCategory as $strKey => $strExample)
@@ -402,7 +402,7 @@
 		
 		public static function PageLinkName($strReference = null) {
 			if (is_null($strReference))
-				$strReference = QApplication::$ScriptName;
+				$strReference = \QCubed\Project\Application::instance()->context()->scriptName();
 
 			foreach (Examples::$Categories as $objExampleCategory)
 				foreach ($objExampleCategory as $strKey => $strExample)
@@ -425,7 +425,7 @@
 				$strToReturn = '<span class="headerGray">header.inc.php</span>';
 				$blnIsScript = true;
 			} else {
-				$strToReturn = sprintf('<a href="%s/../header.inc.php" class="headerLink">header.inc.php</a>', QApplication::$RequestUri);
+				$strToReturn = sprintf('<a href="%s/../header.inc.php" class="headerLink">header.inc.php</a>', \QCubed\Project\Application::instance()->context()->requestUri());
 			}
 
 			$strToReturn .= ' &nbsp; | &nbsp; ';
@@ -434,7 +434,7 @@
 				$strToReturn .= '<span class="headerGray">footer.inc.php</span>';
 				$blnIsScript = true;
 			} else {
-				$strToReturn .= sprintf('<a href="%s/../footer.inc.php" class="headerLink">footer.inc.php</a>', QApplication::$RequestUri);
+				$strToReturn .= sprintf('<a href="%s/../footer.inc.php" class="headerLink">footer.inc.php</a>', \QCubed\Project\Application::instance()->context()->requestUri());
 			}
 			
 			$strToReturn .= ' &nbsp; | &nbsp; ';
@@ -442,7 +442,7 @@
 				$strToReturn .= '<span class="headerGray">examples.css</span>';
 				$blnIsScript = true;
 			} else
-				$strToReturn .= sprintf('<a href="%s/../examples.css" class="headerLink">examples.css</a>', QApplication::$RequestUri);
+				$strToReturn .= sprintf('<a href="%s/../examples.css" class="headerLink">examples.css</a>', \QCubed\Project\Application::instance()->context()->requestUri());
 
 			$strToReturn .= ' &nbsp; | &nbsp; ';
 
@@ -451,7 +451,7 @@
 				$strToReturn .= sprintf('<span class="headerGray">%s</span>', $strScriptname);
 				$blnIsScript = true;
 			} else
-				$strToReturn .= sprintf('<a href="%s/../%s" class="headerLink">%s</a>', QApplication::$RequestUri, $strScriptname, $strScriptname);
+				$strToReturn .= sprintf('<a href="%s/../%s" class="headerLink">%s</a>', \QCubed\Project\Application::instance()->context()->requestUri(), $strScriptname, $strScriptname);
 
 
 			// Current Number of Code Links
@@ -465,7 +465,7 @@
 					$strToReturn .= sprintf('<span class="headerGray">%s</span>', $strScriptname);
 					$blnIsScript = true;
 				} else {
-					$strToReturn .= sprintf('<a href="%s/../%s" class="headerLink">%s</a>', QApplication::$RequestUri, $strScriptname, $strScriptname);
+					$strToReturn .= sprintf('<a href="%s/../%s" class="headerLink">%s</a>', \QCubed\Project\Application::instance()->context()->requestUri(), $strScriptname, $strScriptname);
 				}
 				
 				$intCount++;
@@ -492,7 +492,7 @@
 						$strToReturn .= sprintf('<span class="headerGray">%s</span>', preg_replace('/__.*__/', '', $strScriptname));
 						$blnIsScript = true;
 					} else {
-						$strToReturn .= sprintf('<a href="%s/../%s" class="headerLink">%s</a>', QApplication::$RequestUri, $strScriptname, preg_replace('/__.*__/', '', $strScriptname));
+						$strToReturn .= sprintf('<a href="%s/../%s" class="headerLink">%s</a>', \QCubed\Project\Application::instance()->context()->requestUri(), $strScriptname, preg_replace('/__.*__/', '', $strScriptname));
 					}
 
 					$intCount++;
@@ -512,12 +512,12 @@
 			$strNext = null;
 			$blnFound = false;
 
-			$strScript = QApplication::$ScriptName;
+			$strScript = \QCubed\Project\Application::instance()->context()->scriptName();
 
 			if (strpos($strScript, "plugin") !== false &&
 				strpos($strScript, "vendor") !== false) {
 				// a plugin
-				$strLink = QHtml::RenderLink(QHtml::MakeUrl(__DEVTOOLS_ASSETS__ . '/plugin_manager.php'), "Plugin Manager", ["class"=>"headerLink"]);
+				$strLink = \QCubed\Html::RenderLink(\QCubed\Html::MakeUrl(__DEVTOOLS_ASSETS__ . '/plugin_manager.php'), "Plugin Manager", ["class"=>"headerLink"]);
 				return $strLink;
 			}
 
@@ -532,11 +532,11 @@
 							$intPosition = strpos($strExample, ' ');
 							$strScriptName = substr($strExample, 0, $intPosition);
 							$strDescription = substr($strExample, $intPosition + 1);
-							$qapp = QApplication::$ScriptName;
+							$qapp = \QCubed\Project\Application::instance()->context()->scriptName();
 
 							if (!$blnFound) {
-								if (strpos(QApplication::$ScriptName, $strScriptName) !== false || // for core examples
-									strpos($strScriptName, QApplication::$ScriptName) !== false) { // for plugins examples
+								if (strpos(\QCubed\Project\Application::instance()->context()->scriptName(), $strScriptName) !== false || // for core examples
+									strpos($strScriptName, \QCubed\Project\Application::instance()->context()->scriptName()) !== false) { // for plugins examples
 									$blnFound = true;
 								} else {
 									$strPrevious = sprintf('<strong><a href="%s" class="headerLink">&lt;&lt; %s</a></strong>',
