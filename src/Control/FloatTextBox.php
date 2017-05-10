@@ -14,6 +14,7 @@ use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
 use QCubed\Type;
+use QCubed as Q;
 
 /**
  * Class FloatTextBox
@@ -67,5 +68,14 @@ class FloatTextBox extends NumericTextBox
                     throw $objExc;
                 }
         }
+    }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\TextBox(__CLASS__); // reuse the TextBox generator
     }
 }

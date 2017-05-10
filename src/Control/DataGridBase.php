@@ -390,17 +390,6 @@ class DataGridBase extends TableBase
     }
 
     /**
-     * Override to return the code generator for the list functionality.
-     *
-     * @param string $strClass
-     * @return QDataGrid_CodeGenerator
-     */
-    public static function getCodeGenerator($strClass = 'QDataGrid')
-    {
-        return new QDataGrid_CodeGenerator($strClass);
-    }
-
-    /**
      * Returns the index of the currently sorted column.
      * Returns false if nothing selected.
      *

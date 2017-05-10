@@ -9,6 +9,8 @@
 
 namespace QCubed\Control;
 
+use QCubed as Q;
+
 /**
  * Class Label
  *
@@ -28,4 +30,13 @@ class Label extends BlockControl
     protected $strTagName = 'span';
     /** @var bool Should htmlentities be run on the contents of this control? */
     protected $blnHtmlEntities = true;
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\Label(__CLASS__);
+    }
 }

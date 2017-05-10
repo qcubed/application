@@ -17,6 +17,7 @@ use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\QDateTime;
 use QCubed\Type;
+use QCubed as Q;
 
 //use QCubed\Project\Control\FormBase as QForm;
 //use QCubed\ModelConnector\Param as QModelConnectorParam;
@@ -662,5 +663,14 @@ class DateTimePicker extends QControl
                     throw $objExc;
                 }
         }
+    }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\DateTimePicker(__CLASS__); // reuse the Table generator
     }
 }

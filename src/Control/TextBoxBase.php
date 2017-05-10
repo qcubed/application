@@ -20,6 +20,7 @@ use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
+use QCubed as Q;
 
 /**
  * Class TextBoxBase
@@ -716,4 +717,14 @@ abstract class TextBoxBase extends QControl
                 ))
         ));
     }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\TextBox();
+    }
+
 }

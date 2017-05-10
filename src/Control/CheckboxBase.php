@@ -352,5 +352,4 @@ class CheckboxBase extends QControl
         ));
     }
 
-
 }

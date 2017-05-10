@@ -20,6 +20,7 @@ use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
+use QCubed as Q;
 
 /**
  * Class ListBoxBase
@@ -378,5 +379,14 @@ abstract class ListBoxBase extends ListControl
                     'self::SELECTION_MODE_MULTIPLE' => 'Multiple'
                 ))
         ));
+    }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\ListBox();
     }
 }

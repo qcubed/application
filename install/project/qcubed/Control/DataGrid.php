@@ -1,6 +1,8 @@
 <?php
 namespace QCubed\Project\Control;
 
+use QCubed as Q;
+
 /**
  * QDataGrid can help generate tables automatically with pagination. It can also be used to
  * render data directly from database by using a 'DataSource'. The code-generated search pages you get for
@@ -33,4 +35,15 @@ class DataGrid extends \QCubed\Control\DataGridBase
 
         $this->CssClass = 'datagrid';
     }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\Table(__CLASS__); // reuse the Table generator
+    }
+
+
 }

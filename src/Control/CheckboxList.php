@@ -538,4 +538,14 @@ class CheckboxList extends ListControl
                 'If set, will wrap it in a scrollable pane with the given max height', Type::INTEGER)
         ));
     }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\CheckboxList(__CLASS__);
+    }
+
 }

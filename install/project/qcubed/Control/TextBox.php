@@ -2,6 +2,8 @@
 
 namespace QCubed\Project\Control;
 
+use QCubed as Q;
+
 /**
  * Class TextBox
  * @package QCubed\Project\Control
@@ -31,4 +33,14 @@ class TextBox extends \QCubed\Control\TextBoxBase
         }
 
     }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Generator\TextBox(__CLASS__);
+    }
+
 }
