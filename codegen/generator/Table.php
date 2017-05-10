@@ -11,6 +11,7 @@ namespace QCubed\Generator;
 
 use QCubed\Codegen\SqlTable;
 use QCubed\Codegen\DatabaseCodeGen;
+use QCubed as Q;
 
 /**
  * Class QHtmlTable_CodeGenerator
@@ -42,7 +43,6 @@ class Table extends Control implements DataListInterface
 
     public function dataListImports($objCodeGen, $objTable) {
         $strCode = <<<TMPL
-use QCubed as Q;
 use QCubed\Query\Condition\ConditionInterface as QQCondition;
 use QCubed\Query\Clause\ClauseInterface as QQClause;
 use QCubed\Control\TableColumn\Node as NodeColumn;
@@ -50,6 +50,7 @@ use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\Paginator;
 use QCubed\Type;
+use QCubed\Exception\Caller;
 
 TMPL;
         return $strCode;
@@ -139,7 +140,7 @@ TMPL;
 
 TMPL;
         foreach ($objTable->ColumnArray as $objColumn) {
-            if (isset($objColumn->Options['FormGen']) && ($objColumn->Options['FormGen'] == QFormGen::None)) {
+            if (isset($objColumn->Options['FormGen']) && ($objColumn->Options['FormGen'] == Q\ModelConnector\Options::FORMGEN_NONE)) {
                 continue;
             }
             if (isset($objColumn->Options['NoColumn']) && $objColumn->Options['NoColumn']) {
@@ -188,10 +189,11 @@ TMPL;
 	 * @param QControl|QForm \$objParent
 	 * @param null|string \$strControlId
 	 */
-	public function __construct(\$objParent, \$strControlId = false) {
+	public function __construct(\$objParent, \$strControlId = null) 
+	{
 		parent::__construct(\$objParent, \$strControlId);
 		\$this->createPaginator();
-		\$this->setDataBinder('BindData', \$this);
+		\$this->setDataBinder('bindData', \$this);
 		\$this->watch(QQN::{$objTable->ClassName}());
 	}
 
@@ -211,7 +213,8 @@ TMPL;
 	/**
 	 * Creates the paginator. Override to add an additional paginator, or to remove it.
 	 */
-	protected function createPaginator() {
+	protected function createPaginator() 
+	{
 		\$this->Paginator = new Paginator(\$this);
 		\$this->ItemsPerPage = __FORM_LIST_ITEMS_PER_PAGE__;
 	}
@@ -237,12 +240,13 @@ TMPL;
 	 * Creates the columns for the table. Override to customize, or use the ModelConnectorEditor to turn on and off 
 	 * individual columns. This is a public function and called by the parent control.
 	 */
-	public function createColumns() {
+	public function createColumns() 
+	{
 
 TMPL;
 
         foreach ($objTable->ColumnArray as $objColumn) {
-            if (isset($objColumn->Options['FormGen']) && ($objColumn->Options['FormGen'] == QFormGen::None)) {
+            if (isset($objColumn->Options['FormGen']) && ($objColumn->Options['FormGen'] == Q\ModelConnector\Options::FORMGEN_NONE)) {
                 continue;
             }
             if (isset($objColumn->Options['NoColumn']) && $objColumn->Options['NoColumn']) {
@@ -297,8 +301,12 @@ TMPL;
 	*   passing in the conditions and clauses you want this data binder to use.
 	*
 	*	This binder will automatically add the orderby and limit clauses from the paginator, if present.
-	**/
-	public function bindData(QQCondition \$objAdditionalCondition = null, \$objAdditionalClauses = null) {
+	*
+	* @param QQCondition|null \$objAdditionalCondition
+    * @param null|array \$objAdditionalClauses
+	*/
+	public function bindData(QQCondition \$objAdditionalCondition = null, \$objAdditionalClauses = null) 
+	{
 		\$objCondition = \$this->getCondition(\$objAdditionalCondition);
 		\$objClauses = \$this->getClauses(\$objAdditionalClauses);
 
@@ -341,9 +349,11 @@ TMPL;
 	 * Returns the condition to use when querying the data. Default is to return the condition put in the local
 	 * objCondition member variable. You can also override this to return a condition. 
 	 *
+	 * @param QQCondition|null \$objAdditionalCondition
 	 * @return QQCondition
 	 */
-	protected function getCondition(QQCondition \$objAdditionalCondition = null) {
+	protected function getCondition(QQCondition \$objAdditionalCondition = null) 
+	{
 		// Get passed in condition, possibly coming from subclass or enclosing control or form
 		\$objCondition = \$objAdditionalCondition;
 		if (!\$objCondition) {
@@ -374,9 +384,11 @@ TMPL;
 	 * Returns the clauses to use when querying the data. Default is to return the clauses put in the local
 	 * objClauses member variable. You can also override this to return clauses.
 	 *
+	 * @param array|null \$objAdditionalClauses
 	 * @return QQClause[]
 	 */
-	protected function getClauses(\$objAdditionalClauses = null) {
+	protected function getClauses(\$objAdditionalClauses = null) 
+	{
 		\$objClauses = \$objAdditionalClauses;
 		if (!\$objClauses) {
 			\$objClauses = [];
@@ -407,8 +419,10 @@ TMPL;
 	 *
 	 * @param string \$strName Name of the property to get
 	 * @return mixed
+	 * @throws Caller
 	 */
-	public function __get(\$strName) {
+	public function __get(\$strName) 
+	{
 		switch (\$strName) {
 			case 'Condition':
 				return \$this->objCondition;
@@ -417,7 +431,7 @@ TMPL;
 			default:
 				try {
 					return parent::__get(\$strName);
-				} catch (Q\\Exception\\Caller \$objExc) {
+				} catch (Caller \$objExc) {
 					\$objExc->incrementOffset();
 					throw \$objExc;
 				}
@@ -442,34 +456,35 @@ TMPL;
 	 *
 	 * @param string \$strName Name of the property to set
 	 * @param string \$mixValue New value of the property
-	 * @return mixed
-	 * @throws Q\\Exception\\Caller
+	 * @return void
+	 * @throws Caller
 	 */
-	public function __set(\$strName, \$mixValue) {
+	public function __set(\$strName, \$mixValue) 
+	{
 		switch (\$strName) {
 			case 'Condition':
 				try {
 					\$this->objCondition = Type::cast(\$mixValue, '\\QCubed\\Query\\Condition\\ConditionInterface');
 					\$this->markAsModified();
-					return;
-				} catch (Q\\Exception\\Caller \$objExc) {
+				} catch (Caller \$objExc) {
 					\$objExc->incrementOffset();
 					throw \$objExc;
 				}
+				break;
 			case 'Clauses':
 				try {
 					\$this->objClauses = Type::cast(\$mixValue, Type::ARRAY_TYPE);
 					\$this->markAsModified();
-					return;
-				} catch (Q\\Exception\\Caller \$objExc) {
+				} catch (Caller \$objExc) {
 					\$objExc->incrementOffset();
 					throw \$objExc;
 				}
+				break;
 			default:
 				try {
 					parent::__set(\$strName, \$mixValue);
 					break;
-				} catch (Q\\Exception\\Caller \$objExc) {
+				} catch (Caller \$objExc) {
 					\$objExc->incrementOffset();
 					throw \$objExc;
 				}
@@ -569,7 +584,8 @@ TMPL;
    /**
 	* Creates the data grid and prepares it to be row clickable. Override for additional creation operations.
 	**/
-	protected function {$strVarName}_Create() {
+	protected function {$strVarName}_Create() 
+	{
 		\$this->{$strVarName} = new {$strPropertyName}List(\$this);
 		\$this->{$strVarName}_CreateColumns();
 		\$this->{$strVarName}_MakeEditable();
@@ -610,7 +626,8 @@ TMPL;
    /**
 	* Calls the list connector to add the columns. Override to customize column creation.
 	**/
-	protected function {$strVarName}_CreateColumns() {
+	protected function {$strVarName}_CreateColumns() 
+	{
 		\$this->{$strVarName}->createColumns();
 	}
 
@@ -632,12 +649,14 @@ TMPL;
 
         $strCode = <<<TMPL
 
-	protected function {$strVarName}_MakeEditable() {
+	protected function {$strVarName}_MakeEditable() 
+	{
 		\$this->{$strVarName}->addAction(new Q\\Event\\CellClick(0, null, null, true), new Q\\Action\\AjaxControl(\$this, '{$strVarName}_CellClick', null, null, Q\\Event\\CellClick::RowValue));
 		\$this->{$strVarName}->addCssClass('clickable-rows');
 	}
 
-	protected function {$strVarName}_CellClick(\$strFormId, \$strControlId, \$strParameter) {
+	protected function {$strVarName}_CellClick(\$strFormId, \$strControlId, \$strParameter) 
+	{
 		if (\$strParameter) {
 			\$this->editItem(\$strParameter);
 		}
@@ -660,7 +679,8 @@ TMPL;
         $strVarName = $objCodeGen->dataListVarName($objTable);
 
         $strCode = <<<TMPL
-	public function {$strVarName}_GetRowParams(\$objRowObject, \$intRowIndex) {
+	public function {$strVarName}_GetRowParams(\$objRowObject, \$intRowIndex) 
+	{
 		\$strKey = \$objRowObject->primaryKey();
 		\$params['data-value'] = \$strKey;
 		return \$params;
@@ -696,12 +716,13 @@ TMPL;
 	 You can then modify the column creation process by editing the function below. Or, you can instead call the parent function 
 	 and modify the columns after the {$strPropertyName}List creates the default columns.
 
-	protected function {$strVarName}_CreateColumns() {
+	protected function {$strVarName}_CreateColumns() 
+	{
 
 TMPL;
 
         foreach ($objTable->ColumnArray as $objColumn) {
-            if (isset($objColumn->Options['FormGen']) && ($objColumn->Options['FormGen'] == QFormGen::None)) {
+            if (isset($objColumn->Options['FormGen']) && ($objColumn->Options['FormGen'] == Q\ModelConnector\Options::FORMGEN_NONE)) {
                 continue;
             }
             if (isset($objColumn->Options['NoColumn']) && $objColumn->Options['NoColumn']) {
@@ -737,14 +758,16 @@ TMPL;
 
 		protected \$pxyEditRow;
 
-		protected function {$strVarName}_MakeEditable () {
+		protected function {$strVarName}_MakeEditable () 
+		{
 			\$this->>pxyEditRow = new \\QCubed\\Control\\Proxy(\$this);
 			\$this->>pxyEditRow->addAction(new \\QCubed\\Event\\Click(), new \\QCubed\\Action\\AjaxControl(\$this, '{$strVarName}_EditClick'));
 			\$this->{$strVarName}->createLinkColumn(t('Edit'), t('Edit'), \$this->>pxyEditRow, QQN::{$objTable->ClassName}()->Id, null, false, 0);
 			\$this->{$strVarName}->removeCssClass('clickable-rows');
 		}
 
-		protected function {$strVarName}_EditClick(\$strFormId, \$strControlId, \$param) {
+		protected function {$strVarName}_EditClick(\$strFormId, \$strControlId, \$param) 
+		{
 			\$this->editItem(\$param);
 		}
 */	

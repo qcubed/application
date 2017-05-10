@@ -37,12 +37,10 @@ $_TEMPLATE_SETTINGS = array(
  * Any and all changes to this file will be overwritten with any subsequent re-
  * code generation.
  *
-
 <?= $listCodegenerator->dataListConnectorComments($objCodeGen, $objTable); ?>
- * @subpackage ModelConnector
  *
  */
-
-class <?= $objTable->ClassName ?>ListGen extends <?= $strClassName ?> {
+class <?= $objTable->ClassName ?>ListGen extends <?= $strClassName ?>
+{
 <?= $listCodegenerator->dataListConnector($objCodeGen, $objTable); ?>
 }

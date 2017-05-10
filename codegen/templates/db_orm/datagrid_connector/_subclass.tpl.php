@@ -1,4 +1,7 @@
 <?php
+
+use QCubed\Project\Codegen\CodegenBase as QCodegen;
+
 	/** @var QSqlTable $objTable */
 	/** @var QDatabaseCodeGen $objCodeGen */
 	global $_TEMPLATE_SETTINGS;
