@@ -4,107 +4,107 @@
 
 
 # For QTextBoxBase controls
-MsgId "%s is required"
-MsgStr "%s wird ben&ouml;tigt"
+msgid "%s is required"
+msgstr "%s wird ben&ouml;tigt"
 
-MsgId "Required"
-MsgStr "Ben&ouml;tigt"
+msgid "Required"
+msgstr "Ben&ouml;tigt"
 
 
 # For QWriteBox controls
-MsgId ""
+msgid ""
 "Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  "
 "Use ** at the beginning of any line for a bulleted list."
-MsgStr ""
+msgstr ""
 "Die  &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; sind zul&auml;ssig.  "
 "Benutze ** am Anfang einer beliebigen Zeile f&uuml;r eine Liste mit Aufz&auml;hlungszeichen."
 
 
 # For QPaginatedControl controls
-MsgId "item"
-MsgStr "Objekt"
+msgid "item"
+msgstr "Objekt"
 
-MsgId "items"
-MsgStr "Objekte"
+msgid "items"
+msgstr "Objekte"
 
 
 # For QListBox and QCalendar controls
-MsgId "Reset"
-MsgStr "Reset"
+msgid "Reset"
+msgstr "Reset"
 
 
 # For QIntegerTextBox and QFloatTextBox controls
-MsgId "Invalid Integer"
-MsgStr "Keine g&uuml;ltige ganze Zahl"
+msgid "Invalid Integer"
+msgstr "Keine g&uuml;ltige ganze Zahl"
 
-MsgId "Invalid Float"
-MsgStr "Keine g&uuml;ltige Gleitkomma-Zahl"
+msgid "Invalid Float"
+msgstr "Keine g&uuml;ltige Gleitkomma-Zahl"
 
-MsgId "Value must be less than %s"
-MsgStr "Der Wert mu&szlig; kleiner als %s sein."
+msgid "Value must be less than %s"
+msgstr "Der Wert mu&szlig; kleiner als %s sein."
 
-MsgId "Value must be greater than %s"
-MsgStr "Der Wert mu&szlig; gr&ouml;&szlig;er als %s sein."
+msgid "Value must be greater than %s"
+msgstr "Der Wert mu&szlig; gr&ouml;&szlig;er als %s sein."
 
 
 # For QDataGrid controls
-MsgId "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
-MsgStr "<b>Ergebnisse:</b>&nbsp;Angezeigt:&nbsp;%s&nbsp;%s-%s&nbsp;von&nbsp;%s."
+msgid "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
+msgstr "<b>Ergebnisse:</b>&nbsp;Angezeigt:&nbsp;%s&nbsp;%s-%s&nbsp;von&nbsp;%s."
 
-MsgId "<b>Results:</b> No %s found."
-MsgStr "<b>Ergebnisse:</b> Kein %s gefunden."
+msgid "<b>Results:</b> No %s found."
+msgstr "<b>Ergebnisse:</b> Kein %s gefunden."
 
-MsgId "<b>Results:</b> 1 %s found."
-MsgId_Plural "<b>Results:</b> %s %s found."
-MsgStr[0] "<b>Ergebnisse:</b> 1 %s gefunden."
-MsgStr[1] "<b>Ergebnisse:</b> %s %s gefunden."
+msgid "<b>Results:</b> 1 %s found."
+msgid_plural "<b>Results:</b> %s %s found."
+msgstr[0] "<b>Ergebnisse:</b> 1 %s gefunden."
+msgstr[1] "<b>Ergebnisse:</b> %s %s gefunden."
 
 
 # For QPaginator controls
-MsgId "Previous"
-MsgStr "Vorherige"
+msgid "Previous"
+msgstr "Vorherige"
 
-MsgId "Next"
-MsgStr "N&auml;chste"
+msgid "Next"
+msgstr "N&auml;chste"
 
 
 # For the List FormDraft Include template
-MsgId "List All"
-MsgStr "Alle anzeigen"
+msgid "List All"
+msgstr "Alle anzeigen"
 
-MsgId "Create a New"
-MsgStr "Ein neues erstellen"
+msgid "Create a New"
+msgstr "Ein neues erstellen"
 
-MsgId "Go to \"Form Drafts\""
-MsgStr "Go to \"Form Drafts\""
+msgid "Go to \"Form Drafts\""
+msgstr "Go to \"Form Drafts\""
 
 
 # For the Edit FormBase class template
-MsgId "Create"
-MsgStr "Erstellen"
+msgid "Create"
+msgstr "Erstellen"
 
-MsgId "Edit"
-MsgStr "&Auml;ndern"
+msgid "Edit"
+msgstr "&Auml;ndern"
 
-MsgId "Save"
-MsgStr "Speichern"
+msgid "Save"
+msgstr "Speichern"
 
-MsgId "Cancel"
-MsgStr "Abbruch"
+msgid "Cancel"
+msgstr "Abbruch"
 
-MsgId "Delete"
-MsgStr "L&ouml;schen"
+msgid "Delete"
+msgstr "L&ouml;schen"
 
-MsgId "Are you SURE you want to DELETE this %s?"
-MsgStr "Soll %s WIRKLICH GEL&Ouml;SCHT werden??"
+msgid "Are you SURE you want to DELETE this %s?"
+msgstr "Soll %s WIRKLICH GEL&Ouml;SCHT werden??"
 
 
 # For the form_drafts/index.php page
-MsgId "List of Form Drafts"
-MsgStr "Liste der Formular Vorlagen"
+msgid "List of Form Drafts"
+msgstr "Liste der Formular Vorlagen"
 
-MsgId "View List"
-MsgStr "Liste anzeigen"
+msgid "View List"
+msgstr "Liste anzeigen"
 
-MsgId "Create New"
-MsgStr "Neuen Eintrag erstellen"
+msgid "Create New"
+msgstr "Neuen Eintrag erstellen"

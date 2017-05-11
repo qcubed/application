@@ -5,150 +5,150 @@
 
 
 # For QTextBoxBase controls
-MsgId "%s on nõutav"
-MsgStr "%s on nõutav"
+msgid "%s on nõutav"
+msgstr "%s on nõutav"
 
-MsgId "Required"
-MsgStr "Nõutav"
+msgid "Required"
+msgstr "Nõutav"
 
-MsgId "%s must have at least %s characters"
-MsgStr "%s peab olema vähemalt %s tähemärki"
+msgid "%s must have at least %s characters"
+msgstr "%s peab olema vähemalt %s tähemärki"
 
-MsgId "%s must have at most %s characters"
-MsgStr "%s peab koosnema maksimaalselt %s tähemärki"
+msgid "%s must have at most %s characters"
+msgstr "%s peab koosnema maksimaalselt %s tähemärki"
 
-MsgId "Must have at least %s characters" 
-MsgStr "Peab olema vähemalt %s tähemärki"
+msgid "Must have at least %s characters"
+msgstr "Peab olema vähemalt %s tähemärki"
 
-MsgId "Must have at most %s characters"
-MsgStr "Peab olema maksimaalselt %s tähemärki"
+msgid "Must have at most %s characters"
+msgstr "Peab olema maksimaalselt %s tähemärki"
 
 # For QWriteBox controls
-MsgId ""
+msgid ""
 "Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  "
 "Use ** at the beginning of any line for a bulleted list."
-MsgStr ""
+msgstr ""
 "Sildid &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; ja <http://...&gt; on lubatud. " 
 "Kasutage ** alguses igas reas täpploendit."
 
 
 # For QPaginatedControl controls
-MsgId "item"
-MsgStr "kirje"
+msgid "item"
+msgstr "kirje"
 
-MsgId "items"
-MsgStr "kirjed"
+msgid "items"
+msgstr "kirjed"
 
 
 # For QListBox and QCalendar controls
-MsgId "Reset"
-MsgStr "Lähtesta"
+msgid "Reset"
+msgstr "Lähtesta"
 
 
 # For ListBoxes in Generated Forms
-MsgId "- Select One -"
-MsgStr "- Vali üks -"
+msgid "- Select One -"
+msgstr "- Vali üks -"
 
 
 # For QIntegerTextBox and QFloatTextBox controls
-MsgId "Invalid Integer"
-MsgStr "Vigane täisarv"
+msgid "Invalid Integer"
+msgstr "Vigane täisarv"
 
-MsgId "Invalid Float"
-MsgStr "Vigane number"
+msgid "Invalid Float"
+msgstr "Vigane number"
 
-MsgId "Value must be less than %s"
-MsgStr "Väärtus peab olema väiksem kui %s"
+msgid "Value must be less than %s"
+msgstr "Väärtus peab olema väiksem kui %s"
 
-MsgId "Value must be greater than %s"
-MsgStr "Väärtus peab olema suurem kui %s"
+msgid "Value must be greater than %s"
+msgstr "Väärtus peab olema suurem kui %s"
 
 
 # For QDataGrid controls
-MsgId "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
-MsgStr "<b>Tulemused:</b>&nbsp;Kuvatud&nbsp;%s&nbsp;%s-%s&nbsp;%s kirjest."
+msgid "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
+msgstr "<b>Tulemused:</b>&nbsp;Kuvatud&nbsp;%s&nbsp;%s-%s&nbsp;%s kirjest."
 
-MsgId "<b>Results:</b> No %s found."
-MsgStr "<b>Tulemused:</b> Otsitavat vastet ei leitud."
+msgid "<b>Results:</b> No %s found."
+msgstr "<b>Tulemused:</b> Otsitavat vastet ei leitud."
 
-MsgId "<b>Results:</b> 1 %s found."
-MsgId_Plural "<b>Tulemused:</b> Otsinguvasteid ei leitud."
-MsgStr[0] "<b>Results:</b> 1 %s found."
-MsgStr[1] "<b>Tulemused:</b> Otsinguvasteid ei leitud."
+msgid "<b>Results:</b> 1 %s found."
+msgid_plural "<b>Tulemused:</b> Otsinguvasteid ei leitud."
+msgstr[0] "<b>Results:</b> 1 %s found."
+msgstr[1] "<b>Tulemused:</b> Otsinguvasteid ei leitud."
 
-MsgId "Filter"
-MsgStr "Filtreeri"
+msgid "Filter"
+msgstr "Filtreeri"
 
 
 # For QPaginator controls
-MsgId "Previous"
-MsgStr "Eelmine"
+msgid "Previous"
+msgstr "Eelmine"
 
-MsgId "Next"
-MsgStr "Järgmine"
+msgid "Next"
+msgstr "Järgmine"
 
 
 # For the List FormDraft Include template
-MsgId "List All"
-MsgStr "Näita kõik"
+msgid "List All"
+msgstr "Näita kõik"
 
-MsgId "Create a New"
-MsgStr "Loo"
+msgid "Create a New"
+msgstr "Loo"
 
-MsgId "Go to \"Form Drafts\""
-MsgStr "Tagasi mustandite nimekirja"
+msgid "Go to \"Form Drafts\""
+msgstr "Tagasi mustandite nimekirja"
 
 
 # For the Edit FormBase class template
-MsgId "Create"
-MsgStr "Loo"
+msgid "Create"
+msgstr "Loo"
 
-MsgId "Edit"
-MsgStr "Redigeeri"
+msgid "Edit"
+msgstr "Redigeeri"
 
-MsgId "Save"
-MsgStr "Salvesta"
+msgid "Save"
+msgstr "Salvesta"
 
-MsgId "Cancel"
-MsgStr "Loobu"
+msgid "Cancel"
+msgstr "Loobu"
 
-MsgId "Delete"
-MsgStr "Kustuta"
+msgid "Delete"
+msgstr "Kustuta"
 
-MsgId "Are you SURE you want to DELETE this %s?"
-MsgStr "Kas oled kindel, et soovid kustutada seda kirjet - %s?"
+msgid "Are you SURE you want to DELETE this %s?"
+msgstr "Kas oled kindel, et soovid kustutada seda kirjet - %s?"
 
-MsgId "Are you SURE you want to DELETE this"
-MsgStr "Kas oled kindel, et soovid kustutada seda kirjet?"
+msgid "Are you SURE you want to DELETE this"
+msgstr "Kas oled kindel, et soovid kustutada seda kirjet?"
 
 
 # For the form_drafts/index.php page
-MsgId "List of Form Drafts"
-MsgStr "Mustandite nimekiri"
+msgid "List of Form Drafts"
+msgstr "Mustandite nimekiri"
 
-MsgId "View List"
-MsgStr "Vaata nimekirja"
+msgid "View List"
+msgstr "Vaata nimekirja"
 
-MsgId "Create New"
-MsgStr "Loo"
+msgid "Create New"
+msgstr "Loo"
 
-MsgId "?"
-MsgStr "?"
+msgid "?"
+msgstr "?"
 
-MsgId "True"
-MsgStr "Tõene"
+msgid "True"
+msgstr "Tõene"
 
-MsgId "False"
-MsgStr "Väär"
+msgid "False"
+msgstr "Väär"
 
-MsgId "Set"
-MsgStr "Seatud"
+msgid "Set"
+msgstr "Seatud"
 
-MsgId "Unset"
-MsgStr "Ei ole seatud"
+msgid "Unset"
+msgstr "Ei ole seatud"
 
-MsgId "N/A"
-MsgStr "ei ole veel määratud"
+msgid "N/A"
+msgstr "ei ole veel määratud"
 
-MsgId "Already in Use"
-MsgStr "See on juba kasutusel."
+msgid "Already in Use"
+msgstr "See on juba kasutusel."

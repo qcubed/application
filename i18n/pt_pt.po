@@ -5,121 +5,121 @@
 
 
 # For QTextBoxBase controls
-MsgId "%s is required"
-MsgStr "%s é obrigatório"
+msgid "%s is required"
+msgstr "%s é obrigatório"
 
-MsgId "Required"
-MsgStr "Obrigatório"
+msgid "Required"
+msgstr "Obrigatório"
 
-MsgId "%s must have at least %s characters"
-MsgStr "%s deverá ter no mínimo %s caracteres"
+msgid "%s must have at least %s characters"
+msgstr "%s deverá ter no mínimo %s caracteres"
 
-MsgId "Must have at least %s characters"
-MsgStr "Deverá ter no mínimom %s caracteres"
+msgid "Must have at least %s characters"
+msgstr "Deverá ter no mínimom %s caracteres"
 
 
 # For QWriteBox controls
-MsgId ""
+msgid ""
 "Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  "
 "Use ** at the beginning of any line for a bulleted list."
-MsgStr ""
+msgstr ""
 "Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  "
 "Use ** no início de cada linha para escrever uma lista de marcadores."
 
 
 # For QPaginatedControl controls
-MsgId "item"
-MsgStr "item"
+msgid "item"
+msgstr "item"
 
-MsgId "items"
-MsgStr "items"
+msgid "items"
+msgstr "items"
 
 
 # For QListBox and QCalendar controls
-MsgId "Reset"
-MsgStr "Reiniciar"
+msgid "Reset"
+msgstr "Reiniciar"
 
 
 # For ListBoxes in Generated Forms
-MsgId "- Select One -"
-MsgStr "- Seleccionar uma opção -"
+msgid "- Select One -"
+msgstr "- Seleccionar uma opção -"
 
 
 # For QIntegerTextBox and QFloatTextBox controls
-MsgId "Invalid Integer"
-MsgStr "Número inteiro inválido"
+msgid "Invalid Integer"
+msgstr "Número inteiro inválido"
 
-MsgId "Invalid Float"
-MsgStr "Número decimal inválido"
+msgid "Invalid Float"
+msgstr "Número decimal inválido"
 
-MsgId "Value must be less than %s"
-MsgStr "Valor deve ser inferior a %s"
+msgid "Value must be less than %s"
+msgstr "Valor deve ser inferior a %s"
 
-MsgId "Value must be greater than %s"
-MsgStr "Valor deve ser superior a %s"
+msgid "Value must be greater than %s"
+msgstr "Valor deve ser superior a %s"
 
 
 # For QDataGrid controls
-MsgId "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
-MsgStr "<b>Resultados:</b>&nbsp;A ver&nbsp;%s&nbsp;%s-%s&nbsp;de&nbsp;%s."
+msgid "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
+msgstr "<b>Resultados:</b>&nbsp;A ver&nbsp;%s&nbsp;%s-%s&nbsp;de&nbsp;%s."
 
-MsgId "<b>Results:</b> No %s found."
-MsgStr "<b>Resultados:</b> %s não encontrados."
+msgid "<b>Results:</b> No %s found."
+msgstr "<b>Resultados:</b> %s não encontrados."
 
-MsgId "<b>Results:</b> 1 %s found."
-MsgId_Plural "<b>Resultados:</b> %s %s encontrados."
-MsgStr[0] "<b>Resultados:</b> 1 %s encontrado."
-MsgStr[1] "<b>Resultados:</b> %s %s encontrado."
+msgid "<b>Results:</b> 1 %s found."
+msgid_plural "<b>Resultados:</b> %s %s encontrados."
+msgstr[0] "<b>Resultados:</b> 1 %s encontrado."
+msgstr[1] "<b>Resultados:</b> %s %s encontrado."
 
-MsgId "Filter"
-MsgStr "Filtrar"
+msgid "Filter"
+msgstr "Filtrar"
 
 
 # For QPaginator controls
-MsgId "Previous"
-MsgStr "Anterior"
+msgid "Previous"
+msgstr "Anterior"
 
-MsgId "Next"
-MsgStr "Próximo"
+msgid "Next"
+msgstr "Próximo"
 
 
 # For the List FormDraft Include template
-MsgId "List All"
-MsgStr "Ver Todos"
+msgid "List All"
+msgstr "Ver Todos"
 
-MsgId "Create a New"
-MsgStr "Criar Novo"
+msgid "Create a New"
+msgstr "Criar Novo"
 
-MsgId "Go to \"Form Drafts\""
-MsgStr "Ir para \"Form Drafts\""
+msgid "Go to \"Form Drafts\""
+msgstr "Ir para \"Form Drafts\""
 
 
 # For the Edit FormBase class template
-MsgId "Create"
-MsgStr "Criar"
+msgid "Create"
+msgstr "Criar"
 
-MsgId "Edit"
-MsgStr "Alterar"
+msgid "Edit"
+msgstr "Alterar"
 
-MsgId "Save"
-MsgStr "Guardar"
+msgid "Save"
+msgstr "Guardar"
 
-MsgId "Cancel"
-MsgStr "Cancelar"
+msgid "Cancel"
+msgstr "Cancelar"
 
-MsgId "Delete"
-MsgStr "Apagar"
+msgid "Delete"
+msgstr "Apagar"
 
-MsgId "Are you SURE you want to DELETE this %s?"
-MsgStr "Tem a certeza que pretende apagar este %s?"
+msgid "Are you SURE you want to DELETE this %s?"
+msgstr "Tem a certeza que pretende apagar este %s?"
 
 
 # For the form_drafts/index.php page
-MsgId "List of Form Drafts"
-MsgStr "Listagem de Form Drafts"
+msgid "List of Form Drafts"
+msgstr "Listagem de Form Drafts"
 
-MsgId "View List"
-MsgStr "Ver Lista"
+msgid "View List"
+msgstr "Ver Lista"
 
-MsgId "Create New"
-MsgStr "Criar Novo"
+msgid "Create New"
+msgstr "Criar Novo"

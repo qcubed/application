@@ -4,106 +4,106 @@
 
 
 # For QTextBoxBase controls
-MsgId "%s is required"
-MsgStr "%s �O���ݪ�"
-MsgId "Required"
-MsgStr "���ݪ�"
+msgid "%s is required"
+msgstr "%s �O���ݪ�"
+msgid "Required"
+msgstr "���ݪ�"
 
 
 # For QWriteBox controls
-MsgId ""
+msgid ""
 "Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  "
 "Use ** at the beginning of any line for a bulleted list."
-MsgStr ""
+msgstr ""
 "�i�ϥΥH�U�аO &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; �� &lt;http://...&gt;   "
 "�b��Ʀ歺��J ** �i��ܶ��زŸ�."
 
 
 # For QPaginatedControl controls
-MsgId "item"
-MsgStr "����"
+msgid "item"
+msgstr "����"
 
-MsgId "items"
-MsgStr "����"
+msgid "items"
+msgstr "����"
 
 
 # For QListBox and QCalendar controls
-MsgId "Reset"
-MsgStr "���]"
+msgid "Reset"
+msgstr "���]"
 
 
 # For QIntegerTextBox and QFloatTextBox controls
-MsgId "Invalid Integer"
-MsgStr "�����T�����"
+msgid "Invalid Integer"
+msgstr "�����T�����"
 
-MsgId "Invalid Float"
-MsgStr "�����T���B�I��"
+msgid "Invalid Float"
+msgstr "�����T���B�I��"
 
-MsgId "Value must be less than %s"
-MsgStr "�ȥ��ݤp�� %s"
+msgid "Value must be less than %s"
+msgstr "�ȥ��ݤp�� %s"
 
-MsgId "Value must be greater than %s"
-MsgStr "�ȥ��ݤj�� %s"
+msgid "Value must be greater than %s"
+msgstr "�ȥ��ݤj�� %s"
 
 
 # For QDataGrid controls
-MsgId "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
-MsgStr "<b>���G:</b>&nbsp;���&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
+msgid "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
+msgstr "<b>���G:</b>&nbsp;���&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
 
-MsgId "<b>Results:</b> No %s found."
-MsgStr "<b>���G:</b> ���o�{ %s."
+msgid "<b>Results:</b> No %s found."
+msgstr "<b>���G:</b> ���o�{ %s."
 
-MsgId "<b>Results:</b> 1 %s found."
-MsgId_Plural "<b>Results:</b> %s %s found."
-MsgStr[0] "<b>���G:</b> �o�{ 1 %s ."
-MsgStr[1] "<b>���G:</b> �o�{ %s %s ."
+msgid "<b>Results:</b> 1 %s found."
+msgid_plural "<b>Results:</b> %s %s found."
+msgstr[0] "<b>���G:</b> �o�{ 1 %s ."
+msgstr[1] "<b>���G:</b> �o�{ %s %s ."
 
 
 # For QPaginator controls
-MsgId "Previous"
-MsgStr "�e�@��"
+msgid "Previous"
+msgstr "�e�@��"
 
-MsgId "Next"
-MsgStr "��@��"
+msgid "Next"
+msgstr "��@��"
 
 
 # For the List FormDraft Include template
-MsgId "List All"
-MsgStr "��ܥ���"
+msgid "List All"
+msgstr "��ܥ���"
 
-MsgId "Create a New"
-MsgStr "�s��"
+msgid "Create a New"
+msgstr "�s��"
 
-MsgId "Go to \"Form Drafts\""
-MsgStr "��� \"��Z\""
+msgid "Go to \"Form Drafts\""
+msgstr "��� \"��Z\""
 
 
 # For the Edit FormBase class template
-MsgId "Create"
-MsgStr "�s��"
+msgid "Create"
+msgstr "�s��"
 
-MsgId "Edit"
-MsgStr "�s��"
+msgid "Edit"
+msgstr "�s��"
 
-MsgId "Save"
-MsgStr "�x�s"
+msgid "Save"
+msgstr "�x�s"
 
-MsgId "Cancel"
-MsgStr "���"
+msgid "Cancel"
+msgstr "���"
 
-MsgId "Delete"
-MsgStr "�R��"
+msgid "Delete"
+msgstr "�R��"
 
-MsgId "Are you SURE you want to DELETE this %s?"
-MsgStr "�A�T�w�R���o�� %s?"
+msgid "Are you SURE you want to DELETE this %s?"
+msgstr "�A�T�w�R���o�� %s?"
 
 
 # For the form_drafts/index.php page
-MsgId "List of Form Drafts"
-MsgStr "��Z�C��"
+msgid "List of Form Drafts"
+msgstr "��Z�C��"
 
-MsgId "View List"
-MsgStr "��ɦC��"
+msgid "View List"
+msgstr "��ɦC��"
 
-MsgId "Create New"
-MsgStr "�s��"
+msgid "Create New"
+msgstr "�s��"

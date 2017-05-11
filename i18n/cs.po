@@ -4,107 +4,107 @@
 
 
 # For QTextBoxBase controls
-MsgId "%s is required"
-MsgStr "%s je povinný"
+msgid "%s is required"
+msgstr "%s je povinný"
 
-MsgId "Required"
-MsgStr "Povinný"
+msgid "Required"
+msgstr "Povinný"
 
 
 # For QWriteBox controls
-MsgId ""
+msgid ""
 "Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  "
 "Use ** at the beginning of any line for a bulleted list."
-MsgStr ""
+msgstr ""
 "Tagy &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; a &lt;http://...&gt; jsou povoleny.  "
 "Použijte ** na začátku řádku pro vytvoření nečíslovaného seznamu."
 
 
 # For QPaginatedControl controls
-MsgId "item"
-MsgStr "položka"
+msgid "item"
+msgstr "položka"
 
-MsgId "items"
-MsgStr "záznamy"
+msgid "items"
+msgstr "záznamy"
 
 
 # For QListBox and QCalendar controls
-MsgId "Reset"
-MsgStr "Reset"
+msgid "Reset"
+msgstr "Reset"
 
 
 # For QIntegerTextBox and QFloatTextBox controls
-MsgId "Invalid Integer"
-MsgStr "Neplatné celé číslo"
+msgid "Invalid Integer"
+msgstr "Neplatné celé číslo"
 
-MsgId "Invalid Float"
-MsgStr "Neplatné desetinné číslo"
+msgid "Invalid Float"
+msgstr "Neplatné desetinné číslo"
 
-MsgId "Value must be less than %s"
-MsgStr "Hodnota musí být menší než %s"
+msgid "Value must be less than %s"
+msgstr "Hodnota musí být menší než %s"
 
-MsgId "Value must be greater than %s"
-MsgStr "Hodnota musí být větší než %s"
+msgid "Value must be greater than %s"
+msgstr "Hodnota musí být větší než %s"
 
 
 # For QDataGrid controls
-MsgId "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
-MsgStr "<b>Výsledek:</b>&nbsp;Zobrazeny&nbsp;%s&nbsp;%s-%s&nbsp;z&nbsp;%s."
+msgid "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
+msgstr "<b>Výsledek:</b>&nbsp;Zobrazeny&nbsp;%s&nbsp;%s-%s&nbsp;z&nbsp;%s."
 
-MsgId "<b>Results:</b> No %s found."
-MsgStr "<b>Výsledek:</b> Nenalezeno %s."
+msgid "<b>Results:</b> No %s found."
+msgstr "<b>Výsledek:</b> Nenalezeno %s."
 
-MsgId "<b>Results:</b> 1 %s found."
-MsgId_Plural "<b>Results:</b> %s %s found."
-MsgStr[0] "<b>Výsledek:</b> Nalezen 1 %s ."
-MsgStr[1] "<b>Results:</b> Nalezeno %s %s ."
+msgid "<b>Results:</b> 1 %s found."
+msgid_plural "<b>Results:</b> %s %s found."
+msgstr[0] "<b>Výsledek:</b> Nalezen 1 %s ."
+msgstr[1] "<b>Results:</b> Nalezeno %s %s ."
 
 
 # For QPaginator controls
-MsgId "Previous"
-MsgStr "Předchozí"
+msgid "Previous"
+msgstr "Předchozí"
 
-MsgId "Next"
-MsgStr "Následující"
+msgid "Next"
+msgstr "Následující"
 
 
 # For the List FormDraft Include template
-MsgId "List All"
-MsgStr "Zobrazit vše"
+msgid "List All"
+msgstr "Zobrazit vše"
 
-MsgId "Create a New"
-MsgStr "Vytvořit nový"
+msgid "Create a New"
+msgstr "Vytvořit nový"
 
-MsgId "Go to \"Form Drafts\""
-MsgStr "Přejít na \"Form Drafts\""
+msgid "Go to \"Form Drafts\""
+msgstr "Přejít na \"Form Drafts\""
 
 
 # For the Edit FormBase class template
-MsgId "Create"
-MsgStr "Vytvořit"
+msgid "Create"
+msgstr "Vytvořit"
 
-MsgId "Edit"
-MsgStr "Editovat"
+msgid "Edit"
+msgstr "Editovat"
 
-MsgId "Save"
-MsgStr "Uložit"
+msgid "Save"
+msgstr "Uložit"
 
-MsgId "Cancel"
-MsgStr "Zrušit"
+msgid "Cancel"
+msgstr "Zrušit"
 
-MsgId "Delete"
-MsgStr "Odstranit"
+msgid "Delete"
+msgstr "Odstranit"
 
-MsgId "Are you SURE you want to DELETE this %s?"
-MsgStr "Opravdu odstranit %s?"
+msgid "Are you SURE you want to DELETE this %s?"
+msgstr "Opravdu odstranit %s?"
 
 
 # For the form_drafts/index.php page
-MsgId "List of Form Drafts"
-MsgStr "Seznam návrhů formulářů"
+msgid "List of Form Drafts"
+msgstr "Seznam návrhů formulářů"
 
-MsgId "View List"
-MsgStr "Zobrazit seznam"
+msgid "View List"
+msgstr "Zobrazit seznam"
 
-MsgId "Create New"
-MsgStr "Vytvořit nový"
+msgid "Create New"
+msgstr "Vytvořit nový"

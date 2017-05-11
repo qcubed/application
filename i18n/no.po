@@ -4,107 +4,107 @@
 
 
 # For QTextBoxBase controls
-MsgId "%s is required"
-MsgStr "%s er p�krevd"
+msgid "%s is required"
+msgstr "%s er p�krevd"
 
-MsgId "Required"
-MsgStr "P�krevd"
+msgid "Required"
+msgstr "P�krevd"
 
 
 # For QWriteBox controls
-MsgId ""
+msgid ""
 "Tags &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; and &lt;http://...&gt; are allowed.  "
 "Use ** at the beginning of any line for a bulleted list."
-MsgStr ""
+msgstr ""
 "Tagger &lt;b&gt; &lt;u&gt; &lt;i&gt; &lt;br&gt; &lt;code&gt; og &lt;http://...&gt; er tillatt.  "
 "Bruk ** i begynnelsen av linjer for uordnet liste."
 
 
 # For QPaginatedControl controls
-MsgId "item"
-MsgStr "rad"
+msgid "item"
+msgstr "rad"
 
-MsgId "items"
-MsgStr "rader"
+msgid "items"
+msgstr "rader"
 
 
 # For QListBox and QCalendar controls
-MsgId "Reset"
-MsgStr "Nullstill"
+msgid "Reset"
+msgstr "Nullstill"
 
 
 # For QIntegerTextBox and QFloatTextBox controls
-MsgId "Invalid Integer"
-MsgStr "Ugyldig heltall"
+msgid "Invalid Integer"
+msgstr "Ugyldig heltall"
 
-MsgId "Invalid Float"
-MsgStr "Ugyldig flyttall"
+msgid "Invalid Float"
+msgstr "Ugyldig flyttall"
 
-MsgId "Value must be less than %s"
-MsgStr "Verdien m� v�re mindre enn %s"
+msgid "Value must be less than %s"
+msgstr "Verdien m� v�re mindre enn %s"
 
-MsgId "Value must be greater than %s"
-MsgStr "Verdien m� v�re st�rre enn %s"
+msgid "Value must be greater than %s"
+msgstr "Verdien m� v�re st�rre enn %s"
 
 
 # For QDataGrid controls
-MsgId "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
-MsgStr "<b>Resultater:</b>&nbsp;Viser&nbsp;%s&nbsp;%s-%s&nbsp;av&nbsp;%s."
+msgid "<b>Results:</b>&nbsp;Viewing&nbsp;%s&nbsp;%s-%s&nbsp;of&nbsp;%s."
+msgstr "<b>Resultater:</b>&nbsp;Viser&nbsp;%s&nbsp;%s-%s&nbsp;av&nbsp;%s."
 
-MsgId "<b>Results:</b> No %s found."
-MsgStr "<b>Resultater:</b> No %s found."
+msgid "<b>Results:</b> No %s found."
+msgstr "<b>Resultater:</b> No %s found."
 
-MsgId "<b>Results:</b> 1 %s found."
-MsgId_Plural "<b>Results:</b> %s %s found."
-MsgStr[0] "<b>Resultat:</b> 1 %s funnet."
-MsgStr[1] "<b>Resultat:</b> %s %s funnet."
+msgid "<b>Results:</b> 1 %s found."
+msgid_plural "<b>Results:</b> %s %s found."
+msgstr[0] "<b>Resultat:</b> 1 %s funnet."
+msgstr[1] "<b>Resultat:</b> %s %s funnet."
 
 
 # For QPaginator controls
-MsgId "Previous"
-MsgStr "Forrige"
+msgid "Previous"
+msgstr "Forrige"
 
-MsgId "Next"
-MsgStr "Neste"
+msgid "Next"
+msgstr "Neste"
 
 
 # For the List FormDraft Include template
-MsgId "List All"
-MsgStr "Vis alle"
+msgid "List All"
+msgstr "Vis alle"
 
-MsgId "Create a New"
-MsgStr "Opprett en ny"
+msgid "Create a New"
+msgstr "Opprett en ny"
 
-MsgId "Go to \"Form Drafts\""
-MsgStr "G� til \"Skjemautkast\""
+msgid "Go to \"Form Drafts\""
+msgstr "G� til \"Skjemautkast\""
 
 
 # For the Edit FormBase class template
-MsgId "Create"
-MsgStr "Opprett"
+msgid "Create"
+msgstr "Opprett"
 
-MsgId "Edit"
-MsgStr "Rediger"
+msgid "Edit"
+msgstr "Rediger"
 
-MsgId "Save"
-MsgStr "Lagre"
+msgid "Save"
+msgstr "Lagre"
 
-MsgId "Cancel"
-MsgStr "Avbryt"
+msgid "Cancel"
+msgstr "Avbryt"
 
-MsgId "Delete"
-MsgStr "Slett"
+msgid "Delete"
+msgstr "Slett"
 
-MsgId "Are you SURE you want to DELETE this %s?"
-MsgStr "Er du sikker p� at du vil SLETTE denne %s?"
+msgid "Are you SURE you want to DELETE this %s?"
+msgstr "Er du sikker p� at du vil SLETTE denne %s?"
 
 
 # For the form_drafts/index.php page
-MsgId "List of Form Drafts"
-MsgStr "Liste over skjemautkast"
+msgid "List of Form Drafts"
+msgstr "Liste over skjemautkast"
 
-MsgId "View List"
-MsgStr "Vis liste"
+msgid "View List"
+msgstr "Vis liste"
 
-MsgId "Create New"
-MsgStr "Opprett ny"
+msgid "Create New"
+msgstr "Opprett ny"
