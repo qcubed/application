@@ -19,13 +19,5 @@ class RadioButton extends \QCubed\Control\RadioButtonBase
     // Feel free to specify global display preferences/defaults for all QButton controls
     protected $strCssClass = 'radio';
 
-    /**
-     * Returns the generator corresponding to this control.
-     *
-     * @return Q\Generator\GeneratorBase
-     */
-    public static function getCodeGenerator() {
-        return new Q\Generator\TextBox(__CLASS__);
-    }
 
 }

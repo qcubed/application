@@ -2,7 +2,7 @@
 
 namespace QCubed\Project\Control;
 
-use QCubed;
+use QCubed as Q;
 use QCubed\Project\Application;
 
 /**
@@ -14,7 +14,7 @@ use QCubed\Project\Application;
  *
  * @was QListBox
  */
-class ListBox extends QCubed\Control\ListBoxBase
+class ListBox extends Q\Control\ListBoxBase
 {
     ///////////////////////////
     // ListBox Preferences
@@ -46,4 +46,14 @@ class ListBox extends QCubed\Control\ListBoxBase
 
         return $strToReturn;
     }
+
+    /**
+     * Returns the generator corresponding to this control.
+     *
+     * @return Q\Codegen\Generator\GeneratorBase
+     */
+    public static function getCodeGenerator() {
+        return new Q\Codegen\Generator\ListBox(__CLASS__);
+    }
+
 }

@@ -21,10 +21,10 @@ class Checkbox extends \QCubed\Control\CheckboxBase
     /**
      * Returns the generator corresponding to this control.
      *
-     * @return Q\Generator\GeneratorBase
+     * @return Q\Codegen\Generator\GeneratorBase
      */
     public static function getCodeGenerator() {
-        return new Q\Generator\Checkbox(__CLASS__);
+        return new Q\Codegen\Generator\Checkbox(__CLASS__);
     }
 
 }

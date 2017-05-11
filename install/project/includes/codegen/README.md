@@ -1,7 +1,12 @@
 # About `codegen` directory
 
-The codegen-related class in this directory allow you to override 
-the functionality of the codegen operation.
+The two codegen-related classes in this directory are customizations
+to the associated `QCodeGenBase` and `QConvertNotationBase` classes that are part
+of the QCubed codegen framework.
+
+It allows you to override the functionality in these classes, as well as
+define additional methods/functionality for the code generator and the 
+notation converter.
 
 Feel free to make any changes to these customizations as you wish.
 

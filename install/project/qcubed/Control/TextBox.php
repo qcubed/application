@@ -11,7 +11,7 @@ use QCubed as Q;
  */
 class TextBox extends \QCubed\Control\TextBoxBase
 {
-    // Feel free to specify global display preferences/defaults for all TextBox controls
+    // Feel free to specify global display preferences/defaults for all QTextBox controls
     /** @var string Default CSS class for the textbox */
     protected $strCssClass = 'textbox';
 
@@ -34,13 +34,14 @@ class TextBox extends \QCubed\Control\TextBoxBase
 
     }
 
+
     /**
      * Returns the generator corresponding to this control.
      *
-     * @return Q\Generator\GeneratorBase
+     * @return Q\Codegen\Generator\GeneratorBase
      */
     public static function getCodeGenerator() {
-        return new Q\Generator\TextBox(__CLASS__);
+        return new Q\Codegen\Generator\TextBox(__CLASS__);
     }
 
 }

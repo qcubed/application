@@ -37,8 +37,8 @@ class Watcher extends \QCubed\Watcher\Cache
 // Feel free to remove the example code.
 
         // Overrides the default version to create our own cache provider just for watchers. If you don't want to
-        // use the QApplication's $objCacheProvider, you can do this in your own code too.
-        static::$objCache = new QCacheProviderLocalMemory(['KeepInSession' => true]);
+        // use the Application's $objCacheProvider, you can do this in your own code too.
+        static::$objCache = new \QCubed\Cache\LocalMemoryCache(['KeepInSession' => true]);
     }
 }
 /*
