@@ -1,0 +1,155 @@
+<?php
+/**
+ *
+ * Part of the QCubed PHP framework.
+ *
+ * @license MIT
+ *
+ */
+
+namespace QCubed\ModelConnector;
+
+require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
+use QCubed\Application\t;
+
+use QCubed\Exception\Caller;
+use QCubed;
+use QCubed\ObjectBase;
+use QCubed\Type;
+
+/**
+ * Class Param
+ *
+ * Encapsulates a description of an editable ModelConnector parameter.
+ *
+ * For example, this class would be used to tell the QModelConnectorEditDlg that you can set the
+ * name of a control using a text box, or the visibility state of a control using boolean selector.
+ *
+ * You can currently specify a boolean value, a text value, an integer value, or a list of options.
+ *
+ * @property-read string $Category
+ * @property-read string $Name
+ * @was QModelConnectorParam
+ * @package QCubed\ModelConnector
+ */
+
+class Param extends ObjectBase
+{
+    /** Specifies a list of items to present to the user to select from. */
+    const SELECTION_LIST = 'list';
+
+    const GENERAL_CATEGORY = 'General';
+
+    protected $strCategory;
+    protected $strName;
+    protected $strDescription;
+    protected $controlType;
+    protected $options;
+
+    /** @var  QControl caching the created control */
+    protected $objControl;
+
+    public function __construct($strCategory, $strName, $strDescription, $controlType, $options = null)
+    {
+        $this->strCategory = t($strCategory);
+        $this->strName = t($strName);
+        $this->strDescription = t($strDescription);
+        $this->controlType = $controlType;
+
+        $this->options = $options;
+
+        if ($controlType == static::SELECTION_LIST && !$options) {
+            throw new Caller('Selection list without a list of items to select.');
+        }
+    }
+
+    /**
+     * Called by the QModelConnectorEditDlg dialog. Creates a control that will allow the user to edit the value
+     * associated with this parameter, and caches that control so that its easy to get to.
+     *
+     * @param QControl|null $objParent
+     * @return null|QControl
+     */
+    public function getControl($objParent = null)
+    {
+        if ($this->objControl) {
+            if ($objParent) {
+                $this->objControl->setParentControl($objParent);
+            }
+            return $this->objControl;
+        } elseif ($objParent) {
+            $this->objControl = $this->createControl($objParent);
+            return $this->objControl;
+        }
+        return null;
+    }
+
+    /**
+     * Creates the actual control that will edit the value.
+     *
+     * @param QControl $objParent
+     * @return IntegerTextBox|ListBox|RadioButtonList|TextBox
+     */
+    protected function createControl(QControl $objParent)
+    {
+        switch ($this->controlType) {
+            case Type::BOOLEAN:
+                $ctl = new RadioButtonList($objParent);
+                $ctl->addItem('True', true);
+                $ctl->addItem('False', false);
+                $ctl->addItem('None', null);
+                $ctl->RepeatColumns = 3;
+                break;
+
+            case Type::STRING:
+                $ctl = new TextBox($objParent);
+                break;
+
+            case Type::INTEGER:
+                $ctl = new IntegerTextBox($objParent);
+                break;
+
+            case Type::ARRAY_TYPE:    // an array the user will specify in a comma separated list
+                $ctl = new TextBox($objParent);
+                break;
+
+            case QModelConnectorParam::SELECTION_LIST: // a specific set of choices to present to the user
+                $ctl = new ListBox($objParent);
+
+                foreach ($this->options as $key => $val) {
+                    $ctl->addItem($val, $key === '' ? null : $key); // allow null item keys
+                }
+                break;
+
+            default: // i.e. QJsClosure, or other random items. Probably codegened, and not used much.
+                $ctl = new TextBox($objParent);
+                break;
+
+        }
+
+        $ctl->Name = $this->strName;
+        $ctl->ToolTip = $this->strDescription;
+        return $ctl;
+    }
+
+    public function __get($strName)
+    {
+        switch ($strName) {
+            case 'Name':
+                return $this->strName;
+                break;
+
+            case 'Category':
+                return $this->strCategory;
+                break;
+
+            default:
+                try {
+                    return parent::__get($strName);
+                } catch (Caller $objExc) {
+                    $objExc->incrementOffset();
+                    throw $objExc;
+                }
+        }
+    }
+}
