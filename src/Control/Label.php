@@ -34,9 +34,9 @@ class Label extends BlockControl
     /**
      * Returns the generator corresponding to this control.
      *
-     * @return Q\Generator\GeneratorBase
+     * @return Q\Codegen\Generator\GeneratorBase
      */
     public static function getCodeGenerator() {
-        return new Q\Generator\Label(__CLASS__);
+        return new Q\Codegen\Generator\Label(__CLASS__);
     }
 }

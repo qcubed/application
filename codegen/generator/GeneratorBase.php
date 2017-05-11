@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -16,7 +16,7 @@ use QCubed\Codegen\SqlTable;
 
 /**
  * Class GeneratorBase
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was AbstractControl_CodeGenerator
  */
 abstract class GeneratorBase

@@ -139,4 +139,6 @@ $a['const']['QDateTimePickerType::DateTimeSeconds'] = '\\QCubed\Control\\DateTim
 $a['const']['QDateTimePickerType::Time'] = '\\QCubed\Control\\DateTimePicker::SHOW_TIME';
 $a['const']['QDateTimePickerType::TimeSeconds'] = '\\QCubed\Control\\DateTimePicker::SHOW_TIME_SECONDS';
 
+$a['class']['QCacheProviderLocalMemory'] = '\\QCubed\\Cache\\LocalMemoryCache';
+
 return $a;

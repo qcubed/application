@@ -26,7 +26,7 @@
 
 /**
  * Command line script to recursively processes the given directory and outputs a PHP array
- * to send to the run_sed command that will help convert QCubed 3.x code to QCubed 4.0 code.
+ * to send to the run_was command that will help convert QCubed 3.x code to QCubed 4.0 code.
  * I originally tried to do this with sed for speed, but sed works differently on different OS's, so I am doing
  * it in PHP for consistency across OS's.
  *
@@ -51,7 +51,7 @@ include 'qcubed.inc.php';
 $loader = require dirname(dirname(dirname(__DIR__))) . '/autoload.php'; // load superclasses
 $loader->addPsr4('QCubed\\', dirname(dirname(__DIR__)) . '/common/src'); // make sure common is included
 $loader->addPsr4('QCubed\\Project\\',dirname(__DIR__) . '/install/project/qcubed'); // make sure user side codegen is included
-$loader->addPsr4('QCubed\\Generator\\',dirname(__DIR__) . '/codegen/generator'); // make sure user side codegen is included
+$loader->addPsr4('QCubed\\Codegen\\Generator\\',dirname(__DIR__) . '/codegen/generator'); // make sure user side codegen is included
 $loader->addPsr4('QCubed\\', dirname(__DIR__) . '/src'); // make sure I am included
 
 // convert upper case name to camel name

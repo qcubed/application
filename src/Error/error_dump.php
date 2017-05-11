@@ -28,6 +28,7 @@ if (file_exists($__exc_strFilename)) {
 }
 
 header("HTTP/1.1 500 Internal Server Error");
+\QCubed\Project\Application::setProcessOutput(false);
 ?>
 <!DOCTYPE html>
 <?php

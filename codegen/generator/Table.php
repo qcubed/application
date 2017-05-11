@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\SqlTable;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -20,7 +20,7 @@ use QCubed as Q;
  * of QHtmlTable derived classes as a list connector, something that displays a list of records from a database,
  * and optionally allows the user to do CRUD operations on individual records.
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QHtmlTable_CodeGenerator
  */
 class Table extends Control implements DataListInterface

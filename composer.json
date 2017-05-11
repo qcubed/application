@@ -15,7 +15,8 @@
     "qcubed/i18n": "^4.0",
     "qcubed/common":"^4.0",
     "qcubed/orm":"^4.0",
-    "qcubed/composer": "^1.0.5"
+    "qcubed/composer": "^1.0.5",
+    "qcubed/cache": ">=0.1"
 
   },
   "require-dev" : {

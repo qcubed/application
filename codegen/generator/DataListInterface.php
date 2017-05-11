@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\SqlTable;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -17,7 +17,7 @@ use QCubed\Codegen\DatabaseCodeGen;
  *
  * This interface describes the minimum functions to implement in order to create a code generator for a data list.
  * See the HtmlTable generator for an example
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QDataList_CodeGen_Interface
  */
 interface DataListInterface

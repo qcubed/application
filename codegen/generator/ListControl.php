@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -19,12 +19,12 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class ListControl
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QListControlBase_CodeGenerator
  */
 class ListControl extends Control
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Control\\ListControl')
     {
         parent::__construct($strControlClassName);
     }
@@ -40,7 +40,7 @@ class ListControl extends Control
 
     public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
     {
-        $a = [];
+        $a = parent::connectorImports($objCodeGen, $objTable, $objColumn);
         $a[] = ['class'=>'QCubed\\Control\\ListControl'];
         $a[] = ['class'=>'QCubed\\Project\\Control\\ListBox'];
         $a[] = ['class'=>'QCubed\\Control\\ListItem'];

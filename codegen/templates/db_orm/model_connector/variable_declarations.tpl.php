@@ -36,7 +36,7 @@
 
 	if ($objControlCodeGenerator->getControlClass() != 'QCubed\\Control\\Label' && (!isset($objColumn->Options['FormGen']) || $objColumn->Options['FormGen'] == \QCubed\ModelConnector\Options::FORMGEN_BOTH)) {
 		// also generate a QCubed\\Control\\Label for each control that is not defaulted as a label already
-		echo \QCubed\Generator\Label::instance()->connectorVariableDeclaration($objCodeGen, $objColumn);
+		echo \QCubed\Codegen\Generator\Label::instance()->connectorVariableDeclaration($objCodeGen, $objColumn);
 	}
 }
 ?>
@@ -58,7 +58,7 @@
 
 	if ($objControlCodeGenerator->getControlClass() != 'QCubed\\Control\\Label' && (!isset($objReverseReference->Options['FormGen']) || $objReverseReference->Options['FormGen'] == \QCubed\ModelConnector\Options::FORMGEN_BOTH)) {
 		// also generate a QCubed\\Control\\Label for each control that is not defaulted as a label already
-		echo \QCubed\Generator\Label::instance()->connectorVariableDeclaration($objCodeGen, $objReverseReference);
+		echo \QCubed\Codegen\Generator\Label::instance()->connectorVariableDeclaration($objCodeGen, $objReverseReference);
 	}
 } ?>
 <?php foreach ($objTable->ManyToManyReferenceArray as $objManyToManyReference) {
@@ -68,7 +68,7 @@
 
 	if ($objControlCodeGenerator->getControlClass() != 'QCubed\\Control\\Label' && (!isset($objManyToManyReference->Options['FormGen']) || $objManyToManyReference->Options['FormGen'] == \QCubed\ModelConnector\Options::FORMGEN_BOTH)) {
 	// also generate a QCubed\\Control\\Label for each control that is not defaulted as a label already
-		echo \QCubed\Generator\Label::instance()->connectorVariableDeclaration($objCodeGen, $objManyToManyReference);
+		echo \QCubed\Codegen\Generator\Label::instance()->connectorVariableDeclaration($objCodeGen, $objManyToManyReference);
 	}
 ?>
     protected $str<?= $objManyToManyReference->ObjectDescription; ?>Glue = ', ';

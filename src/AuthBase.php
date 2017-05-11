@@ -9,6 +9,8 @@
 
 namespace QCubed;
 
+use QCubed\Project\Application;
+
 /**
  * class AuthBase
  *
@@ -44,6 +46,7 @@ class AuthBase
         header('Status: 401 Access Denied', true);
 
         // throw new QRemoteAdminDeniedException(); ?? Really, throw an exception??
+        Application::setProcessOutput(false);
         exit();
     }
 

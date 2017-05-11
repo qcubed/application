@@ -28,7 +28,7 @@
 
             if ($objControlCodeGenerator->GetControlClass() != 'QCubed\\Control\\Label' && (!isset($objColumn->Options['FormGen']) || $objColumn->Options['FormGen'] == \QCubed\ModelConnector\Options::FORMGEN_BOTH)) {
                 // also generate a QCubed\\Control\\Label for each control that is not defaulted as a label already
-                echo \QCubed\Generator\Label::Instance()->ConnectorRefresh($objCodeGen, $objTable, $objColumn);
+                echo \QCubed\Codegen\Generator\Label::Instance()->ConnectorRefresh($objCodeGen, $objTable, $objColumn);
             }
             echo "\n\n";
         }
@@ -39,7 +39,7 @@
                 echo $objControlCodeGenerator->ConnectorRefresh($objCodeGen, $objTable, $objReverseReference);
                 if ($objControlCodeGenerator->GetControlClass() != 'QCubed\\Control\\Label' && (!isset($objReverseReference->Options['FormGen']) || $objReverseReference->Options['FormGen'] == \QCubed\ModelConnector\Options::FORMGEN_BOTH)) {
                     // also generate a QCubed\\Control\\Label for each control that is not defaulted as a label already
-                    echo \QCubed\Generator\Label::Instance()->ConnectorRefresh($objCodeGen, $objTable, $objReverseReference);
+                    echo \QCubed\Codegen\Generator\Label::Instance()->ConnectorRefresh($objCodeGen, $objTable, $objReverseReference);
                 }
                 echo "\n\n";
             }
@@ -51,7 +51,7 @@
             echo $objControlCodeGenerator->ConnectorRefresh($objCodeGen, $objTable, $objManyToManyReference);
             if ($objControlCodeGenerator->GetControlClass() != 'QCubed\\Control\\Label' && (!isset($objManyToManyReference->Options['FormGen']) || $objManyToManyReference->Options['FormGen'] == \QCubed\ModelConnector\Options::FORMGEN_BOTH)) {
                 // also generate a QCubed\\Control\\Label for each control that is not defaulted as a label already
-                echo \QCubed\Generator\Label::Instance()->ConnectorRefresh($objCodeGen, $objTable, $objManyToManyReference);
+                echo \QCubed\Codegen\Generator\Label::Instance()->ConnectorRefresh($objCodeGen, $objTable, $objManyToManyReference);
             }
             echo "\n\n";
         }

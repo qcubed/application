@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -16,12 +16,12 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class DateTimePicker
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QDateTimePickerBase_CodeGenerator
  */
 class DateTimePicker extends Control
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Control\\DateTimePicker')
     {
         parent::__construct($strControlClassName);
     }
@@ -34,13 +34,6 @@ class DateTimePicker extends Control
     {
         return 'cal' . $strPropName;
     }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn) {
-        $a = [];
-        $a[] = ['class'=>'QCubed\\Control\\DateTimePicker'];
-        return $a;
-    }
-
 
     /**
      * Generate code that will be inserted into the ModelConnector to connect a database object with this control.

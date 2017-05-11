@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -17,12 +17,12 @@ use QCubed as Q;
 /**
  * Class Checkbox
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QCheckBoxBase_CodeGenerator
  */
 class Checkbox extends Control
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Project\\Control\\Checkbox')
     {
         parent::__construct($strControlClassName);
     }
@@ -34,12 +34,6 @@ class Checkbox extends Control
     public function varName($strPropName)
     {
         return 'chk' . $strPropName;
-    }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
-    {
-        $a[] = ['class' => 'QCubed\\Control\\Checkbox'];
-        return $a;
     }
 
     /**
@@ -141,13 +135,4 @@ TMPL;
 TMPL;
         return $strRet;
     }
-    /**
-     * Returns the generator corresponding to this control.
-     *
-     * @return Q\Generator\GeneratorBase
-     */
-    public static function getCodeGenerator() {
-        return new Q\Generator\Table(__CLASS__); // reuse the Table generator
-    }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
 use QCubed as Q;
-use QCubed\Generator\Label;
+use QCubed\Codegen\Generator\Label;
 
 // Array is an array of arrays, with each entry being an array of:
 // class=>classname

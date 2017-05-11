@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\ManyToManyReference;
@@ -19,11 +19,17 @@ use QCubed\Exception\Caller;
 
 /**
  * Class Control
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QControlBase_CodeGenerator
  */
 abstract class Control extends GeneratorBase
 {
+
+    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
+    {
+        $a[] = ['class' => $this->strControlClassName];
+        return $a;
+    }
 
     /**
      * @param DatabaseCodeGen $objCodeGen

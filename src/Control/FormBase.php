@@ -679,6 +679,7 @@ abstract class FormBase extends ObjectBase
             Application::sendAjaxResponse(['loc' => 'reload']);
         } else {
             header('Location: ' . Application::instance()->context()->requestUri());
+            Application::setProcessOutput(false);
         }
 
         // End the Response Script
@@ -831,7 +832,7 @@ abstract class FormBase extends ObjectBase
         if (strtolower(substr($strContents, 0, 5)) == 'debug') {
             // TODO: Output debugging information.
         } else {
-            ob_clean();
+            ob_end_clean();
 
             Application::sendAjaxResponse($aResponse);
         }

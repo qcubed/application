@@ -513,10 +513,10 @@ class RadioButtonList extends ListControl
     /**
      * Returns the generator corresponding to this control.
      *
-     * @return Q\Generator\GeneratorBase
+     * @return Q\Codegen\Generator\GeneratorBase
      */
     public static function getCodeGenerator() {
-        return new Q\Generator\RadioButtonList(__CLASS__);
+        return new Q\Codegen\Generator\RadioButtonList(__CLASS__);
     }
 
 }

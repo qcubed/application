@@ -22,7 +22,7 @@
 		<li><a href="form_drafts.php">View Form Drafts</a> - to view the generated files (after you run the Code Generator).</li>
 		<li><a href="<?php _p(__VIRTUAL_DIRECTORY__ . __EXAMPLES__) ?>/index.php">QCubed Examples</a> - learn QCubed by studying and modifying the example files locally.</li>
 		<li><a href="<?php _p(__VIRTUAL_DIRECTORY__ . __DEVTOOLS_ASSETS__) ?>/plugin_manager.php">Plugin Manager</a> - to extend QCubed with community-contributed plugins.</li>
-		<li><a href="<?php _p(__VIRTUAL_DIRECTORY__ . __PHP_ASSETS__) ?>/qcubed_unit_tests.php">QCubed Unit Tests</a> - set of tests that QCubed developers use to verify the integrity of the framework.
+		<li><a href="../test/localtest.php">QCubed Unit Tests</a> - set of tests that QCubed developers use to verify the integrity of the framework.
 			You must install the test SQL database and codegen_options.json file to run the tests. These can be found in the <?php _p(__VIRTUAL_DIRECTORY__ . __PHP_ASSETS__ . '/examples')?> directory.</li>
 	</ul>
 <?php if (\QCubed\Project\Application::isAuthorized()) { ?>

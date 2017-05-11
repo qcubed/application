@@ -721,10 +721,10 @@ abstract class TextBoxBase extends QControl
     /**
      * Returns the generator corresponding to this control.
      *
-     * @return Q\Generator\GeneratorBase
+     * @return Q\Codegen\Generator\GeneratorBase
      */
     public static function getCodeGenerator() {
-        return new Q\Generator\TextBox();
+        return new Q\Codegen\Generator\TextBox();
     }
 
 }

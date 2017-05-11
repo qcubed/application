@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\SqlTable;
@@ -15,12 +15,12 @@ use QCubed\Codegen\DatabaseCodeGen;
 
 /**
  * Class Slider
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QSliderBase_CodeGenerator
  */
 class Slider extends Control
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Project\\Jqui\\Slider')
     {
         parent::__construct($strControlClassName);
     }
@@ -32,13 +32,6 @@ class Slider extends Control
     public function varName($strPropName)
     {
         return 'sld' . $strPropName;
-    }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
-    {
-        $a = [];
-        $a[] = ['class'=>'QCubed\\Project\\Jqui\\Slider'];
-        return $a;
     }
 
     /**

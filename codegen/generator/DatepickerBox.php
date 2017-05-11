@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -15,12 +15,12 @@ use QCubed\Codegen\SqlTable;
 
 /**
  * Class DatepickerBox
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QDatepickerBoxBase_CodeGenerator
  */
 class DatepickerBox extends TextBox
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Project\\Jqui\\DatepickerBox')
     {
         parent::__construct($strControlClassName);
     }
@@ -33,13 +33,6 @@ class DatepickerBox extends TextBox
     public function varName($strPropName)
     {
         return 'cal' . $strPropName;
-    }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
-    {
-        $a = parent::connectorImports($objCodeGen, $objTable, $objColumn);
-        $a[] = ['class' => 'QCubed\\Control\\DatepickerBox'];
-        return $a;
     }
 
     /**

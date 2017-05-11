@@ -13,7 +13,7 @@ foreach ($objTable->ColumnArray as $objColumn) {
 		echo $objControlCodeGenerator->connectorCreate($objCodeGen, $objTable, $objColumn);
 		if ($objControlCodeGenerator->getControlClass() != 'QCubed\\Control\\Label' && (!isset($objColumn->Options['FormGen']) || $objColumn->Options['FormGen'] == Options::FORMGEN_BOTH)) {
 			// also generate a QCubed\\Control\\Label for each control that generates both
-			echo \QCubed\Generator\Label::instance()->connectorCreate($objCodeGen, $objTable, $objColumn);
+			echo \QCubed\Codegen\Generator\Label::instance()->connectorCreate($objCodeGen, $objTable, $objColumn);
 		}
 		echo "\n\n";
 	}
@@ -28,7 +28,7 @@ foreach ($objTable->ColumnArray as $objColumn) {
 
 		if ($objControlCodeGenerator->getControlClass() != 'QCubed\\Control\\Label' && (!isset($objReverseReference->Options['FormGen']) || $objReverseReference->Options['FormGen'] == Options::FORMGEN_BOTH)) {
 			// also generate a QCubed\\Control\\Label for each control that generates both
-			echo \QCubed\Generator\Label::instance()->connectorCreate($objCodeGen, $objTable, $objReverseReference);
+			echo \QCubed\Codegen\Generator\Label::instance()->connectorCreate($objCodeGen, $objTable, $objReverseReference);
 		}
 		echo "\n\n";
 	}
@@ -41,7 +41,7 @@ foreach ($objTable->ColumnArray as $objColumn) {
 
 		if ($objControlCodeGenerator->getControlClass() != 'QCubed\\Control\\Label' && (!isset($objManyToManyReference->Options['FormGen']) || $objManyToManyReference->Options['FormGen'] == Options::FORMGEN_BOTH)) {
 			// also generate a QCubed\\Control\\Label for each control that generates both
-			echo \QCubed\Generator\Label::instance()->connectorCreate($objCodeGen, $objTable, $objManyToManyReference);
+			echo \QCubed\Codegen\Generator\Label::instance()->connectorCreate($objCodeGen, $objTable, $objManyToManyReference);
 		}
 		echo "\n\n";
 	}

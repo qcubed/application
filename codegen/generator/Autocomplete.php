@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -19,12 +19,12 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class Autocomplete
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QAutocompleteBase_CodeGenerator
  */
 class Autocomplete extends TextBox
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Project\\Jqui\\Autocomplete')
     {
         parent::__construct($strControlClassName);
     }
@@ -44,7 +44,6 @@ class Autocomplete extends TextBox
         $a[] = ['class'=>'QCubed\\Query\\Condition\\ConditionInterface', 'as'=>'QQCondition'];
         $a[] = ['class'=>'QCubed\\Query\\Clause\\ClauseInterface', 'as'=>'QQClause'];
         $a[] = ['class'=>'QCubed\\Control\\ListItem'];
-        $a[] = ['class'=>'QCubed\\Project\\Jqui\\Autocomplete'];
         return $a;
     }
 

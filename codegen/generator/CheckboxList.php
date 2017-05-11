@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -17,23 +17,15 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class CheckboxList
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QCheckBoxBaseList_CodeGenerator
  */
 class CheckboxList extends ListControl
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Control\\CheckboxList')
     {
         parent::__construct($strControlClassName);
     }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
-    {
-        $a = parent::connectorImports($objCodeGen, $objTable, $objColumn);
-        $a[] = ['class' => 'QCubed\\Control\\CheckboxList'];
-        return $a;
-    }
-
 
     /**
      * Reads the options from the special data file, and possibly the column
@@ -52,7 +44,7 @@ class CheckboxList extends ListControl
         $strRet = parent::connectorCreateOptions($objCodeGen, $objTable, $objColumn, $strControlVarName);
 
         if (!$objColumn instanceof ManyToManyReference) {
-            $objCodeGen->reportError($objTable->Name . ':' . $objColumn->Name . ' is not compatible with a QCheckBoxList.');
+            $objCodeGen->reportError($objTable->Name . ':' . $objColumn->Name . ' is not compatible with a CheckBoxList.');
         }
 
         return $strRet;

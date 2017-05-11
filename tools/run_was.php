@@ -25,7 +25,12 @@
  */
 
 /**
- * Process a script from the gen_was command
+ * Process a substitution script from the gen_was command. Run this command to convert QCubed v3 code into v4 code.
+ * Files are changed in place, so be careful! Make backups before running this.
+ *
+ * Use the all.regex.php file as the pattern file.
+ *
+ * -R to search a directory recursively.
  */
 
 if (count($argv) < 3) {

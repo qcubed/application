@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -18,12 +18,12 @@ use QCubed\Type;
 /**
  * Class TextBox
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QTextBoxBase_CodeGenerator
  */
 class TextBox extends Control
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Project\\Control\\TextBox')
     {
         parent::__construct($strControlClassName);
     }
@@ -35,13 +35,6 @@ class TextBox extends Control
     public function varName($strPropName)
     {
         return 'txt' . $strPropName;
-    }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
-    {
-        $a = [];
-        $a[] = ['class' => 'QCubed\\Project\\Control\\TextBox'];
-        return $a;
     }
 
     /**

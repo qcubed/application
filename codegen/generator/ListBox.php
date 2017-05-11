@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -15,12 +15,12 @@ use QCubed\Codegen\SqlTable;
 
 /**
  * Class ListBox
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QListBoxBase_CodeGenerator
  */
 class ListBox extends ListControl
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Project\\Control\\ListBox')
     {
         parent::__construct($strControlClassName);
     }

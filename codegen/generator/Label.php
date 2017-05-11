@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -19,14 +19,14 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class Label
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QLabel_CodeGenerator
  */
 class Label extends Control
 {
     private static $instance = null;
 
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Control\\Label')
     {
         parent::__construct($strControlClassName);
     }
@@ -49,12 +49,6 @@ class Label extends Control
     public function varName($strPropName)
     {
         return 'lbl' . $strPropName;
-    }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn) {
-        $a = [];
-        $a[] = ['class'=>'QCubed\\Control\\Label'];
-        return $a;
     }
 
     /**

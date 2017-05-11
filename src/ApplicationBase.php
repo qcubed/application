@@ -45,6 +45,12 @@ abstract class ApplicationBase extends ObjectBase
      * */
     public static $blnLocalCache = false;
 
+    /** @var string */
+    protected static $strCacheControl = 'private';
+    /** @var string */
+    protected static $strContentType = "text/html";
+
+
     private static $instance = null;
 
 
@@ -58,11 +64,6 @@ abstract class ApplicationBase extends ObjectBase
     protected $objPurifier;
     /** @var bool */
     protected $blnProcessOutput = true;
-    /** @var string */
-    protected  $strCacheControl = 'private';
-    /** @var string  */
-    protected  $strContentType = "text/html";
-
 
 
     /**
@@ -222,7 +223,7 @@ abstract class ApplicationBase extends ObjectBase
         return Application::instance()->objPurifier->purify($strText, $objCustomConfig);
     }
 
-    abstract function initPurifier();
+    abstract public function initPurifier();
 
     /**
      * Whether or not we are currently trying to Process the Output of the page.
@@ -245,6 +246,7 @@ abstract class ApplicationBase extends ObjectBase
         Application::instance()->blnProcessOutput = $blnProcess;
         return $blnOldValue;
     }
+
     /**
      * Definition of CacheControl for the HTTP header.  In general, it is
      * recommended to keep this as "private".  But this can/should be overriden
@@ -255,11 +257,13 @@ abstract class ApplicationBase extends ObjectBase
      * @param string $strControl The new value
      * @return string The old value
      */
-    public static function setCacheControl($strControl) {
-        $strOldValue = Application::instance()->strCacheControl;
-        Application::instance()->strCacheControl = $strControl;
+    public static function setCacheControl($strControl)
+    {
+        $strOldValue = static::$strCacheControl;
+        static::$strCacheControl = $strControl;
         return $strOldValue;
     }
+
 
     /**
      * The content type to output.
@@ -267,9 +271,10 @@ abstract class ApplicationBase extends ObjectBase
      * @param string $strContentType
      * @return string The old value
      */
-    public static function setContentType($strContentType) {
-        $strOldValue = Application::instance()->strCacheControl;
-        Application::instance()->strCacheControl = $strContentType;
+    public static function setContentType($strContentType)
+    {
+        $strOldValue = static::$strContentType;
+        static::$strContentType = $strContentType;
         return $strOldValue;
     }
 
@@ -307,6 +312,7 @@ abstract class ApplicationBase extends ObjectBase
                     // If so, we're likely using PHP as a Plugin/Module
                     // Use 'header' to redirect
                     header(sprintf('Location: %s', $strLocation));
+                    static::setProcessOutput(false);
                 } else {
                     // We're likely using this as a CGI
                     // Use JavaScript to redirect
@@ -516,12 +522,16 @@ abstract class ApplicationBase extends ObjectBase
         ) {
             return trim($strBuffer);
         } else {
-            // We are outputting a QForm
-            header('Cache-Control: ' . Application::instance()->strCacheControl);
-            // make sure the server does not override the character encoding value by explicitly sending it out as a header.
-            // some servers will use an internal default if not specified in the header, and that will override the "encoding" value sent in the text.
-            header(sprintf('Content-Type: %s; charset=%s', strtolower(Application::instance()->strCacheControl),
-                strtolower(Application::encodingType())));
+            $file = "";
+            $line = 0;
+            if (!headers_sent()) {
+                // We are outputting a QForm
+                header('Cache-Control: ' . static::$strCacheControl);
+                // make sure the server does not override the character encoding value by explicitly sending it out as a header.
+                // some servers will use an internal default if not specified in the header, and that will override the "encoding" value sent in the text.
+                header(sprintf('Content-Type: %s; charset=%s', strtolower(static::$strContentType),
+                    strtolower(__APPLICATION_ENCODING_TYPE__)));
+            }
 
             /*
              * Normally, FormBase->renderEnd will render the javascripts. In the unusual case
@@ -690,7 +700,8 @@ abstract class ApplicationBase extends ObjectBase
         _p('</ul></div>', false);
     }
 
-    public static function isAuthorized($options = null) {
+    public static function isAuthorized($options = null)
+    {
         return false; // must be overridden!
     }
 
@@ -707,5 +718,4 @@ abstract class ApplicationBase extends ObjectBase
         // throw new QRemoteAdminDeniedException(); ?? Really, throw an exception??
         exit();
     }
-
 }

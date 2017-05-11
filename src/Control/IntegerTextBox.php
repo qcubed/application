@@ -68,9 +68,9 @@ class IntegerTextBox extends NumericTextBox
     /**
      * Returns the generator corresponding to this control.
      *
-     * @return Q\Generator\GeneratorBase
+     * @return Q\Codegen\Generator\GeneratorBase
      */
     public static function getCodeGenerator() {
-        return new Q\Generator\TextBox(__CLASS__); // reuse the TextBox generator
+        return new Q\Codegen\Generator\TextBox(__CLASS__); // reuse the TextBox generator
     }
 }

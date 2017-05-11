@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Generator;
+namespace QCubed\Codegen\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
@@ -17,12 +17,12 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class RadioButtonList
  *
- * @package QCubed\Generator
+ * @package QCubed\Codegen\Generator
  * @was QRadioButtonListBase_CodeGenerator
  */
 class RadioButtonList extends ListControl
 {
-    public function __construct($strControlClassName = __CLASS__)
+    public function __construct($strControlClassName = 'QCubed\\Control\\RadioButtonList')
     {
         parent::__construct($strControlClassName);
     }
@@ -48,13 +48,6 @@ class RadioButtonList extends ListControl
         }
 
         return $strRet;
-    }
-
-    public function connectorImports(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
-    {
-        $a = parent::connectorImports($objCodeGen, $objTable, $objColumn);
-        $a[] = ['class' => 'QCubed\\Control\\RadioButtonList'];
-        return $a;
     }
 
 }
