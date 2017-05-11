@@ -13,9 +13,14 @@ use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\SqlTable;
 use QCubed\Codegen\DatabaseCodeGen;
 
+/**
+ * Class Slider
+ * @package QCubed\Generator
+ * @was QSliderBase_CodeGenerator
+ */
 class Slider extends Control
 {
-    public function __construct($strControlClassName = 'Slider')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }
@@ -57,33 +62,33 @@ class Slider extends Control
         $strControlType = $objCodeGen->getControlCodeGenerator($objColumn)->getControlClass();
 
         $strRet = <<<TMPL
-		/**
-		 * Create and setup a $strControlType $strControlVarName
-		 * @param string \$strControlId optional ControlId to use
-		 * @return $strControlType
-		 */
-		public function {$strControlVarName}_Create(\$strControlId = null) {
+    /**
+     * Create and setup a $strControlType $strControlVarName
+     * @param string \$strControlId optional ControlId to use
+     * @return $strControlType
+     */
+    public function {$strControlVarName}_Create(\$strControlId = null) {
 
 TMPL;
         $strControlIdOverride = $objCodeGen->generateControlId($objTable, $objColumn);
 
         if ($strControlIdOverride) {
             $strRet .= <<<TMPL
-			if (!\$strControlId) {
-				\$strControlId = '$strControlIdOverride';
-			}
+        if (!\$strControlId) {
+            \$strControlId = '$strControlIdOverride';
+        }
 
 TMPL;
         }
         $strRet .= <<<TMPL
-			\$this->{$strControlVarName} = new $strControlType(\$this->objParentObject, \$strControlId);
-			\$this->{$strControlVarName}->Name = t('$strLabelName');
+        \$this->{$strControlVarName} = new \\{$strControlType}(\$this->objParentObject, \$strControlId);
+        \$this->{$strControlVarName}->Name = t('$strLabelName');
 
 TMPL;
 
         if ($strMethod = QCodeGen::$PreferredRenderMethod) {
             $strRet .= <<<TMPL
-			\$this->{$strControlVarName}->PreferredRenderMethod = '$strMethod';
+        \$this->{$strControlVarName}->PreferredRenderMethod = '$strMethod';
 
 TMPL;
         }
@@ -91,8 +96,8 @@ TMPL;
         $strRet .= $this->connectorRefresh($objCodeGen, $objTable, $objColumn, true);
 
         $strRet .= <<<TMPL
-			return \$this->{$strControlVarName};
-		}
+        return \$this->{$strControlVarName};
+    }
 
 
 TMPL;

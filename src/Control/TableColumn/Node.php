@@ -17,7 +17,7 @@ use QCubed\Query\QQ;
 /**
  * Class Node
  *
- * A table column that displays the content of a database column represented by a QQNode\Base object.
+ * A table column that displays the content of a database column represented by a NodeBase object.
  * The $objNodes can be a single node, or an array of nodes. If an array of nodes, the first
  * node will be the display node, and the rest of the nodes will be used for sorting.
  *

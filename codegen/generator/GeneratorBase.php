@@ -17,6 +17,7 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class GeneratorBase
  * @package QCubed\Generator
+ * @was AbstractControl_CodeGenerator
  */
 abstract class GeneratorBase
 {

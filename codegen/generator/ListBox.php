@@ -16,10 +16,11 @@ use QCubed\Codegen\SqlTable;
 /**
  * Class ListBox
  * @package QCubed\Generator
+ * @was QListBoxBase_CodeGenerator
  */
 class ListBox extends ListControl
 {
-    public function __construct($strControlClassName = 'ListBox')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }

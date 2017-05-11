@@ -13,9 +13,14 @@ use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
 use QCubed\Codegen\SqlTable;
 
+/**
+ * Class DatepickerBox
+ * @package QCubed\Generator
+ * @was QDatepickerBoxBase_CodeGenerator
+ */
 class DatepickerBox extends TextBox
 {
-    public function __construct($strControlClassName = 'DatepickerBox')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }

@@ -18,10 +18,11 @@ use QCubed as Q;
  * Class Checkbox
  *
  * @package QCubed\Generator
+ * @was QCheckBoxBase_CodeGenerator
  */
 class Checkbox extends Control
 {
-    public function __construct($strControlClassName = 'Checkbox')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }
@@ -80,7 +81,7 @@ TMPL;
 TMPL;
         }
         $strRet .= <<<TMPL
-			\$this->{$strControlVarName} = new $strControlType(\$this->objParentObject, \$strControlId);
+			\$this->{$strControlVarName} = new \\{$strControlType}(\$this->objParentObject, \$strControlId);
 			\$this->{$strControlVarName}->Name = t('$strLabelName');
 			\$this->{$strControlVarName}->Checked = \$this->{$strObjectName}->{$objColumn->PropertyName};
 

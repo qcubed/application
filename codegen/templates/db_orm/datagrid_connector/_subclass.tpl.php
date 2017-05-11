@@ -10,11 +10,11 @@ use QCubed\Project\Codegen\CodegenBase as QCodegen;
 		'DocrootFlag' => false,
 		'DirectorySuffix' => '',
 		'TargetDirectory' => __MODEL_CONNECTOR__,
-		'TargetFileName' => $objTable->ClassName . 'List.class.php'
+		'TargetFileName' => $objTable->ClassName . 'List.php'
 	);
 ?>
 <?php print("<?php\n"); ?>
-	require(__MODEL_CONNECTOR_GEN__ . '/<?= $objTable->ClassName ?>ListGen.class.php');
+	require(__MODEL_CONNECTOR_GEN__ . '/<?= $objTable->ClassName ?>ListGen.php');
 
 	/**
 	 * This is the connector class for the List functionality

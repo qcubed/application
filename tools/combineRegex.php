@@ -11,6 +11,7 @@ $files = [
     __DIR__ . '/manual.regex.php',
     __DIR__ . '/app.regex.php',
     __DIR__ . '/project.regex.php',
+    __DIR__ . '/generator.regex.php',
     $dirQCubed . '/common/tools/common.regex.php',
     $dirQCubed . '/orm/tools/orm.regex.php',
     $dirQCubed . '/orm/tools/manual.regex.php',

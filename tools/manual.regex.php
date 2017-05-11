@@ -45,7 +45,7 @@ $a['const']['QJsPriority::Exclusive'] = '\\QCubed\\ApplicationBase::PRIORITY_EXC
 $a['const']['QJsPriority::Last'] = '\\QCubed\\ApplicationBase::PRIORITY_LAST';
 
 $a['func']['QApplication::Translate'] = 't';
-$a['func']['QApplication::PathInfo'] = '\\QCubed\\Project\\Application::instance()->context()->pathItem';
+$a['func']['QApplication::PathInfo'] = '\\QCubed\\Project\\Application::instance()->context()->pathInfo';
 $a['func']['QApplication::QueryString'] = '\\QCubed\\Project\\Application::instance()->context()->queryStringItem';
 $a['func']['QApplication::IsBrowser'] = '\\QCubed\\Project\\Application::instance()->context()->isBrowser';
 $a['func']['QApplication::HtmlEntities'] = '\\QCubed\\QString::htmlEntities';
@@ -98,6 +98,8 @@ $a['regex']['QApplicationBase::\\$BrowserVersion'] = '\\QCubed\\Project\\Applica
 $a['regex']['QApplicationBase::\\$DocumentRoot'] = '\\QCubed\\Project\\Application::instance()->context()->docRoot()';
 $a['regex']['QApplicationBase::\\$Minimize'] = '\\QCubed\\Project\\Application::instance()->context()->minimize()';
 $a['regex']['QApplicationBase::\\$RequestMode'] = '\\QCubed\\Project\\Application::instance()->context()->requestMode()';
+
+$a['regex']['QConvertNotation'] = '\\QCubed\\QString';
 
 $a['warn']['QCallType'] = 'QCallType has been removed. Use Application::isAjax, or Application::instance()->context()->requestMode() instead.';
 

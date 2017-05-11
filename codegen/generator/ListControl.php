@@ -20,10 +20,11 @@ use QCubed\Codegen\SqlTable;
  * Class ListControl
  *
  * @package QCubed\Generator
+ * @was QListControlBase_CodeGenerator
  */
 class ListControl extends Control
 {
-    public function __construct($strControlClassName = 'ListControl')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }
@@ -89,11 +90,10 @@ TMPL;
 		/**
 		 * Create and setup {$strControlType} {$strControlVarName}
 		 * @param string \$strControlId optional ControlId to use
-		 * @param QQCondition \$objConditions override the default condition of QQ::all() to the query, itself
+		 * @param QQCondition \$objCondition override the default condition of QQ::all() to the query, itself
 		 * @param QQClause[] \$objClauses additional QQClause object or array of QQClause objects for the query
 		 * @return ListBox
 		 */
-
 		public function {$strControlVarName}_Create(\$strControlId = null, QQCondition \$objCondition = null, \$objClauses = null) {
 			\$this->obj{$strPropName}Condition = \$objCondition;
 			\$this->obj{$strPropName}Clauses = \$objClauses;
@@ -114,7 +114,7 @@ TMPL;
         }
 
         $strRet .= <<<TMPL
-			\$this->{$strControlVarName} = new {$strControlType}(\$this->objParentObject, \$strControlId);
+			\$this->{$strControlVarName} = new \\{$strControlType}(\$this->objParentObject, \$strControlId);
 			\$this->{$strControlVarName}->Name = t('{$strLabelName}');
 
 TMPL;
@@ -246,17 +246,17 @@ TMPL;
         $strControlVarName = $this->varName($strPropName);
 
         $strRet = <<<TMPL
-		/**
-		 * @var {$strClassName} {$strControlVarName}
-		 * @access protected
-		 */
-		protected \${$strControlVarName};
+    /**
+     * @var {$strClassName}
+     * @access protected
+     */
+    protected \${$strControlVarName};
 
-		/**
-		 * @var string str{$strPropName}NullLabel
-		 * @access protected
-		 */
-		protected \$str{$strPropName}NullLabel;
+    /**
+     * @var string 
+     * @access protected
+     */
+    protected \$str{$strPropName}NullLabel;
 
 
 TMPL;
@@ -266,17 +266,17 @@ TMPL;
             ($objColumn instanceof ReverseReference)
         ) {
             $strRet .= <<<TMPL
-		/**
-		* @var obj{$strPropName}Condition
-		* @access protected
-		*/
-		protected \$obj{$strPropName}Condition;
+    /**
+    * @var QQCondition
+    * @access protected
+    */
+    protected \$obj{$strPropName}Condition;
 
-		/**
-		* @var obj{$strPropName}Clauses
-		* @access protected
-		*/
-		protected \$obj{$strPropName}Clauses;
+    /**
+    * @var QQClause[]
+    * @access protected
+    */
+    protected \$obj{$strPropName}Clauses;
 
 TMPL;
         }
@@ -435,8 +435,9 @@ TMPL;
         $strPropName = DatabaseCodeGen::modelConnectorPropertyName($objColumn);
         $strControlVarName = $this->varName($strPropName);
         $strRet = <<<TMPL
-					case '{$strPropName}NullLabel':
-						return \$this->str{$strPropName}NullLabel = \$mixValue;
+                case '{$strPropName}NullLabel':
+                    \$this->str{$strPropName}NullLabel = \$mixValue;
+                    break;
 
 TMPL;
         return $strRet;
@@ -454,8 +455,8 @@ TMPL;
         $strPropName = DatabaseCodeGen::modelConnectorPropertyName($objColumn);
         $strControlVarName = $this->varName($strPropName);
         $strRet = <<<TMPL
-				case '{$strPropName}NullLabel':
-					return \$this->str{$strPropName}NullLabel;
+            case '{$strPropName}NullLabel':
+                return \$this->str{$strPropName}NullLabel;
 
 TMPL;
         return $strRet;

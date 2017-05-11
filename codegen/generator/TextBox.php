@@ -13,6 +13,7 @@ use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
 use QCubed\Codegen\SqlTable;
 use QCubed\Database\FieldType;
+use QCubed\Type;
 
 /**
  * Class TextBox
@@ -22,7 +23,7 @@ use QCubed\Database\FieldType;
  */
 class TextBox extends Control
 {
-    public function __construct($strControlClassName = 'TextBox')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }
@@ -83,7 +84,7 @@ TMPL;
 TMPL;
         }
         $strRet .= <<<TMPL
-			\$this->{$strControlVarName} = new $strControlType(\$this->objParentObject, \$strControlId);
+			\$this->{$strControlVarName} = new \\{$strControlType}(\$this->objParentObject, \$strControlId);
 			\$this->{$strControlVarName}->Name = t('$strLabelName');
 
 TMPL;

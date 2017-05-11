@@ -18,10 +18,11 @@ use QCubed\Codegen\SqlTable;
  * Class RadioButtonList
  *
  * @package QCubed\Generator
+ * @was QRadioButtonListBase_CodeGenerator
  */
 class RadioButtonList extends ListControl
 {
-    public function __construct($strControlClassName = 'RadioButtonList')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }

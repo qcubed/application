@@ -51,6 +51,7 @@ include 'qcubed.inc.php';
 $loader = require dirname(dirname(dirname(__DIR__))) . '/autoload.php'; // load superclasses
 $loader->addPsr4('QCubed\\', dirname(dirname(__DIR__)) . '/common/src'); // make sure common is included
 $loader->addPsr4('QCubed\\Project\\',dirname(__DIR__) . '/install/project/qcubed'); // make sure user side codegen is included
+$loader->addPsr4('QCubed\\Generator\\',dirname(__DIR__) . '/codegen/generator'); // make sure user side codegen is included
 $loader->addPsr4('QCubed\\', dirname(__DIR__) . '/src'); // make sure I am included
 
 // convert upper case name to camel name

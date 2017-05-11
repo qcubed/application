@@ -16,13 +16,4 @@ use QCubed as Q;
  */
 class DatepickerBox extends Q\Jqui\DatepickerBoxBase
 {
-    /**
-     * Returns the generator corresponding to this control.
-     *
-     * @return Q\Generator\GeneratorBase
-     */
-    public static function getCodeGenerator() {
-        return new Q\Generator\DatepickerBox(__CLASS__);
-    }
-
 }

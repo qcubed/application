@@ -17,10 +17,11 @@ use QCubed\Codegen\SqlTable;
  * Class DateTimePicker
  *
  * @package QCubed\Generator
+ * @was QDateTimePickerBase_CodeGenerator
  */
 class DateTimePicker extends Control
 {
-    public function __construct($strControlClassName = 'DateTimePicker')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }
@@ -80,17 +81,17 @@ TMPL;
 TMPL;
         }
         $strRet .= <<<TMPL
-			\$this->{$strControlVarName} = new $strControlType(\$this->objParentObject, \$strControlId);
+			\$this->{$strControlVarName} = new \\{$strControlType}(\$this->objParentObject, \$strControlId);
 			\$this->{$strControlVarName}->Name = t('$strLabelName');
 			\$this->{$strControlVarName}->DateTime = \$this->{$strObjectName}->{$objColumn->PropertyName};
 
 TMPL;
         switch ($objColumn->DbType) {
-            case QDatabaseFieldType::DateTime:
+            case \QCubed\Database\FieldType::DATE_TIME:
                 $strRet .= "\t\t\t\$this->{$strControlVarName}->DateTimePickerType = DateTimePicker::SHOW_DATE_TIME;\n";
                 break;
 
-            case QDatabaseFieldType::Time:
+            case \QCubed\Database\FieldType::TIME:
                 $strRet .= "\t\t\t\$this->{$strControlVarName}->DateTimePickerType = DateTimePicker::SHOW_TIME;\n";
                 break;
 

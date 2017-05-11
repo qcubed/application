@@ -21,6 +21,7 @@ use QCubed as Q;
  * and optionally allows the user to do CRUD operations on individual records.
  *
  * @package QCubed\Generator
+ * @was QHtmlTable_CodeGenerator
  */
 class Table extends Control implements DataListInterface
 {
@@ -159,7 +160,7 @@ TMPL;
 
             if ($objReverseReference->Unique) {
                 $strCode .= <<<TMPL
-	/** @var NodeColumn {$strColVarName} */
+	/** @var NodeColumn */
 	public \${$strColVarName};
 
 TMPL;
@@ -648,17 +649,25 @@ TMPL;
         $strVarName = $objCodeGen->dataListVarName($objTable);
 
         $strCode = <<<TMPL
-
+    /**
+     * Make the datagrid editable
+     */
 	protected function {$strVarName}_MakeEditable() 
 	{
-		\$this->{$strVarName}->addAction(new Q\\Event\\CellClick(0, null, null, true), new Q\\Action\\AjaxControl(\$this, '{$strVarName}_CellClick', null, null, Q\\Event\\CellClick::RowValue));
+		\$this->{$strVarName}->addAction(new Q\\Event\\CellClick(0, null, null, true), new Q\\Action\\AjaxControl(\$this, '{$strVarName}_CellClick', null, null, Q\\Event\\CellClick::ROW_VALUE));
 		\$this->{$strVarName}->addCssClass('clickable-rows');
 	}
 
-	protected function {$strVarName}_CellClick(\$strFormId, \$strControlId, \$strParameter) 
+    /**
+     * Respond to a cell click
+     * @param string \$strFormId The form id
+     * @param string \$strControlId The control id of the control clicked on.
+     * @param mixed \$param Params coming from the cell click. In this situations, it is a string containing the id of row clicked.
+     */
+	protected function {$strVarName}_CellClick(\$strFormId, \$strControlId, \$param) 
 	{
-		if (\$strParameter) {
-			\$this->editItem(\$strParameter);
+		if (\$param) {
+			\$this->editItem(\$param);
 		}
 	}
 
@@ -679,6 +688,13 @@ TMPL;
         $strVarName = $objCodeGen->dataListVarName($objTable);
 
         $strCode = <<<TMPL
+    /**
+     * Get row parameters for the row tag
+     * 
+     * @param mixed \$objRowObject   A database object
+     * @param int \$intRowIndex      The row index
+     * @return array
+     */
 	public function {$strVarName}_GetRowParams(\$objRowObject, \$intRowIndex) 
 	{
 		\$strKey = \$objRowObject->primaryKey();
@@ -708,7 +724,7 @@ TMPL;
     public function dataListSubclassOverrides(DatabaseCodeGen $objCodeGen, SqlTable $objTable)
     {
         $strVarName = $objCodeGen->dataListVarName($objTable);
-        $strPropertyName = QCodeGen::dataListPropertyName($objTable);
+        $strPropertyName = DatabaseCodeGen::dataListPropertyName($objTable);
 
         $strCode = <<<TMPL
 /*

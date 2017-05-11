@@ -66,7 +66,7 @@ abstract class WatcherBase extends ObjectBase
     /**
      * Call from control to watch a node. Watches all tables associated with the node.
      *
-     * @param \QCubed\Query\Node\Base $objNode
+     * @param \QCubed\Query\Node\NodeBase $objNode
      * @throws Caller
      */
     public function watch(NodeBase $objNode)

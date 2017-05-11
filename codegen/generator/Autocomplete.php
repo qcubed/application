@@ -20,10 +20,11 @@ use QCubed\Codegen\SqlTable;
  * Class Autocomplete
  *
  * @package QCubed\Generator
+ * @was QAutocompleteBase_CodeGenerator
  */
 class Autocomplete extends TextBox
 {
-    public function __construct($strControlClassName = 'Autocomplete')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }
@@ -76,13 +77,13 @@ class Autocomplete extends TextBox
         // Create a control designed just for selecting from a type table
         if ($objColumn instanceof SqlColumn && $objColumn->Reference->IsType) {
             $strRet = <<<TMPL
-		/**
-		 * Create and setup {$strControlType} {$strControlVarName}
-		 * @param string \$strControlId optional ControlId to use
-		 * @return {$strControlType}
-		 */
+    /**
+     * Create and setup {$strControlType} {$strControlVarName}
+     * @param string \$strControlId optional ControlId to use
+     * @return {$strControlType}
+     */
 
-		public function {$strControlVarName}_Create(\$strControlId = null) {
+    public function {$strControlVarName}_Create(\$strControlId = null) {
 
 TMPL;
         } else {    // Create a control that presents a list taken from the database
@@ -117,7 +118,7 @@ TMPL;
         }
 
         $strRet .= <<<TMPL
-			\$this->{$strControlVarName} = new {$strControlType}(\$this->objParentObject, \$strControlId);
+			\$this->{$strControlVarName} = new \\{$strControlType}(\$this->objParentObject, \$strControlId);
 			\$this->{$strControlVarName}->Name = t('{$strLabelName}');
 
 TMPL;
@@ -212,23 +213,23 @@ TMPL;
         $strControlVarName = $this->varName($strPropName);
 
         $strRet = <<<TMPL
-		/**
-		 * @var {$strClassName} {$strControlVarName}
-		 * @access protected
-		 */
-		protected \${$strControlVarName};
+    /**
+     * @var {$strClassName}
+     * @access protected
+     */
+    protected \${$strControlVarName};
 
-		/**
-		* @var obj{$strPropName}Condition
-		* @access protected
-		*/
-		protected \$obj{$strPropName}Condition;
+    /**
+    * @var QQCondition
+    * @access protected
+    */
+    protected \$obj{$strPropName}Condition;
 
-		/**
-		* @var obj{$strPropName}Clauses
-		* @access protected
-		*/
-		protected \$obj{$strPropName}Clauses;
+    /**
+    * @var QQClause[]
+    * @access protected
+    */
+    protected \$obj{$strPropName}Clauses;
 
 TMPL;
 

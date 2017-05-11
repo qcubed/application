@@ -259,7 +259,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     protected $blnIsBlockElement = false;
     /** @var Watcher Stores information about watched tables. */
     protected $objWatcher = null;
-    /** @var Q\Query\Node\Base  Used by designer to associate a db node with this control */
+    /** @var Q\Query\Node\NodeBase  Used by designer to associate a db node with this control */
     protected $objLinkedNode;
     /**
      * @var bool | null For controls that also produce built-in labels (QCheckBox, QCheckBoxList, etc.)
@@ -2517,7 +2517,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             // CODEGEN
             case "LinkedNode":
                 try {
-                    $this->objLinkedNode = Type::cast($mixValue, 'Q\Query\Node\Base');
+                    $this->objLinkedNode = Type::cast($mixValue, '\\QCubed\\Query\\Node\\NodeBase');
                     break;
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();

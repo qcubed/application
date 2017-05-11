@@ -690,7 +690,9 @@ abstract class ApplicationBase extends ObjectBase
         _p('</ul></div>', false);
     }
 
-    abstract public static function isAuthorized($options = null);
+    public static function isAuthorized($options = null) {
+        return false; // must be overridden!
+    }
 
     public static function checkAuthorized($options = null)
     {

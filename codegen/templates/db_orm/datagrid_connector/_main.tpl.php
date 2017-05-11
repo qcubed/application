@@ -17,7 +17,7 @@ $_TEMPLATE_SETTINGS = array(
     'DocrootFlag' => false,
     'DirectorySuffix' => '',
     'TargetDirectory' => __MODEL_CONNECTOR_GEN__,
-    'TargetFileName' => $objTable->ClassName . 'ListGen.class.php'
+    'TargetFileName' => $objTable->ClassName . 'ListGen.php'
 );
 
 ?>

@@ -16,13 +16,4 @@ use QCubed as Q;
  */
 class Slider extends Q\Jqui\SliderBase
 {
-    /**
-     * Returns the generator corresponding to this control.
-     *
-     * @return Q\Generator\GeneratorBase
-     */
-    public static function getCodeGenerator() {
-        return new Q\Generator\Slider(__CLASS__);
-    }
-
 }

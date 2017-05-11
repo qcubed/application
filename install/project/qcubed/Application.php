@@ -94,7 +94,7 @@ class Application extends QCubed\ApplicationBase
      *
      * @return bool
      */
-    protected function isAuthorized($options = null) {
+    public static function isAuthorized($options = null) {
         return true;
     }
 

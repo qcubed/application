@@ -50,6 +50,32 @@ $patterns = include($patternFile);
 $regexFind = [];
 $regexReplace = [];
 
+if (isset($patterns['func'])) {
+    $find = array_map(function ($was) {
+        return '/' . addslashes($was) .
+            '\s*\(/i';
+    }, array_keys($patterns['func']));
+
+    $replace = array_map(function ($newName) {
+        $slashedName = addslashes($newName);
+        return $slashedName . '(';
+    }, array_values($patterns['func']));
+
+    $regexFind = array_merge($regexFind, $find);
+    $regexReplace = array_merge($regexReplace, $replace);
+}
+
+// straight regex replacement
+if (isset($patterns['regex'])) {
+    $find = array_map(function ($was) {
+        return '/' . $was .
+            '/i';
+    }, array_keys($patterns['regex']));
+
+    $regexFind = array_merge($regexFind, $find);
+    $regexReplace = array_merge($regexReplace,  array_values($patterns['regex']));
+}
+
 /**
  * Here we try to detect a class that could be like this:
  *  QControl, or
@@ -79,28 +105,6 @@ PTRN;
     $regexReplace = array_merge($regexReplace, $replace);
 }
 
-/*
-if (isset($patterns['class'])) {
-    $find = array_map(function ($was) {
-        $pattern = <<<'PTRN'
-/(^|[^a-zA-Z0-9\\])
-PTRN;
-        $pattern .= $was;
-        $pattern .= <<<'PTRN'
-(?:\b)/i
-PTRN;
-        return $pattern;
-    }, array_keys($patterns['class']));
-
-    $replace = array_map(function ($className) {
-        $slashedClassName = addslashes($className);
-        return '$1' . $slashedClassName;
-    }, array_values($patterns['class']));
-
-    $regexFind = array_merge($regexFind, $find);
-    $regexReplace = array_merge($regexReplace, $replace);
-}
-*/
 
 if (isset($patterns['const'])) {
     $find = array_map(function ($was) {
@@ -117,31 +121,6 @@ if (isset($patterns['const'])) {
     $regexReplace = array_merge($regexReplace, $replace);
 }
 
-if (isset($patterns['func'])) {
-    $find = array_map(function ($was) {
-        return '/' . addslashes($was) .
-            '\s*\(/i';
-    }, array_keys($patterns['func']));
-
-    $replace = array_map(function ($newName) {
-        $slashedName = addslashes($newName);
-        return $slashedName . '(';
-    }, array_values($patterns['func']));
-
-    $regexFind = array_merge($regexFind, $find);
-    $regexReplace = array_merge($regexReplace, $replace);
-}
-
-// straight regex replacement
-if (isset($patterns['regex'])) {
-    $find = array_map(function ($was) {
-        return '/' . $was .
-            '/i';
-    }, array_keys($patterns['regex']));
-
-    $regexFind = array_merge($regexFind, $find);
-    $regexReplace = array_merge($regexReplace,  array_values($patterns['regex']));
-}
 
 
 

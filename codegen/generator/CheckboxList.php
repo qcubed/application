@@ -18,10 +18,11 @@ use QCubed\Codegen\SqlTable;
  * Class CheckboxList
  *
  * @package QCubed\Generator
+ * @was QCheckBoxBaseList_CodeGenerator
  */
 class CheckboxList extends ListControl
 {
-    public function __construct($strControlClassName = 'CheckboxList')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }

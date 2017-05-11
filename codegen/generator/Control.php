@@ -17,6 +17,11 @@ use QCubed\Codegen\SqlColumn;
 use QCubed\Codegen\DatabaseCodeGen;
 use QCubed\Exception\Caller;
 
+/**
+ * Class Control
+ * @package QCubed\Generator
+ * @was QControlBase_CodeGenerator
+ */
 abstract class Control extends GeneratorBase
 {
 
@@ -31,12 +36,12 @@ abstract class Control extends GeneratorBase
         $strControlVarName = $objCodeGen->modelConnectorVariableName($objColumn);
 
         $strRet = <<<TMPL
-		/**
-		 * @var {$strClassName} {$strControlVarName}
+    /**
+     * @var {$strClassName}
 
-		 * @access protected
-		 */
-		protected \${$strControlVarName};
+     * @access protected
+     */
+    protected \${$strControlVarName};
 
 
 TMPL;
@@ -58,7 +63,7 @@ TMPL;
 
         if (!$objColumn) {
             $strRet .= <<<TMPL
-			\$this->{$strControlVarName}->LinkedNode = QQN::{$objTable->ClassName}();
+        \$this->{$strControlVarName}->LinkedNode = QQN::{$objTable->ClassName}();
 
 TMPL;
             $options = $objTable->Options;
@@ -74,7 +79,7 @@ TMPL;
             }
 
             $strRet .= <<<TMPL
-			\$this->{$strControlVarName}->LinkedNode = QQN::{$strClass}()->{$strPropName};
+        \$this->{$strControlVarName}->LinkedNode = QQN::{$strClass}()->{$strPropName};
 
 TMPL;
             $options = $objColumn->Options;
@@ -98,7 +103,7 @@ TMPL;
                     $strVal = var_export($val, true);
                 }
                 $strRet .= <<<TMPL
-			\$this->{$strControlVarName}->{$name} = {$strVal};
+        \$this->{$strControlVarName}->{$name} = {$strVal};
 
 TMPL;
             }
@@ -179,8 +184,6 @@ TMPL;
      * @param DatabaseCodeGen $objCodeGen
      * @param SqlTable $objTable
      * @param ColumnInterface $objColumn
-     *
-     * @throws QCallerException
      * @return string
      */
     public function connectorSet(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
@@ -194,8 +197,6 @@ TMPL;
      * @param DatabaseCodeGen $objCodeGen
      * @param SqlTable $objTable
      * @param ColumnInterface $objColumn
-     *
-     * @throws Caller
      * @return string
      */
     public function connectorGet(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)

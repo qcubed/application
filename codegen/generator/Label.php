@@ -11,18 +11,22 @@ namespace QCubed\Generator;
 
 use QCubed\Codegen\ColumnInterface;
 use QCubed\Codegen\DatabaseCodeGen;
+use QCubed\Codegen\ManyToManyReference;
+use QCubed\Codegen\ReverseReference;
+use QCubed\Codegen\SqlColumn;
 use QCubed\Codegen\SqlTable;
 
 /**
  * Class Label
  *
  * @package QCubed\Generator
+ * @was QLabel_CodeGenerator
  */
 class Label extends Control
 {
     private static $instance = null;
 
-    public function __construct($strControlClassName = 'Label')
+    public function __construct($strControlClassName = __CLASS__)
     {
         parent::__construct($strControlClassName);
     }
@@ -61,13 +65,13 @@ class Label extends Control
      * @param DatabaseCodeGen $objCodeGen
      * @param SqlTable $objTable
      * @param ColumnInterface $objColumn
-     * @throws Exception
+     * @throws \Exception
      * @return string
      */
     public function connectorCreate(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)
     {
         $strLabelName = addslashes(DatabaseCodeGen::modelConnectorControlName($objColumn));
-        $strControlType = 'Label';
+        $strControlType = $this->strControlClassName;
 
         $strPropName = DatabaseCodeGen::modelConnectorPropertyName($objColumn);
         $strControlVarName = $this->varName($strPropName);
@@ -80,39 +84,40 @@ class Label extends Control
         }
 
         $strRet = <<<TMPL
-		/**
-		 * Create and setup $strControlType $strControlVarName
-		 *
-		 * @param string \$strControlId optional ControlId to use{$strDateTimeParamExtra}
-		 * @return $strControlType
-		 */
-		public function {$strControlVarName}_Create(\$strControlId = null{$strDateTimeExtra}) {
+    /**
+     * Create and setup $strControlType $strControlVarName
+     *
+     * @param string \$strControlId optional ControlId to use{$strDateTimeParamExtra}
+     * @return $strControlType
+     */
+    public function {$strControlVarName}_Create(\$strControlId = null{$strDateTimeExtra}) 
+    {
 
 TMPL;
         $strControlIdOverride = $objCodeGen->generateControlId($objTable, $objColumn);
 
         if ($strControlIdOverride) {
             $strRet .= <<<TMPL
-			if (!\$strControlId) {
-				\$strControlId = '$strControlIdOverride';
-			}
+        if (!\$strControlId) {
+            \$strControlId = '$strControlIdOverride';
+        }
 
 TMPL;
         }
         $strRet .= <<<TMPL
-			\$this->{$strControlVarName} = new {$strControlType}(\$this->objParentObject, \$strControlId);
-			\$this->{$strControlVarName}->Name = t('{$strLabelName}');
+        \$this->{$strControlVarName} = new \\{$strControlType}(\$this->objParentObject, \$strControlId);
+        \$this->{$strControlVarName}->Name = t('{$strLabelName}');
 
 TMPL;
         if ($objColumn->VariableType == 'QDateTime') {
             $strRet .= <<<TMPL
-			\$this->str{$strPropName}DateTimeFormat = \$strDateTimeFormat;
+        \$this->str{$strPropName}DateTimeFormat = \$strDateTimeFormat;
 
 TMPL;
         }
         if ($strMethod = DatabaseCodeGen::$PreferredRenderMethod) {
             $strRet .= <<<TMPL
-			\$this->{$strControlVarName}->PreferredRenderMethod = '$strMethod';
+        \$this->{$strControlVarName}->PreferredRenderMethod = '$strMethod';
 
 TMPL;
         }
@@ -123,8 +128,8 @@ TMPL;
         $strRet .= $this->connectorRefresh($objCodeGen, $objTable, $objColumn, true);
 
         $strRet .= <<<TMPL
-			return \$this->{$strControlVarName};
-		}
+        return \$this->{$strControlVarName};
+    }
 
 
 TMPL;
@@ -134,7 +139,7 @@ TMPL;
     /**
      * @param DatabaseCodeGen $objCodeGen
      * @param ColumnInterface $objColumn
-     * @throws Exception
+     * @throws \Exception
      * @return string
      */
     public function connectorVariableDeclaration(DatabaseCodeGen $objCodeGen, ColumnInterface $objColumn)
@@ -143,22 +148,22 @@ TMPL;
         $strControlVarName = $this->varName($strPropName);
 
         $strRet = <<<TMPL
-		/**
-		 * @var QLabel {$strControlVarName}
-		 * @access protected
-		 */
-		protected \${$strControlVarName};
+    /**
+     * @var Label
+     * @access protected
+     */
+    protected \${$strControlVarName};
 
 
 TMPL;
 
         if ($objColumn->VariableType == 'QDateTime') {
             $strRet .= <<<TMPL
-		/**
-		* @var str{$strPropName}DateTimeFormat
-		* @access protected
-		*/
-		protected \$str{$strPropName}DateTimeFormat;
+    /**
+    * @var string
+    * @access protected
+    */
+    protected \$str{$strPropName}DateTimeFormat;
 
 TMPL;
         }
@@ -172,7 +177,7 @@ TMPL;
      * @param SqlTable $objTable
      * @param ColumnInterface $objColumn
      * @param bool $blnInit
-     * @throws Exception
+     * @throws \Exception
      * @return string
      */
     public function connectorRefresh(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn, $blnInit = false)
@@ -183,7 +188,7 @@ TMPL;
 
         // Preamble with an if test if not initializing
         $strRet = '';
-        if ($objColumn instanceof QSqlColumn) {
+        if ($objColumn instanceof SqlColumn) {
             if ($objColumn->Identity ||
                 $objColumn->Timestamp
             ) {
@@ -210,14 +215,14 @@ TMPL;
                     }
                 }
             }
-        } elseif ($objColumn instanceof QReverseReference) {
+        } elseif ($objColumn instanceof ReverseReference) {
             if ($objColumn->Unique) {
                 $strRet = "\$this->{$strControlVarName}->Text = \$this->{$strObjectName}->{$objColumn->ObjectPropertyName} ? \$this->{$strObjectName}->{$objColumn->ObjectPropertyName}->__toString() : null;";
             }
-        } elseif ($objColumn instanceof QManyToManyReference) {
+        } elseif ($objColumn instanceof ManyToManyReference) {
             $strRet = "\$this->{$strControlVarName}->Text = implode(\$this->str{$objColumn->ObjectDescription}Glue, \$this->{$strObjectName}->Get{$objColumn->ObjectDescription}Array());";
         } else {
-            throw new Exception('Unknown column type.');
+            throw new \Exception('Unknown column type.');
         }
 
         if (!$blnInit) {
