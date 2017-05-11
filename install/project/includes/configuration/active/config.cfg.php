@@ -80,7 +80,9 @@ switch (SERVER_INSTANCE) {
 		 */
 		define ('__PROJECT__', __DOCROOT__ . __SUBDIRECTORY__ . '/project');
 		define ('__INCLUDES__', __PROJECT__ . '/includes');
+        define ('__QCUBED__', __INCLUDES__); // on the way to deprecation
 		define ('__EXTERNAL_LIBRARIES__', __DOCROOT__ . __SUBDIRECTORY__ . '/vendor');
+        define ('QCUBED_BASE_DIR',  __DOCROOT__ . __SUBDIRECTORY__ . '/vendor/qcubed');
 		define ('__QCUBED_CORE__', __DOCROOT__ . __SUBDIRECTORY__ . '/vendor/qcubed/qcubed/includes');
 
 	case 'test':
