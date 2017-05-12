@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
@@ -18,7 +18,7 @@ use QCubed\Project\Control\ControlBase as QControl;
 
 
 /**
- * Class Data
+ * Class DataColumn
  *
  * An abstract column designed to work with DataGrid and other tables that require more than basic columns.
  * Supports post processing of cell contents for further formatting, and OrderBy clauses.
@@ -32,9 +32,9 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @property-write callback $PostCallback         after the cell object is retrieved, call this callback on the obtained object.
  *    If $PostMethod is also set, this will be called after that method call.
  * @was QAbstractHtmlTableDataColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-abstract class Data extends TableColumnBase
+abstract class DataColumn extends ColumnBase
 {
     /** @var mixed Order By information. Can be a \QCubed\Query\QQ::Clause, or any kind of object depending on your need */
     protected $objOrderByClause = null;

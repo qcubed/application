@@ -14,8 +14,9 @@ use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
-use QCubed\Control\TableColumn\TableColumnBase as ColumnBase;
-use QCubed\Control\TableColumn as Column;
+use QCubed\Table\ColumnBase;
+use QCubed\Table\DataColumn;
+use QCubed\Table\DataGridCheckboxColumn;
 use QCubed\Type;
 
 
@@ -156,7 +157,7 @@ class DataGridBase extends TableBase
         $intColumnIndex = $strParameter['col'];
         $objColumn = $this->getColumn($intColumnIndex, true);
 
-        if ($objColumn instanceof Column\DataGridCheckbox) {
+        if ($objColumn instanceof DataGridCheckboxColumn) {
             $objColumn->click($strParameter);
         }
     }
@@ -170,7 +171,7 @@ class DataGridBase extends TableBase
     public function clearCheckedItems($strColId = null)
     {
         foreach ($this->objColumnArray as $objColumn) {
-            if ($objColumn instanceof Column\DataGridCheckbox) {
+            if ($objColumn instanceof DataGridCheckboxColumn) {
                 if (is_null($strColId) || $objColumn->Id === $strColId) {
                     $objColumn->clearCheckedItems();
                 }
@@ -189,7 +190,7 @@ class DataGridBase extends TableBase
     public function getCheckedItemIds($strColId = null)
     {
         foreach ($this->objColumnArray as $objColumn) {
-            if ($objColumn instanceof Column\DataGridCheckbox) {
+            if ($objColumn instanceof DataGridCheckboxColumn) {
                 if (is_null($strColId) ||
                     $objColumn->Id === $strColId
                 ) {
@@ -215,7 +216,7 @@ class DataGridBase extends TableBase
         if (!$objColumn) {
             return;
         }
-        assert($objColumn instanceof Column\Data);
+        assert($objColumn instanceof DataColumn);
 
         $this->blnModified = true;
 
@@ -274,7 +275,7 @@ class DataGridBase extends TableBase
             $strCells = '';
             if ($this->objColumnArray) {
                 foreach ($this->objColumnArray as $objColumn) {
-                    assert ($objColumn instanceof Column\Data);
+                    assert ($objColumn instanceof DataColumn);
                     if ($objColumn->Visible) {
                         $strCellValue = $this->getHeaderCellContent($objColumn);
                         $aParams = $objColumn->getHeaderCellParams();
@@ -299,10 +300,10 @@ class DataGridBase extends TableBase
     /**
      * Override to return sortable column info.
      *
-     * @param Column\Data $objColumn
+     * @param DataColumn $objColumn
      * @return string
      */
-    protected function getHeaderCellContent(Column\Data $objColumn)
+    protected function getHeaderCellContent(DataColumn $objColumn)
     {
         $blnSortable = false;
         $strCellValue = $objColumn->fetchHeaderCellValue();
@@ -419,7 +420,7 @@ class DataGridBase extends TableBase
     {
         if ($this->strSortColumnId !== null) {
             $objColumn = $this->getColumnById($this->strSortColumnId);
-            assert($objColumn instanceof Column\Data);
+            assert($objColumn instanceof DataColumn);
             if ($objColumn && $objColumn->OrderByClause) {
                 if ($this->intSortDirection == self::SORT_ASCENDING) {
                     return $objColumn->OrderByClause;

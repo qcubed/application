@@ -7,22 +7,22 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed\Exception\Caller;
 use QCubed\Query\QQ;
 use QCubed\Type;
 
 /**
- * Class VirtualAttribute
+ * Class VirtualAttributeColumn
  *
  * A column to display a virtual attribute from a database record.
  *
  * @property string $Attribute
  * @was QVirtualAttributeColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class VirtualAttribute extends Data
+class VirtualAttributeColumn extends DataColumn
 {
     protected $strAttribute;
 

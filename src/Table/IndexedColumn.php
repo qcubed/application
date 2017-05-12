@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed\Exception\Caller;
 
@@ -18,9 +18,9 @@ use QCubed\Exception\Caller;
  *
  * @property int|string $Index the index or key to use when accessing the arrays in the DataSource array
  * @was QHtmlTableIndexedColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class Indexed extends Data
+class IndexedColumn extends DataColumn
 {
     protected $mixIndex;
 

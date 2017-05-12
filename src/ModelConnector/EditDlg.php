@@ -11,7 +11,7 @@ namespace QCubed\ModelConnector;
 
 use QCubed\Action\AjaxControl;
 use QCubed\Codegen\ControlCategoryType;
-use QCubed\Control\TableColumn\QCallable;
+use QCubed\Table\CallableColumn;
 use QCubed\Project\Application;
 use QCubed\Project\Control\Dialog as QDialog;
 use QCubed\Project\Control\ControlBase as QControl;
@@ -99,7 +99,7 @@ class EditDlg extends QDialog
         $this->dtgGeneralOptions->ShowHeader = false;
         $this->dtgGeneralOptions->Name = "General";
         $this->dtgGeneralOptions->createPropertyColumn('Attribute', 'Name');
-        $col = $this->dtgGeneralOptions->addColumn(new QCallable('Attribute',
+        $col = $this->dtgGeneralOptions->addColumn(new CallableColumn('Attribute',
             array($this, 'dtg_ValueRender'), $this->dtgGeneralOptions));
         $col->HtmlEntities = false;
         $this->dtgGeneralOptions->setDataBinder('dtgGeneralOptions_Bind', $this);
@@ -210,7 +210,7 @@ class EditDlg extends QDialog
             $dtg->ShowHeader = false;
             $dtg->Name = $tabName;
             $dtg->createPropertyColumn('Attribute', 'Name');
-            $col = $dtg->addColumn(new QCallable('Attribute', array($this, 'dtg_ValueRender'), $dtg));
+            $col = $dtg->addColumn(new CallableColumn('Attribute', array($this, 'dtg_ValueRender'), $dtg));
             $col->HtmlEntities = false;
             $dtg->setDataBinder('dtgControlBind', $this);
             $dtg->Name = $tabName; // holder for category

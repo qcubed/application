@@ -29,10 +29,10 @@
 </style>
 
 <div id="instructions">
-	<h1>Styling and Formatting \QCubed\Project\Control\Table Column Values</h1>
+	<h1>Styling and Formatting Table Column Values</h1>
 	<h2>Post-processing Column Values</h2>
 	<p>Sometimes the value of the data for a particular column is not displayable, or you would like to further process
-	the value before displaying it. All QHtmlTableColumn types have the ability for you to specify the following:</p>
+	the value before displaying it. All Table column types have the ability for you to specify the following:</p>
 	<ul>
 		<li><strong>Format</strong>: If the column returns a string, will apply the Format string as an
 			sprintf format string. If the column is a \QCubed\QDateTime type, it will apply it as a qFormat string.</li>

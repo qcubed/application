@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed as Q;
 use QCubed\Exception\Caller;
@@ -21,7 +21,7 @@ use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Control\TableBase;
 
 /**
- * Class Base
+ * Class ColumnBase
  *
  * Represents a column for a Table control. Different subclasses (see below) allow accessing and fetching the data
  * for each cells in a variety of ways
@@ -42,9 +42,9 @@ use QCubed\Control\TableBase;
  * @property-read TagStyler		$HeaderCellStyler		The tag styler for the header cells in the column
  * @property-read TagStyler		$ColStyler		The tag styler for the col tag in the column
  * @was QAbstractHtmlTableColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-abstract class TableColumnBase extends ObjectBase
+abstract class ColumnBase extends ObjectBase
 {
     /** @var string */
     protected $strName;

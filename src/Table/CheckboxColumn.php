@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
@@ -17,6 +17,7 @@ use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\ControlBase as QControl;
 
 /**
+ * Class CheckboxColumn
  *
  * A column of checkboxes.
  *
@@ -39,9 +40,9 @@ use QCubed\Project\Control\ControlBase as QControl;
  *
  * @property bool $ShowCheckAll
  * @was QHtmlTableCheckBoxColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class Checkbox extends Data
+class CheckboxColumn extends DataColumn
 {
     protected $blnHtmlEntities = false;    // turn off html entities
     protected $checkParamCallback = null;

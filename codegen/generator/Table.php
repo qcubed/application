@@ -46,7 +46,7 @@ class Table extends Control implements DataListInterface
         $strCode = <<<TMPL
 use QCubed\Query\Condition\ConditionInterface as QQCondition;
 use QCubed\Query\Clause\ClauseInterface as QQClause;
-use QCubed\Control\TableColumn\Node as NodeColumn;
+use QCubed\Table\NodeColumn;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\Paginator;

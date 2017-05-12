@@ -1,7 +1,7 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class ComplexColumn extends \QCubed\Control\TableColumn\Indexed {
+class ComplexColumn extends \QCubed\Table\IndexedColumn {
 	public function RenderHeaderCell() {
 		if ($this->objParentTable->CurrentHeaderRowIndex == 0 &&
 				$this->Index > 1) {
@@ -57,7 +57,7 @@ class ExampleForm extends \QCubed\Project\Control\FormBase {
 
 		// Define Columns
 		// This demonstrates how to first create a column, and then add it to the table
-		$objColumn = new \QCubed\Control\TableColumn\QCallable('Full Name', [$this, 'getFullName']);
+		$objColumn = new \QCubed\Table\CallableColumn('Full Name', [$this, 'getFullName']);
 		$this->tblPersons->AddColumn($objColumn);
 
 		// The second column demonstrates using a property name for fetching the data

@@ -7,11 +7,13 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed\Type;
 
 /**
+ * Class DataGridCheckboxColumn
+ *
  * A checkbox column that specifically is for inclusion in a QDataGrid object. The two work together to hand off
  * important events and functionality.
  *
@@ -29,9 +31,9 @@ use QCubed\Type;
  * the database if the datagrid is using a paginator.
  *
  * @was QDataGrid_CheckBoxColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class DataGridCheckbox extends Checkbox
+class DataGridCheckboxColumn extends CheckboxColumn
 {
     /** @var  bool Record the state of the AllChecked checkbox in the header. */
     protected $blnAllChecked;

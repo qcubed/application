@@ -9,7 +9,7 @@
 
 namespace QCubed\Control;
 
-use QCubed\Css\Display;
+use QCubed\Css\DisplayType;
 
 /**
  * Class Panel

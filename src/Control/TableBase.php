@@ -14,9 +14,14 @@ use QCubed\Exception\IndexOutOfRange;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
 use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Control\TableColumn\TableColumnBase as ColumnBase;
-use QCubed\Control\TableColumn as Column;
+use QCubed\Table\CallableColumn;
+use QCubed\Table\ColumnBase;
 use QCubed\QString;
+use QCubed\Table\IndexedColumn;
+use QCubed\Table\LinkColumn;
+use QCubed\Table\NodeColumn;
+use QCubed\Table\PropertyColumn;
+use QCubed\Table\VirtualAttributeColumn;
 use QCubed\Type;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
@@ -122,14 +127,14 @@ abstract class TableBase extends PaginatedControl
      * @param mixed $mixIndex the index to use to access the cell date. i.e. $item[$index]
      * @param integer $intColumnIndex column position
      *
-     * @return Column\Indexed
+     * @return IndexedColumn
      */
     public function createIndexedColumn($strName = '', $mixIndex = null, $intColumnIndex = -1)
     {
         if (is_null($mixIndex)) {
             $mixIndex = count($this->objColumnArray);
         }
-        $objColumn = new Column\Indexed($strName, $mixIndex);
+        $objColumn = new IndexedColumn($strName, $mixIndex);
         $this->addColumnAt($intColumnIndex, $objColumn);
         return $objColumn;
     }
@@ -142,11 +147,11 @@ abstract class TableBase extends PaginatedControl
      * @param integer $intColumnIndex column position
      * @param object $objBaseNode a query node from which the property descends, if you are using the sorting capabilities
      *
-     * @return Column\Property
+     * @return PropertyColumn
      */
     public function createPropertyColumn($strName, $strProperty, $intColumnIndex = -1, $objBaseNode = null)
     {
-        $objColumn = new Column\Property($strName, $strProperty, $objBaseNode);
+        $objColumn = new PropertyColumn($strName, $strProperty, $objBaseNode);
         $this->addColumnAt($intColumnIndex, $objColumn);
         return $objColumn;
     }
@@ -155,13 +160,13 @@ abstract class TableBase extends PaginatedControl
      * @param string $strName
      * @param mixed $objNodes
      * @param int $intColumnIndex
-     * @return Column\Node
+     * @return NodeColumn
      * @throws Caller
      */
     public function createNodeColumn($strName, $objNodes, $intColumnIndex = -1)
     {
         try {
-            $objColumn = new Column\Node($strName, $objNodes);
+            $objColumn = new NodeColumn($strName, $objNodes);
             $this->addColumnAt($intColumnIndex, $objColumn);
             return $objColumn;
         } catch (Caller $e) {
@@ -178,14 +183,14 @@ abstract class TableBase extends PaginatedControl
      * @param integer $intColumnIndex column position
      * @param mixed $mixParams extra parameters to pass to the closure callback.
      *
-     * @return Column\QCallable
+     * @return CallableColumn
      * @throws Caller
      */
     public function createCallableColumn($strName, $objCallable, $intColumnIndex = -1, $mixParams = null)
     {
         try {
 
-            $objColumn = new Column\QCallable($strName, $objCallable, $mixParams);
+            $objColumn = new CallableColumn($strName, $objCallable, $mixParams);
             $this->addColumnAt($intColumnIndex, $objColumn);
             return $objColumn;
         } catch (Caller $e) {
@@ -201,11 +206,11 @@ abstract class TableBase extends PaginatedControl
      * @param $strName
      * @param $strAttribute
      * @param $intColumnIndex
-     * @return Column\VirtualAttribute
+     * @return VirtualAttributeColumn
      */
     public function createVirtualAttributeColumn($strName, $strAttribute, $intColumnIndex = -1)
     {
-        $objColumn = new Column\VirtualAttribute($strName, $strAttribute);
+        $objColumn = new VirtualAttributeColumn($strName, $strAttribute);
         $this->addColumnAt($intColumnIndex, $objColumn);
         return $objColumn;
     }
@@ -228,7 +233,7 @@ abstract class TableBase extends PaginatedControl
      *   For example, could be used to add a class or an id to each tag.
      * @param bool $blnAsButton Only used if this is drawing a QControlProxy. Will draw the proxy as a button.
      * @param int $intColumnIndex
-     * @return Column\Link
+     * @return LinkColumn
      */
     public function createLinkColumn(
         $strName,
@@ -239,7 +244,7 @@ abstract class TableBase extends PaginatedControl
         $blnAsButton = false,
         $intColumnIndex = -1
     ) {
-        $objColumn = new Column\Link($strName,
+        $objColumn = new LinkColumn($strName,
             $mixText,
             $mixDestination,
             $getVars,

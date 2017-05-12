@@ -10,6 +10,7 @@
 namespace QCubed;
 
 use QCubed as Q;
+use QCubed\Exception\Caller;
 use QCubed\Project\Application;
 
 /**
@@ -80,14 +81,14 @@ class JsResponse
      * @deprecated Will be eventually removed. If you need to do something in javascript, add it to AjaxResponse.
      * @param string $strJavaScript the javascript to execute
      * @param string $strPriority
-     * @throws QCallerException
+     * @throws Caller
      */
     public function executeJavaScript($strJavaScript, $strPriority = ApplicationBase::PRIORITY_STANDARD)
     {
         if (is_bool($strPriority)) {
             //we keep this codepath for backward compatibility
             if ($strPriority === true) {
-                throw new QCallerException('Please specify a correct priority value');
+                throw new Caller('Please specify a correct priority value');
             }
         } else {
             switch ($strPriority) {
@@ -134,12 +135,12 @@ class JsResponse
      * @param string $strFunctionName
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
      *                                        end with a PRIORITY_* to prioritize the command.
-     * @throws Q\Exception\Caller
+     * @throws Caller
      */
     public function executeSelectorFunction($mixSelector, $strFunctionName /*, ..., PRIORITY_* */)
     {
         if (!(is_string($mixSelector) || (is_array($mixSelector) && count($mixSelector) == 2))) {
-            throw new Q\Exception\Caller('Selector must be a string or an array of two items');
+            throw new Caller('Selector must be a string or an array of two items');
         }
         $args = func_get_args();
         array_shift($args);

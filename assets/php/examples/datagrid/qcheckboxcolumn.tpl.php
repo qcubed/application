@@ -2,7 +2,7 @@
 <?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Using the \QCubed\Control\TableColumn\DataGridCheckbox</h1>
+	<h1>Using the \QCubed\Table\DataGridCheckboxColumn</h1>
 
 	<p>In this example we will take our Paginated <strong>\QCubed\Project\Control\DataGrid</strong>, and add a column which has a
 	"Select" checkbox.  Checkbox columns that are part of a paginated datagrid can be tricky to manage.
@@ -28,7 +28,7 @@
 	unknowingly replace values recently changed by another user. Its better to have real-time awareness of the values when two
 	people are editing the same data.</p>
 
-	<p>The <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> is designed to help manage a column of checkboxes.
+	<p>The <strong>\QCubed\Table\DataGridCheckboxColumn</strong> is designed to help manage a column of checkboxes.
 		By default, it acts as a selection list, and maintains its own record of what is checked, 
 		managing the display of checked items
 		as the user pages through the data. To get the current list of what is checked, call <strong>GetCheckedItemIds()</strong>.<p>
@@ -36,26 +36,26 @@
 
 	<h2>Check All</h2>
 	<p>
-		The <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> can display a checkbox in the header that will check all, or check none,
+		The <strong>\QCubed\Table\DataGridCheckboxColumn</strong> can display a checkbox in the header that will check all, or check none,
 		by setting the <strong>ShowCheckAll</strong> property to true.
-		In order to implement this, <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> must be able to get an id
+		In order to implement this, <strong>\QCubed\Table\DataGridCheckboxColumn</strong> must be able to get an id
 		for each possible row shown, so that when the user pages through data, they can see what is checked. In order to do this,
-		you must subclass <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> and implement the <strong>GetAllIds()</strong> method.
+		you must subclass <strong>\QCubed\Table\DataGridCheckboxColumn</strong> and implement the <strong>GetAllIds()</strong> method.
 	</p>
 
 	<hr>
 
 	<p>
-		In the first example, we are using the default functionality of the <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> class
-		to create a selection list that will be acted on later. The <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> keeps a record
-		of what is checked in the _SESSION variable. It uses a subclass of <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> to get
+		In the first example, we are using the default functionality of the <strong>\QCubed\Table\DataGridCheckboxColumn</strong> class
+		to create a selection list that will be acted on later. The <strong>\QCubed\Table\DataGridCheckboxColumn</strong> keeps a record
+		of what is checked in the _SESSION variable. It uses a subclass of <strong>\QCubed\Table\DataGridCheckboxColumn</strong> to get
 		all the ids if the user clicks the Check All button.
 	</p>
 
 	<p>The second example is a simulation of changing the data in real-time. In this case, we're displaying a
 	many-to-many relationship and allowing the user to select a Project that should be associated with 
 	the current one (in this case, ACME Website Redesign). Checking a box will immediately associate the selected project
-	with the ACME project. To support this type of interaction, we subclass <strong>\QCubed\Control\TableColumn\DataGridCheckbox</strong> and
+	with the ACME project. To support this type of interaction, we subclass <strong>\QCubed\Table\DataGridCheckboxColumn</strong> and
 	implement the <strong>GetItemCheckedState</strong> and <strong>SetItemCheckedState</strong> methods.</p>
 
 </div>

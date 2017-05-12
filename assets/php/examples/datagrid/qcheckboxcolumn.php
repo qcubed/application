@@ -1,7 +1,7 @@
 <?php
 	require_once('../qcubed.inc.php');
 
-	class ExampleCheckColumn1 extends \QCubed\Control\TableColumn\DataGridCheckbox {
+	class ExampleCheckColumn1 extends \QCubed\Table\DataGridCheckboxColumn {
 		protected function GetAllIds()
 		{
 			return Person::QueryPrimaryKeys();
@@ -9,7 +9,7 @@
 	}
 
 
-	class ExampleCheckColumn2 extends \QCubed\Control\TableColumn\DataGridCheckbox {
+	class ExampleCheckColumn2 extends \QCubed\Table\DataGridCheckboxColumn {
 		protected function GetItemCheckedState ($item) {
 			if(null !== $item->GetVirtualAttribute('assn_item')) {
 				return true;
@@ -49,7 +49,7 @@ class ExampleForm extends \QCubed\Project\Control\FormBase {
 		protected $dtgPersons;
 		protected $lblResponse;
 
-		/** @var  \QCubed\Control\TableColumn\DataGridCheckbox */
+		/** @var  \QCubed\Table\DataGridCheckboxColumn */
 		protected $colSelect;
 		
 		protected $dtgProjects;
@@ -85,7 +85,7 @@ class ExampleForm extends \QCubed\Project\Control\FormBase {
 			$col = $this->dtgPersons->CreateNodeColumn('Last Name', [QQN::Person()->LastName, QQN::Person()->LastName]);
 			$col->CellStyler->Width = 200;
 
-			//Create the select column, a subclass of \QCubed\Control\TableColumn\DataGridCheckbox
+			//Create the select column, a subclass of \QCubed\Table\DataGridCheckboxColumn
 			$this->colSelect = new ExampleCheckColumn1('');
 			$this->colSelect->ShowCheckAll = true;
 			$this->colSelect->CellStyler->Width = 20;

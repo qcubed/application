@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
@@ -15,7 +15,7 @@ use QCubed\Query\QQ;
 use QCubed\Type;
 
 /**
- * Class Property
+ * Class PropertyColumn
  *
  * Column to dispay a  property of an object, as in $object->Property
  * If your DataSource is an array of objects, use this column to display a particular property of each object.
@@ -26,9 +26,9 @@ use QCubed\Type;
  *  inside the Prop1 object, inside the current object.
  * @property boolean $NullSafe if true the value fetcher will check for nulls before accessing the properties
  * @was QHtmlTablePropertyColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class Property extends Data
+class PropertyColumn extends DataColumn
 {
     protected $strProperty;
     protected $strPropertiesArray;

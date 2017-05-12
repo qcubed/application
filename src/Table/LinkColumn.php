@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed as Q;
 use QCubed\Exception\Caller;
@@ -19,7 +19,7 @@ use QCubed\Type;
 
 
 /**
- * Class Link
+ * Class LinkColumn
  *
  * A multi-purpose link column. This column lets you specify a column whose purpose is to show an anchor tag
  * with text, attributes and properties related to row item. It can handle row items that are objects or arrays,
@@ -78,9 +78,9 @@ use QCubed\Type;
  * @property-write null|array $TagAttributes An array of key=>value pairs to use as additional attributes in the tag.
  *   For example, could be used to add a class or an id to each tag.
  * @was QHtmlTableLinkColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class Link extends Data
+class LinkColumn extends DataColumn
 {
     /** @var bool */
     protected $blnHtmlEntities = false;    // we are rendering a link so turn off entities

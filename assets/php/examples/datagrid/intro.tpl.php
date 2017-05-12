@@ -24,9 +24,9 @@
 		(e.g. &lt;table&gt;) format.  All <strong>\QCubed\Project\Control\Table</strong> objects take in a <strong>DataSource</strong>, which can be an array
 		of anything (or in our example, an array of Person objects).</p>
 
-	<p>When creating a <strong>\QCubed\Project\Control\Table</strong>, you must create a <strong>QHtmlTableColumn</strong> for each column in your table.
-		For each <strong>QHtmlTableColumn</strong> you specify its name and how it should be rendered.
-		In our example below, we create a <strong>\QCubed\Control\TableColumn\QCallable</strong> column, which takes a
+	<p>When creating a <strong>\QCubed\Project\Control\Table</strong>, you must create a table column for each column in your table.
+		For each <strong>Table\ColumnBase</strong> type you specify its name and how it should be rendered.
+		In our example below, we create a <strong>\QCubed\Table\CallableColumn</strong> column, which takes a
 		PHP callable type, and lets you define a callback that will return the text of each cell in the column. The
 		callback will be called repeatedly for each row in the table, and each time will be passed the data for the row
 		it is to draw.

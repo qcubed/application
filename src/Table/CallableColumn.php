@@ -7,24 +7,26 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
+use Prophecy\Exception\InvalidArgumentException;
 use QCubed\Exception\Caller;
+use QCubed\Exception\InvalidArgument;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Type;
 
 /**
- * Class QCallable
+ * Class CallableColumn
  *
  * A type of column that lets you use a PHP 'callable'. However, you CANNOT send a PHP closure to this,
  * since closures are not serializable. You CAN do things like array($this, 'method'), or 'Class::StaticMethod'.
  *
  * @property int|string $Index the index or key to use when accessing the arrays in the DataSource array
  * @was QHtmlTableCallableColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class QCallable extends Data
+class CallableColumn extends DataColumn
 {
     /** @var callback */
     protected $callback;
@@ -40,13 +42,13 @@ class QCallable extends Data
      * @param mixed $mixParams extra parameters to pass to the closure callback.
      * will be called with the row of the DataSource as that single argument.
      *
-     * @throws InvalidArgumentException
+     * @throws Caller
      */
     public function __construct($strName, callable $objCallable, $mixParams = null)
     {
         parent::__construct($strName);
         if ($objCallable instanceof Closure) {
-            throw new Caller('Cannot be a Closure.');
+            throw new Caller('\$objCallable Cannot be a Closure.');
         }
         $this->callback = $objCallable;
         $this->mixParams = $mixParams;

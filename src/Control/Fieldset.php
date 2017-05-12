@@ -9,7 +9,7 @@
 
 namespace QCubed\Control;
 
-use QCubed\Css\Display;
+use QCubed\Css\DisplayType;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Type;

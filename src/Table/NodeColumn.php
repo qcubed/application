@@ -7,7 +7,7 @@
  *
  */
 
-namespace QCubed\Control\TableColumn;
+namespace QCubed\Table;
 
 use QCubed\Exception\Caller;
 use QCubed\Query\Node as QQNode;
@@ -15,16 +15,16 @@ use QCubed\Query\QQ;
 
 
 /**
- * Class Node
+ * Class NodeColumn
  *
  * A table column that displays the content of a database column represented by a NodeBase object.
  * The $objNodes can be a single node, or an array of nodes. If an array of nodes, the first
  * node will be the display node, and the rest of the nodes will be used for sorting.
  *
  * @was QHtmlTableNodeColumn
- * @package QCubed\Control\TableColumn
+ * @package QCubed\Table
  */
-class Node extends Property
+class NodeColumn extends PropertyColumn
 {
     public function __construct($strName, $objNodes)
     {

@@ -436,7 +436,7 @@ abstract class ApplicationBase extends ObjectBase
      *  Will be eventually removed. If you need to do something in javascript, add it to AjaxResponse.
      * @param string $strJavaScript the javascript to execute
      * @param string $strPriority
-     * @throws QCallerException
+     * @throws Caller
      */
     public static function executeJavaScript($strJavaScript, $strPriority = self::PRIORITY_STANDARD)
     {
@@ -469,7 +469,7 @@ abstract class ApplicationBase extends ObjectBase
      * @param string $strFunctionName
      * @param string $strFunctionName,... Unlimited OPTIONAL parameters to use as a parameter list to the function. List can
      *                                        end with a PRIORITY_* to prioritize the command.
-     * @throws QCallerException
+     * @throws Caller
      */
     public static function executeSelectorFunction($mixSelector, $strFunctionName /*, ..., PRIORITY_* */)
     {

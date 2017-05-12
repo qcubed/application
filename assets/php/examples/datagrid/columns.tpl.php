@@ -29,28 +29,28 @@
 	<h2>ColumnTypes</h2>
 	<p>The following is a quick overview of each column type you can add to a <strong>\QCubed\Project\Control\Table</strong>.</p>
 	<ul>
-		<li><strong>\QCubed\Control\TableColumn\QCallable</strong>: this is the most versatile of the column types, and lets you
+		<li><strong>CallableColumn</strong>: this is the most versatile of the column types, and lets you
 			specify a callback which returns the text of each cell in the column. The callback must be a valid PHP
 			<a href="http://php.net/manual/en/language.types.callable.php">callable callback function</a>.
 			The one caveat is that you cannot use PHP <strong>Closures</strong>strong> here,
 			because QCubed needs to serialize everything in the form to preserve its state, and closures cannot
 			be serialized.</li>
-		<li><strong>\QCubed\Control\TableColumn\Property</strong>: this is useful when the data source is an array of objects,
+		<li><strong>PropertyColumn</strong>: this is useful when the data source is an array of objects,
 			and cell data can be fetched by simply calling a property on each item. A property can be a member
 			variable, or a property returned by the <strong>__get</strong> PHP magic method. Properites can be chained.</li>
-		<li><strong>\QCubed\Control\TableColumn\Indexed</strong>: this is useful when the DataSource is an array of arrays.
+		<li><strong>IndexedColumn</strong>: this is useful when the DataSource is an array of arrays.
 			You can specify which item in the array should be drawn in the column.</li>
-		<li><strong>\QCubed\Control\TableColumn\Node</strong>: If the DataSource is an array of database objects, like the array
+		<li><strong>NodeColumn</strong>: If the DataSource is an array of database objects, like the array
 			returned by the <strong>QueryArray</strong> method, you can
 			specify what data should be displayed using a QCubed node object. For example, to display the first name of
 			a person, you would enter <strong>QQN::Person()->FirstName</strong>. Nodes are chainable.</li>
-		<li><strong>\QCubed\Control\TableColumn\VirtualAttribute</strong>: If the DataSource is an array of database objects, and those
-			objects also have <strong>QVirtualAttributes</strong> in them, a \QCubed\Control\TableColumn\VirtualAttribute lets
+		<li><strong>VirtualAttributeColumn</strong>: If the DataSource is an array of database objects, and those
+			objects also have <strong>QVirtualAttributes</strong> in them, a VirtualAttributeColumn lets
 			you easily display the value of the attribute.</li>
-		<li><strong>\QCubed\Control\TableColumn\Checkbox</strong>: This column lets you display a column of checkboxes that the
+		<li><strong>CheckboxColumn</strong>: This column lets you display a column of checkboxes that the
 			user can select, and then query later. Checkbox columns can be complex, and is described more fully in
 			another example.</li>
-		<li><strong>\QCubed\Control\TableColumn\Link</strong>: This column lets you display an html link (anchor tag), or a button, whose
+		<li><strong>LinkColumn</strong>: This column lets you display an html link (anchor tag), or a button, whose
 			contents are dependent on the values in the DataSource row. Link columns can have many options for how to
 			set them up, and are described more in a different example.</li>
 
@@ -96,7 +96,7 @@
 
 	<h2>Third Example</h2>
 
-	<p>This example demonstrates how to override a column to create a complex header. HtmlTableColumn and its subclasses have
+	<p>This example demonstrates how to override a column to create a complex header. Table\ColumnBase and its subclasses have
 		a variety of hooks to return ids, classes and other attributes for whole rows, columns or individual cells.</p>
 
 	<p>This example creates a colspan for the top header row of the 2nd column to span the rest of the columns.</p>
