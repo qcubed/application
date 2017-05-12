@@ -64,6 +64,8 @@ abstract class ApplicationBase extends ObjectBase
     protected $objPurifier;
     /** @var bool */
     protected $blnProcessOutput = true;
+    /** @var string  */
+    protected $strEncodingType = __APPLICATION_ENCODING_TYPE__;
 
 
     /**
@@ -146,8 +148,19 @@ abstract class ApplicationBase extends ObjectBase
      */
     public static function encodingType()
     {
-        assert(defined('__APPLICATION_ENCODING_TYPE__')); // Must be defined
-        return __APPLICATION_ENCODING_TYPE__;
+        return Application::instance()->strEncodingType;
+    }
+
+    /**
+     * Allows temporary setting of the encoding type if loading a special page.
+     *
+     * @return string
+     */
+    public static function setEncodingType($strEncodingType)
+    {
+        $strOldValue = Application::instance()->strEncodingType;
+        Application::instance()->strEncodingType = $strEncodingType;
+        return $strOldValue;
     }
 
     /**

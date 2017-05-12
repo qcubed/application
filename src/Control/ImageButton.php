@@ -42,16 +42,13 @@ class ImageButton extends ActionControl
 
     public function renderHtmlAttributes($attributeOverrides = null, $styleOverrides = null)
     {
-        $strToReturn = parent::renderHtmlAttributes($attributeOverrides, $styleOverrides);
-
-        if ($this->strAlternateText) {
-            $strToReturn .= sprintf('alt="%s" ', $this->strAlternateText);
+        if (!$attributeOverrides) {
+            $attributeOverrides = [];
         }
-        if ($this->strImageUrl) {
-            $strToReturn .= sprintf('src="%s" ', $this->strImageUrl);
-        }
+        $attributeOverrides['alt'] = $this->strAlternateText;
+        $attributeOverrides['src'] = $this->strImageUrl;
 
-        return $strToReturn;
+        return parent::renderHtmlAttributes($attributeOverrides, $styleOverrides);
     }
 
     public function parsePostData()
@@ -71,22 +68,10 @@ class ImageButton extends ActionControl
 
     protected function getControlHtml()
     {
-        $strStyle = '';
-        /*
-        $strStyle = $this->getStyleAttributes();
-        if ($strStyle) {
-            $strStyle = sprintf('style="%s"', $strStyle);
-        }*/
-
         if ($this->blnPrimaryButton) {
-            $strToReturn = sprintf('<input type="image" name="%s" %s%s />',
-                $this->strControlId,
-                $this->renderHtmlAttributes(),
-                $strStyle);
+            $strToReturn = $this->renderTag('input', ['name'=>$this->strControlId, 'type'=>'image'], null, null, true);
         } else {
-            $strToReturn = sprintf('<img  %s%s />',
-                $this->renderHtmlAttributes(),
-                $strStyle);
+            $strToReturn = $this->renderTag('img', null, null, null, true);
         }
 
         $strToReturn .= sprintf('<input type="hidden" name="%s_x" id="%s_x" value=""/><input type="hidden" name="%s_y" id="%s_y" value=""/>',

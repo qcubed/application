@@ -360,7 +360,7 @@ abstract class Html {
                 if ($strValue === false) {
                     $strToReturn .= (' ' . $strName);
                 } elseif (!is_null($strValue)) {
-                    $strToReturn .= (' ' . $strName . '="' . htmlspecialchars($strValue, ENT_COMPAT | ENT_HTML5, __APPLICATION_ENCODING_TYPE__) . '"');
+                    $strToReturn .= (' ' . $strName . '="' . htmlspecialchars($strValue, ENT_COMPAT | ENT_HTML5, Application::encodingType()) . '"');
                 }
             }
         }
@@ -535,7 +535,7 @@ abstract class Html {
      * @return string
      */
     public static function renderString($strText) {
-        return nl2br(htmlspecialchars($strText, ENT_COMPAT | ENT_HTML5, __APPLICATION_ENCODING_TYPE__));
+        return nl2br(htmlspecialchars($strText, ENT_COMPAT | ENT_HTML5, Application::encodingType()));
     }
 
     /**

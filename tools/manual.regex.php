@@ -34,9 +34,9 @@ $a['const']['QTextMode::Url'] = '\\QCubed\\Control\\TextBoxBase::URL';
 $a['const']['QRepeatDirection::Horizontal'] = '\\QCubed\\Control\\ListControl::REPEAT_HORIZONTAL';
 $a['const']['QRepeatDirection::Vertical'] = '\\QCubed\\Control\\ListControl::REPEAT_VERTICAL';
 
-$a['const']['QSelectionMode::Single'] = '\\QCubed\\ListBoxBase::SELECTION_MODE_SINGLE';
-$a['const']['QSelectionMode::Multiple'] = '\\QCubed\\ListBoxBase::SELECTION_MODE_MULTIPLE';
-$a['const']['QSelectionMode::None'] = '\\QCubed\\ListBoxBase::SELECTION_MODE_NONE';
+$a['const']['QSelectionMode::Single'] = '\\QCubed\\Control\\ListBoxBase::SELECTION_MODE_SINGLE';
+$a['const']['QSelectionMode::Multiple'] = '\\QCubed\\Control\\ListBoxBase::SELECTION_MODE_MULTIPLE';
+$a['const']['QSelectionMode::None'] = '\\QCubed\\Control\\ListBoxBase::SELECTION_MODE_NONE';
 
 $a['const']['QJsPriority::Standard'] = '\\QCubed\\ApplicationBase::PRIORITY_STANDARD';
 $a['const']['QJsPriority::High'] = '\\QCubed\\ApplicationBase::PRIORITY_HIGH';

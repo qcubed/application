@@ -44,7 +44,7 @@ class BasicForm extends \QCubed\Project\Control\FormBase {
 		$this->lstSelect2 = new \QCubed\Project\Control\ListBox($this);
 		$this->lstSelect2->AddItems ($items);
 		$this->lstSelect2->Name = 'Multiselect';
-		$this->lstSelect2->SelectionMode = \QCubed\ListBoxBase::SELECTION_MODE_MULTIPLE;
+		$this->lstSelect2->SelectionMode = \QCubed\Control\ListBoxBase::SELECTION_MODE_MULTIPLE;
 
 		$this->lstCheck = new \QCubed\Control\CheckboxList($this);
 		$this->lstCheck->AddItems ($items);

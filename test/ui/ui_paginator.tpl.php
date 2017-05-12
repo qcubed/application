@@ -1,4 +1,4 @@
-<?php require(__PROJECT__ . '/includes/configuration/header.inc.php'); ?>
+<?php require(__CONFIGURATION__ . '/header.inc.php'); ?>
 <?php $this->renderBegin(); ?>
 <div>
 <?php $this->dtg->Render(); ?>
@@ -6,4 +6,4 @@
 <?php $this->txtPageSize->RenderWithName(); ?>
 </div>
 <?php $this->renderEnd(); ?>
-<?php require(__PROJECT__ . '/includes/configuration/footer.inc.php'); ?>
+<?php require(__CONFIGURATION__ . '/footer.inc.php'); ?>

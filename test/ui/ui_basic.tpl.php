@@ -1,6 +1,6 @@
 <?php
 	$strPageTitle = 'Basic Test';
- 	require('../../../../../../project/includes/configuration/header.inc.php');
+ 	require(__CONFIGURATION__ . '/header.inc.php');
 
 ?>
 
@@ -25,4 +25,4 @@
 <?php $this->btnAjax->Render(); ?>
 <?php $this->btnSetItemsAjax->Render(); ?>
 <?php $this->renderEnd(); ?>
-<?php require('../../../../../../project/includes/configuration/footer.inc.php'); ?>
+<?php require(__CONFIGURATION__ . '/footer.inc.php'); ?>

@@ -66,7 +66,7 @@ trait ListItemManagerTrait
      * @throws IndexOutOfRange
      * @throws Exception|InvalidCast
      */
-    public function addItemAt($intIndex, QListItemBase $objListItem)
+    public function addItemAt($intIndex, \QCubed\Control\ListItemBase $objListItem)
     {
         try {
             $intIndex = Type::cast($intIndex, Type::INTEGER);
@@ -126,7 +126,7 @@ trait ListItemManagerTrait
         try {
             $objListItemArray = Type::cast($objListItemArray, Type::ARRAY_TYPE);
             if ($objListItemArray) {
-                if (!reset($objListItemArray) instanceof QListItemBase) {
+                if (!reset($objListItemArray) instanceof \QCubed\Control\ListItemBase) {
                     throw new Caller('Not an array of ListItemBase types');
                 }
             }
