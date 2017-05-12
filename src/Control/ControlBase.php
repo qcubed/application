@@ -792,7 +792,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *
      * @param QAction $objAction
      */
-    public function OnClick(QAction $objAction) {
+    public function onClick(QAction $objAction) {
         $this->addAction (new Q\Event\Click(5, null, null, true), $objAction);
     }
 

@@ -4,7 +4,7 @@
 
 ?>
 
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 <?php $this->txtText->RenderWithName(); ?>
 <?php $this->txtText2->RenderWithName(); ?>
 <?php $this->chkCheck->RenderWithName(); ?>
@@ -24,5 +24,5 @@
 <?php $this->btnServer->Render(); ?>
 <?php $this->btnAjax->Render(); ?>
 <?php $this->btnSetItemsAjax->Render(); ?>
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../../../../../../project/includes/configuration/footer.inc.php'); ?>

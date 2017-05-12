@@ -1,7 +1,7 @@
 <?php
 require_once('../qcubed.inc.php');
 
-class BasicForm extends QForm {
+class BasicForm extends \QCubed\Project\Control\FormBase {
 	protected $txtText;
 	protected $txtText2;
 	protected $lstSelect;
@@ -14,45 +14,45 @@ class BasicForm extends QForm {
 	protected $rdoRadio2;
 	protected $rdoRadio3;
 
-	/** @var  QImageButton */
+	/** @var  \QCubed\Control\ImageButton */
 	protected $btnImage;
 
 	protected $btnServer;
 	protected $btnAjax;
 	protected $btnSetItemsAjax;
 
-	protected function Form_Create() {
-		$this->txtText = new QTextBox($this);
+	protected function formCreate() {
+		$this->txtText = new \QCubed\Project\Control\TextBox($this);
 		$this->txtText->Text = 'Default';
 		$this->txtText->Name = 'TextBox';
 
-		$this->txtText2 = new QTextBox($this);
+		$this->txtText2 = new \QCubed\Project\Control\TextBox($this);
 		$this->txtText2->Text = 'Big';
 		$this->txtText2->Name = 'TextBox';
-		$this->txtText2->TextMode = QTextMode::MultiLine;
+		$this->txtText2->TextMode = \QCubed\Control\TextBoxBase::MULTI_LINE;
 		$this->txtText2->Rows = 3;
 
-		$this->chkCheck = new QCheckBox($this);
+		$this->chkCheck = new \QCubed\Project\Control\Checkbox($this);
 		$this->chkCheck->Name = 'CheckBox';
 		$this->chkCheck->WrapLabel = true;
 
 		$items = array (1=>'Item1', 2=>'Item2', 3=>'Item3', 4=>'Item4');
-		$this->lstSelect = new QListBox($this);
+		$this->lstSelect = new \QCubed\Project\Control\ListBox($this);
 		$this->lstSelect->AddItems ($items);
 		$this->lstSelect->Name = 'Select';
 
-		$this->lstSelect2 = new QListBox($this);
+		$this->lstSelect2 = new \QCubed\Project\Control\ListBox($this);
 		$this->lstSelect2->AddItems ($items);
 		$this->lstSelect2->Name = 'Multiselect';
-		$this->lstSelect2->SelectionMode = QSelectionMode::Multiple;
+		$this->lstSelect2->SelectionMode = \QCubed\ListBoxBase::SELECTION_MODE_MULTIPLE;
 
-		$this->lstCheck = new QCheckBoxList($this);
+		$this->lstCheck = new \QCubed\Control\CheckboxList($this);
 		$this->lstCheck->AddItems ($items);
 		$this->lstCheck->Name = 'Check List';
-		$this->lstCheck->RepeatDirection = QRepeatDirection::Horizontal;
+		$this->lstCheck->RepeatDirection = \QCubed\Control\ListControl::REPEAT_HORIZONTAL;
 		$this->lstCheck->RepeatColumns = 4;
 
-		$this->lstCheck2 = new QCheckBoxList($this);
+		$this->lstCheck2 = new \QCubed\Control\CheckboxList($this);
 		$this->lstCheck2->AddItems ($items);
 		$this->lstCheck2->Name = 'Check List';
 		$this->lstCheck2->RepeatColumns = 1;
@@ -60,39 +60,39 @@ class BasicForm extends QForm {
 		$this->lstCheck2->WrapLabel = true;
 		$this->lstCheck2->Name = 'Check List 2';
 
-		$this->lstRadio = new QRadioButtonList($this);
+		$this->lstRadio = new \QCubed\Control\RadioButtonList($this);
 		$this->lstRadio->AddItems ($items);
 		$this->lstRadio->Name = 'Radio List';
-		$this->lstRadio->RepeatDirection = QRepeatDirection::Horizontal;
+		$this->lstRadio->RepeatDirection = \QCubed\Control\ListControl::REPEAT_HORIZONTAL;
 		$this->lstRadio->RepeatColumns = 4;
 		$this->lstRadio->SelectedIndex = 1;
 
-		$this->rdoRadio1 = new QRadioButton($this);
+		$this->rdoRadio1 = new \QCubed\Project\Control\RadioButton($this);
 		$this->rdoRadio1->Name = 'Item 1';
 		$this->rdoRadio1->GroupName = 'MyGroup';
-		$this->rdoRadio2 = new QRadioButton($this);
+		$this->rdoRadio2 = new \QCubed\Project\Control\RadioButton($this);
 		$this->rdoRadio2->Name = 'Item 2';
 		$this->rdoRadio2->GroupName = 'MyGroup';
-		$this->rdoRadio3 = new QRadioButton($this);
+		$this->rdoRadio3 = new \QCubed\Project\Control\RadioButton($this);
 		$this->rdoRadio3->Name = 'Item 3';
 		$this->rdoRadio3->GroupName = 'MyGroup';
 
-		$this->btnImage = new QImageButton($this);
+		$this->btnImage = new \QCubed\Control\ImageButton($this);
 		$this->btnImage->Name = 'Image Button';
 		$this->btnImage->ImageUrl = __PHP_ASSETS__ . '/examples/images/data_model_thumbnail.png';
-		$this->btnImage->AddAction (new QClickEvent(), new QRegisterClickPositionAction());
+		$this->btnImage->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\RegisterClickPosition());
 
-		$this->btnServer = new QButton ($this);
+		$this->btnServer = new \QCubed\Project\Control\Button ($this);
 		$this->btnServer->Text = 'Server Submit';
-		$this->btnServer->AddAction(new QClickEvent(), new QServerAction('submit_click'));
+		$this->btnServer->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('submit_click'));
 
-		$this->btnAjax = new QButton ($this);
+		$this->btnAjax = new \QCubed\Project\Control\Button ($this);
 		$this->btnAjax->Text = 'Ajax Submit';
-		$this->btnAjax->AddAction(new QClickEvent(), new QAjaxAction('submit_click'));
+		$this->btnAjax->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('submit_click'));
 
-		$this->btnSetItemsAjax = new QButton ($this);
+		$this->btnSetItemsAjax = new \QCubed\Project\Control\Button ($this);
 		$this->btnSetItemsAjax->Text = 'Ajax Set Items';
-		$this->btnSetItemsAjax->AddAction(new QClickEvent(), new QAjaxAction('setItems_click'));
+		$this->btnSetItemsAjax->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('setItems_click'));
 
 	}
 

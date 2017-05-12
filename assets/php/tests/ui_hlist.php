@@ -1,7 +1,7 @@
 <?php
     require_once('../qcubed.inc.php');
     
-	class SelectForm extends QForm {
+	class SelectForm extends \QCubed\Project\Control\FormBase {
 		protected $list1;
 
 		protected $btnServer;
@@ -10,27 +10,27 @@
 		protected $a;
 
 
-		protected function Form_Create() {
-			$this->a = [new HListItem ('A', 1),
-				new HListItem ('B', 2),
-				new HListItem ('C', 3),
-				new HListItem ('D', 4)
+		protected function formCreate() {
+			$this->a = [new \QCubed\Control\HListItem ('A', 1),
+				new \QCubed\Control\HListItem ('B', 2),
+				new \QCubed\Control\HListItem ('C', 3),
+				new \QCubed\Control\HListItem ('D', 4)
 			];
 
-			$this->list1 = new QHListControl($this);
+			$this->list1 = new \QCubed\Control\HList($this);
 			$this->list1->Name = 'List';
 
 
 			$this->list1->AddItems($this->a);
 			$this->list1->SetDataBinder([$this, 'DataBind']);
 
-			$this->btnServer = new QButton ($this);
+			$this->btnServer = new \QCubed\Project\Control\Button ($this);
 			$this->btnServer->Text = 'Server Submit';
-			$this->btnServer->AddAction(new QClickEvent(), new QServerAction('submit_click'));
+			$this->btnServer->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('submit_click'));
 
-			$this->btnAjax = new QButton ($this);
+			$this->btnAjax = new \QCubed\Project\Control\Button ($this);
 			$this->btnAjax->Text = 'Ajax Submit';
-			$this->btnAjax->AddAction(new QClickEvent(), new QAjaxAction('submit_click'));
+			$this->btnAjax->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('submit_click'));
 		}
 
 		protected function submit_click($strFormId, $strControlId, $strParameter) {

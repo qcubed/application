@@ -30,7 +30,7 @@
 	ksort($strObjectArray);
 
 	$strPageTitle = 'List of Forms';
-	require(__CONFIGURATION__ . '/header.inc.php');
+	require(__DIR__ . '/header.inc.php');
 ?>
 	<div id="draftList">
 <?php
@@ -42,4 +42,4 @@
 ?>
 	</div>
 
-<?php require (__CONFIGURATION__ . '/footer.inc.php'); ?>
+<?php require (__DIR__ . '/footer.inc.php'); ?>

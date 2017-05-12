@@ -1,42 +1,42 @@
 <?php
     require_once('../qcubed.inc.php');
-    class NestedTabForm extends QForm
+    class NestedTabForm extends \QCubed\Project\Control\FormBase
 	{
 		/**
-		 * @var QTabs
+		 * @var \QCubed\Project\Jqui\Tabs
 		 */
 		protected $tabs;
 		/**
-		 * @var QPanel
+		 * @var \QCubed\Control\Panel
 		 */
 		protected $log;
 		/**
-		 * @var QPanel[]
+		 * @var \QCubed\Control\Panel[]
 		 */
 		protected $panels = [];
 
-		protected function Form_Create()
+		protected function formCreate()
 		{
-			$this->log = new QPanel($this);
-			$this->tabs = new QTabs($this);
+			$this->log = new \QCubed\Control\Panel($this);
+			$this->tabs = new \QCubed\Project\Jqui\Tabs($this);
 			$this->tabs->Headers = ['one', 'two'];
 			$this->panels[] = $this->CreatePanel("hi", $this->tabs);
-			$pnl = new QPanel($this->tabs);
+			$pnl = new \QCubed\Control\Panel($this->tabs);
 			$pnl->AutoRenderChildren = true;
 			$this->panels[] = $pnl;
-			$tabs = new QTabs($this->panels[0]);
+			$tabs = new \QCubed\Project\Jqui\Tabs($this->panels[0]);
 			$tabs->Headers = ['three', 'four'];
 			$this->CreatePanel("aaa2", $tabs);
 			$this->CreatePanel("bbb", $tabs);
-			$this->tabs->AddAction(new QTabs_ActivateEvent(), new QAjaxAction('tabs_Load'));
-			//$tabs->AddAction(new QTabs_ActivateEvent(), new QAjaxAction('tabs2_Load'));
+			$this->tabs->AddAction(new \QCubed\Jqui\Event\TabsActivate(), new \QCubed\Action\Ajax('tabs_Load'));
+			//$tabs->AddAction(new \QCubed\Jqui\Event\TabsActivate(), new \QCubed\Action\Ajax('tabs2_Load'));
 		}
 
 		public function CreatePanel($strContent, $objTab)
 		{
-			$pnl = new QPanel($objTab);
+			$pnl = new \QCubed\Control\Panel($objTab);
 			$pnl->AutoRenderChildren = true;
-			$pnlContent = new QPanel($pnl);
+			$pnlContent = new \QCubed\Control\Panel($pnl);
 			$pnlContent->Text = $strContent;
 			return $pnl;
 		}
@@ -44,7 +44,7 @@
 		public function tabs_Load($strForm, $strControl, $strParam, $params)
 		{
 			/**
-			 * @var $objControl QTabs
+			 * @var $objControl \QCubed\Project\Jqui\Tabs
 			 */
 			$objControl = $this->GetControl($strControl);
 			if (!$objControl) {
@@ -56,7 +56,7 @@
 				if (count($pnlParent->GetChildControls()) > 0) {
 					return;
 				}
-				$pnlContent = new QPanel($this->panels[1]);
+				$pnlContent = new \QCubed\Control\Panel($this->panels[1]);
 				$pnlContent->Text = "there ";
 				$this->tabs->Refresh();
 			}

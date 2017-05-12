@@ -1,30 +1,30 @@
 <?php
     require_once('../qcubed.inc.php');
     
-	class PaginatorForm extends QForm {
-		/** @var  QDataGrid */
+	class PaginatorForm extends \QCubed\Project\Control\FormBase {
+		/** @var  \QCubed\Project\Control\DataGrid */
 		protected $dtg;
-		/** @var  QIntegerTextBox */
+		/** @var  \QCubed\Control\IntegerTextBox */
 		protected $txtCount;
-		/** @var  QIntegerTextBox */
+		/** @var  \QCubed\Control\IntegerTextBox */
 		protected $txtPageSize;
 
-		protected function Form_Create() {
-			$this->dtg = new QDataGrid($this);
+		protected function formCreate() {
+			$this->dtg = new \QCubed\Project\Control\DataGrid($this);
 			$this->dtg->SetDataBinder("dtg_Bind");
-			$this->dtg->Paginator = new QPaginator($this->dtg);
+			$this->dtg->Paginator = new \QCubed\Project\Control\Paginator($this->dtg);
 			$this->dtg->CreateIndexedColumn("Item", 0);
 
-			$this->txtCount = new QIntegerTextBox($this);
+			$this->txtCount = new \QCubed\Control\IntegerTextBox($this);
 			$this->txtCount->Name = "Count";
 			$this->txtCount->SaveState = true;
-			$this->txtCount->AddAction(new QChangeEvent(), new QAjaxAction("refreshGrid"));
+			$this->txtCount->AddAction(new \QCubed\Event\Change(), new \QCubed\Action\Ajax("refreshGrid"));
 
-			$this->txtPageSize = new QIntegerTextBox($this);
+			$this->txtPageSize = new \QCubed\Control\IntegerTextBox($this);
 			$this->txtPageSize->Name = "Page Size";
 			$this->txtPageSize->Text = 10;
 			$this->txtPageSize->SaveState = true;
-			$this->txtPageSize->AddAction(new QChangeEvent(), new QAjaxAction("refreshGrid"));
+			$this->txtPageSize->AddAction(new \QCubed\Event\Change(), new \QCubed\Action\Ajax("refreshGrid"));
 
 			$intPageSize = (int)$this->txtPageSize->Text;
 			$this->dtg->ItemsPerPage = $intPageSize;

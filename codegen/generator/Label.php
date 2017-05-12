@@ -231,7 +231,7 @@ TMPL;
     /**
      * @param DatabaseCodeGen $objCodeGen
      * @param SqlTable $objTable
-     * @param QSqlColumn|QReverseReference $objColumn
+     * @param SqlColumn|ReverseReference $objColumn
      * @return string
      */
     public function connectorUpdate(DatabaseCodeGen $objCodeGen, SqlTable $objTable, ColumnInterface $objColumn)

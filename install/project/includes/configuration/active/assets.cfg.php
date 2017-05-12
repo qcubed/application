@@ -21,6 +21,8 @@ define ('QCUBED_URL_ORM', QCUBED_URL_BASE . '/orm');
 define ('QCUBED_URL_ORM_TOOLS', QCUBED_URL_ORM . '/tools');
 define ('QCUBED_URL_ORM_CODEGEN', QCUBED_URL_ORM_TOOLS . '/codegen.php');
 
+define ('QCUBED_URL_APP', QCUBED_URL_BASE . '/application');
+
 
 define ('__VENDOR_ASSETS__', __SUBDIRECTORY__ . '/vendor');
 
@@ -80,7 +82,7 @@ define ('__QCUBED_JS_CORE__',  'qcubed.js');
 define ('__JQUERY_CSS__', 'jquery-ui-themes/ui-qcubed/jquery-ui.custom.css');
 
 // Location of the QCubed-specific web-based development tools, like codegen.php
-define ('__DEVTOOLS_ASSETS__', __PHP_ASSETS__ . '/_devtools');
+define ('__DEVTOOLS_ASSETS__', QCUBED_URL_APP . '/tools');
 
 // Location of the Examples site
 define ('__EXAMPLES__', __PHP_ASSETS__ . '/examples');

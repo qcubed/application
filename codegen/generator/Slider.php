@@ -49,7 +49,7 @@ class Slider extends Control
         $strObjectName = $objCodeGen->modelVariableName($objTable->Name);
         $strClassName = $objTable->ClassName;
         $strControlVarName = $objCodeGen->modelConnectorVariableName($objColumn);
-        $strLabelName = addslashes(QCodeGen::modelConnectorControlName($objColumn));
+        $strLabelName = addslashes(DatabaseCodeGen::modelConnectorControlName($objColumn));
 
         // Read the control type in case we are generating code for a subclass of QTextBox
         $strControlType = $objCodeGen->getControlCodeGenerator($objColumn)->getControlClass();
@@ -79,7 +79,7 @@ TMPL;
 
 TMPL;
 
-        if ($strMethod = QCodeGen::$PreferredRenderMethod) {
+        if ($strMethod = DatabaseCodeGen::$PreferredRenderMethod) {
             $strRet .= <<<TMPL
         \$this->{$strControlVarName}->PreferredRenderMethod = '$strMethod';
 

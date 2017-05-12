@@ -4,8 +4,8 @@
 
 ?>
 
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 <?php $this->dtg->Render(); ?>
 <?php $this->lblVars->Render(); ?>
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require('../../../../../../project/includes/configuration/footer.inc.php'); ?>

@@ -3,13 +3,13 @@ require_once('../qcubed.inc.php');
 
 use QCubed as Q;
 
-class UrlForm extends QForm {
-	/** @var  QHtmlTable */
+class UrlForm extends \QCubed\Project\Control\FormBase {
+	/** @var  \QCubed\Project\Control\Table */
 	protected $dtg;
 	protected $lblVars;
 
-	protected function Form_Create() {
-		$this->dtg = new QHtmlTable($this);
+	protected function formCreate() {
+		$this->dtg = new \QCubed\Project\Control\Table($this);
 		$this->dtg->SetDataBinder('BindData');
 
 		$col = $this->dtg->CreateCallableColumn('Link', [$this, 'dtg_LinkRender']);
@@ -17,7 +17,7 @@ class UrlForm extends QForm {
 		$col = $this->dtg->CreateCallableColumn('Button', [$this, 'dtg_ButtonRender']);
 		$col->HtmlEntities = false;
 
-		$this->lblVars = new QLabel ($this);
+		$this->lblVars = new \QCubed\Control\Label ($this);
 	}
 
 	public function dtg_LinkRender ($item) {
@@ -25,23 +25,23 @@ class UrlForm extends QForm {
 	}
 
 	public function dtg_ButtonRender ($item) {
-		$strControl = new QButton ($this);
+		$strControl = new \QCubed\Project\Control\Button ($this);
 		$strControl->Text = 'Button';
 		$strControl->ActionParameter = $item;
-		$strControl->AddAction (new QClickEvent(), new QServerAction('btn_click'));
+		$strControl->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\Server('btn_click'));
 
 		return $strControl->Render(false);
 	}
 
 	protected function btn_click($strFormId, $strControlId, $strParameter) {
-		QApplication::Redirect($strParameter);
+		\QCubed\Project\Application::Redirect($strParameter);
 	}
 
 	public function BindData() {
 		$a = [
-			Q\Html::MakeUrl(QApplication::$ScriptName, null, 'anchor'),
-			Q\Html::MakeUrl(QApplication::$ScriptName, ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back']),
-			Q\Html::MakeUrl(QApplication::$ScriptName, ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back'], null, QHtml::HTTP, $_SERVER['HTTP_HOST']),
+			Q\Html::MakeUrl(\QCubed\Project\Application::instance()->context()->scriptName(), null, 'anchor'),
+			Q\Html::MakeUrl(\QCubed\Project\Application::instance()->context()->scriptName(), ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back']),
+			Q\Html::MakeUrl(\QCubed\Project\Application::instance()->context()->scriptName(), ['a'=>1, 'b'=>'this & that', 'c'=>'/forward\back'], null, \QCubed\Html::HTTP, $_SERVER['HTTP_HOST']),
 			Q\Html::MailToUrl('test', 'qcu.be', ['subject'=>'Hey you.']),
 			Q\Html::MailToUrl('test', 'qcu.be', ['subject'=>'What & About \ this /']),
 			Q\Html::MailToUrl('"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"', 'strange.email.com', ['subject'=>'What & About \ this /']),

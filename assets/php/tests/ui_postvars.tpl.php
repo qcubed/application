@@ -1,5 +1,5 @@
 <?php require(__PROJECT__ . '/includes/configuration/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 <p>This is a stress test for the various ways that data can be retrieved from client and delivered to the server. Put text
 in the field and press the submit button. Try international characters in particular.
 The results of the various attempts will display. They should all show
@@ -14,5 +14,5 @@ use UTF-8 encoding to make sure we can decode into any encoding.</p>
 	<?php $this->btnAjax->Render(); ?>
 
 </div>
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require(__PROJECT__ . '/includes/configuration/footer.inc.php'); ?>

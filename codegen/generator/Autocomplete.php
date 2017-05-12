@@ -303,12 +303,12 @@ TMPL;
         $strControlVarName = $this->varName($strPropName);
 
         $strRet = '';
-        if ($objColumn instanceof QSqlColumn) {
+        if ($objColumn instanceof SqlColumn) {
             $strRet = <<<TMPL
 				if (\$this->{$strControlVarName}) \$this->{$strObjectName}->{$objColumn->PropertyName} = \$this->{$strControlVarName}->SelectedValue;
 
 TMPL;
-        } elseif ($objColumn instanceof QReverseReference) {
+        } elseif ($objColumn instanceof ReverseReference) {
             $strRet = <<<TMPL
 				if (\$this->{$strControlVarName}) \$this->{$strObjectName}->{$objColumn->ObjectPropertyName} = {$objColumn->VariableType}::load(\$this->{$strControlVarName}->SelectedValue);
 

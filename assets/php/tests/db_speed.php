@@ -1,13 +1,13 @@
 <?php
     require_once('../qcubed.inc.php');
     
-	class SpeedForm extends QForm {
+	class SpeedForm extends \QCubed\Project\Control\FormBase {
 		protected $pnlTiny;
 		protected $pnlBig;
 
 		protected $btnGo;
 
-		protected function Form_Create() {
+		protected function formCreate() {
 
 			$count = 10000;
 			Project::ClearCache();
@@ -33,34 +33,34 @@
 					$objProject->ProjectStatusTypeId = ProjectStatusType::Open;
 					$objProject->ManagerPersonId = $i % 1000 + 1000;
 					$objProject->Description = 'Description' . $i;
-					$objProject->StartDate = QDateTime::Now();
-					$objProject->EndDate = QDateTime::Now();
+					$objProject->StartDate = \QCubed\QDateTime::Now();
+					$objProject->EndDate = \QCubed\QDateTime::Now();
 					$objProject->Budget = $i;
 					$objProject->Spent = 1;
 					$objProject->Save();
 				}
 			}
 
-			$this->pnlTiny = new QPanel($this);
+			$this->pnlTiny = new \QCubed\Control\Panel($this);
 			$this->pnlTiny->Name = '10,000 Person Objects';
 
-			$this->pnlBig = new QPanel($this);
+			$this->pnlBig = new \QCubed\Control\Panel($this);
 			$this->pnlBig->Name = '10,000 Project Objects With Expansion';
 
-			$this->btnGo = new QButton($this);
+			$this->btnGo = new \QCubed\Project\Control\Button($this);
 			$this->btnGo->Text = 'Go';
-			$this->btnGo->AddAction (new QClickEvent(), new QAjaxAction('Go_Click'));
+			$this->btnGo->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\Ajax('Go_Click'));
 
 		}
 
 		protected function Go_Click() {
-			QApplication::$blnLocalCache = false;
+			\QCubed\Project\Application::$blnLocalCache = false;
 
 			$timeNoCache = -microtime(true);
 			$a = Person::LoadAll(); // noncached loads
 			$timeNoCache += microtime(true);
 
-			QApplication::$blnLocalCache = true;
+			\QCubed\Project\Application::$blnLocalCache = true;
 
 			$timeLoad1Cached = -microtime(true);
 			$a = Person::LoadAll(); // noncached loads
@@ -69,7 +69,7 @@
 			$a = Person::LoadAll(); // cached loads
 			$timeLoad2Cached += microtime(true);
 
-			QApplication::$blnLocalCache = new QCacheProviderLocalMemory(array());
+			\QCubed\Project\Application::$blnLocalCache = new \QCubed\Cache\LocalMemoryCache(array());
 
 			$timeLoad3Cached = -microtime(true);
 			$a = Person::LoadAll(); // noncached loads
@@ -86,19 +86,19 @@
 				sprintf ("Load LocalCacheProvider: %2.1f%% \n", 100 * $timeLoad4Cached / $timeNoCache)
 			;
 
-			$cond = QQ::Equal (QQN::Project()->ProjectStatusTypeId, ProjectStatusType::Open);
-			$clauses[] = QQ::Expand (QQN::Project()->ManagerPerson);
+			$cond = \QCubed\Query\QQ::Equal (QQN::Project()->ProjectStatusTypeId, ProjectStatusType::Open);
+			$clauses[] = \QCubed\Query\QQ::Expand (QQN::Project()->ManagerPerson);
 
 			Project::ClearCache();
 			Person::ClearCache();
 
-			QApplication::$blnLocalCache = false;
+			\QCubed\Project\Application::$blnLocalCache = false;
 
 			$timeNoCache = -microtime(true);
 			$a = Project::QueryArray($cond, $clauses); // noncached loads
 			$timeNoCache += microtime(true);
 
-			QApplication::$blnLocalCache = true;
+			\QCubed\Project\Application::$blnLocalCache = true;
 
 			$timeLoad1Cached = -microtime(true);
 			$a = Project::QueryArray($cond, $clauses); // noncached loads
@@ -107,7 +107,7 @@
 			$a = Project::QueryArray($cond, $clauses); // cached loads
 			$timeLoad2Cached += microtime(true);
 
-			QApplication::$blnLocalCache = new QCacheProviderLocalMemory(array());
+			\QCubed\Project\Application::$blnLocalCache = new \QCubed\Cache\LocalMemoryCache(array());
 
 			$timeLoad3Cached = -microtime(true);
 			$a = Project::QueryArray($cond, $clauses); // noncached loads

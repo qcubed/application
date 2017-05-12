@@ -1,6 +1,6 @@
 <?php
 require_once('../qcubed.inc.php');
-QApplication::$EncodingType = 'ISO-8859-1';
+\QCubed\Project\Application::encodingType() = 'ISO-8859-1';
 
 /**
  * Class MyControl
@@ -38,7 +38,7 @@ class MyControl extends QControl {
 	}
 }
 
-class ParamsForm extends QForm {
+class ParamsForm extends \QCubed\Project\Control\FormBase {
 	protected $txtText;
 	protected $txt2;
 	protected $pnlTest;
@@ -47,18 +47,18 @@ class ParamsForm extends QForm {
 	protected $btnSubmit;
 	protected $btnAjax;
 
-	protected function Form_Create() {
+	protected function formCreate() {
 		$this->txtText = new MyControl($this);
 		$this->txtText->Name = "Special Vals";
 
-		$this->txt2 = new QTextBox($this);
+		$this->txt2 = new \QCubed\Project\Control\TextBox($this);
 		$this->txt2->Name = "Regular Val";
 
-		$this->pnlTest = new QPanel($this);
+		$this->pnlTest = new \QCubed\Control\Panel($this);
 		//$this->pnlTest->HtmlEntities = true;
 		$this->pnlTest->Name = 'Result';
 
-		$this->lstCheckables = new QCheckBoxList($this);
+		$this->lstCheckables = new \QCubed\Control\CheckboxList($this);
 		$this->lstCheckables->AddItem('é - accented', 'é');
 		$this->lstCheckables->AddItem('ü - umlat', 'ü');
 		$this->lstCheckables->AddItem('î - circuflexed', 'î');
@@ -67,13 +67,13 @@ class ParamsForm extends QForm {
 		$strId = $this->txtText->ControlId;
 		$strJs = "{txt: \$j('#{$strId}').val(), nullVal:null}";
 
-		$this->btnSubmit = new QButton($this);
+		$this->btnSubmit = new \QCubed\Project\Control\Button($this);
 		$this->btnSubmit->Text = "Server Submit";
-		$this->btnSubmit->AddAction(new QClickEvent(), new QServerAction('submit_click', null, $strJs));
+		$this->btnSubmit->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('submit_click', null, $strJs));
 
-		$this->btnAjax = new QButton($this);
+		$this->btnAjax = new \QCubed\Project\Control\Button($this);
 		$this->btnAjax->Text = "Ajax Submit";
-		$this->btnAjax->AddAction(new QClickEvent(), new QAjaxAction('submit_click', null, null, $strJs));
+		$this->btnAjax->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('submit_click', null, null, $strJs));
 	}
 
 	protected function submit_click($strFormId, $strControlId, $mixParam) {

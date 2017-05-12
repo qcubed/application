@@ -1,5 +1,5 @@
 <?php require(__PROJECT__ . '/includes/configuration/header.inc.php'); ?>
-<?php $this->RenderBegin(); ?>
+<?php $this->renderBegin(); ?>
 <div>
 <?php $this->txt1->RenderWithName(); ?>
 <?php $this->txt2->RenderWithName(); ?>
@@ -12,5 +12,5 @@
 <?php $this->btnAjax1->Render(); ?>
 <?php $this->btnAjax2->Render(); ?>
 </div>
-<?php $this->RenderEnd(); ?>
+<?php $this->renderEnd(); ?>
 <?php require(__PROJECT__ . '/includes/configuration/footer.inc.php'); ?>
