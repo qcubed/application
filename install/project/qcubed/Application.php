@@ -68,7 +68,7 @@ class Application extends QCubed\ApplicationBase
     {
         //$translator = new \QCubed\I18n\SimpleCacheTranslator();
         /*
-        $translator->bindDomain('app', __PROJECT__ . "/includes/i18n")  // set to application's i18n directory
+        $translator->bindDomain('app', __PROJECT__ . "/i18n")  // set to application's i18n directory
             ->setDefaultDomain('app')
             ->setTempDir(TMP);
         TranslationService::instance()->setTranslator($translator);
