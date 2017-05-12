@@ -787,6 +787,16 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
+     * Shortcut for adding a debounced click action with a tiny delay. This is effective for most situations like submit
+     * buttons and things that need to popup things after other actions, and then wait for a response before proceeding.
+     *
+     * @param QAction $objAction
+     */
+    public function OnClick(QAction $objAction) {
+        $this->addAction (new Q\Event\Click(5, null, null, true), $objAction);
+    }
+
+    /**
      * Returns all actions that are connected with specific events
      *
      * @param string $strEventType the type of the event. Be sure and use a
