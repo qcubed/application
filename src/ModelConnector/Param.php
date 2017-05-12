@@ -12,9 +12,14 @@ namespace QCubed\ModelConnector;
 require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
+use QCubed\Control\IntegerTextBox;
+use QCubed\Control\RadioButtonList;
 use QCubed\Exception\Caller;
 use QCubed;
 use QCubed\ObjectBase;
+use QCubed\Project\Control\ControlBase;
+use QCubed\Project\Control\ListBox;
+use QCubed\Project\Control\TextBox;
 use QCubed\Type;
 
 /**
@@ -46,7 +51,7 @@ class Param extends ObjectBase
     protected $controlType;
     protected $options;
 
-    /** @var  QControl caching the created control */
+    /** @var  ControlBase caching the created control */
     protected $objControl;
 
     public function __construct($strCategory, $strName, $strDescription, $controlType, $options = null)
@@ -67,8 +72,8 @@ class Param extends ObjectBase
      * Called by the QModelConnectorEditDlg dialog. Creates a control that will allow the user to edit the value
      * associated with this parameter, and caches that control so that its easy to get to.
      *
-     * @param QControl|null $objParent
-     * @return null|QControl
+     * @param ControlBase|null $objParent
+     * @return null|ControlBase
      */
     public function getControl($objParent = null)
     {
@@ -87,10 +92,10 @@ class Param extends ObjectBase
     /**
      * Creates the actual control that will edit the value.
      *
-     * @param QControl $objParent
+     * @param ControlBase $objParent
      * @return IntegerTextBox|ListBox|RadioButtonList|TextBox
      */
-    protected function createControl(QControl $objParent)
+    protected function createControl(ControlBase $objParent)
     {
         switch ($this->controlType) {
             case Type::BOOLEAN:
@@ -113,7 +118,7 @@ class Param extends ObjectBase
                 $ctl = new TextBox($objParent);
                 break;
 
-            case QModelConnectorParam::SELECTION_LIST: // a specific set of choices to present to the user
+            case self::SELECTION_LIST: // a specific set of choices to present to the user
                 $ctl = new ListBox($objParent);
 
                 foreach ($this->options as $key => $val) {

@@ -14,6 +14,8 @@ use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\TextBox;
 use QCubed\Type;
 use QCubed as Q;

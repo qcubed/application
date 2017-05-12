@@ -600,10 +600,10 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public static function sleepHelper($obj)
     {
-        if ($obj instanceof QForm) {
+        if ($obj instanceof FormBase) {
             // assume its THE form
             return '**QF;';
-        } elseif ($obj instanceof Base) {
+        } elseif ($obj instanceof ControlBase) {
             return '**QC;' . $obj->strControlId;
         } elseif (is_array($obj)) {
             $ret = array();
@@ -2581,7 +2581,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             new ModelConnectorParam ('Control', 'CausesValidation',
                 'How and what to validate. Can also be set to a control.', ModelConnectorParam::SELECTION_LIST,
                 array(
-                    '\\QCubed\\Control\\ControlBase::NONE' => 'None',
+                    '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_NONE' => 'None',
                     '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_ALL' => 'All Controls',
                     '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN' => 'Siblings And Children',
                     '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_ONLY' => 'Siblings Only'

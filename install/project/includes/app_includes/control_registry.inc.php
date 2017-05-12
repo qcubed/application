@@ -7,16 +7,21 @@
  * the quotes to add it to the appropriate array.
  */
 
-//$controls[QDatabaseFieldType::VarChar][] = 'QMyTextBox';
-//$controls[QDatabaseFieldType::Blob][] = '';
-//$controls[QDatabaseFieldType::Char][] = '';
-//$controls[QDatabaseFieldType::Integer][] = '';
-//$controls[QDatabaseFieldType::Float][] = '';
-//$controls[QDatabaseFieldType::Bit][] = '';
-//$controls[QDatabaseFieldType::DateTime][] = '';
-//$controls[QDatabaseFieldType::Date][] = '';
-//$controls[QDatabaseFieldType::Time][] = '';
-//$controls[QType::ArrayType][] = ''; // Many-to-one. Includes forward and unique reverse references.
-//$controls[QType::Association][] = ''; // Many-to-many.
+use QCubed\ModelConnector\ControlType;
 
-?>
+$controls = [];
+
+//$controls[ControlType::VAR_CHAR][] = 'QCubed\\Project\\MyTextBox';
+//$controls[ControlType::BLOB][] = '';
+//$controls[ControlType::CHAR][] = '';
+//$controls[ControlType::INTEGER][] = '';
+//$controls[ControlType::FLOAT][] = '';
+//$controls[ControlType::BIT][] = '';
+//$controls[ControlType::DATE_TIME][] = '';
+//$controls[ControlType::DATE][] = '';
+//$controls[ControlType::TIME][] = '';
+//$controls[ControlType::SINGLE_SELECT][] = ''; // Many-to-one. Includes forward and unique reverse references.
+//$controls[ControlType::MULTI_SELECT][] = ''; // Many-to-many.
+//$controls[ControlType::TABLE][] = ''; // Select from a list.
+
+return $controls;

@@ -402,13 +402,15 @@ class EditDlg extends QDialog
     protected function createClassNameArray()
     {
         // create the control array
-        $controls = array();
-        include(__QCUBED_CORE__ . '/control_registry.inc.php');
+        $controls = include(QCUBED_BASE_DIR . '/application/control_registry.inc.php');
 
         if (file_exists(__APP_INCLUDES__ . '/control_registry.inc.php')) {
-            include(__APP_INCLUDES__ . '/control_registry.inc.php');
+            $controls = array_merge($controls, include(__APP_INCLUDES__ . '/control_registry.inc.php'));
         }
 
+        /*
+         * Renable plugins once they are converted to new version
+         *
         if (defined('__PLUGINS__') &&
             is_dir(__PLUGINS__)
         ) {
@@ -420,7 +422,7 @@ class EditDlg extends QDialog
                     }
                 }
             }
-        }
+        }*/
 
         // $controls is now an array indexed by Type, with each entry a QControl type name
 

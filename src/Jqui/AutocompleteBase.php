@@ -288,7 +288,7 @@ class AutocompleteBase extends AutocompleteGen
     public static function getModelConnectorParams()
     {
         return array_merge(parent::getModelConnectorParams(), array(
-            new Q\ModelConnector\Param(QModelConnectorParam::GeneralCategory, 'NoAutoLoad',
+            new Q\ModelConnector\Param(Q\ModelConnector\Param::GENERAL_CATEGORY, 'NoAutoLoad',
                 'Prevent automatically populating a list type control. Set this if you are doing more complex list loading.',
                 Type::BOOLEAN)
         ));

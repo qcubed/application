@@ -125,7 +125,7 @@ if (stristr($__exc_strMessage, "Invalid Form State Data") !== false) {
 								}
 								$__exc_StrVarExport = htmlentities(var_export($__exc_ObjSessionVarArray, true));
 							} else if (($__exc_ObjVariableArray[$__exc_Key] instanceof \QCubed\Project\Control\ControlBase) || ($__exc_ObjVariableArray[$__exc_Key] instanceof \QCubed\Project\Control\FormBase)) {
-								$__exc_StrVarExport = htmlentities($__exc_ObjVariableArray[$__exc_Key]->VarExport());
+								$__exc_StrVarExport = htmlentities($__exc_ObjVariableArray[$__exc_Key]->varExport());
 							} else {
 								$__exc_StrVarExport = htmlentities(var_export($__exc_ObjVariableArray[$__exc_Key], true));
 							}
