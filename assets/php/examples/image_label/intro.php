@@ -63,7 +63,7 @@
 			// specify a Horizontal or Vertical alignment of "NotSet" in order for QImageLabel
 			// to recognize the X- or Y- coordinate preference.  Otherwise, the X-/Y- coordinate
 			// will be dynamically calculated.
-//			$this->lblMessage->TextAlign = \QCubed\Css\TextAlign::CENTER;
+//			$this->lblMessage->TextAlign = \QCubed\Css\TextAlignType::CENTER;
 //			$this->lblMessage->VerticalAlign = QVerticalAlign::NotSet;
 //			$this->lblMessage->YCoordinate = 30;
 

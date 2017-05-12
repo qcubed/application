@@ -15,7 +15,7 @@ namespace QCubed\Css;
  * @package QCubed\Css
  * @was QBorderStyle
  */
-abstract class BorderStyle
+abstract class BorderStyleType
 {
     /** No set border */
     const NOT_SET = 'NotSet';

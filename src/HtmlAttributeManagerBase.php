@@ -493,7 +493,7 @@ class HtmlAttributeManagerBase extends ObjectBase {
 			case "BorderStyle": return $this->getCssStyle('border-style');
 			case "BorderWidth": return $this->getCssStyle('border-width');
 			case "BorderCollapse": return $this->getCssStyle('border-collapse');
-			case "Display": return !($this->getCssStyle('display') === Display::NONE);
+			case "Display": return !($this->getCssStyle('display') === DisplayType::NONE);
 			case "DisplayStyle": return $this->getCssStyle('display');
 			case "FontBold": return $this->getCssStyle('font-weight') == 'bold';
 			case "FontItalic": return $this->getCssStyle('font-style') == 'italic';
@@ -601,7 +601,7 @@ class HtmlAttributeManagerBase extends ObjectBase {
 						$this->removeCssStyle('display'); // do the default
 					}
 					else {
-						$this->setCssStyle('display', Display::NONE);
+						$this->setCssStyle('display', DisplayType::NONE);
 					}
 				} else {
 					try {

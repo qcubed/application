@@ -15,7 +15,7 @@ namespace QCubed\Css;
  * @package QCubed\Css
  * @was QCursor
  */
-abstract class Cursor
+abstract class CursorType
 {
     /** Undefined */
     const NOT_SET = 'NotSet';

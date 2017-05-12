@@ -15,7 +15,7 @@ namespace QCubed\Css;
  * @package QCubed\Css
  * @was QOverflow
  */
-abstract class Overflow
+abstract class OverflowType
 {
     /** Not set */
     const NOT_SET = 'NotSet';

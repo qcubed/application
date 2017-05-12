@@ -47,7 +47,7 @@ class CheckboxBase extends QControl
     /** @var string Text opposite to the checkbox */
     protected $strText = null;
     /** @var TextAlign|string the alignment of the string */
-    protected $strTextAlign = TextAlign::RIGHT;
+    protected $strTextAlign = TextAlignType::RIGHT;
 
     // BEHAVIOR
     /** @var bool Should the htmlentities function be run on the control's text (strText)? */
@@ -342,8 +342,8 @@ class CheckboxBase extends QControl
             new QModelConnectorParam (get_called_class(), 'TextAlign', 'Left or right alignment of label',
                 QModelConnectorParam::SELECTION_LIST,
                 array(
-                    '\\QCubed\\Css\\TextAlign::RIGHT' => 'Right',
-                    '\\QCubed\\Css\\TextAlign::LEFT' => 'Left'
+                    '\\QCubed\\Css\\TextAlignType::RIGHT' => 'Right',
+                    '\\QCubed\\Css\\TextAlignType::LEFT' => 'Left'
                 )),
             new QModelConnectorParam (get_called_class(), 'HtmlEntities', 'Whether to apply HTML entities on the label',
                 Type::BOOLEAN),

@@ -15,7 +15,7 @@ namespace QCubed\Css;
  * @package QCubed\Css
  * @was QTextAlign
  */
-abstract class TextAlign
+abstract class TextAlignType
 {
     const LEFT = 'left';
     const RIGHT = 'center';

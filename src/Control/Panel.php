@@ -27,7 +27,7 @@ class Panel extends BlockControl
     /** @var string HTML tag to the used for the Block Control */
     protected $strTagName = 'div';
     /** @var string Default display style for the control */
-    protected $strDefaultDisplayStyle = Display::BLOCK;
+    protected $strDefaultDisplayStyle = DisplayType::BLOCK;
     /** @var bool Is the control a block element? */
     protected $blnIsBlockElement = true;
     /** @var bool Use htmlentities for the control? */

@@ -32,7 +32,7 @@ class Fieldset extends BlockControl
     /** @var string HTML tag to the used for the Block Control */
     protected $strTagName = 'fieldset';
     /** @var string Default display style for the control. See QCubed\Css\Display class for available list */
-    protected $strDefaultDisplayStyle = Display::BLOCK;
+    protected $strDefaultDisplayStyle = DisplayType::BLOCK;
     /** @var bool Is the control a block element? */
     protected $blnIsBlockElement = true;
     /** @var bool Use htmlentities for the control? */

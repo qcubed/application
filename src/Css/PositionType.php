@@ -15,7 +15,7 @@ namespace QCubed\Css;
  * @package QCubed\Css
  * @was QPosition
  */
-abstract class Position
+abstract class PositionType
 {
     /** Relative to the normal position */
     const RELATIVE = 'relative';

@@ -15,7 +15,7 @@ namespace QCubed\Css;
  * @package QCubed\Css
  * @was QDisplayStyle
  */
-abstract class Display
+abstract class DisplayType
 {
     /** Hide the control */
     const NONE = 'none';

@@ -19,8 +19,8 @@ $a['const']['QCausesValidation::AllControls'] = '\\QCubed\\Control\\ControlBase:
 $a['const']['QCausesValidation::SiblingsAndChildren'] = '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN';
 $a['const']['QCausesValidation::SiblingsOnly'] = '\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_ONLY';
 
-$a['const']['QTextAlign::Left'] = '\\QCubed\\Html::TEXT_ALIGN_LEFT';
-$a['const']['QTextAlign::Right'] = '\\QCubed\\Html::TEXT_ALIGN_RIGHT';
+$a['const']['QTextAlignType::Left'] = '\\QCubed\\Html::TEXT_ALIGN_LEFT';
+$a['const']['QTextAlignType::Right'] = '\\QCubed\\Html::TEXT_ALIGN_RIGHT';
 
 $a['const']['QTextMode::SingeLine'] = '\\QCubed\\Control\\TextBoxBase::SINGLE_LINE';
 $a['const']['QTextMode::MultiLine'] = '\\QCubed\\Control\\TextBoxBase::MULTI_LINE';
@@ -126,9 +126,9 @@ $a['regex']['\\$this->RenderEnd\\('] = '$this->renderEnd(';
 
 $a['regex']['->HorizontalAlign'] = '->TextAlign';
 $a['class']['QHorizontalAlign'] = '\\QCubed\Css\\TextAlign';
-$a['const']['\\QCubed\Css\\TextAlign::Center'] = '\\QCubed\Css\\TextAlign::CENTER';
-$a['const']['\\QCubed\Css\\TextAlign::Right'] = '\\QCubed\Css\\TextAlign::RIGHT';
-$a['const']['\\QCubed\Css\\TextAlign::Left'] = '\\QCubed\Css\\TextAlign::LEFT';
+$a['const']['\\QCubed\Css\\TextAlignType::Center'] = '\\QCubed\Css\\TextAlignType::CENTER';
+$a['const']['\\QCubed\Css\\TextAlignType::Right'] = '\\QCubed\Css\\TextAlignType::RIGHT';
+$a['const']['\\QCubed\Css\\TextAlignType::Left'] = '\\QCubed\Css\\TextAlignType::LEFT';
 
 $a['regex']['const EventName'] = 'const EVENT_NAME';
 $a['regex']['const JsReturnParam'] = 'const JS_RETURN_PARAM';

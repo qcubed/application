@@ -155,7 +155,7 @@ class RadioButtonList extends ListControl
 
         $strHtml = Q\Html::renderLabeledInput(
             $strLabelText,
-            $this->strTextAlign == TextAlign::LEFT,
+            $this->strTextAlign == TextAlignType::LEFT,
             $objStyles->renderHtmlAttributes(),
             $objLabelStyles->renderHtmlAttributes(),
             $blnWrapLabel);
@@ -484,8 +484,8 @@ class RadioButtonList extends ListControl
             new QModelConnectorParam(get_called_class(), 'TextAlign', '', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    '\\QCubed\\Css\\TextAlign::LEFT' => 'Left',
-                    '\\QCubed\\Css\\TextAlign::RIGHT' => 'Right'
+                    '\\QCubed\\Css\\TextAlignType::LEFT' => 'Left',
+                    '\\QCubed\\Css\\TextAlignType::RIGHT' => 'Right'
                 )),
             new QModelConnectorParam(get_called_class(), 'HtmlEntities',
                 'Set to false to have the browser interpret the labels as HTML', Type::BOOLEAN),

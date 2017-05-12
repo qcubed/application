@@ -19,7 +19,7 @@
 			$this->pnlPanel->Width = 300;
 			$this->pnlPanel->BackColor = '#dddddd';
 			$this->pnlPanel->Padding = '10px 0px';
-			$this->pnlPanel->TextAlign = \QCubed\Css\TextAlign::CENTER;
+			$this->pnlPanel->TextAlign = \QCubed\Css\TextAlignType::CENTER;
 
 			// Define a Template to make it Pretty
 			$this->pnlPanel->Text = 'Text Here Goes First';

@@ -511,9 +511,9 @@ class CheckboxList extends ListControl
             new QModelConnectorParam(get_called_class(), 'TextAlign', '', QModelConnectorParam::SELECTION_LIST,
                 array(
                     null => 'Default',
-                    '\\QCubed\\Css\\TextAlign::LEFT' => 'Left',
-                    '\\QCubed\\Css\\TextAlign::RIGHT' => 'Right',
-                    '\\QCubed\\Css\\TextAlign::CENTER' => 'Center'
+                    '\\QCubed\\Css\\TextAlignType::LEFT' => 'Left',
+                    '\\QCubed\\Css\\TextAlignType::RIGHT' => 'Right',
+                    '\\QCubed\\Css\\TextAlignType::CENTER' => 'Center'
 
                 )),
             new QModelConnectorParam(get_called_class(), 'HtmlEntities',

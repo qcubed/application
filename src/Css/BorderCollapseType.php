@@ -15,7 +15,7 @@ namespace QCubed\Css;
  * @package QCubed\Css
  * @was QBorderCollapse
  */
-abstract class BorderCollapse
+abstract class BorderCollapseType
 {
     /** Not set */
     const NOT_SET = 'NotSet';
