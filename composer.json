@@ -35,13 +35,14 @@
   },
   "require": {
       "php": ">=5.5.0",
-    "qcubed/i18n": "^4.0",
-    "qcubed/common":"^4.0",
-    "qcubed/orm":"^4.0",
-    "qcubed/composer": "^1.0.5",
-    "qcubed/cache": ">=0.1"
+    "qcubed/i18n": "master-dev",
+    "qcubed/common":"master-dev",
+    "qcubed/orm":"master-dev",
+    "qcubed/composer": "master-dev",
+    "qcubed/cache": "master-dev"
 
   },
+  "minimum-stability": "dev",
   "require-dev" : {
     "phpunit/phpunit": "4.8.*"
   },
