@@ -49,7 +49,7 @@
   "autoload": {
     "psr-4": {
       "QCubed\\": "src/",
-      "QCubed\\Codegen\\Generator":"codegen/generator/"
+      "QCubed\\Codegen\\Generator\\":"codegen/generator/"
     }
   }
 }
