@@ -1,4 +1,27 @@
 {
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/qcubed/common"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/qcubed/i18n"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/qcubed/orm"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/qcubed/cache"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/qcubed/application"
+    }
+  ],
+
   "name": "qcubed/application",
   "description": "The common files used by many of the components of the QCubed framework",
   "keywords": ["php", "framework", "jquery"],
