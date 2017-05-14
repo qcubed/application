@@ -8,7 +8,6 @@
 
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => false,
-		'DocrootFlag' => false,
 		'DirectorySuffix' => '',
 		'TargetDirectory' => __DIALOG__,
 		'TargetFileName' => $strPropertyName . 'EditDlg.php'

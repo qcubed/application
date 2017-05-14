@@ -173,8 +173,8 @@ if (!defined('SERVER_INSTANCE')) {
 			define ('__IMAGE_CACHE__', __IMAGE_ASSETS__ . '/cache');
 
 			// There are two ways to add jQuery JS files to QCubed. Either by absolute paths (Google CDN of
-			// the jQuery library is awesome! It's the default option below) - or by using the jQuery
-			// installation that's local to QCubed (in that case, paths must be relative to __JS_ASSETS__
+			// the jQuery library is awesome! It's the default option below) - or by downloading your own
+            // custom version of the files and pointing to them
 
 			define ('__JQUERY_BASE__', ' http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 			define ('__JQUERY_EFFECTS__', ' http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js');

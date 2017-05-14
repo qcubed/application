@@ -9,7 +9,6 @@ $strPropertyName = CodegenBase::dataListPropertyName($objTable);
 
 $_TEMPLATE_SETTINGS = array(
     'OverwriteFlag' => true,
-    'DocrootFlag' => false,
     'DirectorySuffix' => '',
     'TargetDirectory' => __DIALOG_GEN__,
     'TargetFileName' => $strPropertyName . 'EditDlgGen.php'

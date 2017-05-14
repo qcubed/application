@@ -56,13 +56,13 @@
         return $result;
     }
     
-    $strJsFileArray = explode(",", __JQUERY_BASE__);
+    $strJsFileArray = explode(",", QCUBED_JQUERY);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>QCubed Development Framework - Database Profiling Tool</title>
-	<style type="text/css">@import url("<?php _p(__VIRTUAL_DIRECTORY__ . __CSS_ASSETS__, false); ?>/corepage.css");</style>
+	<style type="text/css">@import url("<?php _p(QCUBED_CSS_URL, false); ?>/corepage.css");</style>
 <?php
     foreach ($strJsFileArray as $strJsFile) {
         if (false !== strpos($strJsFile, "http")) {
@@ -75,7 +75,7 @@
             if (0 !== strpos($strJsFile, "/")) {
                 $strSlash = '/';
             } ?>			
-	<script type="text/javascript" src="<?php _p(__VIRTUAL_DIRECTORY__ . __JS_ASSETS__ . $strSlash . $strJsFile); ?>"></script>
+	<script type="text/javascript" src="<?php _p(QCUBED_JS_URL . $strSlash . $strJsFile); ?>"></script>
 <?php
 
         }

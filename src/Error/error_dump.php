@@ -43,7 +43,7 @@ if (stristr($__exc_strMessage, "Invalid Form State Data") !== false) {
 <html>
 	<head>
 		<title>PHP <?= htmlentities($__exc_strType); ?> - <?= htmlentities($__exc_strMessage) ?></title>
-		<style type="text/css">@import url("<?= __VIRTUAL_DIRECTORY__ . __CSS_ASSETS__ ?>/styles.css");</style>
+		<style type="text/css">@import url("<?= QCUBED_CSS_URL ?>/styles.css");</style>
 	</head>
 	<body>
 		<header>
@@ -57,7 +57,7 @@ if (stristr($__exc_strMessage, "Invalid Form State Data") !== false) {
 				$_SESSION['RenderedPageForError'] = $__exc_strRenderedPage;
 ?>
 				<p><strong>Rendered Page:</strong>
-					<a target="_blank" href="<?= htmlentities(__VIRTUAL_DIRECTORY__ . __PHP_ASSETS__); ?>/error_already_rendered_page.php">Click here to view contents able to be rendered.</a>
+					<a target="_blank" href="<?= htmlentities(QCUBED_PHP_URL); ?>/error_already_rendered_page.php">Click here to view contents able to be rendered.</a>
 				</p>
 <?php
 			}

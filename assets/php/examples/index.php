@@ -19,7 +19,7 @@ require('includes/header.inc.php');
 
 	<p class="bodySmall">* Some of the examples (marked with a "*") use the <strong>Examples Site Database</strong>.
 		This database (which consists of six tables and some preloaded sample data) is included in the Examples Site directories.  See
-		<a href="<?php _p(__VIRTUAL_DIRECTORY__ . __EXAMPLES__); ?>/code_generator/intro.php" class="bodyLink" style="font-weight: bold;">Basic CodeGen &gt; About the Database</a>
+		<a href="<?php _p(QCUBED_EXAMPLES_URL); ?>/code_generator/intro.php" class="bodyLink" style="font-weight: bold;">Basic CodeGen &gt; About the Database</a>
 		for more information.</p>
 </div>
 

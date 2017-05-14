@@ -43,7 +43,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 class CheckboxGen extends QCubed\Project\Control\Checkbox
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
+    protected $strJavaScripts = QCUBED_JQUI;
     protected $strStyleSheets = __JQUERY_CSS__;
     /** @var mixed */
     protected $mixClasses = null;

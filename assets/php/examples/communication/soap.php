@@ -46,7 +46,7 @@
 	// obviously, we could do this using Microsoft.NET, J2EE, etc., as well
 	$strUrl = sprintf('http://%s%s/communication/example_service.php',
 		$_SERVER['HTTP_HOST'],
-		__VIRTUAL_DIRECTORY__ . __EXAMPLES__);
+		QCUBED_EXAMPLES_URL);
 
 	$strWsdlUrl = sprintf('%s?wsdl', $strUrl);
 	$objClient = new SoapClient($strWsdlUrl);

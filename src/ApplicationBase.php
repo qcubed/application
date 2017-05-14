@@ -164,14 +164,6 @@ abstract class ApplicationBase extends ObjectBase
     }
 
     /**
-     * @return string   The current docroot setting
-     */
-    public static function docRoot()
-    {
-        return trim(__DOCROOT__);
-    }
-
-    /**
      * Returns true if this is a QCubed Ajax call. Note that if you are calling an entry point with ajax, but not through
      * qcubed.js, then it will return false. If you want to know whether a particular entry point is being called with
      * ajax that might be serving up a REST api for example, check requestMode() for Context::REQUEST_MODE_AJAX
@@ -644,7 +636,7 @@ abstract class ApplicationBase extends ObjectBase
         if (strpos($strFile, "/") === 0) {
             return __VIRTUAL_DIRECTORY__ . $strFile;
         }
-        return __VIRTUAL_DIRECTORY__ . __JS_ASSETS__ . '/' . $strFile;
+        return QCUBED_JS_URL . '/' . $strFile;
     }
 
     /**
@@ -661,7 +653,7 @@ abstract class ApplicationBase extends ObjectBase
         if (strpos($strFile, "/") === 0) {
             return __VIRTUAL_DIRECTORY__ . $strFile;
         }
-        return __VIRTUAL_DIRECTORY__ . __CSS_ASSETS__ . '/' . $strFile;
+        return QCUBED_CSS_URL . '/' . $strFile;
     }
 
     /**
@@ -687,7 +679,6 @@ abstract class ApplicationBase extends ObjectBase
         printf('<li>__QCUBED_CORE__ = "%s"</li>', __QCUBED_CORE__);
         printf('<li>ERROR_PAGE_PATH = "%s"</li>', ERROR_PAGE_PATH);
         printf('<li>PHP Include Path = "%s"</li>', get_include_path());
-        printf('<li>DocumentRoot = "%s"</li>', Application::instance()->docRoot());
         printf('<li>EncodingType = "%s"</li>', Application::encodingType());
         printf('<li>PathInfo = "%s"</li>', Application::instance()->context()->pathInfo());
         printf('<li>QueryString = "%s"</li>', Application::instance()->context()->queryString());

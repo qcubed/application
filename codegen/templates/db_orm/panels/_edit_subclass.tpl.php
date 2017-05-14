@@ -8,7 +8,6 @@ use QCubed\Project\Codegen\CodegenBase;
     global $_TEMPLATE_SETTINGS;
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => false,
-        'DocrootFlag' => false,
         'DirectorySuffix' => '',
         'TargetDirectory' => __PANEL__,
         'TargetFileName' => $objTable->ClassName . 'EditPanel.php'

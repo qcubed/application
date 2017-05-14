@@ -79,7 +79,7 @@ class BasicForm extends \QCubed\Project\Control\FormBase {
 
 		$this->btnImage = new \QCubed\Control\ImageButton($this);
 		$this->btnImage->Name = 'Image Button';
-		$this->btnImage->ImageUrl = __PHP_ASSETS__ . '/examples/images/data_model_thumbnail.png';
+		$this->btnImage->ImageUrl = QCUBED_PHP_URL . '/examples/images/data_model_thumbnail.png';
 		$this->btnImage->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\RegisterClickPosition());
 
 		$this->btnServer = new \QCubed\Project\Control\Button ($this);

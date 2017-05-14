@@ -4,7 +4,6 @@
 	global $_TEMPLATE_SETTINGS;
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => false,
-		'DocrootFlag' => false,
 		'DirectorySuffix' => '',
 		'TargetDirectory' => __MODEL_CONNECTOR__,
 		'TargetFileName' => $objTable->ClassName . 'Connector.php'

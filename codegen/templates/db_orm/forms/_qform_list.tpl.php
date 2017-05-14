@@ -7,9 +7,8 @@ use QCubed\QString;
     global $_TEMPLATE_SETTINGS;
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => true,    // TODO: Change to false
-        'DocrootFlag' => true,
         'DirectorySuffix' => '',
-        'TargetDirectory' => __FORMS__,
+        'TargetDirectory' => QCUBED_FORMS_DIR,
         'TargetFileName' => QString::underscoreFromCamelCase($objTable->ClassName) . '_list.php'
     );
 ?>

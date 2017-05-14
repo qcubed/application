@@ -48,7 +48,7 @@
 
 			// For purposes of this example, add a css file that styles the table.
 			// Normally you would include your global style sheets in your tpl file or header.inc.php file.
-			$this->dtgProjects->AddCssFile(__QCUBED_ASSETS__ . '/php/examples/master_detail/styles.css');
+			$this->dtgProjects->AddCssFile(QCUBED_EXAMPLES_URL . '/master_detail/styles.css');
 		}
 
 		protected function dtgProjects_Bind() {

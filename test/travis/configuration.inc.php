@@ -6,27 +6,13 @@ if (!defined('SERVER_INSTANCE')) {
 	// The Server Instance constant is used to help ease web applications with multiple environments.
 	// Feel free to use, change or ignore.
 	define('SERVER_INSTANCE', 'dev');
-
 	define('ALLOW_REMOTE_ADMIN', true);
 
-	define ('__DOCROOT__', __WORKING_DIR__);
-	define ('__VIRTUAL_DIRECTORY__', '');
-	if (!defined ('__SUBDIRECTORY__')) {
-		define ('__SUBDIRECTORY__', '');
-	}
+	// In the travis test build, the vendor directory is install inside the application directory
+    define ('QCUBED_BASE_DIR',  dirname(dirname(__DIR__)) . '/vendor/qcubed');
 
-	// for travis build only, we point to the project directory inside the install directory
-	define ('__PROJECT__', __DOCROOT__ . __SUBDIRECTORY__ . '/install/project');
-	define ('__INCLUDES__', __PROJECT__ . '/includes');
-
-	// The application includes directory
-	define ('__APP_INCLUDES__', __INCLUDES__ . '/app_includes');
-
-
-	// The QCubed Core
-	define ('__QCUBED_CORE__', __DOCROOT__ . __SUBDIRECTORY__ . '/includes');
-
-    define ('QCUBED_BASE_DIR',  __DOCROOT__ . __SUBDIRECTORY__ . '/vendor/qcubed');
+    // for travis build only, we point to the project directory inside the install directory
+	define ('QCUBED_PROJECT_DIR', dirname(dirname(__DIR__)) . '/install/project');
 
 
     // Destination for Code Generated class files

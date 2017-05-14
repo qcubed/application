@@ -11,9 +11,8 @@ $strPropertyNamePlural = QCodeGen::dataListPropertyNamePlural($objTable);
 
 $_TEMPLATE_SETTINGS = array(
     'OverwriteFlag' => true,
-    'DocrootFlag' => true,
     'DirectorySuffix' => '',
-    'TargetDirectory' => __FORMS__,
+    'TargetDirectory' => QCUBED_FORMS_DIR,
     'TargetFileName' => QString::underscoreFromCamelCase($objTable->ClassName) . '_edit.tpl.php'
 );
 ?>

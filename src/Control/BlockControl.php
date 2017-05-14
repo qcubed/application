@@ -12,8 +12,11 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QString;
 use QCubed\Type;
+use QCubed\Project\Application;
+use QCubed as Q;
 
 /**
  * Class BlockControl
@@ -54,25 +57,22 @@ abstract class BlockControl extends QControl
  //   protected $blnDropTarget = false;
 
     // Move Targets and Drop Zones
-    /*
+
     protected $objMovesControlsArray = array();
     protected $objDropsControlsArray = array();
     protected $objDropsGroupingsArray = array();
     protected $objIsDropZoneFor = array();
-*/
-    /*
-     *
-    This is very old code. It has been replaced by JQuery UI drag and drop, and then HTML5 drag and drop came out.
 
-    Drag and Drop removed for now. Might revisit this and implement HTML5 drag and drop if needed.
-
+    /**
+     * @param QControl $objTargetControl
+     */
     public function addControlToMove($objTargetControl = null)
     {
-        $this->strJavaScripts = __JQUERY_EFFECTS__;
+        $this->strJavaScripts = QCUBED_JQUI;
         if ($objTargetControl && $objTargetControl->ControlId != $this->ControlId) {
-            QApplication::executeJavascript(sprintf('var pos_%s = $j("#%s").offset()', $objTargetControl->ControlId,
+            Application::executeJavascript(sprintf('var pos_%s = $j("#%s").offset()', $objTargetControl->ControlId,
                 $objTargetControl->ControlId));
-            QApplication::executeJavascript(sprintf('$j("#%s").on("drag",  function (ev, ui) { p = $j("#%s").offset(); p.left = pos_%s.left + ui.position.left; p.top = pos_%s.top + ui.position.top; $j("#%s").offset(p); } );',
+            Application::executeJavascript(sprintf('$j("#%s").on("drag",  function (ev, ui) { p = $j("#%s").offset(); p.left = pos_%s.left + ui.position.left; p.top = pos_%s.top + ui.position.top; $j("#%s").offset(p); } );',
                 $this->strControlId, $objTargetControl->ControlId, $objTargetControl->ControlId,
                 $objTargetControl->ControlId, $objTargetControl->ControlId));
             $this->objMovesControlsArray[$objTargetControl->ControlId] = true;
@@ -96,7 +96,7 @@ abstract class BlockControl extends QControl
 
     public function addDropZone($objParentObject)
     {
-        $this->strJavaScripts = __JQUERY_EFFECTS__;
+        $this->strJavaScripts = QCUBED_JQUI;
         $this->objDropsControlsArray[$objParentObject->ControlId] = true;
         $objParentObject->DropTarget = true;
         $objParentObject->objIsDropZoneFor[$this->ControlId] = true;
@@ -107,18 +107,18 @@ abstract class BlockControl extends QControl
         if ($objParentObject instanceof QForm) {
             $this->objDropsControlsArray[$objParentObject->FormId] = false;
         } else {
-            if ($objParentObject instanceof QBlockControl) {
+            if ($objParentObject instanceof BlockControl) {
                 $this->objDropsControlsArray[$objParentObject->ControlId] = false;
                 $objParentObject->objIsDropZoneFor[$this->ControlId] = false;
             } else {
-                throw new Caller('ParentObject must be either a QForm or QBlockControl object');
+                throw new Caller('ParentObject must be either a Form or BlockControl object');
             }
         }
     }
 
     public function removeAllDropZones()
     {
-        QApplication::executeControlCommand($this->strControlId, 'draggable', "option", "revert", "invalid");
+        Application::executeControlCommand($this->strControlId, 'draggable', "option", "revert", "invalid");
 
         foreach ($this->objDropsControlsArray as $strControlId => $blnValue) {
             if ($blnValue) {
@@ -130,12 +130,12 @@ abstract class BlockControl extends QControl
         }
         $this->objDropsControlsArray = array();
     }
-*/
+
     /**
      * Returns the End Script of the Control which is sent to the client when the control's Render is complete
      * @return string The JS EndScript for the control
      */
-    /*
+
     public function getEndScript()
     {
         $strToReturn = parent::getEndScript();
@@ -143,7 +143,7 @@ abstract class BlockControl extends QControl
         // DROP ZONES
         foreach ($this->objDropsControlsArray as $strKey => $blnIsDropZone) {
             if ($blnIsDropZone) {
-                QApplication::executeControlCommand($strKey, 'droppable');
+                Application::executeControlCommand($strKey, 'droppable');
             }
         }
 
@@ -151,7 +151,7 @@ abstract class BlockControl extends QControl
             if ($blnIsDropZone) {
                 $objControl = $this->objForm->getControl($strKey);
                 if ($objControl && ($objControl->strRenderMethod)) {
-                    QApplication::executeControlCommand($this->strControlId, 'droppable', 'option', 'accept',
+                    Application::executeControlCommand($this->strControlId, 'droppable', 'option', 'accept',
                         '#' . $strKey);
                 }
             }
@@ -159,7 +159,7 @@ abstract class BlockControl extends QControl
 
         return $strToReturn;
     }
-*/
+
     //////////
     // Methods
     //////////
@@ -405,12 +405,12 @@ abstract class BlockControl extends QControl
     public static function getModelConnectorParams()
     {
         return array(
-            new ModelConnectorParam ('BlockControl', 'Text', 'Text to draw in the control', Type::STRING),
-            new ModelConnectorParam ('BlockControl', 'Format', 'Format string', Type::STRING),
-            new ModelConnectorParam ('BlockControl', 'Template', 'Path to template', Type::STRING),
-            new ModelConnectorParam ('BlockControl', 'AutoRenderChildren', 'Automatically render child controls?', Type::BOOLEAN),
-            new ModelConnectorParam ('BlockControl', 'TagName', 'The html tag', Type::STRING),
-            new ModelConnectorParam ('BlockControl', 'HtmlEntities', 'Should text content pass through html_entities?', Type::BOOLEAN)
+            new Q\ModelConnector\Param ('BlockControl', 'Text', 'Text to draw in the control', Type::STRING),
+            new Q\ModelConnector\Param ('BlockControl', 'Format', 'Format string', Type::STRING),
+            new Q\ModelConnector\Param ('BlockControl', 'Template', 'Path to template', Type::STRING),
+            new Q\ModelConnector\Param ('BlockControl', 'AutoRenderChildren', 'Automatically render child controls?', Type::BOOLEAN),
+            new Q\ModelConnector\Param ('BlockControl', 'TagName', 'The html tag', Type::STRING),
+            new Q\ModelConnector\Param ('BlockControl', 'HtmlEntities', 'Should text content pass through html_entities?', Type::BOOLEAN)
         );
 
     }

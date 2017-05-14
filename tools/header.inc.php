@@ -10,7 +10,7 @@ use QCubed as Q;
 <?php if (isset($strPageTitle)) { ?>
 		<title><?php Q\QString::htmlEntities($strPageTitle); ?></title>
 <?php } ?>
-		<link href="<?= __VIRTUAL_DIRECTORY__ . __CSS_ASSETS__ ?>/styles.css" rel="stylesheet">
+		<link href="<?= QCUBED_CSS_URL ?>/styles.css" rel="stylesheet">
 		<?php if (isset($this)) $this->RenderStyles(); ?>
 	</head>
 	<body>

@@ -10,9 +10,8 @@ use QCubed\QString;
 
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => true,	// TODO: Change to false
-		'DocrootFlag' => true,
 		'DirectorySuffix' => '',
-		'TargetDirectory' => __FORMS__,
+        'TargetDirectory' => QCUBED_FORMS_DIR,
 		'TargetFileName' => QString::underscoreFromCamelCase($objTable->ClassName) . '_edit.php'
 	);
 ?>

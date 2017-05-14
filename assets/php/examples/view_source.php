@@ -24,8 +24,8 @@
 	<head>
 		<meta charset="<?php _p(\QCubed\Project\Application::encodingType()); ?>" />
 		<title>QCubed PHP 5 Development Framework - View Source</title>
-		<link rel="stylesheet" type="text/css" href="<?php _p(__VIRTUAL_DIRECTORY__ . __CSS_ASSETS__ . '/styles.css'); ?>" />
-		<link rel="stylesheet" type="text/css" href="<?php _p(__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . '/includes/examples.css'); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php _p(QCUBED_CSS_URL . '/styles.css'); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php _p(QCUBED_EXAMPLES_URL . '/includes/examples.css'); ?>" />
 	</head>
 	<body>
 		<div id="closeWindow"><a href="javascript:window.close()" class="close-window">Close this Window</a></div>
@@ -43,6 +43,7 @@
 		$strFilename = __QCUBED_CORE__ . '/framework/' . str_replace('__CORE_FRAMEWORK__', '', str_replace('/', '', $strScript));
 	} else {		
 		$strFilename = substr($strReference, 1);
+		// todo: fix this
 		$strFilename = __DOCROOT__ . '/' . substr($strFilename, strlen(__VIRTUAL_DIRECTORY__), strrpos($strReference, '/') - strlen(__VIRTUAL_DIRECTORY__)) . $strScript;
 	}
 

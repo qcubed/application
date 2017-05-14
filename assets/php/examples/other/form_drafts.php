@@ -22,7 +22,7 @@
 
 <div id="demoZone">
 	To view one of the generated <strong>Forms</strong>, please click here to
-	view the <strong><a href="<?php _p(__VIRTUAL_DIRECTORY__ . __FORMS__); ?>/person_list.php"
+	view the <strong><a href="<?php _p(QCUBED_FORMS_URL); ?>/person_list.php"
 						class="bodyLink">Person List</a></strong> page (available only if you are running examples locally).
 </div>
 

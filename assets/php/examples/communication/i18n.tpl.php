@@ -62,7 +62,7 @@
 	<?php $this->btnEs->Render('Text="' . t('Switch to') . ' es"'); ?>
 
 	<p><?php _t('To view the People form translated into the selected language, go to'); ?>
-		<a href="<?php _p(__VIRTUAL_DIRECTORY__ . __FORMS__); ?>/person_list.php" class="bodyLink"><?php _p(__VIRTUAL_DIRECTORY__ . __FORMS__); ?>/person_list.php</a>
+		<a href="<?php _p(QCUBED_FORMS_URL); ?>/person_list.php" class="bodyLink"><?php _p(QCUBED_FORMS_URL); ?>/person_list.php</a>
 	</p>
 	<p><?php _t('We used the <b>QI18n::Load</b> approach to ensure the following is always Spanish:'); ?><br/>
 		<?php

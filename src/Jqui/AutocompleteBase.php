@@ -56,7 +56,7 @@ class AutocompleteBase extends AutocompleteGen
     {
         parent::__construct($objParentObject, $strControlId);
 
-        $this->addJavascriptFile(__JS_ASSETS__ . '/qcubed.autocomplete.js');
+        $this->addJavascriptFile(QCUBED_JS_URL . '/qcubed.autocomplete.js');
     }
 
     /**

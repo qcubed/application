@@ -22,8 +22,8 @@
 			self::AddCoreExampleFile($intIndex, '/code_generator/relationships_many.php * Many-to-Many Relationships');
 			self::AddCoreExampleFile($intIndex, '/code_generator/script_path.php Defining Relationships without Foreign Keys');
 			self::AddCoreExampleFile($intIndex, '/code_generator/primary_keys.php Explanation of QCubed Primary Key Requirement');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . '/code_generator/intro.php'] = array('mysql_innodb.sql','sql_server.sql');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__  . __EXAMPLES__ . '/code_generator/script_path.php'] = array('mysql_myisam.sql', 'relationships.txt');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . '/code_generator/intro.php'] = array('mysql_innodb.sql','sql_server.sql');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . '/code_generator/script_path.php'] = array('mysql_myisam.sql', 'relationships.txt');
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
@@ -113,12 +113,12 @@
 			self::AddCoreExampleFile($intIndex, '/dynamic/inline_editing.php * Datagrid with Inline Editing');
 
 			self::AddCoreExampleFile($intIndex, '/master_detail/project_list.php * Nested \QCubed\Project\Control\DataGrid');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__  . '/master_detail/project_list.php'] = array(
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/master_detail/project_list.php'] = array(
 				'records.summary.php',
 				'records.summary.tpl.php',
 				'styles.css');
 			self::AddCoreExampleFile($intIndex, '/datarepeater/ajax.php * Simple \QCubed\Control\DataRepeater using AJAX-triggered Pagination');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__  . '/datarepeater/ajax.php'] = array('dtr_persons.tpl.php');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/datarepeater/ajax.php'] = array('dtr_persons.tpl.php');
 
 
 			$intIndex++;
@@ -155,7 +155,7 @@
 			self::AddCoreExampleFile($intIndex, '/other_controls/js_return_param_example.php Post data back to the server from jQuery UI controls');
 			self::AddCoreExampleFile($intIndex, '/advanced_ajax/jquery_effects.php JQuery Effects');
 			
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . '/advanced_ajax/dialog_box.php'] = array('CalculatorWidget.class.php','CalculatorWidget.tpl.php');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . '/advanced_ajax/dialog_box.php'] = array('CalculatorWidget.class.php','CalculatorWidget.tpl.php');
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
@@ -265,14 +265,14 @@
 		}
 
 		private static function AddCoreExampleFile($intIndex, $strExampleFileName) {
-			array_push(Examples::$Categories[$intIndex], __VIRTUAL_DIRECTORY__ . __EXAMPLES__ . $strExampleFileName);
+			array_push(Examples::$Categories[$intIndex], QCUBED_EXAMPLES_URL . $strExampleFileName);
 		}
 		
 		private static function AddCoreReferencedFile($strExampleFileName, $mixReferencedFile) {
 			if (!is_array($mixReferencedFile)) {
 				$mixReferencedFile = array($mixReferencedFile);
 			}
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . $strExampleFileName] = $mixReferencedFile;
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . $strExampleFileName] = $mixReferencedFile;
 		}
 
 		public static function GetCategoryId() {
@@ -568,7 +568,7 @@
 
 			$strToReturn .= ' &nbsp; | &nbsp; ';
 			$strToReturn .= sprintf('<strong><a href="%s/index.php%s" class="headerLink">Back to Main</a></strong>',
-				__VIRTUAL_DIRECTORY__ . __EXAMPLES__, $intPartId == 1 ? "" : "/" . $intPartId);
+				QCUBED_EXAMPLES_URL, $intPartId == 1 ? "" : "/" . $intPartId);
 			$strToReturn .= ' &nbsp; | &nbsp; ';
 
 			if ($strNext)

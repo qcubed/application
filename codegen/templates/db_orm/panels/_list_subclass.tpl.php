@@ -9,7 +9,6 @@ use QCubed\Project\Codegen\CodegenBase;
 
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => false,
-        'DocrootFlag' => false,
         'DirectorySuffix' => '',
         'TargetDirectory' => __PANEL__,
         'TargetFileName' => $strPropertyName . 'ListPanel.php'

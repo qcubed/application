@@ -42,7 +42,7 @@ use QCubed\Event\EventBase as QEvent;
  */
 class Calendar extends DateTimeTextBox
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
+    protected $strJavaScripts = QCUBED_JQUI;
     protected $strStyleSheets = __JQUERY_CSS__;
     protected $datMinDate = null;
     protected $datMaxDate = null;

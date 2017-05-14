@@ -141,7 +141,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 abstract class ResizableGen extends QCubed\Project\Control\ControlBase
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
+    protected $strJavaScripts = QCUBED_JQUI;
     protected $strStyleSheets = __JQUERY_CSS__;
     /** @var mixed */
     protected $mixAlsoResize = null;

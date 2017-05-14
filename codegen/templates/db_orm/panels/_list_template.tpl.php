@@ -10,7 +10,6 @@ use QCubed\Project\Codegen\CodegenBase;
 
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => true,
-        'DocrootFlag' => false,
         'DirectorySuffix' => '',
         'TargetDirectory' => __PANEL_GEN__,
         'TargetFileName' => $strPropertyName . 'ListPanel.tpl.php'

@@ -937,7 +937,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * The  include mechanism will take care of duplicates, and also change the given URL in the following ways:
      *    - If the file name begins with 'http', it will use it directly as a URL
      *  - If the file name begins with '/', the url will be relative to  __DOCROOT__ . __VIRTUAL_DIRECTORY__
-     *  - If the file name begins with anything else, the url will be relative to __JS_ASSETS__
+     *  - If the file name begins with anything else, the url will be relative to QCUBED_JS_URL
      *
      * @param string $strJsFileName url, path, or file name to include
      */
@@ -980,7 +980,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * The  include mechanism will take care of duplicates, and also change the given URL in the following ways:
      *    - If the file name begins with 'http', it will use it directly as a URL
      *  - If the file name begins with '/', the url will be relative to the ___DOCROOT__ . __VIRTUAL_DIRECTORY__
-     *  - If the file name begins with anything else, the url will be relative to __CSS_ASSETS__
+     *  - If the file name begins with anything else, the url will be relative to QCUBED_CSS_URL
      *
      * @param string $strCssFileName url, path, or file name to include
      */

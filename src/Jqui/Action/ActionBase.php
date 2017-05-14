@@ -36,6 +36,6 @@ abstract class ActionBase extends \QCubed\Action\ActionBase
 
     private function setJavaScripts(QControl $objControl)
     {
-        $objControl->addJavascriptFile(__JQUERY_EFFECTS__);
+        $objControl->addJavascriptFile(QCUBED_JQUI);
     }
 }

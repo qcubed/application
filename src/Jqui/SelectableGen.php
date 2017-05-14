@@ -70,7 +70,7 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 class SelectableGen extends QCubed\Control\Panel
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
+    protected $strJavaScripts = QCUBED_JQUI;
     protected $strStyleSheets = __JQUERY_CSS__;
     /** @var mixed */
     protected $mixAppendTo = null;

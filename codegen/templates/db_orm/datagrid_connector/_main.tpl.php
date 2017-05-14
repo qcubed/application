@@ -14,7 +14,6 @@ $options = $objTable->Options;
 
 $_TEMPLATE_SETTINGS = array(
     'OverwriteFlag' => true,
-    'DocrootFlag' => false,
     'DirectorySuffix' => '',
     'TargetDirectory' => __MODEL_CONNECTOR_GEN__,
     'TargetFileName' => $objTable->ClassName . 'ListGen.php'

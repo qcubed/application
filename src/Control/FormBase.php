@@ -1779,8 +1779,8 @@ abstract class FormBase extends ObjectBase
     protected function getFormJavaScripts()
     {
         return array(
-            __JQUERY_BASE__,
-            __JQUERY_EFFECTS__,
+            QCUBED_JQUERY,
+            QCUBED_JQUI,
             'ajaxq/ajaxq.js',
             __QCUBED_JS_CORE__
         );
@@ -1930,11 +1930,11 @@ abstract class FormBase extends ObjectBase
 
         // put javascript environment defines up early for use by other js files.
         $strHtml .= '<script type="text/javascript">' .
-            sprintf('qc.baseDir = "%s"; ', __VIRTUAL_DIRECTORY__) .
-            sprintf('qc.jsAssets = "%s"; ', __VIRTUAL_DIRECTORY__ . __JS_ASSETS__) .
-            sprintf('qc.phpAssets = "%s"; ', __VIRTUAL_DIRECTORY__ . __PHP_ASSETS__) .
-            sprintf('qc.cssAssets = "%s"; ', __VIRTUAL_DIRECTORY__ . __CSS_ASSETS__) .
-            sprintf('qc.imageAssets = "%s"; ', __VIRTUAL_DIRECTORY__ . __IMAGE_ASSETS__) .
+            sprintf('qc.baseDir = "%s"; ', QCUBED_BASE_URL) .
+            sprintf('qc.jsAssets = "%s"; ', QCUBED_JS_URL) .
+            sprintf('qc.phpAssets = "%s"; ', QCUBED_PHP_URL) .
+            sprintf('qc.cssAssets = "%s"; ', QCUBED_CSS_URL) .
+            sprintf('qc.imageAssets = "%s"; ', QCUBED_IMAGE_URL) .
             '</script>' .
             _nl();
 
