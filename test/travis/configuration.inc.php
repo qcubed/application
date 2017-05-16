@@ -40,4 +40,7 @@ if (!defined('SERVER_INSTANCE')) {
 
     define('__FORM_STATE_HANDLER__', '\\QCubed\\FormState\\SessionHandler');
 
+    define ('QCUBED_JQUERY_JS', ' http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+    define ('QCUBED_JQUI_JS', ' http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js');
+
 }
