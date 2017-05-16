@@ -70,7 +70,6 @@ if (!defined('__PREPEND_INCLUDED__')) {
     require_once(QCUBED_BASE_DIR . '/i18n/tools/i18n-app.inc.php'); // Include the translation shortcuts. See the Application for translation setup.
     require_once(__QC__ . '/application/src/utilities.inc.php');     // Shortcuts used throughout the framework
     //require_once(QCUBED_BASE_DIR . '/orm/src/model_includes.inc.php');     // Shortcuts used throughout the framework
-    require_once(QCUBED_PROJECT_MODEL_GEN_DIR . '/QQN.php');     // Shortcuts used throughout the framework
 
     ////////////////////////////////////////////////
     // Initialize the Application and DB Connections
