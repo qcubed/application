@@ -8,7 +8,7 @@ if (!defined('SERVER_INSTANCE')) {
 	define('SERVER_INSTANCE', 'dev');
 	define('ALLOW_REMOTE_ADMIN', true);
 
-	// In the travis test build, the vendor directory is install inside the application directory
+	// In the travis test build, the vendor directory is installed inside the application directory
     define ('QCUBED_BASE_DIR',  dirname(dirname(__DIR__)) . '/vendor/qcubed');
 
     // for travis build only, we point to the project directory inside the install directory
@@ -18,6 +18,9 @@ if (!defined('SERVER_INSTANCE')) {
 
     define ('QCUBED_PROJECT_MODEL_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/model' );
     define ('QCUBED_PROJECT_MODEL_GEN_DIR', QCUBED_PROJECT_GEN_DIR . '/model_base' );
+
+    define ('QCUBED_APP_INCLUDES_DIR', QCUBED_PROJECT_DIR . '/includes/app_includes' );
+    define ('QCUBED_ORM_TOOLS_DIR', QCUBED_BASE_DIR . '/orm/tools' );
 
 	require_once (getenv("DB") . '.inc.php');
 

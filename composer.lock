@@ -60,7 +60,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:qcubed/cache.git",
+                "url": "https://github.com/qcubed/cache.git",
                 "reference": "426e42476100dfc21495aef57a83494cb2eb4541"
             },
             "dist": {
@@ -104,13 +104,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:qcubed/common.git",
-                "reference": "99820bb6d861c4a01b48eabbf09f94482064298e"
+                "url": "https://github.com/qcubed/common.git",
+                "reference": "ebabd850166a8fd6b2126e76af9199e6d5eff3ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/qcubed/common/zipball/99820bb6d861c4a01b48eabbf09f94482064298e",
-                "reference": "99820bb6d861c4a01b48eabbf09f94482064298e",
+                "url": "https://api.github.com/repos/qcubed/common/zipball/ebabd850166a8fd6b2126e76af9199e6d5eff3ec",
+                "reference": "ebabd850166a8fd6b2126e76af9199e6d5eff3ec",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "wiki": "https://github.com/qcubed/qcubed/wiki",
                 "source": "https://github.com/qcubed/common"
             },
-            "time": "2017-05-12 15:24:29"
+            "time": "2017-05-16 04:00:06"
         },
         {
             "name": "qcubed/composer",
@@ -185,7 +185,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:qcubed/i18n.git",
+                "url": "https://github.com/qcubed/i18n.git",
                 "reference": "549d5da73749bb8d1215393a88316c9663cf3020"
             },
             "dist": {
@@ -242,13 +242,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:qcubed/orm.git",
-                "reference": "b520b60d288edee0dceb02fba05fb6a94a589d44"
+                "url": "https://github.com/qcubed/orm.git",
+                "reference": "ad436c8f5a371eeaf272ecdff6f29d91bce5e9f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/qcubed/orm/zipball/b520b60d288edee0dceb02fba05fb6a94a589d44",
-                "reference": "b520b60d288edee0dceb02fba05fb6a94a589d44",
+                "url": "https://api.github.com/repos/qcubed/orm/zipball/ad436c8f5a371eeaf272ecdff6f29d91bce5e9f3",
+                "reference": "ad436c8f5a371eeaf272ecdff6f29d91bce5e9f3",
                 "shasum": ""
             },
             "require": {
@@ -279,7 +279,7 @@
                 "wiki": "https://github.com/qcubed/qcubed/wiki",
                 "source": "https://github.com/qcubed/common"
             },
-            "time": "2017-05-12 04:10:27"
+            "time": "2017-05-16 04:00:19"
         }
     ],
     "packages-dev": [
@@ -992,12 +992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "773fe7e47f2375746bff48e16a9100357efba583"
+                "reference": "66ae2274b7e50f8f9a93630f3c09c7468f4f7503"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/773fe7e47f2375746bff48e16a9100357efba583",
-                "reference": "773fe7e47f2375746bff48e16a9100357efba583",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/66ae2274b7e50f8f9a93630f3c09c7468f4f7503",
+                "reference": "66ae2274b7e50f8f9a93630f3c09c7468f4f7503",
                 "shasum": ""
             },
             "require": {
@@ -1036,7 +1036,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-13 09:21:34"
+            "time": "2017-05-16 03:19:44"
         },
         {
             "name": "sebastian/environment",
@@ -1300,12 +1300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "dcbd318c241341c82444a8d92b7a0ddf6419f496"
+                "reference": "924d16e27b592d8bb8aa8ef531005a3f564f64e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/dcbd318c241341c82444a8d92b7a0ddf6419f496",
-                "reference": "dcbd318c241341c82444a8d92b7a0ddf6419f496",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/924d16e27b592d8bb8aa8ef531005a3f564f64e7",
+                "reference": "924d16e27b592d8bb8aa8ef531005a3f564f64e7",
                 "shasum": ""
             },
             "require": {
@@ -1347,7 +1347,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-01 15:01:29"
+            "time": "2017-05-15 12:04:53"
         },
         {
             "name": "webmozart/assert",
