@@ -105,12 +105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/qcubed/common.git",
-                "reference": "ebabd850166a8fd6b2126e76af9199e6d5eff3ec"
+                "reference": "eb93e852ca5122136a6bfc5259cc90c2499e606f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/qcubed/common/zipball/ebabd850166a8fd6b2126e76af9199e6d5eff3ec",
-                "reference": "ebabd850166a8fd6b2126e76af9199e6d5eff3ec",
+                "url": "https://api.github.com/repos/qcubed/common/zipball/eb93e852ca5122136a6bfc5259cc90c2499e606f",
+                "reference": "eb93e852ca5122136a6bfc5259cc90c2499e606f",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "wiki": "https://github.com/qcubed/qcubed/wiki",
                 "source": "https://github.com/qcubed/common"
             },
-            "time": "2017-05-16 04:00:06"
+            "time": "2017-05-16 10:13:13"
         },
         {
             "name": "qcubed/composer",
@@ -243,12 +243,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/qcubed/orm.git",
-                "reference": "ad436c8f5a371eeaf272ecdff6f29d91bce5e9f3"
+                "reference": "7bbcf5f0d410f17a3eb1ef1d2e4433814b061112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/qcubed/orm/zipball/ad436c8f5a371eeaf272ecdff6f29d91bce5e9f3",
-                "reference": "ad436c8f5a371eeaf272ecdff6f29d91bce5e9f3",
+                "url": "https://api.github.com/repos/qcubed/orm/zipball/7bbcf5f0d410f17a3eb1ef1d2e4433814b061112",
+                "reference": "7bbcf5f0d410f17a3eb1ef1d2e4433814b061112",
                 "shasum": ""
             },
             "require": {
@@ -279,7 +279,7 @@
                 "wiki": "https://github.com/qcubed/qcubed/wiki",
                 "source": "https://github.com/qcubed/common"
             },
-            "time": "2017-05-16 04:00:19"
+            "time": "2017-05-16 10:13:34"
         }
     ],
     "packages-dev": [
