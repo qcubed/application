@@ -42,5 +42,12 @@ if (!defined('SERVER_INSTANCE')) {
 
     define ('QCUBED_JQUERY_JS', ' http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
     define ('QCUBED_JQUI_JS', ' http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js');
+// The core qcubed javascript file to be used.
+// In production or as a performance tweak, you may want to use the compressed "_qc_packed.js" library
+    define ('QCUBED_JS',  QCUBED_JS_URL . '/qcubed.js');
+//define ('QCUBED_JS',  '_qc_packed.js');
+
+    define ('QCUBED_JQUI_CSS', QCUBED_CSS_URL . '/jquery-ui-themes/ui-qcubed/jquery-ui.custom.css');
+
 
 }
