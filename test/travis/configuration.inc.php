@@ -38,4 +38,6 @@ if (!defined('SERVER_INSTANCE')) {
     define ('QCUBED_PROJECT_PANEL_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/panel' );
     define ('QCUBED_PROJECT_PANEL_GEN_DIR', QCUBED_PROJECT_GEN_DIR . '/panel_base' );
 
+    define('__FORM_STATE_HANDLER__', '\\QCubed\\FormState\\SessionHandler');
+
 }
