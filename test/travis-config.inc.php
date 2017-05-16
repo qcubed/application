@@ -8,9 +8,9 @@ define('__WORKING_DIR__', $workingDir);
 
 // Configure
 require( __WORKING_DIR__ . '/test/travis/prepend.inc.php');
-define ('__CONFIGURATION__', __WORKING_DIR__ . '/test/travis');
 
-// Codegen
-require(__CONFIGURATION__ . '/CodegenBase.php');
-require( QCUBED_BASE_DIR . '/orm/tools/codegen.cli.php');
+define ('QCUBED_PROJECT_CONFIGURATION_DIR', __WORKING_DIR__ . '/test/travis');
+
+require(QCUBED_PROJECT_CONFIGURATION_DIR . '/CodegenBase.php');
+require( QCUBED_ORM_DIR . '/tools/codegen.cli.php');
 

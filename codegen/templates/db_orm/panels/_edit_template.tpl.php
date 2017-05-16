@@ -11,9 +11,8 @@ use QCubed as Q;
 
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => true,
-        'DocrootFlag' => false,
         'DirectorySuffix' => '',
-        'TargetDirectory' => __PANEL_GEN__,
+        'TargetDirectory' => QCUBED_PROJECT_PANEL_GEN_DIR,
         'TargetFileName' => $strPropertyName . 'EditPanel.tpl.php'
     );
 ?>

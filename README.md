@@ -4,7 +4,13 @@ actions, events and code to tie them all together.
 
 ##Upgrade Notes
 This version now uses namespacing. See the tools directory for tools to help you
-convert your current code base to the new names.
+convert your current code base to the new names. Specifically, run the following command line script
+on your codebase, and it will convert about 99% of your code:
+
+```php
+cd (vendor_dir)/qcubed/application/tools
+./run_was.php -R all.regex.php (your source dir)
+```
 
 
 The application framework moving forward will focus on supporting html5 tags in its 

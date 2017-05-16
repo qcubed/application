@@ -206,8 +206,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 abstract class DraggableGen extends QCubed\Project\Control\ControlBase
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
-    protected $strStyleSheets = __JQUERY_CSS__;
+    protected $strJavaScripts = QCUBED_JQUI_JS;
+    protected $strStyleSheets = QCUBED_JQUI_CSS;
     /** @var boolean */
     protected $blnAddClasses = null;
     /** @var mixed */

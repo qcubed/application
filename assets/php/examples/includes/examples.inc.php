@@ -22,8 +22,8 @@
 			self::AddCoreExampleFile($intIndex, '/code_generator/relationships_many.php * Many-to-Many Relationships');
 			self::AddCoreExampleFile($intIndex, '/code_generator/script_path.php Defining Relationships without Foreign Keys');
 			self::AddCoreExampleFile($intIndex, '/code_generator/primary_keys.php Explanation of QCubed Primary Key Requirement');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . '/code_generator/intro.php'] = array('mysql_innodb.sql','sql_server.sql');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__  . __EXAMPLES__ . '/code_generator/script_path.php'] = array('mysql_myisam.sql', 'relationships.txt');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . '/code_generator/intro.php'] = array('mysql_innodb.sql','sql_server.sql');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . '/code_generator/script_path.php'] = array('mysql_myisam.sql', 'relationships.txt');
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
@@ -113,12 +113,12 @@
 			self::AddCoreExampleFile($intIndex, '/dynamic/inline_editing.php * Datagrid with Inline Editing');
 
 			self::AddCoreExampleFile($intIndex, '/master_detail/project_list.php * Nested \QCubed\Project\Control\DataGrid');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__  . '/master_detail/project_list.php'] = array(
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/master_detail/project_list.php'] = array(
 				'records.summary.php',
 				'records.summary.tpl.php',
 				'styles.css');
 			self::AddCoreExampleFile($intIndex, '/datarepeater/ajax.php * Simple \QCubed\Control\DataRepeater using AJAX-triggered Pagination');
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__  . '/datarepeater/ajax.php'] = array('dtr_persons.tpl.php');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/datarepeater/ajax.php'] = array('dtr_persons.tpl.php');
 
 
 			$intIndex++;
@@ -132,8 +132,8 @@
 			self::AddCoreExampleFile($intIndex, '/composite/intro.php Creating a Composite Control');
 			self::AddCoreExampleFile($intIndex, '/multiple_qform/intro.php "Multiple QForms" Functionality via Custom QPanels');
 			self::AddCoreReferencedFile('/dynamic/\QCubed\Control\Panel.php', 'pnl_panel.tpl.php');
-			self::AddCoreReferencedFile('/other_controls/sample.php', '__CORE_CONTROL__QSampleControl.class.php');
-			self::AddCoreReferencedFile('/composite/intro.php', 'SampleComposite.class.php');
+			self::AddCoreReferencedFile('/other_controls/sample.php', 'SampleControl.php');
+			self::AddCoreReferencedFile('/composite/intro.php', 'SampleComposite.php');
 			self::AddCoreReferencedFile('/multiple_qform/intro.php', array(
 				'ProjectViewPanel.class.php', 'ProjectViewPanel.tpl.php',
 				'ProjectEditPanel.class.php', 'ProjectEditPanel.tpl.php',
@@ -155,7 +155,7 @@
 			self::AddCoreExampleFile($intIndex, '/other_controls/js_return_param_example.php Post data back to the server from jQuery UI controls');
 			self::AddCoreExampleFile($intIndex, '/advanced_ajax/jquery_effects.php JQuery Effects');
 			
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . '/advanced_ajax/dialog_box.php'] = array('CalculatorWidget.class.php','CalculatorWidget.tpl.php');
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . '/advanced_ajax/dialog_box.php'] = array('CalculatorWidget.class.php','CalculatorWidget.tpl.php');
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
@@ -211,7 +211,7 @@
 			self::AddCoreExampleFile($intIndex, '/other/single.php Single File QForms');
 			self::AddCoreExampleFile($intIndex, '/other/form_state.php Working with FormState Handlers');
 			self::AddCoreExampleFile($intIndex, '/other/print.php PHP Print Command Shortcuts');
-			self::AddCoreExampleFile($intIndex, '/other/includes_outside.php Includes outside of the __DOCROOT__ for Security and Shared Installs');
+			self::AddCoreExampleFile($intIndex, '/other/includes_outside.php Includes outside of the DocRoot for Security and Shared Installs');
 			self::AddCoreReferencedFile('/other/alternate_template.php', 'some_template_file.tpl.php');
 
 			$intIndex++;
@@ -222,8 +222,9 @@
 			self::AddCoreExampleFile($intIndex, '/plugins/components.php Writing your own plugins, Part 1: components of a plugin');
 			self::AddCoreExampleFile($intIndex, '/plugins/packaging.php Writing your own plugins, Part 2: packaging a plugin');
 			//self::AddCoreExampleFile($intIndex, '/plugins/unattended.php Automatic Installation of Plugins');
-			self::AddCoreReferencedFile('/plugins/components.php', '__CORE_FRAMEWORK__QPluginInterface.class.php');
+			//self::AddCoreReferencedFile('/plugins/components.php', '__CORE_FRAMEWORK__QPluginInterface.class.php');
 
+            // TODO: Remove this. Plugins are going away and becoming just normal composer libraries
 			// Scan plugin folders for examples to include
 			if (defined ('__PLUGINS__') &&
 				is_dir(__PLUGINS__)) {
@@ -265,14 +266,14 @@
 		}
 
 		private static function AddCoreExampleFile($intIndex, $strExampleFileName) {
-			array_push(Examples::$Categories[$intIndex], __VIRTUAL_DIRECTORY__ . __EXAMPLES__ . $strExampleFileName);
+			array_push(Examples::$Categories[$intIndex], QCUBED_EXAMPLES_URL . $strExampleFileName);
 		}
 		
 		private static function AddCoreReferencedFile($strExampleFileName, $mixReferencedFile) {
 			if (!is_array($mixReferencedFile)) {
 				$mixReferencedFile = array($mixReferencedFile);
 			}
-			Examples::$AdditionalCode[__VIRTUAL_DIRECTORY__ . __EXAMPLES__ . $strExampleFileName] = $mixReferencedFile;
+			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL . $strExampleFileName] = $mixReferencedFile;
 		}
 
 		public static function GetCategoryId() {
@@ -457,10 +458,16 @@
 			// Current Number of Code Links
 			$intCount = 4;
 
-			if (file_exists(__DOCROOT__ . str_replace('.php', '.tpl.php', $strReference))) {
+			// search for a matching template file
+            // convert script to absolute path
+            $strFilename = QCUBED_EXAMPLES_DIR . substr($strReference, strlen(QCUBED_EXAMPLES_URL));
+            // convert to template name
+            $strTemplate =  str_replace('.php', '.tpl.php', $strFilename);
+
+            if (file_exists($strTemplate)) {
 				$strToReturn .= ' &nbsp; | &nbsp; ';
 
-				$strScriptname = substr(str_replace('.php', '.tpl.php', $strReference), strrpos(str_replace('.php', '.tpl.php', $strReference), '/') + 1);
+				$strScriptname = substr($strTemplate, strrpos($strTemplate, '/') + 1);
 				if ($strCurrentScript == $strScriptname) {
 					$strToReturn .= sprintf('<span class="headerGray">%s</span>', $strScriptname);
 					$blnIsScript = true;
@@ -568,7 +575,7 @@
 
 			$strToReturn .= ' &nbsp; | &nbsp; ';
 			$strToReturn .= sprintf('<strong><a href="%s/index.php%s" class="headerLink">Back to Main</a></strong>',
-				__VIRTUAL_DIRECTORY__ . __EXAMPLES__, $intPartId == 1 ? "" : "/" . $intPartId);
+				QCUBED_EXAMPLES_URL, $intPartId == 1 ? "" : "/" . $intPartId);
 			$strToReturn .= ' &nbsp; | &nbsp; ';
 
 			if ($strNext)

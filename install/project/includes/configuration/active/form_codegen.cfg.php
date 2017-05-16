@@ -1,7 +1,7 @@
 <?php
-define ('__MODEL_CONNECTOR__', __INCLUDES__ . '/connector' );
-define ('__MODEL_CONNECTOR_GEN__', __PROJECT__ . '/generated/connector_base' );
-define ('__DIALOG__', __INCLUDES__ . '/dialog' );
-define ('__DIALOG_GEN__', __PROJECT__ . '/generated/dialog_base' );
-define ('__PANEL__', __INCLUDES__ . '/panel' );
-define ('__PANEL_GEN__', __PROJECT__ . '/generated/panel_base' );
+define ('QCUBED_PROJECT_MODELCONNECTOR_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/connector' );
+define ('QCUBED_PROJECT_MODELCONNECTOR_GEN_DIR', QCUBED_PROJECT_GEN_DIR . '/connector_base' );
+define ('QCUBED_PROJECT_DIALOG_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/dialog' );
+define ('QCUBED_PROJECT_DIALOG_GEN_DIR', QCUBED_PROJECT_GEN_DIR . '/dialog_base' );
+define ('QCUBED_PROJECT_PANEL_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/panel' );
+define ('QCUBED_PROJECT_PANEL_GEN_DIR', QCUBED_PROJECT_GEN_DIR . '/panel_base' );

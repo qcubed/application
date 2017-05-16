@@ -9,7 +9,7 @@
 
 namespace QCubed;
 
-require_once(__DOCROOT__ . __VENDOR_ASSETS__ . '/ezyang/htmlpurifier/library/HTMLPurifier.auto.php');
+require_once(dirname(QCUBED_BASE_DIR) . '/ezyang/htmlpurifier/library/HTMLPurifier.auto.php');
 
 
 /**

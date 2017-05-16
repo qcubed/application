@@ -6,11 +6,11 @@ use QCubed as Q;
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="<?php echo(__APPLICATION_ENCODING_TYPE__); ?>" />
+		<meta charset="<?php echo(QCUBED_ENCODING); ?>" />
 <?php if (isset($strPageTitle)) { ?>
 		<title><?php Q\QString::htmlEntities($strPageTitle); ?></title>
 <?php } ?>
-		<link href="<?= __VIRTUAL_DIRECTORY__ . __CSS_ASSETS__ ?>/styles.css" rel="stylesheet">
+		<link href="<?= QCUBED_CSS_URL ?>/styles.css" rel="stylesheet">
 		<?php if (isset($this)) $this->RenderStyles(); ?>
 	</head>
 	<body>

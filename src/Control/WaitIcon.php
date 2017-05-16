@@ -81,7 +81,7 @@ class WaitIcon extends QControl
     {
         $strImg = Q\Html::renderTag('img',
             [
-                'src' => __VIRTUAL_DIRECTORY__ . __IMAGE_ASSETS__ . '/spinner_14.gif',
+                'src' => QCUBED_IMAGE_URL . '/spinner_14.gif',
                 'width' => 14,
                 'height' => 14,
                 'alt' => $this->strText

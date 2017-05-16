@@ -6,9 +6,8 @@ use QCubed\Project\Codegen\CodegenBase;
 	global $_TEMPLATE_SETTINGS;
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => true,
-		'DocrootFlag' => false,
 		'DirectorySuffix' => '',
-		'TargetDirectory' => __MODEL_CONNECTOR_GEN__,
+		'TargetDirectory' => QCUBED_PROJECT_MODELCONNECTOR_GEN_DIR,
 		'TargetFileName' => $objTable->ClassName . 'ConnectorGen.php'
 	);
 ?>

@@ -1,4 +1,4 @@
-<?php require(__CONFIGURATION__ . '/header.inc.php'); ?>
+<?php require(QCUBED_PROJECT_CONFIGURATION_DIR . '/header.inc.php'); ?>
 
 	<h1>Oops!</h1>
 
@@ -6,4 +6,4 @@
 
 	<p><strong>Thanks for your understanding!</strong></p>
 
-<?php require(__CONFIGURATION__ . '/footer.inc.php'); ?>
+<?php require(QCUBED_PROJECT_CONFIGURATION_DIR . '/footer.inc.php'); ?>

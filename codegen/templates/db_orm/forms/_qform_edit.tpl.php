@@ -10,9 +10,8 @@ use QCubed\QString;
 
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => true,	// TODO: Change to false
-		'DocrootFlag' => true,
 		'DirectorySuffix' => '',
-		'TargetDirectory' => __FORMS__,
+        'TargetDirectory' => QCUBED_FORMS_DIR,
 		'TargetFileName' => QString::underscoreFromCamelCase($objTable->ClassName) . '_edit.php'
 	);
 ?>
@@ -27,7 +26,7 @@ use QCubed\Project\Control\ControlBase;
 // Load the QCubed Development Framework
 require('../qcubed.inc.php');
 
-require(__PANEL__ . '/<?= $objTable->ClassName ?>EditPanel.php');
+require(QCUBED_PROJECT_PANEL_DIR . '/<?= $objTable->ClassName ?>EditPanel.php');
 
 /**
  * This is a draft FormBase object to do Create, Edit, and Delete functionality

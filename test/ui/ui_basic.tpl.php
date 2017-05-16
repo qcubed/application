@@ -1,6 +1,6 @@
 <?php
 	$strPageTitle = 'Basic Test';
- 	require(__CONFIGURATION__ . '/header.inc.php');
+ 	require(QCUBED_PROJECT_CONFIGURATION_DIR . '/header.inc.php');
 
 ?>
 
@@ -25,4 +25,4 @@
 <?php $this->btnAjax->Render(); ?>
 <?php $this->btnSetItemsAjax->Render(); ?>
 <?php $this->renderEnd(); ?>
-<?php require(__CONFIGURATION__ . '/footer.inc.php'); ?>
+<?php require(QCUBED_PROJECT_CONFIGURATION_DIR . '/footer.inc.php'); ?>

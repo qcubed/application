@@ -26,8 +26,8 @@ class ExampleForm extends \QCubed\Project\Control\FormBase {
 		$this->objDefaultWaitIcon = new \QCubed\Control\WaitIcon($this);
 
 		// Create a treenav of the file/folder directory for qqcubed includes
-		$this->tnvExample_AddItems(dirname(__INCLUDES__ . '.'));
-		$this->tnvExampleDynamic_AddItems(dirname(__INCLUDES__ . '.'));
+		$this->tnvExample_AddItems(dirname(QCUBED_PROJECT_INCLUDES_DIR . '.'));
+		$this->tnvExampleDynamic_AddItems(dirname(QCUBED_PROJECT_INCLUDES_DIR . '.'));
 	}
 
 	protected function tnvExample_AddItems($strDirectory, $objParentItem = null) {

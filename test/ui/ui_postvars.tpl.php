@@ -1,4 +1,4 @@
-<?php require(__PROJECT__ . '/includes/configuration/header.inc.php'); ?>
+<?php require(QCUBED_PROJECT_DIR . '/includes/configuration/header.inc.php'); ?>
 <?php $this->renderBegin(); ?>
 <p>This is a stress test for the various ways that data can be retrieved from client and delivered to the server. Put text
 in the field and press the submit button. Try international characters in particular.
@@ -15,4 +15,4 @@ use UTF-8 encoding to make sure we can decode into any encoding.</p>
 
 </div>
 <?php $this->renderEnd(); ?>
-<?php require(__PROJECT__ . '/includes/configuration/footer.inc.php'); ?>
+<?php require(QCUBED_PROJECT_DIR . '/includes/configuration/footer.inc.php'); ?>

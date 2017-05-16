@@ -24,7 +24,7 @@
 	// Note: Typically, this code would be in includes/data_objects/Project.class.php
 	// but the Project.class.php code has been pulled out and put here for demonstration
 	// purposes.
-	require(__MODEL_GEN__ . '/ProjectGen.class.php');
+	require(QCUBED_PROJECT_MODEL_GEN_DIR . '/ProjectGen.php');
 	class Project extends ProjectGen {
         public function __toString() {
             return $this->Name;

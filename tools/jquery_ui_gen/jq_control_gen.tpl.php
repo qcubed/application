@@ -34,8 +34,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 <?= $objJqDoc->strAbstract ?>class <?= $objJqDoc->strQcClass ?>Gen extends <?= $objJqDoc->strQcBaseClass ?>
 
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
-    protected $strStyleSheets = __JQUERY_CSS__;
+    protected $strJavaScripts = QCUBED_JQUI_JS;
+    protected $strStyleSheets = QCUBED_JQUI_CSS;
 <?php foreach ($objJqDoc->options as $option) { ?>
     /** @var <?= $option->phpType ?> */
 <?php 	if (!$option->defaultValue) { ?>

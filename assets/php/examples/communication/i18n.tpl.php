@@ -47,7 +47,7 @@
 
 	<p><?php _t('
 		Finally, due to the heavy processing of PO parsing, the results of the PO parsing are cached
-		using QCache, and cached files are stored in <b>' . __FILE_CACHE__ . '/i18n</b>.'); ?>
+		using QCache, and cached files are stored in <b>' . QCUBED_FILE_CACHE_DIR . '/i18n</b>.'); ?>
 	</p>
 </div>
 
@@ -62,7 +62,7 @@
 	<?php $this->btnEs->Render('Text="' . t('Switch to') . ' es"'); ?>
 
 	<p><?php _t('To view the People form translated into the selected language, go to'); ?>
-		<a href="<?php _p(__VIRTUAL_DIRECTORY__ . __FORMS__); ?>/person_list.php" class="bodyLink"><?php _p(__VIRTUAL_DIRECTORY__ . __FORMS__); ?>/person_list.php</a>
+		<a href="<?php _p(QCUBED_FORMS_URL); ?>/person_list.php" class="bodyLink"><?php _p(QCUBED_FORMS_URL); ?>/person_list.php</a>
 	</p>
 	<p><?php _t('We used the <b>QI18n::Load</b> approach to ensure the following is always Spanish:'); ?><br/>
 		<?php

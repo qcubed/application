@@ -7,14 +7,13 @@ use QCubed\Project\Codegen\CodegenBase as QCodegen;
 	global $_TEMPLATE_SETTINGS;
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => false,
-		'DocrootFlag' => false,
 		'DirectorySuffix' => '',
-		'TargetDirectory' => __MODEL_CONNECTOR__,
+		'TargetDirectory' => QCUBED_PROJECT_MODELCONNECTOR_DIR,
 		'TargetFileName' => $objTable->ClassName . 'List.php'
 	);
 ?>
 <?php print("<?php\n"); ?>
-	require(__MODEL_CONNECTOR_GEN__ . '/<?= $objTable->ClassName ?>ListGen.php');
+	require(QCUBED_PROJECT_MODELCONNECTOR_GEN_DIR . '/<?= $objTable->ClassName ?>ListGen.php');
 
 	/**
 	 * This is the connector class for the List functionality

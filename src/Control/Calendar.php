@@ -42,8 +42,8 @@ use QCubed\Event\EventBase as QEvent;
  */
 class Calendar extends DateTimeTextBox
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
-    protected $strStyleSheets = __JQUERY_CSS__;
+    protected $strJavaScripts = QCUBED_JQUI_JS;
+    protected $strStyleSheets = QCUBED_JQUI_CSS;
     protected $datMinDate = null;
     protected $datMaxDate = null;
     protected $datDefaultDate = null;

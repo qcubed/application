@@ -11,9 +11,8 @@ $strPropertyNamePlural = QCodeGen::dataListPropertyNamePlural($objTable);
 
 $_TEMPLATE_SETTINGS = array(
     'OverwriteFlag' => true,
-    'DocrootFlag' => true,
     'DirectorySuffix' => '',
-    'TargetDirectory' => __FORMS__,
+    'TargetDirectory' => QCUBED_FORMS_DIR,
     'TargetFileName' => QString::underscoreFromCamelCase($objTable->ClassName) . '_edit.tpl.php'
 );
 ?>
@@ -27,7 +26,7 @@ $gObjectName =  t('<?= $strPropertyName ?>');
 $gObjectNamePlural =  t('<?= $strPropertyNamePlural ?>');
 
 $strPageTitle = t('<?= $strPropertyName ?>');
-require(__CONFIGURATION__ . '/header.inc.php');
+require(QCUBED_PROJECT_CONFIGURATION_DIR . '/header.inc.php');
 
 ?>
 <?php print("<?php"); ?> $this->renderBegin() ?>
@@ -46,4 +45,4 @@ require(__CONFIGURATION__ . '/header.inc.php');
 
 <?php print("<?php"); ?> $this->renderEnd() ?>
 
-<?php print("<?php"); ?> require(__CONFIGURATION__ .'/footer.inc.php');
+<?php print("<?php"); ?> require(QCUBED_PROJECT_CONFIGURATION_DIR .'/footer.inc.php');

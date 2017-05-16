@@ -6,9 +6,8 @@ use QCubed\Project\Codegen\CodegenBase;
 global $_TEMPLATE_SETTINGS;
 $_TEMPLATE_SETTINGS = array(
     'OverwriteFlag' => true,
-    'DocrootFlag' => false,
     'DirectorySuffix' => '',
-    'TargetDirectory' => __PANEL_GEN__,
+    'TargetDirectory' => QCUBED_PROJECT_PANEL_GEN_DIR,
     'TargetFileName' => $objTable->ClassName . 'EditPanelGen.php'
 );
 
@@ -22,7 +21,7 @@ use QCubed\Project\Control\FormBase;
 use QCubed\Exception\Caller;
 use \QCubed\Project\Application;
 
-require (__MODEL_CONNECTOR__ . '/<?= $strPropertyName ?>Connector.php');
+require (QCUBED_PROJECT_MODELCONNECTOR_DIR . '/<?= $strPropertyName ?>Connector.php');
 
 /**
  * This is the base class for the the <?php echo $objTable->ClassName  ?>EditPanel class.  It uses the code-generated

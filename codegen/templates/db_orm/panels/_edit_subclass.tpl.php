@@ -8,9 +8,8 @@ use QCubed\Project\Codegen\CodegenBase;
     global $_TEMPLATE_SETTINGS;
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => false,
-        'DocrootFlag' => false,
         'DirectorySuffix' => '',
-        'TargetDirectory' => __PANEL__,
+        'TargetDirectory' => QCUBED_PROJECT_PANEL_DIR,
         'TargetFileName' => $objTable->ClassName . 'EditPanel.php'
     );
 
@@ -18,7 +17,7 @@ $strPropertyName = CodegenBase::dataListPropertyName($objTable);
 
 ?>
 <?php print("<?php\n"); ?>
-require(__PANEL_GEN__ . '/<?= $strPropertyName ?>EditPanelGen.php');
+require(QCUBED_PROJECT_PANEL_GEN_DIR . '/<?= $strPropertyName ?>EditPanelGen.php');
 
 /**
  * This is the customizable subclass for the edit panel functionality
@@ -38,6 +37,6 @@ class <?= $strPropertyName ?>EditPanel extends <?= $strPropertyName ?>EditPanelG
 		// instead in your superclass and modify the template.
 		$this->AutoRenderChildren = true;
 
-		//$this->Template = __PANEL_GEN__ . '/<?php echo $strPropertyName  ?>EditPanel.tpl.php';
+		//$this->Template = QCUBED_PROJECT_PANEL_GEN_DIR . '/<?php echo $strPropertyName  ?>EditPanel.tpl.php';
 	}
 }

@@ -935,9 +935,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Add javascript file to be included in the form.
      * The  include mechanism will take care of duplicates, and also change the given URL in the following ways:
-     *    - If the file name begins with 'http', it will use it directly as a URL
-     *  - If the file name begins with '/', the url will be relative to  __DOCROOT__ . __VIRTUAL_DIRECTORY__
-     *  - If the file name begins with anything else, the url will be relative to __JS_ASSETS__
+     *   - If the file name begins with 'http', it will use it directly as a URL
+     *  - If the file name begins with '/', the url will be absolute
+     *  - If the file name begins with anything else, an error is thrown
      *
      * @param string $strJsFileName url, path, or file name to include
      */
@@ -954,8 +954,8 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * Add javascript file to be included from a plugin. Plugins should use this function instead of AddJavascriptFile.
      * The  include mechanism will take care of duplicates, and also change the given URL in the following ways:
      *    - If the file name begins with 'http', it will use it directly as a URL
-     *  - If the file name begins with '/', the url will be relative to the __DOCROOT__ . __VIRTUAL_DIRECTORY__ directory.
-     *  - If the file name begins with anything else, the url will be relative to __PLUGIN_ASSETS__/pluginName/js/
+     *  - If the file name begins with '/', the url will be absolute
+     *  - If the file name begins with anything else, an error is thrown
      *
      * @param string $strPluginName name of plugin
      * @param string $strJsFileName url, path, or file name to include
@@ -969,8 +969,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                 // custom location for plugin javascript, relative to virtual directory
                 $this->addJavascriptFile($strJsFileName);
             } else {
-                // Use the default location, relative to plugin's own directory given.
-                $this->addJavascriptFile(__PLUGIN_ASSETS__ . '/' . $strPluginName . "/js/" . $strJsFileName);
+                throw new Exception\Caller('Relative urls are not supported any more');
             }
         }
     }
@@ -979,8 +978,8 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * Add style sheet file to be included in the form.
      * The  include mechanism will take care of duplicates, and also change the given URL in the following ways:
      *    - If the file name begins with 'http', it will use it directly as a URL
-     *  - If the file name begins with '/', the url will be relative to the ___DOCROOT__ . __VIRTUAL_DIRECTORY__
-     *  - If the file name begins with anything else, the url will be relative to __CSS_ASSETS__
+     *  - If the file name begins with '/', the url will be absolute
+     *  - If the file name begins with anything else, an error is thrown
      *
      * @param string $strCssFileName url, path, or file name to include
      */
@@ -1012,8 +1011,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                 // custom location for plugin javascript, relative to virtual dir
                 $this->addCssFile($strCssFileName);
             } else {
-                // Use the default location
-                $this->addCssFile(__PLUGIN_ASSETS__ . '/' . $strPluginName . "/css/" . $strCssFileName);
+                throw new Exception\Caller("Relative path names are no longer supported.");
             }
         }
     }

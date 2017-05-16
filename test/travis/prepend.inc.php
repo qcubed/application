@@ -16,20 +16,6 @@ if (!defined('__PREPEND_INCLUDED__')) {
     if (file_exists(__DIR__ . '/configuration.inc.php')) {
         require(__DIR__ . '/configuration.inc.php');
     }
-    else {
-        // The minimal constants set to work
-        define ('__DOCROOT__', dirname(__FILE__) . '/../../..');
-        define ('__PROJECT__', dirname(__FILE__) . '/../..');
-        define ('__INCLUDES__', dirname(__FILE__) . '/..');
-        define ('__QCUBED__', __INCLUDES__); // needs to be reconfigured
-        define ('__PLUGINS__', __PROJECT__ . '/generated/plugins');
-        define ('__QCUBED_CORE__', __DOCROOT__ . '/vendor/qcubed/qcubed/includes');
-        define ('__APP_INCLUDES__', __INCLUDES__ . '/app_includes');
-        define ('__MODEL__', __INCLUDES__ . '/model' );
-        define ('__MODEL_CONNECTOR__', __INCLUDES__ . '/meta_controls');
-        define ('__META_CONTROLS_GEN__', __PROJECT__ . '/generated/meta_base');
-        define ('__MODEL_GEN__', __PROJECT__ . '/generated/model_base' );
-    }
 
     require_once(QCUBED_BASE_DIR . '/application/src/version.inc.php');     // Include the hard-coded QCubed version number
     require_once(QCUBED_BASE_DIR . '/application/src/Error/Manager.php');   // Include the error manager so we can process errors immediately
@@ -41,9 +27,9 @@ if (!defined('__PREPEND_INCLUDED__')) {
     require_once(QCUBED_BASE_DIR . '/common/src/AutoloaderService.php');   // Find the autoloader
     \QCubed\AutoloaderService::instance()
         ->initialize(dirname(QCUBED_BASE_DIR) )   // register with the vendor directory
-        ->addPsr4('QCubed\\Project\\', __PROJECT__ . '/qcubed')
-        ->addPsr4('QCubed\\Plugin\\', __PROJECT__ . '/includes/plugins')
-        ->addClassmapFile(__APP_INCLUDES__ . '/app_includes.inc.php')
+        ->addPsr4('QCubed\\Project\\', QCUBED_PROJECT_DIR . '/qcubed')
+        ->addPsr4('QCubed\\Plugin\\', QCUBED_PROJECT_DIR . '/includes/plugins')
+        ->addClassmapFile(QCUBED_APP_INCLUDES_DIR . '/app_includes.inc.php')
         // temp includes
         ->addPsr4('QCubed\\', QCUBED_BASE_DIR . '/application/src')
         ->addPsr4('QCubed\\', QCUBED_BASE_DIR . '/common/src')
@@ -53,19 +39,19 @@ if (!defined('__PREPEND_INCLUDED__')) {
         ->addPsr4('QCubed\\Codegen\\Generator\\', QCUBED_BASE_DIR . '/application/codegen/generator')
     ;
 
-    if (file_exists(__MODEL_GEN__ . '/_class_paths.inc.php')) {
-        \QCubed\AutoloaderService::instance()->addClassmapFile(__MODEL_GEN__ . '/_class_paths.inc.php');
+    if (file_exists(QCUBED_PROJECT_MODEL_GEN_DIR . '/_class_paths.inc.php')) {
+        \QCubed\AutoloaderService::instance()->addClassmapFile(QCUBED_PROJECT_MODEL_GEN_DIR . '/_class_paths.inc.php');
     }
-    if (file_exists(__MODEL_GEN__ . '/_type_class_paths.inc.php')) {
-        \QCubed\AutoloaderService::instance()->addClassmapFile(__MODEL_GEN__ . '/_type_class_paths.inc.php');
+    if (file_exists(QCUBED_PROJECT_MODEL_GEN_DIR . '/_type_class_paths.inc.php')) {
+        \QCubed\AutoloaderService::instance()->addClassmapFile(QCUBED_PROJECT_MODEL_GEN_DIR . '/_type_class_paths.inc.php');
     }
 
     // Register the custom autoloader, making sure we go after the previous autoloader
     spl_autoload_register(array('\\QCubed\\Project\\Application', 'autoload'), true, false);
 
     /*
-    if (defined('__APP_INCLUDES__')) {
-        require_once(__APP_INCLUDES__ . '/app_includes.inc.php');    // autoload local files
+    if (defined('QCUBED_APP_INCLUDES_DIR')) {
+        require_once(QCUBED_APP_INCLUDES_DIR . '/app_includes.inc.php');    // autoload local files
     }
 */
     //////////////////////////

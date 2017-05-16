@@ -16,3 +16,10 @@ Class names (and therefore file names), follow these additional guidelines:
 As much as possible, classes are chosen so that there names are unique across
 the entire framework. This makes it easier to import them into other namespaces. This is not always practical, and there are some collissions,
 but the use of the longer namespaced name can help it be explicit.
+
+## Variable names
+We like having variable names start with a small prefix indicating its
+basic type. Arrays should start with an indicator of the type of each
+item in the array, and end in a plural form, or the word "Array".
+
+For example $strNames would be an array of strings containing names.

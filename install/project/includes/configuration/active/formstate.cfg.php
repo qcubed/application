@@ -45,7 +45,7 @@
 define('__FORM_STATE_HANDLER__', '\\QCubed\\FormState\\SessionHandler');
 
 // If using the QFileFormStateHandler, specify the path where QCubed will save the session state files (has to be writeable!)
-define('__FILE_FORM_STATE_HANDLER_PATH__', __PROJECT__ . '/tmp');
+define('__FILE_FORM_STATE_HANDLER_PATH__', QCUBED_PROJECT_DIR . '/tmp');
 
 // If using the QDbBackedSessionHandler, define the DB index where the table to store the formstates is present
 define('__DB_BACKED_FORM_STATE_HANDLER_DB_INDEX__', 1);

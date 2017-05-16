@@ -3,11 +3,11 @@
 //ini_set("log_errors", 1);
 //ini_set("error_log", "/tmp/php-error.log");
 
-// Define the Filepath for the error page (path MUST be relative from the DOCROOT)
-define('ERROR_PAGE_PATH', QCUBED_BASE_DIR . '/application/src/Error/error_page.php');
+// Define the Filepath for the error page
+define('QCUBED_ERROR_PAGE_PHP', QCUBED_BASE_DIR . '/application/src/Error/error_page.php');
 
 // Define the Filepath for any logged errors
-//define('ERROR_LOG_PATH', __TMP__ . '/error_log');
+//define('ERROR_LOG_PATH', QCUBED_TMP_DIR . '/error_log');
 
 // To Log ALL errors that have occurred, set flag to true
 //define('ERROR_LOG_FLAG', true);

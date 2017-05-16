@@ -39,3 +39,6 @@ define("DB_BACKED_SESSION_HANDLER_TABLE_NAME", "qc_session");
 
 // The session variable that saves the state of every control you mark as SavedState=true
 define('__SESSION_SAVED_STATE__', 'QSavedState');
+
+// TODO: Move this to an application service?
+// TODO: Use an APC cache or Redis server?

@@ -9,9 +9,8 @@ use QCubed\Project\Codegen\CodegenBase;
 
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => true,
-        'DocrootFlag' => false,
         'DirectorySuffix' => '',
-        'TargetDirectory' => __PANEL_GEN__,
+        'TargetDirectory' => QCUBED_PROJECT_PANEL_GEN_DIR,
         'TargetFileName' => $strPropertyName . 'ListPanelGen.php'
     );
 
@@ -40,7 +39,7 @@ use QCubed\Query\Condition\ConditionInterface as QQCondition;
 
 <?php if ($blnUseDialog) {
     ?>
-	include (__DIALOG__ . '/<?= $strPropertyName ?>EditDlg.php');
+	include (QCUBED_PROJECT_DIALOG_DIR . '/<?= $strPropertyName ?>EditDlg.php');
 <?php 
 } ?>
 

@@ -306,8 +306,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 class DatepickerBoxGen extends QCubed\Project\Control\TextBox
 {
-    protected $strJavaScripts = __JQUERY_EFFECTS__;
-    protected $strStyleSheets = __JQUERY_CSS__;
+    protected $strJavaScripts = QCUBED_JQUI_JS;
+    protected $strStyleSheets = QCUBED_JQUI_CSS;
     /** @var mixed */
     protected $mixAltField = null;
     /** @var string */

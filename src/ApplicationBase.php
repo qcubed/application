@@ -65,7 +65,7 @@ abstract class ApplicationBase extends ObjectBase
     /** @var bool */
     protected $blnProcessOutput = true;
     /** @var string  */
-    protected $strEncodingType = __APPLICATION_ENCODING_TYPE__;
+    protected $strEncodingType = QCUBED_ENCODING;
 
 
     /**
@@ -164,14 +164,6 @@ abstract class ApplicationBase extends ObjectBase
     }
 
     /**
-     * @return string   The current docroot setting
-     */
-    public static function docRoot()
-    {
-        return trim(__DOCROOT__);
-    }
-
-    /**
      * Returns true if this is a QCubed Ajax call. Note that if you are calling an entry point with ajax, but not through
      * qcubed.js, then it will return false. If you want to know whether a particular entry point is being called with
      * ajax that might be serving up a REST api for example, check requestMode() for Context::REQUEST_MODE_AJAX
@@ -191,7 +183,7 @@ abstract class ApplicationBase extends ObjectBase
      */
     public static function autoload($strClassName)
     {
-        if (file_exists($strFilePath = sprintf('%s/plugins/%s.php', __INCLUDES__, $strClassName))) {
+        if (file_exists($strFilePath = sprintf('%s/plugins/%s.php', QCUBED_PROJECT_INCLUDES_DIR, $strClassName))) {
             require_once($strFilePath);
             return true;
         }
@@ -543,7 +535,7 @@ abstract class ApplicationBase extends ObjectBase
                 // make sure the server does not override the character encoding value by explicitly sending it out as a header.
                 // some servers will use an internal default if not specified in the header, and that will override the "encoding" value sent in the text.
                 header(sprintf('Content-Type: %s; charset=%s', strtolower(static::$strContentType),
-                    strtolower(__APPLICATION_ENCODING_TYPE__)));
+                    strtolower(QCUBED_ENCODING)));
             }
 
             /*
@@ -642,9 +634,10 @@ abstract class ApplicationBase extends ObjectBase
             return $strFile;
         }
         if (strpos($strFile, "/") === 0) {
-            return __VIRTUAL_DIRECTORY__ . $strFile;
+            return $strFile;
+        } else {
+            throw new Caller('Relative urls are no longer supported. Trying to load: ' . $strFile);
         }
-        return __VIRTUAL_DIRECTORY__ . __JS_ASSETS__ . '/' . $strFile;
     }
 
     /**
@@ -659,9 +652,11 @@ abstract class ApplicationBase extends ObjectBase
             return $strFile;
         }
         if (strpos($strFile, "/") === 0) {
-            return __VIRTUAL_DIRECTORY__ . $strFile;
+            return $strFile;
         }
-        return __VIRTUAL_DIRECTORY__ . __CSS_ASSETS__ . '/' . $strFile;
+        else {
+            throw new Caller("Relative urls are no longer supported. Trying to load: " . $strFile);
+        }
     }
 
     /**
@@ -681,13 +676,9 @@ abstract class ApplicationBase extends ObjectBase
         printf('<li>QCUBED_VERSION = "%s"</li>', QCUBED_VERSION);
         //printf('<li>jQuery version = "%s"</li>', __JQUERY_CORE_VERSION__);
         //printf('<li>jQuery UI version = "%s"</li>', __JQUERY_UI_VERSION__);
-        printf('<li>__SUBDIRECTORY__ = "%s"</li>', __SUBDIRECTORY__);
-        printf('<li>__VIRTUAL_DIRECTORY__ = "%s"</li>', __VIRTUAL_DIRECTORY__);
-        printf('<li>__INCLUDES__ = "%s"</li>', __INCLUDES__);
-        printf('<li>__QCUBED_CORE__ = "%s"</li>', __QCUBED_CORE__);
-        printf('<li>ERROR_PAGE_PATH = "%s"</li>', ERROR_PAGE_PATH);
+        printf('<li>QCUBED_PROJECT_INCLUDES_DIR = "%s"</li>', QCUBED_PROJECT_INCLUDES_DIR);
+        printf('<li>QCUBED_ERROR_PAGE_PHP = "%s"</li>', QCUBED_ERROR_PAGE_PHP);
         printf('<li>PHP Include Path = "%s"</li>', get_include_path());
-        printf('<li>DocumentRoot = "%s"</li>', Application::instance()->docRoot());
         printf('<li>EncodingType = "%s"</li>', Application::encodingType());
         printf('<li>PathInfo = "%s"</li>', Application::instance()->context()->pathInfo());
         printf('<li>QueryString = "%s"</li>', Application::instance()->context()->queryString());

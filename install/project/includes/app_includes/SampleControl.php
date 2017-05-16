@@ -1,26 +1,49 @@
 <?php
 use QCubed\Exception\Caller;
-use QCubed\Type;
+use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Control\FormBase as QForm;
+use QCubed\QString;
+
 
 /**
-     * This is a SAMPLE of a custom QControl that you could write.  Think of this as a "starting point".
+     * This is a SAMPLE of a custom Control that you could write.  Think of this as a "starting point".
      * Remember: EVERYTHING here is meant to be customized!  To use, simply make a copy of this file,
      * rename the file, and edit the renamed file.  Remember to specify a control Class name which matches the
-     * name of your file.  And then implement your own logic for GetControlHtml().
+     * name of your file.  And then implement your own logic for getControlHtml().
      *
-     * Additionally, you can add customizable logic for any or all of the following, as well:
-     *  - __construct()
-     *  - ParsePostData()
-     *  - Validate()
-     *  - GetEndScript()
-     *  - GetEndHtml()
      *
-     * @package Controls
      */
-    class SampleControl extends \QCubed\Project\Control\ControlBase
+    class SampleControl extends QControl
     {
         protected $intExample;
         protected $strFoo;
+
+        /**
+         * Constructor for this control
+         * @param QForm|QControl $objParentObject Parent QForm or QControl that is responsible for rendering this control
+         * @param string $strControlId optional control ID
+         * @param null|string $strControlId
+         * @throws Caller
+         */
+        public function __construct($objParentObject, $strControlId = null)
+        {
+            try {
+                parent::__construct($objParentObject, $strControlId);
+            } catch (Caller $objExc) {
+                $objExc->incrementOffset();
+                throw $objExc;
+            }
+
+            // Setup Control-specific CSS and JS files to be loaded
+            // Paths are relative to the __CSS_ASSETS__ and __JS_ASSETS__ directories
+            // Multiple files can be specified, as well, by separating with a comma
+//			$this->strJavaScripts = 'custom.js, ../path/to/prototype.js, etc.js';
+//			$this->strStyleSheets = 'custom.css';
+
+            // Additional Setup Performed here
+            $this->intExample = 28;
+            $this->strFoo = 'Hello!';
+        }
 
         /**
          * If this control needs to update itself from the $_POST data, the logic to do so
@@ -46,43 +69,13 @@ use QCubed\Type;
          */
         public function getControlHtml()
         {
-            // Pull any Attributes
-            $strAttributes = $this->getAttributes();
-
-            // Pull any styles
-            if ($strStyle = $this->getStyleAttributes()) {
-                $strStyle = 'style="' . $strStyle . '"';
-            }
-
-            // Return the HTML.
-            return sprintf('<span id="%s" %s%s>Sample Control: %s - %s</span>',
-                $this->strControlId, $strAttributes, $strStyle, $this->intExample, $this->strFoo);
+            return $this->renderTag('span', null, null, $this->getInnerHtml());
         }
 
-        /**
-         * Constructor for this control
-         * @param mixed $objParentObject Parent QForm or QControl that is responsible for rendering this control
-         * @param string $strControlId optional control ID
-         */
-        public function __construct($objParentObject, $strControlId = null)
-        {
-            try {
-                parent::__construct($objParentObject, $strControlId);
-            } catch (Caller $objExc) {
-                $objExc->incrementOffset();
-                throw $objExc;
-            }
-
-            // Setup Control-specific CSS and JS files to be loaded
-            // Paths are relative to the __CSS_ASSETS__ and __JS_ASSETS__ directories
-            // Multiple files can be specified, as well, by separating with a comma
-//			$this->strJavaScripts = 'custom.js, ../path/to/prototype.js, etc.js';
-//			$this->strStyleSheets = 'custom.css';
-
-            // Additional Setup Performed here
-            $this->intExample = 28;
-            $this->strFoo = 'Hello!';
+        protected function getInnerHtml() {
+            return QString::htmlEntities("Sample Control " . $this->intExample . ' - ' . $this->strFoo);
         }
+
 
         // For any JavaScript calls that need to be made whenever this control is rendered or re-rendered
 //		public function getEndScript() {
@@ -126,14 +119,14 @@ use QCubed\Type;
 
                 case 'Example':
                     try {
-                        return ($this->intExample = Type::cast($mixValue, Type::Integer));
+                        return ($this->intExample = QType::cast($mixValue, QType::Integer));
                     } catch (Caller $objExc) {
                         $objExc->incrementOffset();
                         throw $objExc;
                     }
                 case 'Foo':
                     try {
-                        return ($this->strFoo = Type::cast($mixValue, Type::String));
+                        return ($this->strFoo = QType::cast($mixValue, QType::String));
                     } catch (Caller $objExc) {
                         $objExc->incrementOffset();
                         throw $objExc;
