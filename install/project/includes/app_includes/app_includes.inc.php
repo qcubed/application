@@ -9,11 +9,11 @@
  * This file is intended to allow you to create a classmap so the autoloader can get to your files.
  *
  * For example:
- * $a['plantypes'] = __APP_INCLUDES__ . '/classes/PlanTypes.class.php';
- * $a['planlayout'] = __APP_INCLUDES__ . '/controls/PlanLayout.class.php';
+ * $a['plantypes'] = QCUBED_APP_INCLUDES_DIR . '/classes/PlanTypes.class.php';
+ * $a['planlayout'] = QCUBED_APP_INCLUDES_DIR . '/controls/PlanLayout.class.php';
  *
  * Note that the format is:
- * $a['classname'] = __APP_INCLUDES__ .'/path/to/file_containing_the_class/FileName.class.php';
+ * $a['classname'] = QCUBED_APP_INCLUDES_DIR .'/path/to/file_containing_the_class/FileName.class.php';
  *
  * The class you define in the '/path/to/file_containing_the_class/FileName.class.php' file can be in
  * any case but the same classname must be written in all lower case in the $a['classname']
@@ -30,9 +30,9 @@
  *
  * You may add the file as:
  *
- * require_once(__APP_INCLUDES__ . '/functions/blog_functions.inc.php');
+ * require_once(QCUBED_APP_INCLUDES_DIR . '/functions/blog_functions.inc.php');
  *
  */
-$a['navpanel'] = __INCLUDES__ .'/app_includes/nav_panel.class.php';
+$a['navpanel'] = QCUBED_PROJECT_INCLUDES_DIR .'/app_includes/nav_panel.class.php';
 
 return $a;

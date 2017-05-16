@@ -65,7 +65,7 @@ abstract class ApplicationBase extends ObjectBase
     /** @var bool */
     protected $blnProcessOutput = true;
     /** @var string  */
-    protected $strEncodingType = __APPLICATION_ENCODING_TYPE__;
+    protected $strEncodingType = QCUBED_ENCODING;
 
 
     /**
@@ -535,7 +535,7 @@ abstract class ApplicationBase extends ObjectBase
                 // make sure the server does not override the character encoding value by explicitly sending it out as a header.
                 // some servers will use an internal default if not specified in the header, and that will override the "encoding" value sent in the text.
                 header(sprintf('Content-Type: %s; charset=%s', strtolower(static::$strContentType),
-                    strtolower(__APPLICATION_ENCODING_TYPE__)));
+                    strtolower(QCUBED_ENCODING)));
             }
 
             /*

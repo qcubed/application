@@ -27,9 +27,9 @@ if (!defined('__PREPEND_INCLUDED__')) {
     require_once(QCUBED_BASE_DIR . '/common/src/AutoloaderService.php');   // Find the autoloader
     \QCubed\AutoloaderService::instance()
         ->initialize(dirname(QCUBED_BASE_DIR) )   // register with the vendor directory
-        ->addPsr4('QCubed\\Project\\', __PROJECT__ . '/qcubed')
-        ->addPsr4('QCubed\\Plugin\\', __PROJECT__ . '/includes/plugins')
-        ->addClassmapFile(__APP_INCLUDES__ . '/app_includes.inc.php')
+        ->addPsr4('QCubed\\Project\\', QCUBED_PROJECT_DIR . '/qcubed')
+        ->addPsr4('QCubed\\Plugin\\', QCUBED_PROJECT_DIR . '/includes/plugins')
+        ->addClassmapFile(QCUBED_APP_INCLUDES_DIR . '/app_includes.inc.php')
         // temp includes
         ->addPsr4('QCubed\\', QCUBED_BASE_DIR . '/application/src')
         ->addPsr4('QCubed\\', QCUBED_BASE_DIR . '/common/src')
@@ -50,8 +50,8 @@ if (!defined('__PREPEND_INCLUDED__')) {
     spl_autoload_register(array('\\QCubed\\Project\\Application', 'autoload'), true, false);
 
     /*
-    if (defined('__APP_INCLUDES__')) {
-        require_once(__APP_INCLUDES__ . '/app_includes.inc.php');    // autoload local files
+    if (defined('QCUBED_APP_INCLUDES_DIR')) {
+        require_once(QCUBED_APP_INCLUDES_DIR . '/app_includes.inc.php');    // autoload local files
     }
 */
     //////////////////////////

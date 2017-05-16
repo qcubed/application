@@ -1,4 +1,4 @@
-<?php require(__PROJECT__ . '/includes/configuration/header.inc.php'); ?>
+<?php require(QCUBED_PROJECT_DIR . '/includes/configuration/header.inc.php'); ?>
 <?php $this->renderBegin(); ?>
 	<div>
 		<?php $this->txt1->RenderWithName(); ?>
@@ -10,4 +10,4 @@
 		<?php $this->lblCheck->RenderWithName(); ?>
 	</div>
 <?php $this->renderEnd(); ?>
-<?php require(__PROJECT__ . '/includes/configuration/footer.inc.php'); ?>
+<?php require(QCUBED_PROJECT_DIR . '/includes/configuration/footer.inc.php'); ?>

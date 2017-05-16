@@ -46,4 +46,7 @@ $a['regex']['__PANEL_GEN__'] = 'QCUBED_PROJECT_PANEL_GEN_DIR';
 $a['regex']['__MODEL__'] = 'QCUBED_PROJECT_MODEL_DIR';
 $a['regex']['__MODEL_GEN__'] = 'QCUBED_PROJECT_MODEL_GEN_DIR';
 
+$a['regex']['__URL_REWRITE__'] = 'QCUBED_URL_REWRITE';
+$a['regex']['__APPLICATION_ENCODING_TYPE__'] = 'QCUBED_ENCODING';
+
 return $a;

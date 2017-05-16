@@ -19,16 +19,16 @@ if (!defined('__PREPEND_INCLUDED__')) {
     else {
         // The minimal constants set to work
         define ('__DOCROOT__', dirname(__FILE__) . '/../../..');
-        define ('__PROJECT__', dirname(__FILE__) . '/../..');
-        define ('__INCLUDES__', dirname(__FILE__) . '/..');
-        define ('__QCUBED__', __INCLUDES__); // needs to be reconfigured
-        define ('__PLUGINS__', __PROJECT__ . '/generated/plugins');
+        define ('QCUBED_PROJECT_DIR', dirname(__FILE__) . '/../..');
+        define ('QCUBED_PROJECT_INCLUDES_DIR', dirname(__FILE__) . '/..');
+        define ('__QCUBED__', QCUBED_PROJECT_INCLUDES_DIR); // needs to be reconfigured
+        define ('__PLUGINS__', QCUBED_PROJECT_DIR . '/generated/plugins');
         define ('__QCUBED_CORE__', __DOCROOT__ . '/vendor/qcubed/qcubed/includes');
-        define ('__APP_INCLUDES__', __INCLUDES__ . '/app_includes');
-        define ('__MODEL__', __INCLUDES__ . '/model' );
-        define ('__MODEL_CONNECTOR__', __INCLUDES__ . '/meta_controls');
-        define ('__META_CONTROLS_GEN__', __PROJECT__ . '/generated/meta_base');
-        define ('__MODEL_GEN__', __PROJECT__ . '/generated/model_base' );
+        define ('QCUBED_APP_INCLUDES_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/app_includes');
+        define ('QCUBED_PROJECT_MODEL_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/model' );
+        define ('QCUBED_PROJECT_MODELCONNECTOR_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/meta_controls');
+        define ('__META_CONTROLS_GEN__', QCUBED_PROJECT_DIR . '/generated/meta_base');
+        define ('QCUBED_PROJECT_MODEL_GEN_DIR', QCUBED_PROJECT_DIR . '/generated/model_base' );
     }
 
     require_once(QCUBED_BASE_DIR . '/application/src/version.inc.php');     // Include the hard-coded QCubed version number
@@ -41,9 +41,9 @@ if (!defined('__PREPEND_INCLUDED__')) {
     require_once(QCUBED_BASE_DIR . '/common/src/AutoloaderService.php');   // Find the autoloader
     \QCubed\AutoloaderService::instance()
         ->initialize(dirname(QCUBED_BASE_DIR) )   // register with the vendor directory
-        ->addPsr4('QCubed\\Project\\', __PROJECT__ . '/qcubed')
-        ->addPsr4('QCubed\\Plugin\\', __PROJECT__ . '/includes/plugins')
-        ->addClassmapFile(__APP_INCLUDES__ . '/app_includes.inc.php')
+        ->addPsr4('QCubed\\Project\\', QCUBED_PROJECT_DIR . '/qcubed')
+        ->addPsr4('QCubed\\Plugin\\', QCUBED_PROJECT_DIR . '/includes/plugins')
+        ->addClassmapFile(QCUBED_APP_INCLUDES_DIR . '/app_includes.inc.php')
         // temp includes
         ->addPsr4('QCubed\\', QCUBED_BASE_DIR . '/application/src')
         ->addPsr4('QCubed\\', QCUBED_BASE_DIR . '/common/src')
@@ -64,8 +64,8 @@ if (!defined('__PREPEND_INCLUDED__')) {
     spl_autoload_register(array('\\QCubed\\Project\\Application', 'autoload'), true, false);
 
     /*
-    if (defined('__APP_INCLUDES__')) {
-        require_once(__APP_INCLUDES__ . '/app_includes.inc.php');    // autoload local files
+    if (defined('QCUBED_APP_INCLUDES_DIR')) {
+        require_once(QCUBED_APP_INCLUDES_DIR . '/app_includes.inc.php');    // autoload local files
     }
 */
     //////////////////////////

@@ -24,6 +24,6 @@ if (!defined('SERVER_INSTANCE')) {
 	define ('MAX_DB_CONNECTION_INDEX', 1);
 
 	/** The value for QApplication::$EncodingType constant */
-	define('__APPLICATION_ENCODING_TYPE__', 'UTF-8');
+	define('QCUBED_ENCODING', 'UTF-8');
 
 }

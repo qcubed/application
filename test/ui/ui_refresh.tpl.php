@@ -1,4 +1,4 @@
-<?php require(__CONFIGURATION__ . '/header.inc.php'); ?>
+<?php require(QCUBED_PROJECT_CONFIGURATION_DIR . '/header.inc.php'); ?>
 <?php $this->renderBegin(); ?>
 <div>
 <?php $this->txt1->RenderWithName(); ?>
@@ -13,4 +13,4 @@
 <?php $this->btnAjax2->Render(); ?>
 </div>
 <?php $this->renderEnd(); ?>
-<?php require(__CONFIGURATION__ . '/footer.inc.php'); ?>
+<?php require(QCUBED_PROJECT_CONFIGURATION_DIR . '/footer.inc.php'); ?>

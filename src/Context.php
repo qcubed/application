@@ -181,8 +181,8 @@ class Context
     {
         if (!$this->strRequestUri) {
             // Setup RequestUri
-            if (defined('__URL_REWRITE__')) {
-                switch (strtolower(__URL_REWRITE__)) {
+            if (defined('QCUBED_URL_REWRITE')) {
+                switch (strtolower(QCUBED_URL_REWRITE)) {
                     case 'apache':
                         $this->strRequestUri = $_SERVER['REQUEST_URI'];
                         break;
@@ -194,7 +194,7 @@ class Context
                         break;
 
                     default:
-                        throw new Exception('Invalid URL Rewrite type: ' . __URL_REWRITE__);
+                        throw new Exception('Invalid URL Rewrite type: ' . QCUBED_URL_REWRITE);
                 }
             } else {
                 $this->strRequestUri = sprintf('%s%s%s',

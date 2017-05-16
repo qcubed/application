@@ -6,7 +6,7 @@ use QCubed as Q;
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="<?php echo(__APPLICATION_ENCODING_TYPE__); ?>" />
+		<meta charset="<?php echo(QCUBED_ENCODING); ?>" />
 <?php if (isset($strPageTitle)) { ?>
 		<title><?php Q\QString::htmlEntities($strPageTitle); ?></title>
 <?php } ?>
