@@ -1,5 +1,4 @@
-<phpunit bootstrap="./travis-config.inc.php"
-         colors="true"
+<phpunit colors="true"
         processIsolation="false">
     <testsuites>
         <testsuite name="QCubed Common Unit Test">
