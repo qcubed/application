@@ -17,7 +17,7 @@
         },
         "IsEnabled": {
             "FormGen": "both",
-            "ControlClass": "QCubed\\Project\\Control\\CheckBox"
+            "ControlClass": "QCubed\\Project\\Control\\Checkbox"
         }
     },
     "Address": {
