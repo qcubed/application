@@ -301,7 +301,7 @@ class EditDlg extends QDialog
         } elseif ($mixParam == 'saveRefresh') {
             $this->updateControlInfo();
             $this->writeParams();
-            QCodeGen::run(__CONFIGURATION__ . '/codegen_settings.xml');
+            QCodeGen::run(QCUBED_PROJECT_CONFIGURATION_DIR . '/codegen_settings.xml');
             foreach (QCodeGen::$CodeGenArray as $objCodeGen) {
                 $objCodeGen->generateAll(); // silently codegen
             }
@@ -404,8 +404,8 @@ class EditDlg extends QDialog
         // create the control array
         $controls = include(QCUBED_BASE_DIR . '/application/control_registry.inc.php');
 
-        if (file_exists(__APP_INCLUDES__ . '/control_registry.inc.php')) {
-            $controls = array_merge($controls, include(__APP_INCLUDES__ . '/control_registry.inc.php'));
+        if (file_exists(QCUBED_APP_INCLUDES_DIR . '/control_registry.inc.php')) {
+            $controls = array_merge($controls, include(QCUBED_APP_INCLUDES_DIR . '/control_registry.inc.php'));
         }
 
         /*

@@ -53,11 +53,11 @@ if (!defined('__PREPEND_INCLUDED__')) {
         ->addPsr4('QCubed\\Codegen\\Generator\\', QCUBED_BASE_DIR . '/application/codegen/generator')
     ;
 
-    if (file_exists(__MODEL_GEN__ . '/_class_paths.inc.php')) {
-        \QCubed\AutoloaderService::instance()->addClassmapFile(__MODEL_GEN__ . '/_class_paths.inc.php');
+    if (file_exists(QCUBED_PROJECT_MODEL_GEN_DIR . '/_class_paths.inc.php')) {
+        \QCubed\AutoloaderService::instance()->addClassmapFile(QCUBED_PROJECT_MODEL_GEN_DIR . '/_class_paths.inc.php');
     }
-    if (file_exists(__MODEL_GEN__ . '/_type_class_paths.inc.php')) {
-        \QCubed\AutoloaderService::instance()->addClassmapFile(__MODEL_GEN__ . '/_type_class_paths.inc.php');
+    if (file_exists(QCUBED_PROJECT_MODEL_GEN_DIR . '/_type_class_paths.inc.php')) {
+        \QCubed\AutoloaderService::instance()->addClassmapFile(QCUBED_PROJECT_MODEL_GEN_DIR . '/_type_class_paths.inc.php');
     }
 
     // Register the custom autoloader, making sure we go after the previous autoloader

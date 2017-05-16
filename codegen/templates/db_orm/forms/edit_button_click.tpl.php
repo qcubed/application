@@ -75,6 +75,6 @@ use QCubed\QString;
     * @param string $strParameter   The control parameter, not used
     */
 	protected function redirectToListPage() {
-		Application::redirect(__VIRTUAL_DIRECTORY__ . __FORMS__ . '/<?= QString::underscoreFromCamelCase($objTable->ClassName) ?>_list.php',
+		Application::redirect(QCUBED_FORMS_URL . '/<?= QString::underscoreFromCamelCase($objTable->ClassName) ?>_list.php',
             false); // Putting false here is important to preventing an optimistic locking exception as a result of the user pressing the back button on the browser
 	}

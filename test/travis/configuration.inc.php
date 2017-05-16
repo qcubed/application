@@ -13,11 +13,11 @@ if (!defined('SERVER_INSTANCE')) {
 
     // for travis build only, we point to the project directory inside the install directory
 	define ('QCUBED_PROJECT_DIR', dirname(dirname(__DIR__)) . '/install/project');
+    define ('QCUBED_PROJECT_GEN_DIR', QCUBED_PROJECT_DIR . '/generated');
+    define ('QCUBED_PROJECT_INCLUDES_DIR', QCUBED_PROJECT_DIR . '/includes');
 
-
-    // Destination for Code Generated class files
-	define ('__MODEL__', __INCLUDES__ . '/model' );
-	define ('__MODEL_GEN__', __PROJECT__ . '/generated/model_base' );
+    define ('QCUBED_PROJECT_MODEL_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/model' );
+    define ('QCUBED_PROJECT_MODEL_GEN_DIR', QCUBED_PROJECT_GEN_DIR . '/model_base' );
 
 	require_once (getenv("DB") . '.inc.php');
 

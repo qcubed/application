@@ -178,8 +178,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 class DialogGen extends QCubed\Control\Panel
 {
-    protected $strJavaScripts = QCUBED_JQUI;
-    protected $strStyleSheets = __JQUERY_CSS__;
+    protected $strJavaScripts = QCUBED_JQUI_JS;
+    protected $strStyleSheets = QCUBED_JQUI_CSS;
     /** @var mixed */
     protected $mixAppendTo = null;
     /** @var boolean */

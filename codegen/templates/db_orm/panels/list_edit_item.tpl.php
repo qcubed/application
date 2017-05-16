@@ -25,7 +25,7 @@ if ($blnUseDialog) { ?>
 			$strQuery = '?' . http_build_query($params, '', '&');
 <?php 	} ?>
 		}
-		$strEditPageUrl = __VIRTUAL_DIRECTORY__ . __FORMS__ . '/<?php echo \QCubed\QString::underscoreFromCamelCase($strPropertyName) ?>_edit.php' . $strQuery;
+		$strEditPageUrl = QCUBED_FORMS_URL . '/<?php echo \QCubed\QString::underscoreFromCamelCase($strPropertyName) ?>_edit.php' . $strQuery;
 		Application::redirect($strEditPageUrl);
 <?php }
 	else {	// pathinfo type request
@@ -42,7 +42,7 @@ if ($blnUseDialog) { ?>
 		$strQuery = '/' . implode('/', $keys);
 <?php 	} ?>
 		}
-		$strEditPageUrl = __VIRTUAL_DIRECTORY__ . __FORMS__ . '/<?php echo \QCubed\QString::underscoreFromCamelCase($strPropertyName) ?>_edit.php' . $strQuery;
+		$strEditPageUrl = QCUBED_FORMS_URL . '/<?php echo \QCubed\QString::underscoreFromCamelCase($strPropertyName) ?>_edit.php' . $strQuery;
 		Application::redirect($strEditPageUrl);
 <?php }?>
 	}

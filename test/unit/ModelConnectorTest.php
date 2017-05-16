@@ -4,10 +4,10 @@
  * @package Tests
  */
 
-require_once(__INCLUDES__ .'/connector/TypeTestConnector.php');
-require_once(__INCLUDES__ .'/connector/ProjectConnector.php');
-require_once(__INCLUDES__ .'/connector/AddressConnector.php');
-require_once(__INCLUDES__ .'/connector/PersonConnector.php');
+require_once(QCUBED_PROJECT_MODELCONNECTOR_DIR .'/TypeTestConnector.php');
+require_once(QCUBED_PROJECT_MODELCONNECTOR_DIR .'/ProjectConnector.php');
+require_once(QCUBED_PROJECT_MODELCONNECTOR_DIR .'/AddressConnector.php');
+require_once(QCUBED_PROJECT_MODELCONNECTOR_DIR .'/PersonConnector.php');
 
 
 class ModelConnectorTests extends \QCubed\Test\UnitTestCaseBase

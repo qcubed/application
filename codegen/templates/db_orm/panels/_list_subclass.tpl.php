@@ -10,7 +10,7 @@ use QCubed\Project\Codegen\CodegenBase;
     $_TEMPLATE_SETTINGS = array(
         'OverwriteFlag' => false,
         'DirectorySuffix' => '',
-        'TargetDirectory' => __PANEL__,
+        'TargetDirectory' => QCUBED_PROJECT_PANEL_DIR,
         'TargetFileName' => $strPropertyName . 'ListPanel.php'
     );
 
@@ -18,8 +18,8 @@ use QCubed\Project\Codegen\CodegenBase;
 
 ?>
 <?php print("<?php\n"); ?>
-require(__PANEL_GEN__ . '/<?= $strPropertyName ?>ListPanelGen.php');
-require(__MODEL_CONNECTOR__ . '/<?= $strPropertyName ?>List.php');
+require(QCUBED_PROJECT_PANEL_GEN_DIR . '/<?= $strPropertyName ?>ListPanelGen.php');
+require(QCUBED_PROJECT_MODELCONNECTOR_DIR . '/<?= $strPropertyName ?>List.php');
 
 /**
  * This is the customizable subclass for the list panel functionality
@@ -38,7 +38,7 @@ class <?= $strPropertyName ?>ListPanel extends <?= $strPropertyName ?>ListPanelG
 		 * template line to use a template for greater customization of how the panel draws its contents.
 		 **/
 		$this->AutoRenderChildren = true;
-		//$this->Template =  __PANEL_GEN__ . '/<?= $strPropertyName ?>ListPanel.tpl.php';
+		//$this->Template =  QCUBED_PROJECT_PANEL_GEN_DIR . '/<?= $strPropertyName ?>ListPanel.tpl.php';
 	}
 
 <?= $listCodegenerator->dataListSubclassOverrides($objCodeGen, $objTable); ?>

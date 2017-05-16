@@ -132,8 +132,8 @@
 			self::AddCoreExampleFile($intIndex, '/composite/intro.php Creating a Composite Control');
 			self::AddCoreExampleFile($intIndex, '/multiple_qform/intro.php "Multiple QForms" Functionality via Custom QPanels');
 			self::AddCoreReferencedFile('/dynamic/\QCubed\Control\Panel.php', 'pnl_panel.tpl.php');
-			self::AddCoreReferencedFile('/other_controls/sample.php', '__CORE_CONTROL__QSampleControl.class.php');
-			self::AddCoreReferencedFile('/composite/intro.php', 'SampleComposite.class.php');
+			self::AddCoreReferencedFile('/other_controls/sample.php', 'SampleControl.php');
+			self::AddCoreReferencedFile('/composite/intro.php', 'SampleComposite.php');
 			self::AddCoreReferencedFile('/multiple_qform/intro.php', array(
 				'ProjectViewPanel.class.php', 'ProjectViewPanel.tpl.php',
 				'ProjectEditPanel.class.php', 'ProjectEditPanel.tpl.php',
@@ -211,7 +211,7 @@
 			self::AddCoreExampleFile($intIndex, '/other/single.php Single File QForms');
 			self::AddCoreExampleFile($intIndex, '/other/form_state.php Working with FormState Handlers');
 			self::AddCoreExampleFile($intIndex, '/other/print.php PHP Print Command Shortcuts');
-			self::AddCoreExampleFile($intIndex, '/other/includes_outside.php Includes outside of the __DOCROOT__ for Security and Shared Installs');
+			self::AddCoreExampleFile($intIndex, '/other/includes_outside.php Includes outside of the DocRoot for Security and Shared Installs');
 			self::AddCoreReferencedFile('/other/alternate_template.php', 'some_template_file.tpl.php');
 
 			$intIndex++;
@@ -222,8 +222,9 @@
 			self::AddCoreExampleFile($intIndex, '/plugins/components.php Writing your own plugins, Part 1: components of a plugin');
 			self::AddCoreExampleFile($intIndex, '/plugins/packaging.php Writing your own plugins, Part 2: packaging a plugin');
 			//self::AddCoreExampleFile($intIndex, '/plugins/unattended.php Automatic Installation of Plugins');
-			self::AddCoreReferencedFile('/plugins/components.php', '__CORE_FRAMEWORK__QPluginInterface.class.php');
+			//self::AddCoreReferencedFile('/plugins/components.php', '__CORE_FRAMEWORK__QPluginInterface.class.php');
 
+            // TODO: Remove this. Plugins are going away and becoming just normal composer libraries
 			// Scan plugin folders for examples to include
 			if (defined ('__PLUGINS__') &&
 				is_dir(__PLUGINS__)) {
@@ -457,10 +458,16 @@
 			// Current Number of Code Links
 			$intCount = 4;
 
-			if (file_exists(__DOCROOT__ . str_replace('.php', '.tpl.php', $strReference))) {
+			// search for a matching template file
+            // convert script to absolute path
+            $strFilename = QCUBED_EXAMPLES_DIR . substr($strReference, strlen(QCUBED_EXAMPLES_URL));
+            // convert to template name
+            $strTemplate =  str_replace('.php', '.tpl.php', $strFilename);
+
+            if (file_exists($strTemplate)) {
 				$strToReturn .= ' &nbsp; | &nbsp; ';
 
-				$strScriptname = substr(str_replace('.php', '.tpl.php', $strReference), strrpos(str_replace('.php', '.tpl.php', $strReference), '/') + 1);
+				$strScriptname = substr($strTemplate, strrpos($strTemplate, '/') + 1);
 				if ($strCurrentScript == $strScriptname) {
 					$strToReturn .= sprintf('<span class="headerGray">%s</span>', $strScriptname);
 					$blnIsScript = true;

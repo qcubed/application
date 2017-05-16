@@ -41,7 +41,7 @@
 	<h2>List All the Project Status Types (Names and Descriptions)</h2>
 <?php
 	// All Enumerated Types should go from 1 to "MaxId"
-	for ($intIndex = 1; $intIndex <= ProjectStatusType::MaxId; $intIndex++) {
+	for ($intIndex = 1; $intIndex <= ProjectStatusType::MAX_ID; $intIndex++) {
 		// We use the Code Generated ToString and ToDescription to output a constant's value
 		_p(ProjectStatusType::ToString($intIndex) . ' - ' . ProjectStatusType::ToDescription($intIndex));
 

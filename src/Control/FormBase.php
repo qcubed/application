@@ -1487,7 +1487,7 @@ abstract class FormBase extends ObjectBase
         // In order to make ui-themes workable, move the jquery.css to the end of list.
         // It should override any rules that it can override.
         foreach ($strStyleSheetArray as $strScript) {
-            if (__JQUERY_CSS__ == $strScript) {
+            if (QCUBED_JQUI_CSS == $strScript) {
                 unset($strStyleSheetArray[$strScript]);
                 $strStyleSheetArray[$strScript] = $strScript;
                 break;
@@ -1769,7 +1769,7 @@ abstract class FormBase extends ObjectBase
      * javascripts needed to run qcubed.
      * Override and add to this list and include
      * javascript and jQuery files and libraries needed for your application.
-     * Javascript files included before __QCUBED_JS_CORE__ can refer to jQuery as $.
+     * Javascript files included before QCUBED_JS can refer to jQuery as $.
      * After qcubed.js, $ becomes $j, so add other libraries that need
      * $ in a different context after qcubed.js, and insert jQuery libraries and  plugins that
      * refer to $ before qcubed.js file.
@@ -1779,10 +1779,10 @@ abstract class FormBase extends ObjectBase
     protected function getFormJavaScripts()
     {
         return array(
-            QCUBED_JQUERY,
-            QCUBED_JQUI,
-            'ajaxq/ajaxq.js',
-            __QCUBED_JS_CORE__
+            QCUBED_JQUERY_JS,
+            QCUBED_JQUI_JS,
+            QCUBED_JS_URL . '/ajaxq/ajaxq.js',
+            QCUBED_JS
         );
     }
 

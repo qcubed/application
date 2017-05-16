@@ -5,13 +5,13 @@
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => false,
 		'DirectorySuffix' => '',
-		'TargetDirectory' => __MODEL_CONNECTOR__,
+		'TargetDirectory' => QCUBED_PROJECT_MODELCONNECTOR_DIR,
 		'TargetFileName' => $objTable->ClassName . 'Connector.php'
 	);
 ?>
 <?php print("<?php\n"); ?>
 
-require(__MODEL_CONNECTOR_GEN__ . '/<?= $objTable->ClassName ?>ConnectorGen.php');
+require(QCUBED_PROJECT_MODELCONNECTOR_GEN_DIR . '/<?= $objTable->ClassName ?>ConnectorGen.php');
 
 /**
  * This is a ModelConnector customizable subclass, providing a Form or Panel access to event handlers

@@ -7,7 +7,7 @@
 	// that end in _edit.php or _list.php
 	$strSuffixes = array('_edit.php', '_list.php');
 	$strObjectArray = array();
-	$objDirectory = opendir(__DOCROOT__ . __FORMS__);
+	$objDirectory = opendir(QCUBED_FORMS_DIR);
 	while ($strFilename = readdir($objDirectory)) {
 		if (($strFilename != '.') && ($strFilename != '..')) {
 			$blnFound = false;
@@ -36,8 +36,8 @@
 <?php
 		foreach ($strObjectArray as $strObject=>$blnValue) {
 			printf('<h1>%s</h1><p class="create"><a href="%s/%s_list.php">%s</a> &nbsp;|&nbsp; <a href="%s/%s_edit.php">%s</a></p>',
-				$strObject, __VIRTUAL_DIRECTORY__ . __FORMS__, $strObject, t('View List'),
-				__VIRTUAL_DIRECTORY__ . __FORMS__, $strObject, t('Create New'));
+				$strObject, QCUBED_FORMS_URL, $strObject, t('View List'),
+                QCUBED_FORMS_URL, $strObject, t('Create New'));
 		}
 ?>
 	</div>

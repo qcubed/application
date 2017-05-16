@@ -12,7 +12,6 @@ namespace QCubed\FormState;
 use QCubed\ObjectBase;
 use QCubed\Project\Application;
 
-
 /**
  * Class FileHandler
  *
@@ -81,7 +80,7 @@ class FileHandler extends ObjectBase
      * Also, for standard web applications with logins, it might be a good idea to call
      * this method whenever the user logs out.
      */
-    public static function DeleteFormStateForSession()
+    public static function deleteFormStateForSession()
     {
         // Figure Out Session Id (if applicable)
         $strSessionId = session_id();
@@ -104,7 +103,7 @@ class FileHandler extends ObjectBase
      * This will delete all the formstate files that are older than $GarbageCollectDaysOld
      * days old.
      */
-    public static function GarbageCollect()
+    public static function garbageCollect()
     {
         // Go through all the files
         $objDirectory = dir(self::$StatePath);
@@ -126,13 +125,13 @@ class FileHandler extends ObjectBase
         }
     }
 
-    public static function Save($strFormState, $blnBackButtonFlag)
+    public static function save($strFormState, $blnBackButtonFlag)
     {
         // First see if we need to perform garbage collection
         if (self::$GarbageCollectInterval > 0) {
             // This is a crude interval-tester, but it works
             if (rand(1, self::$GarbageCollectInterval) == 1) {
-                self::GarbageCollect();
+                self::garbageCollect();
             }
         }
 
@@ -169,7 +168,7 @@ class FileHandler extends ObjectBase
         return $strPageId;
     }
 
-    public static function Load($strPostDataState)
+    public static function load($strPostDataState)
     {
         // Pull Out strPageId
         $strPageId = $strPostDataState;

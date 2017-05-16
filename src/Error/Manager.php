@@ -242,10 +242,10 @@ class Manager
             $__exc_strRenderedPage = ob_get_contents();
             ob_clean();
         }
-        if (defined('ERROR_PAGE_PATH')) {
-            require(ERROR_PAGE_PATH);
+        if (defined('QCUBED_ERROR_PAGE_PHP')) {
+            require(QCUBED_ERROR_PAGE_PHP);
         } else {
-            // Error in installer or similar - ERROR_PAGE_PATH constant is not defined yet.
+            // Error in installer or similar - QCUBED_ERROR_PAGE_PHP constant is not defined yet.
             echo "error: errno: " . $__exc_errno . "<br/>" . $__exc_strMessage . "<br/>" . $__exc_strFilename . ":" . $__exc_intLineNumber;
         }
         exit();

@@ -15,7 +15,7 @@ $options = $objTable->Options;
 $_TEMPLATE_SETTINGS = array(
     'OverwriteFlag' => true,
     'DirectorySuffix' => '',
-    'TargetDirectory' => __MODEL_CONNECTOR_GEN__,
+    'TargetDirectory' => QCUBED_PROJECT_MODELCONNECTOR_GEN_DIR,
     'TargetFileName' => $objTable->ClassName . 'ListGen.php'
 );
 

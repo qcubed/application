@@ -68,7 +68,7 @@ abstract class BlockControl extends QControl
      */
     public function addControlToMove($objTargetControl = null)
     {
-        $this->strJavaScripts = QCUBED_JQUI;
+        $this->strJavaScripts = QCUBED_JQUI_JS;
         if ($objTargetControl && $objTargetControl->ControlId != $this->ControlId) {
             Application::executeJavascript(sprintf('var pos_%s = $j("#%s").offset()', $objTargetControl->ControlId,
                 $objTargetControl->ControlId));
@@ -96,7 +96,7 @@ abstract class BlockControl extends QControl
 
     public function addDropZone($objParentObject)
     {
-        $this->strJavaScripts = QCUBED_JQUI;
+        $this->strJavaScripts = QCUBED_JQUI_JS;
         $this->objDropsControlsArray[$objParentObject->ControlId] = true;
         $objParentObject->DropTarget = true;
         $objParentObject->objIsDropZoneFor[$this->ControlId] = true;

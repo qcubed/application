@@ -47,7 +47,7 @@
 </div>
 
 <div id="demoZone">
-	<style type="text/css">@import url("<?php _p(QCUBED_CSS_URL . "/" . __JQUERY_CSS__); ?>");</style>
+	<style type="text/css">@import url("<?php _p(QCUBED_CSS_URL . "/" . QCUBED_JQUI_CSS); ?>");</style>
 	<?php $this->dtgButtons->Render(); ?>
 </div>
 

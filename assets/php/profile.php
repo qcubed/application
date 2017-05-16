@@ -56,7 +56,7 @@
         return $result;
     }
     
-    $strJsFileArray = explode(",", QCUBED_JQUERY);
+    $strJsFileArray = explode(",", QCUBED_JQUERY_JS);
 ?>
 <!DOCTYPE html>
 <html>

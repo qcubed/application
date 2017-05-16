@@ -44,8 +44,8 @@ class Options extends ObjectBase
 
     public function __construct()
     {
-        if (file_exists(__CONFIGURATION__ . '/codegen_options.json')) {
-            $strContent = file_get_contents(__CONFIGURATION__ . '/codegen_options.json');
+        if (file_exists(QCUBED_PROJECT_CONFIGURATION_DIR . '/codegen_options.json')) {
+            $strContent = file_get_contents(QCUBED_PROJECT_CONFIGURATION_DIR . '/codegen_options.json');
 
             if ($strContent) {
                 $this->options = json_decode($strContent, true);
@@ -69,7 +69,7 @@ class Options extends ObjectBase
         }
         $strContent = json_encode($this->options, $flags);
 
-        file_put_contents(__CONFIGURATION__ . '/codegen_options.json', $strContent);
+        file_put_contents(QCUBED_PROJECT_CONFIGURATION_DIR . '/codegen_options.json', $strContent);
         $this->blnChanged = false;
     }
 

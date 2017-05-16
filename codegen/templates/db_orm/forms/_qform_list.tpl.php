@@ -22,7 +22,7 @@ use QCubed\Project\Control\ControlBase;
 // Load the QCubed Development Framework
 require('../qcubed.inc.php');
 
-require(__PANEL__ . '/<?= $objTable->ClassName ?>ListPanel.php');
+require(QCUBED_PROJECT_PANEL_DIR . '/<?= $objTable->ClassName ?>ListPanel.php');
 
 /**
  * This is a draft FormBase object to do the List All functionality

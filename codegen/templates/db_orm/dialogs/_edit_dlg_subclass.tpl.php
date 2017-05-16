@@ -9,7 +9,7 @@
 	$_TEMPLATE_SETTINGS = array(
 		'OverwriteFlag' => false,
 		'DirectorySuffix' => '',
-		'TargetDirectory' => __DIALOG__,
+		'TargetDirectory' => QCUBED_PROJECT_DIALOG_DIR,
 		'TargetFileName' => $strPropertyName . 'EditDlg.php'
 	);
 
@@ -19,7 +19,7 @@
 use QCubed\Project\Control\FormBase;
 use QCubed\Project\Control\ControlBase;
 
-require(__DIALOG_GEN__ . '/<?= $strPropertyName ?>EditDlgGen.php');
+require(QCUBED_PROJECT_DIALOG_GEN_DIR . '/<?= $strPropertyName ?>EditDlgGen.php');
 
 /**
  * This is the customizable subclass for the edit dialog. This dialog is just a shell for the

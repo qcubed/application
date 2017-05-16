@@ -183,7 +183,7 @@ abstract class ApplicationBase extends ObjectBase
      */
     public static function autoload($strClassName)
     {
-        if (file_exists($strFilePath = sprintf('%s/plugins/%s.php', __INCLUDES__, $strClassName))) {
+        if (file_exists($strFilePath = sprintf('%s/plugins/%s.php', QCUBED_PROJECT_INCLUDES_DIR, $strClassName))) {
             require_once($strFilePath);
             return true;
         }
@@ -634,9 +634,10 @@ abstract class ApplicationBase extends ObjectBase
             return $strFile;
         }
         if (strpos($strFile, "/") === 0) {
-            return __VIRTUAL_DIRECTORY__ . $strFile;
+            return $strFile;
+        } else {
+            throw new Caller('Relative urls are no longer supported. Trying to load: ' . $strFile);
         }
-        return QCUBED_JS_URL . '/' . $strFile;
     }
 
     /**
@@ -651,9 +652,11 @@ abstract class ApplicationBase extends ObjectBase
             return $strFile;
         }
         if (strpos($strFile, "/") === 0) {
-            return __VIRTUAL_DIRECTORY__ . $strFile;
+            return $strFile;
         }
-        return QCUBED_CSS_URL . '/' . $strFile;
+        else {
+            throw new Caller("Relative urls are no longer supported. Trying to load: " . $strFile);
+        }
     }
 
     /**
@@ -673,11 +676,8 @@ abstract class ApplicationBase extends ObjectBase
         printf('<li>QCUBED_VERSION = "%s"</li>', QCUBED_VERSION);
         //printf('<li>jQuery version = "%s"</li>', __JQUERY_CORE_VERSION__);
         //printf('<li>jQuery UI version = "%s"</li>', __JQUERY_UI_VERSION__);
-        printf('<li>__SUBDIRECTORY__ = "%s"</li>', __SUBDIRECTORY__);
-        printf('<li>__VIRTUAL_DIRECTORY__ = "%s"</li>', __VIRTUAL_DIRECTORY__);
-        printf('<li>__INCLUDES__ = "%s"</li>', __INCLUDES__);
-        printf('<li>__QCUBED_CORE__ = "%s"</li>', __QCUBED_CORE__);
-        printf('<li>ERROR_PAGE_PATH = "%s"</li>', ERROR_PAGE_PATH);
+        printf('<li>QCUBED_PROJECT_INCLUDES_DIR = "%s"</li>', QCUBED_PROJECT_INCLUDES_DIR);
+        printf('<li>QCUBED_ERROR_PAGE_PHP = "%s"</li>', QCUBED_ERROR_PAGE_PHP);
         printf('<li>PHP Include Path = "%s"</li>', get_include_path());
         printf('<li>EncodingType = "%s"</li>', Application::encodingType());
         printf('<li>PathInfo = "%s"</li>', Application::instance()->context()->pathInfo());

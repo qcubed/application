@@ -26,7 +26,7 @@ use QCubed\Project\Control\ControlBase;
 // Load the QCubed Development Framework
 require('../qcubed.inc.php');
 
-require(__PANEL__ . '/<?= $objTable->ClassName ?>EditPanel.php');
+require(QCUBED_PROJECT_PANEL_DIR . '/<?= $objTable->ClassName ?>EditPanel.php');
 
 /**
  * This is a draft FormBase object to do Create, Edit, and Delete functionality

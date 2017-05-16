@@ -217,7 +217,7 @@ TMPL;
 	protected function createPaginator() 
 	{
 		\$this->Paginator = new Paginator(\$this);
-		\$this->ItemsPerPage = __FORM_LIST_ITEMS_PER_PAGE__;
+		\$this->ItemsPerPage = QCUBED_ITEMS_PER_PAGE;
 	}
 
 TMPL;

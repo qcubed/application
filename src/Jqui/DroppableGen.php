@@ -92,8 +92,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 abstract class DroppableGen extends QCubed\Project\Control\ControlBase
 {
-    protected $strJavaScripts = QCUBED_JQUI;
-    protected $strStyleSheets = __JQUERY_CSS__;
+    protected $strJavaScripts = QCUBED_JQUI_JS;
+    protected $strStyleSheets = QCUBED_JQUI_CSS;
     /** @var mixed */
     protected $mixAccept = null;
     /** @var string */

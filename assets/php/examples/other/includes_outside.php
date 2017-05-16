@@ -2,7 +2,7 @@
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions" class="full">
-	<h1>Moving your /includes outside of the __DOCROOT__</h1>
+	<h1>Moving your /includes outside of the DocRoot</h1>
 
 	<p>There is a school of security thought that suggests that files that aren't meant to
 		be web-accessible aren't even supposed to be in a web-accessible directory. An approach
@@ -17,7 +17,7 @@
 		<li>Update the $configPath variable in qcubed.inc.php in the root of your web application.
 			That variable can contain an absolute or a relative path (relative to the root of your
 			web application)</li>
-		<li>Update the __INCLUDES__ variable in your includes/configuration/prepend.inc.php file.</li>
+		<li>Update the QCUBED_PROJECT_INCLUDES_DIR variable in your includes/configuration/prepend.inc.php file.</li>
 	</ul>
 
 	<p>There's another reason why you may want to move your /includes folder outside of the

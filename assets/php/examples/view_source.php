@@ -15,7 +15,8 @@
 	$strReference = Examples::GetExampleScriptPath($strCategoryId, $strExampleId);
 	$strName = Examples::GetExampleName($strCategoryId, $strExampleId);
 
-	if (!$strScript) {
+
+if (!$strScript) {
 		$strUrl = \QCubed\Project\Application::instance()->context()->requestUri() . substr($strReference, strrpos($strReference, '/'));
 		\QCubed\Project\Application::Redirect($strUrl, true);
 	}
@@ -35,16 +36,17 @@
 	// Filename Cleanup
 	if (($strScript == 'header.inc.php') || ($strScript == 'footer.inc.php') || ($strScript == 'examples.css'))
 		$strFilename = 'includes/' . $strScript;
-	else if (($strScript == 'mysql_innodb.sql') || ($strScript == 'sql_server.sql')) {
+	else if (($strScript == 'mysql_innodb.sql') || ($strScript == 'sql_server.sql') || ($strScript == 'pgsql.sql')) {
 		$strFilename = $strScript;
-	} else if (substr($strScript, 0, 16) == '__CORE_CONTROL__') {
-		$strFilename = __QCUBED__ . '/controls/' . str_replace('__CORE_CONTROL__', '', str_replace('/', '', $strScript));
-	} else if (substr($strScript, 0, 18) == '__CORE_FRAMEWORK__') {
-		$strFilename = __QCUBED_CORE__ . '/framework/' . str_replace('__CORE_FRAMEWORK__', '', str_replace('/', '', $strScript));
-	} else {		
-		$strFilename = substr($strReference, 1);
-		// todo: fix this
-		$strFilename = __DOCROOT__ . '/' . substr($strFilename, strlen(__VIRTUAL_DIRECTORY__), strrpos($strReference, '/') - strlen(__VIRTUAL_DIRECTORY__)) . $strScript;
+	}
+	elseif ($strScript[0] == '\\') {    // a fully qualified class name
+        $strFilename = \QCubed\AutoloaderService::instance()->findFile($strScript);
+    } else {
+	    // convert a url to a dir
+		$strFilename = QCUBED_EXAMPLES_DIR . substr($strReference, strlen(QCUBED_EXAMPLES_URL));
+		// substitute actual script name, since it may be a related script
+        $strFilename = substr($strFilename, 0, strrpos ($strFilename, '/') + 1);
+        $strFilename .= $strScript;
 	}
 
 	if (!file_exists($strFilename)) {

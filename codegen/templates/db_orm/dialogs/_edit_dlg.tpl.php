@@ -10,7 +10,7 @@ $strPropertyName = CodegenBase::dataListPropertyName($objTable);
 $_TEMPLATE_SETTINGS = array(
     'OverwriteFlag' => true,
     'DirectorySuffix' => '',
-    'TargetDirectory' => __DIALOG_GEN__,
+    'TargetDirectory' => QCUBED_PROJECT_DIALOG_GEN_DIR,
     'TargetFileName' => $strPropertyName . 'EditDlgGen.php'
 );
 
@@ -24,7 +24,7 @@ use QCubed\Database\Exception\OptimisticLocking;
 use QCubed\Project\Jqui\Dialog;
 
 
-include (__PANEL__ . '/<?= $strPropertyName ?>EditPanel.php');
+include (QCUBED_PROJECT_PANEL_DIR . '/<?= $strPropertyName ?>EditPanel.php');
 
 /**
 * This is the <?= $strPropertyName ?>EditDlgGen class.  It uses the code-generated

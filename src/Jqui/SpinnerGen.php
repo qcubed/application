@@ -110,8 +110,8 @@ use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 class SpinnerGen extends QCubed\Project\Control\TextBox
 {
-    protected $strJavaScripts = QCUBED_JQUI;
-    protected $strStyleSheets = __JQUERY_CSS__;
+    protected $strJavaScripts = QCUBED_JQUI_JS;
+    protected $strStyleSheets = QCUBED_JQUI_CSS;
     /** @var mixed */
     protected $mixClasses = null;
     /** @var string */
