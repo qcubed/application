@@ -29,6 +29,8 @@ if (!defined('SERVER_INSTANCE')) {
 	/** The value for QApplication::$EncodingType constant */
 	define('QCUBED_ENCODING', 'UTF-8');
 
+    define ('QCUBED_FORMS_DIR', QCUBED_PROJECT_DIR . '/forms');
+
     define ('QCUBED_PROJECT_MODELCONNECTOR_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/connector' );
     define ('QCUBED_PROJECT_MODELCONNECTOR_GEN_DIR', QCUBED_PROJECT_GEN_DIR . '/connector_base' );
     define ('QCUBED_PROJECT_DIALOG_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/dialog' );
