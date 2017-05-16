@@ -17,7 +17,7 @@ $imports = [
 foreach ($objTable->ColumnArray as $objColumn) {
     if ($objColumn->Options && isset($objColumn->Options['FormGen']) && $objColumn->Options['FormGen'] == Q\ModelConnector\Options::FORMGEN_NONE) continue;
 
-    $objControlCodeGenerator = $objCodeGen->GetControlCodeGenerator($objColumn);
+    $objControlCodeGenerator = $objCodeGen->getControlCodeGenerator($objColumn);
     $controlImports = $objControlCodeGenerator->connectorImports($objCodeGen, $objTable, $objColumn);
     $imports = array_merge($imports, $controlImports);
 
