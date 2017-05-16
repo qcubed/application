@@ -4,6 +4,39 @@
  * @package Tests
  */
 
+/**
+ *
+ * @package Tests
+ */
+if(!class_exists('Person')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/Person.php';
+}
+if(!class_exists('Project')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/Project.php';
+}
+if(!class_exists('Login')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/Login.php';
+}
+if(!class_exists('Milestone')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/Milestone.php';
+}
+if(!class_exists('Address')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/Address.php';
+}
+if(!class_exists('PersonType')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/PersonType.php';
+}
+if(!class_exists('TwoKey')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/TwoKey.php';
+}
+if(!class_exists('ProjectStatusType')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/ProjectStatusType.php';
+}
+if(!class_exists('TypeTest')){
+    require_once QCUBED_PROJECT_MODEL_DIR .'/TypeTest.php';
+}
+
+
 require_once(QCUBED_PROJECT_MODELCONNECTOR_DIR .'/TypeTestConnector.php');
 require_once(QCUBED_PROJECT_MODELCONNECTOR_DIR .'/ProjectConnector.php');
 require_once(QCUBED_PROJECT_MODELCONNECTOR_DIR .'/AddressConnector.php');
