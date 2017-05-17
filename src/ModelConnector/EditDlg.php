@@ -300,7 +300,7 @@ class EditDlg extends QDialog
         } elseif ($mixParam == 'saveRefresh') {
             $this->updateControlInfo();
             $this->writeParams();
-            QCodeGen::run(QCUBED_PROJECT_CONFIGURATION_DIR . '/codegen_settings.xml');
+            QCodeGen::run(QCUBED_CONFIG_DIR . '/codegen_settings.xml');
             foreach (QCodeGen::$CodeGenArray as $objCodeGen) {
                 $objCodeGen->generateAll(); // silently codegen
             }
@@ -401,7 +401,7 @@ class EditDlg extends QDialog
     protected function createClassNameArray()
     {
         // create the control array
-        $dir = realpath(QCUBED_PROJECT_CONFIGURATION_DIR . '/control_registry');
+        $dir = realpath(QCUBED_CONFIG_DIR . '/control_registry');
         $controls = [];
 
         if ($dir !== false) {    // does the active directory exist?

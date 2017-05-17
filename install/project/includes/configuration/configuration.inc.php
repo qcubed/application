@@ -7,8 +7,9 @@
  * config.cfg.php is loaded first
  */
 
-if (!defined('QCUBED_CONFIG__INCLUDED')) {
-	define ("QCUBED_CONFIG__INCLUDED", 1);	// notify other scripts that the config file is loaded, and prevent multiple loads
+if (!defined('QCUBED_CONFIG')) {
+	define ("QCUBED_CONFIG", __FILE__);	// notify other scripts that the config file is loaded, and prevent multiple loads
+    define ('QCUBED_CONFIG_DIR', __DIR__);
 
 	$dirpath = dirname(__FILE__);
 	$dirpath = realpath($dirpath . '/active');

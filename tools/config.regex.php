@@ -28,7 +28,7 @@ $a['regex']['__JQUERY_CSS__'] = 'QCUBED_JQUI_CSS';
 
 $a['regex']['__PROJECT__'] = 'QCUBED_PROJECT_DIR';
 $a['regex']['__INCLUDES__'] = 'QCUBED_PROJECT_INCLUDES_DIR';
-$a['regex']['__CONFIGURATION__'] = 'QCUBED_PROJECT_CONFIGURATION_DIR';
+$a['regex']['__CONFIGURATION__'] = 'QCUBED_CONFIG_DIR';
 $a['regex']['__APP_INCLUDES__'] = 'QCUBED_APP_INCLUDES_DIR';
 $a['regex']['__TMP__'] = 'QCUBED_TMP_DIR';
 $a['regex']['__CACHE__'] = 'QCUBED_CACHE_DIR';

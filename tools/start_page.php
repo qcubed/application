@@ -8,7 +8,7 @@
 		'<span class="success">all OK.</span>';
 	*/
 	$strPageTitle = 'QCubed Development Framework - Start Page';
-	require(QCUBED_PROJECT_CONFIGURATION_DIR . '/header.inc.php');
+	require(QCUBED_CONFIG_DIR . '/header.inc.php');
 ?>
 	<h1 class="page-title">Welcome to QCubed!</h1>
 	<div class="install-status">
@@ -27,4 +27,4 @@
 <?php if (\QCubed\Project\Application::isAuthorized()) { ?>
 	<pre><code><?php \QCubed\Project\Application::varDump(); ?></code></pre>
 <?php } ?>
-<?php require(QCUBED_PROJECT_CONFIGURATION_DIR . '/footer.inc.php'); ?>
+<?php require(QCUBED_CONFIG_DIR . '/footer.inc.php'); ?>

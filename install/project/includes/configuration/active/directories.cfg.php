@@ -13,7 +13,6 @@
  * constants as you wish/need in defining your other directory constants.)
  */
 
-define ('QCUBED_PROJECT_CONFIGURATION_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/configuration');
 define ('QCUBED_APP_INCLUDES_DIR', QCUBED_PROJECT_INCLUDES_DIR . '/app_includes');
 
 // Browser writable temporary directory for various framework generated files. Handle with care. Does not need to be in docroot.

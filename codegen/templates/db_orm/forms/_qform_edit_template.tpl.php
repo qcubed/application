@@ -26,7 +26,7 @@ $gObjectName =  t('<?= $strPropertyName ?>');
 $gObjectNamePlural =  t('<?= $strPropertyNamePlural ?>');
 
 $strPageTitle = t('<?= $strPropertyName ?>');
-require(QCUBED_PROJECT_CONFIGURATION_DIR . '/header.inc.php');
+require(QCUBED_CONFIG_DIR . '/header.inc.php');
 
 ?>
 <?php print("<?php"); ?> $this->renderBegin() ?>
@@ -45,4 +45,4 @@ require(QCUBED_PROJECT_CONFIGURATION_DIR . '/header.inc.php');
 
 <?php print("<?php"); ?> $this->renderEnd() ?>
 
-<?php print("<?php"); ?> require(QCUBED_PROJECT_CONFIGURATION_DIR .'/footer.inc.php');
+<?php print("<?php"); ?> require(QCUBED_CONFIG_DIR .'/footer.inc.php');
