@@ -400,7 +400,7 @@ class EditDlg extends QDialog
      */
     protected function createClassNameArray()
     {
-        // create the control array
+        // get the control array
         $dir = realpath(QCUBED_CONFIG_DIR . '/control_registry');
         $controls = [];
 
