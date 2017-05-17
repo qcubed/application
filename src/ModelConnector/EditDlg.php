@@ -43,7 +43,7 @@ class EditDlg extends QDialog
 {
     /** @var  QControl */
     protected $objCurrentControl;
-    /** @var Tabs  */
+    /** @var Tabs */
     protected $tabs;
 
     protected $txtName;
@@ -261,8 +261,7 @@ class EditDlg extends QDialog
         $objControl = $objControlParam->getControl($objParent);
         if ($objControl) {
             return $objControl->render(false);
-        }
-        else {
+        } else {
             return "";
         }
     }
@@ -402,29 +401,25 @@ class EditDlg extends QDialog
     protected function createClassNameArray()
     {
         // create the control array
-        $controls = include(QCUBED_BASE_DIR . '/application/control_registry.inc.php');
+        $dir = realpath(QCUBED_PROJECT_CONFIGURATION_DIR . '/control_registry');
+        $controls = [];
 
-        if (file_exists(QCUBED_APP_INCLUDES_DIR . '/control_registry.inc.php')) {
-            $controls = array_merge($controls, include(QCUBED_APP_INCLUDES_DIR . '/control_registry.inc.php'));
-        }
-
-        /*
-         * Renable plugins once they are converted to new version
-         *
-        if (defined('__PLUGINS__') &&
-            is_dir(__PLUGINS__)
-        ) {
-            $plugins = scandir(__PLUGINS__);
-            foreach ($plugins as $dirName) {
-                if ($dirName != '.' && $dirName != '..') {
-                    if (file_exists(__PLUGINS__ . '/' . $dirName . '/control_registry.inc.php')) {
-                        include(__PLUGINS__ . '/' . $dirName . '/control_registry.inc.php');
+        if ($dir !== false) {    // does the active directory exist?
+            foreach (new \DirectoryIterator($dir) as $fileInfo) {
+                if ($fileInfo->isDot()) {
+                    continue;
+                }
+                $strFileName = $fileInfo->getPathname();
+                if (substr($strFileName, -8) == '.inc.php') {
+                    $controls2 = include($strFileName);
+                    if ($controls2 && is_array($controls2)) {
+                        $controls = array_merge($controls, $controls2);
                     }
                 }
             }
-        }*/
+        }
 
-        // $controls is now an array indexed by Type, with each entry a QControl type name
+        // $controls is now an array indexed by Type, with each entry a Control type name
 
         // Figure out what type of control we are looking for
         // For the most part, the control category types are the same as the database type
