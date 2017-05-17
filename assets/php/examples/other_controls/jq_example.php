@@ -154,7 +154,7 @@
 			$this->Button->AddAction(new \QCubed\Event\Click, new \QCubed\Action\Server("button_click"));
 
 			$this->CheckBox = new \QCubed\Project\Jqui\Checkbox($this);
-			$this->CheckBox->Text = "CheckBox";
+			$this->CheckBox->Text = "Checkbox";
 			
 			$this->RadioButton = new \QCubed\Project\Jqui\RadioButton($this);
 			$this->RadioButton->Text = "RadioButton";

@@ -35,11 +35,11 @@
   },
   "require": {
       "php": ">=5.5.0",
-    "qcubed/i18n": "master-dev",
-    "qcubed/common":"master-dev",
-    "qcubed/orm":"master-dev",
-    "qcubed/composer": "master-dev",
-    "qcubed/cache": "master-dev"
+    "qcubed/i18n": "dev-master",
+    "qcubed/common":"dev-master",
+    "qcubed/orm":"dev-master",
+    "qcubed/composer": "dev-qcubed4",
+    "qcubed/cache": "dev-master"
 
   },
   "minimum-stability": "dev",

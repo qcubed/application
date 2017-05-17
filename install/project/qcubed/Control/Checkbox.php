@@ -15,7 +15,6 @@ class Checkbox extends \QCubed\Control\CheckboxBase
     // Button Preferences
     ///////////////////////////
 
-    // Feel free to specify global display preferences/defaults for all QButton controls
     protected $strCssClass = 'checkbox';
 
     /**

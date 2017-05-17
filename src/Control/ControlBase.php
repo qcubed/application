@@ -792,8 +792,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *
      * @param QAction $objAction
      */
-    public function onClick(QAction $objAction) {
-        $this->addAction (new Q\Event\Click(5, null, null, true), $objAction);
+    public function onClick(QAction $objAction)
+    {
+        $this->addAction(new Q\Event\Click(5, null, null, true), $objAction);
     }
 
     /**
@@ -943,11 +944,16 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function addJavascriptFile($strJsFileName)
     {
-        if ($this->strJavaScripts) {
-            $this->strJavaScripts .= ',' . $strJsFileName;
+        if (strpos($strJsFileName, "http") === 0 || $strJsFileName[0] === "/") {
+            if ($this->strJavaScripts) {
+                $this->strJavaScripts .= ',' . $strJsFileName;
+            } else {
+                $this->strJavaScripts = $strJsFileName;
+            }
         } else {
-            $this->strJavaScripts = $strJsFileName;
+            throw new Exception\Caller('Relative urls are not supported any more');
         }
+
     }
 
     /**
@@ -959,6 +965,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *
      * @param string $strPluginName name of plugin
      * @param string $strJsFileName url, path, or file name to include
+     * @deprecated
      */
     public function addPluginJavascriptFile($strPluginName, $strJsFileName)
     {
@@ -985,10 +992,14 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function addCssFile($strCssFileName)
     {
-        if ($this->strStyleSheets) {
-            $this->strStyleSheets .= ',' . $strCssFileName;
+        if (strpos($strCssFileName, "http") === 0 || $strCssFileName[0] === "/") {
+            if ($this->strStyleSheets) {
+                $this->strStyleSheets .= ',' . $strCssFileName;
+            } else {
+                $this->strStyleSheets = $strCssFileName;
+            }
         } else {
-            $this->strStyleSheets = $strCssFileName;
+            throw new Exception\Caller('Relative urls are not supported any more');
         }
     }
 
@@ -1001,6 +1012,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *
      * @param string $strPluginName name of plugin
      * @param string $strCssFileName url, path, or file name to include
+     * @deprecated
      */
     public function addPluginCssFile($strPluginName, $strCssFileName)
     {

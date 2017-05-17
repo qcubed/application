@@ -17,7 +17,7 @@
         },
         "IsEnabled": {
             "FormGen": "both",
-            "ControlClass": "QCubed\\Project\\Control\\CheckBox"
+            "ControlClass": "QCubed\\Project\\Control\\Checkbox"
         }
     },
     "Address": {
@@ -32,9 +32,10 @@
         },
         "Person": {
             "FormGen": "both",
-            "ControlClass": "QCubed\\Project\\Jqui\\Autocomplete",
+            "ControlClass": "\\QCubed\\Project\\Jqui\\Autocomplete",
             "Overrides": {
-                "Placeholder": "Type a \"p\""
+                "Placeholder": "Type a \"p\"",
+                "CausesValidation": "\\QCubed\\Control\\ControlBase::CAUSES_VALIDATION_NONE"
             }
         },
         "Street": {

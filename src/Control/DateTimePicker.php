@@ -15,6 +15,7 @@ use QCubed\Application\t;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QDateTime;
 use QCubed\Type;
 use QCubed as Q;
@@ -80,8 +81,13 @@ class DateTimePicker extends QControl
     protected $intHourInterval = 1;
 
 
-    protected $strJavaScripts = 'date_time_picker.js';
     protected $strCssClass = 'datetimepicker';
+
+    public function __construct($objParent, $strControlId = null)
+    {
+        parent::__construct($objParent, $strControlId);
+        $this->addJavascriptFile(QCUBED_JS_URL . '/date_time_picker.js');
+    }
 
     public function parsePostData()
     {
