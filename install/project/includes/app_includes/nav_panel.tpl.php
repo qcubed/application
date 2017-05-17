@@ -2,4 +2,4 @@
 	global $gObjectNamePlural;	// defined in list form template
 ?>
 <h1><?php _t('Listing All'); ?> <?= t($gObjectNamePlural); ?></h1>
-<h2><a href="<?php _p(__DEVTOOLS_ASSETS__) ?>/form_drafts.php">&laquo; <?= t('Go to "Forms"'); ?></a></h2>
+<h2><a href="<?= QCUBED_APP_TOOLS_URL ?>/form_drafts.php">&laquo; <?= t('Go to "Forms"'); ?></a></h2>
