@@ -17,6 +17,4 @@ do {
 } while (!$blnFound && $dirpath != '/');
 if ($blnFound) {
 	require_once($filepath);
-} else {
-	throw new Exception("Parent qcubed.inc.php file not found. Can't locate the confiugration directory.");
 }
