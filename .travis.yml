@@ -10,7 +10,7 @@ php:
 install:
     - composer install
     - cp -RnT install .
-
+    - cp -R -t project test/travis/project/*
 env:
     - DB=mysql
     - DB=pgsql POSTGRESQL_VERSION=9.1
