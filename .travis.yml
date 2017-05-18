@@ -10,7 +10,8 @@ php:
 install:
     - composer install
     - pwd
-    - cp -RnT install .
+    - cp -R -t project install
+    - cp install/qcubed.inc.php .
     - cp -R -t project test/travis/project/*
 env:
     - DB=mysql
