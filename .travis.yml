@@ -9,6 +9,7 @@ php:
 
 install:
     - composer install
+    - pwd
     - cp -RnT install .
     - cp -R -t project test/travis/project/*
 env:
