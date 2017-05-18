@@ -22,7 +22,7 @@ class Autocomplete extends Q\Jqui\AutocompleteBase
      * @return Q\Codegen\Generator\GeneratorBase
      */
     public static function getCodeGenerator() {
-        return new Q\Codegen\Generator\Slider(__CLASS__);
+        return new Q\Codegen\Generator\Autocomplete(__CLASS__);
     }
 
 }

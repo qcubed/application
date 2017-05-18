@@ -951,7 +951,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                 $this->strJavaScripts = $strJsFileName;
             }
         } else {
-            throw new Exception\Caller('Relative urls are not supported any more');
+            throw new Exception\Caller('Relative urls are not supported any more. ' . $strJsFileName);
         }
 
     }
@@ -999,7 +999,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                 $this->strStyleSheets = $strCssFileName;
             }
         } else {
-            throw new Exception\Caller('Relative urls are not supported any more');
+            throw new Exception\Caller('Relative urls are not supported any more . ' . $strCssFileName);
         }
     }
 
