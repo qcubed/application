@@ -9,6 +9,7 @@ php:
 
 install:
     - composer install
+    - cp -RnT install .
 
 env:
     - DB=mysql
