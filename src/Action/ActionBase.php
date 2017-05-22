@@ -9,8 +9,8 @@
 
 namespace QCubed\Action;
 
+use QCubed\Control\Proxy;
 use QCubed\Exception\Caller;
-use QCubed\Jqui\Event\AbstractProperty;
 use QCubed\ObjectBase;
 use QCubed\Type;
 use QCubed\Project\Control\ControlBase as QControl;
@@ -21,7 +21,7 @@ use QCubed\Project\Application;
  * Base class for all other Actions.
  *
  * @package Actions
- * @property \QCubed\Event\Base $Event Any QEvent derivated class instance
+ * @property \QCubed\Event\EventBase $Event Any QEvent derivated class instance
  * @was QAction
  */
 abstract class ActionBase extends ObjectBase
@@ -58,16 +58,21 @@ abstract class ActionBase extends ObjectBase
         if ($objActions && count($objActions)) {
             foreach ($objActions as $objAction) {
                 if ($objAction->objEvent->EventName != $strEventName) {
-                    throw new Exception('Invalid Action Event in this entry in the ActionArray');
+                    throw new \Exception('Invalid Action Event in this entry in the ActionArray');
                 }
+
+                $strCode = ' ' . $objAction->renderScript($objControl);
+
+                if ($objAction->objEvent->Block) {
+                    $strCode .= _nl() . 'qc.blockEvents = true;';
+                }
+
 
                 if ($objAction->objEvent->Delay > 0) {
                     $strCode = sprintf(" qcubed.setTimeout('%s', \$j.proxy(function(){%s},this), %s);",
                         $objControl->ControlId,
-                        _nl() . _indent(trim($objAction->renderScript($objControl))) . _nl(),
+                        _nl() . _indent(trim($strCode)) . _nl(),
                         $objAction->objEvent->Delay);
-                } else {
-                    $strCode = ' ' . $objAction->renderScript($objControl);
                 }
 
                 // Add Condition (if applicable)
@@ -84,13 +89,10 @@ abstract class ActionBase extends ObjectBase
         }
 
         if (strlen($strToReturn)) {
-            if ($objAction->objEvent->Block) {
-                $strToReturn .= 'qc.blockEvents = true;';
-            }
             $strToReturn = _nl() . _indent($strToReturn);
 
 
-            if ($objControl instanceof \QCubed\Control\Proxy) {
+            if ($objControl instanceof Proxy) {
                 $strOut = sprintf('$j("#%s").on("%s", "[data-qpxy=\'%s\']", function(event, ui){%s});',
                     $objControl->Form->FormId, $strEventName, $objControl->ControlId, $strToReturn);
             } else {

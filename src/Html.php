@@ -81,13 +81,13 @@ abstract class Html {
      *
      * If the innerHtml is detected as being wrapped in an html tag of some sort, it will attempt to format the code so that
      * it has a structured view in a browser, with the inner html indented and on a new line in between the tags. You
-     * can turn this off by setting __MINIMIZE__, or by passing in true to $blnNoSpace.
+     * can turn this off by setting QCUBED_MINIMIZE, or by passing in true to $blnNoSpace.
      *
      * There area a few special cases to consider:
      * - Void elements will not be formatted to avoid adding unnecessary white space since these are generally
      *   inline elements
-     * - Non-void elements always use internal newlines, even in __MINIMIZE__ mode. This is to prevent different behavior
-     *   from appearing in __MINIMIZE__ mode on inline elements, because inline elements with internal space will render with space to separate
+     * - Non-void elements always use internal newlines, even in QCUBED_MINIMIZE mode. This is to prevent different behavior
+     *   from appearing in QCUBED_MINIMIZE mode on inline elements, because inline elements with internal space will render with space to separate
      *   from surrounding elements. Usually, this is not an issue, but in the special situations where you really need inline
      *   elements to be right up against its siblings, set $blnNoSpace to true.
      *

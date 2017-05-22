@@ -2,12 +2,14 @@
 
 namespace QCubed\Project\Control;
 
-use QCubed\Control\AbstractFormBase;
-
 
 /**
- * ProjectForm gives you opportunities to override key functions and values for all of your forms.
+ * Class FormBase
  *
+ * This form base gives you opportunities to override key functions and values for all of your forms.
+ *
+ * @package QCubed\Project\Control
+ * @was QForm
  */
 abstract class FormBase extends \QCubed\Control\FormBase
 {

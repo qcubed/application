@@ -85,7 +85,7 @@ abstract class ApplicationBase extends ObjectBase
 
     public function __construct()
     {
-        if (defined('__MINIMIZE__') && __MINIMIZE__) {
+        if (defined('QCUBED_MINIMIZE') && QCUBED_MINIMIZE) {
             $this->blnMinimize = true;
         }
     }

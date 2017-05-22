@@ -83,6 +83,8 @@ switch (SERVER_INSTANCE) {
     case 'test':
     case 'stage':
     case 'prod':
+        define('QCUBED_MINIMIZE', 1);
+        break;
 }
 
 /*

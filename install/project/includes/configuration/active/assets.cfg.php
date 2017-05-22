@@ -25,7 +25,7 @@ define ('QCUBED_IMAGE_URL', QCUBED_BASE_URL . '/application/assets/images');
 define ('QCUBED_EXAMPLES_URL', QCUBED_PHP_URL . '/examples');
 define ('QCUBED_EXAMPLES_DIR', QCUBED_BASE_DIR . '/application/assets/php/examples');   // corresponding physical dir
 
-define ('QCUBED_VENDOR_URL', QCUBED_BASE_URL . '/../');
+define ('QCUBED_VENDOR_URL', dirname(QCUBED_BASE_URL));
 
 define ('QCUBED_ITEMS_PER_PAGE', 20);
 

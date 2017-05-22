@@ -23,7 +23,7 @@ use QCubed\Project\HtmlAttributeManager;
  * will be printed, and the tag will be correctly terminated.
  *
  * It will normally print the opening and closing tags on their own lines, with the inner html indented once and in-between
- * the two tags. If you define the __MINIMIZE__ constant or set Application::minimize(), it will all be printed on one line with no indents.
+ * the two tags. If you define the QCUBED_MINIMIZE constant or set Application::minimize(), it will all be printed on one line with no indents.
  *
  * This control can be used as a drawing aid to draw complex QControls.
  *
@@ -58,7 +58,7 @@ class Tag extends HtmlAttributeManager
      * Render the tag and everything between the opening and closing tags. Does this in two modes:
      * - Developer mode (default) will put the opening and closing tags on separate lines, with the
      *   innerHtml indented in between them.
-     * - Minimize mode (set the __MINIMIZE__ global constant) will put everything on one line, and draw a little faster.
+     * - Minimize mode (set the QCUBED_MINIMIZE global constant) will put everything on one line, and draw a little faster.
      *
      * @param bool $blnDisplayOutput
      * @param null|string $strInnerText

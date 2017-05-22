@@ -9,6 +9,7 @@ namespace QCubed\Project\Control;
  * ProjectControl is the user overridable Base-Class for all Controls.
  *
  * This class is intended to be modified.
+ * @was QControl
  */
 abstract class ControlBase extends \QCubed\Control\ControlBase
 {

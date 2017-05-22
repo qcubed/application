@@ -54,6 +54,7 @@ $a["const"]["QCubed\\Control\\ControlBase::CausesValidationNone"] = "QCubed\\Con
 $a["const"]["QCubed\\Control\\ControlBase::CausesValidationAll"] = "QCubed\\Control\\ControlBase::CAUSES_VALIDATION_ALL";
 $a["const"]["QCubed\\Control\\ControlBase::CausesValidationSiblingsAndChildren"] = "QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN";
 $a["const"]["QCubed\\Control\\ControlBase::CausesValidationSiblingsOnly"] = "QCubed\\Control\\ControlBase::CAUSES_VALIDATION_SIBLINGS_ONLY";
+$a["class"]['QControl'] = '\\QCubed\\Project\\Control\\ControlBase';
 $a["const"]["QCubed\\Project\\Control\\ControlBase::CommentStart"] = "QCubed\\Project\\Control\\ControlBase::COMMENT_START";
 $a["const"]["QCubed\\Project\\Control\\ControlBase::CommentEnd"] = "QCubed\\Project\\Control\\ControlBase::COMMENT_END";
 $a["const"]["QCubed\\Project\\Control\\ControlBase::CausesValidationNone"] = "QCubed\\Project\\Control\\ControlBase::CAUSES_VALIDATION_NONE";

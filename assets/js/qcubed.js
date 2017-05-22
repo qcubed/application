@@ -473,11 +473,6 @@ qcubed = {
         ////////////////////////////////
 
         this.loadJavaScriptFile = function(strScript, objCallback) {
-            if (strScript.indexOf("/") === 0) {
-                strScript = qc.baseDir + strScript;
-            } else if (strScript.indexOf("http") !== 0) {
-                strScript = qc.jsAssets + "/" + strScript;
-            }
             return $j.ajax({
                 url: strScript,
                 success: objCallback,
@@ -487,11 +482,6 @@ qcubed = {
         };
 
         this.loadStyleSheetFile = function(strStyleSheetFile, strMediaType) {
-            if (strStyleSheetFile.indexOf("/") === 0) {
-                strStyleSheetFile = qc.baseDir + strStyleSheetFile;
-            } else if (strStyleSheetFile.indexOf("http") !== 0) {
-                strStyleSheetFile = qc.cssAssets + "/" + strStyleSheetFile;
-            }
             if (strMediaType){
                 strMediaType = " media="+strMediaType;
             }

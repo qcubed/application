@@ -5,6 +5,8 @@ namespace QCubed\Project\Control;
 use QCubed as Q;
 
 /**
+ * Class RadioButton
+ *
  * Button class - You may modify it to contain your own modifications to the
  * Button throughout the framework.
  * @package Controls

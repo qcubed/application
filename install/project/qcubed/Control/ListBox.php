@@ -6,6 +6,8 @@ use QCubed as Q;
 use QCubed\Project\Application;
 
 /**
+ * Class ListBox
+ *
  * The QListBox class is based upon QListBoxBase.
  *
  * The purpose of this class is entirely to provide a place for you to make modifications of the QListBox control.
@@ -13,6 +15,7 @@ use QCubed\Project\Application;
  * instead of in the base class, you can ensure that your changes are not affected by core improvements.
  *
  * @was QListBox
+ * @package QCubed\Project\Control
  */
 class ListBox extends Q\Control\ListBoxBase
 {
