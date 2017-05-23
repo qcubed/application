@@ -9,7 +9,7 @@
 
 namespace QCubed\Jqui\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -27,14 +27,22 @@ abstract class ActionBase extends \QCubed\Action\ActionBase
     /** @var string|null  */
     protected $strMethod = null;
 
-    protected function __construct(QControl $objControl, $strMethod)
+    /**
+     * ActionBase constructor.
+     * @param ControlBase $objControl
+     * @param $strMethod
+     */
+    protected function __construct(ControlBase $objControl, $strMethod)
     {
         $this->strControlId = $objControl->ControlId;
         $this->strMethod = Type::cast($strMethod, Type::STRING);
         $this->setJavaScripts($objControl);
     }
 
-    private function setJavaScripts(QControl $objControl)
+    /**
+     * @param ControlBase $objControl
+     */
+    private function setJavaScripts(ControlBase $objControl)
     {
         $objControl->addJavascriptFile(QCUBED_JQUI_JS);
     }

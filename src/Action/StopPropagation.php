@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class StopPropagation
@@ -25,11 +25,11 @@ class StopPropagation extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string Client side JS
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return 'event.stopPropagation();';
     }

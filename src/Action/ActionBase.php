@@ -13,7 +13,7 @@ use QCubed\Control\Proxy;
 use QCubed\Exception\Caller;
 use QCubed\ObjectBase;
 use QCubed\Type;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Project\Application;
 
 
@@ -29,24 +29,24 @@ abstract class ActionBase extends ObjectBase
     /**
      * Abstract method, implemented in derived classes. Returns the JS needed for the action to work
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return mixed
      */
-    abstract public function renderScript(QControl $objControl);
+    abstract public function renderScript(ControlBase $objControl);
 
     /** @var \QCubed\Event\EventBase Event object which will fire this action */
     protected $objEvent;
 
     /**
-     * @param QControl $objControl QControl for which the actions have to be rendered
+     * @param ControlBase $objControl ControlBase for which the actions have to be rendered
      * @param string $strEventName Name of the event for which the actions have to be rendered
      * @param ActionBase[] $objActions Array of actions
      *
      * @return null|string
      * @throws \Exception
      */
-    public static function renderActions(QControl $objControl, $strEventName, $objActions)
+    public static function renderActions(ControlBase $objControl, $strEventName, $objActions)
     {
         $strToReturn = '';
         $strJqUiProperty = null;
@@ -97,7 +97,7 @@ abstract class ActionBase extends ObjectBase
                     $objControl->Form->FormId, $strEventName, $objControl->ControlId, $strToReturn);
             } else {
                 $strOut = sprintf('$j("#%s").on("%s", function(event, ui){%s});',
-                    $objControl->getJqControlId(),
+                    $objControl->getJControlBaseId(),
                     $strEventName, $strToReturn);
             }
 

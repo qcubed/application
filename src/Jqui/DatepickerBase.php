@@ -9,6 +9,7 @@
 
 namespace QCubed\Jqui;
 
+use QCubed\Control\Calendar;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\QDateTime;
@@ -49,7 +50,7 @@ class DatepickerBase extends DatepickerGen
      * @param QControl|QForm $objParentObject
      * @param null|string $strControlId
      *
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __construct($objParentObject, $strControlId = null)
     {
@@ -76,7 +77,6 @@ class DatepickerBase extends DatepickerGen
      * @param string $strName
      *
      * @return mixed|null|string
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -112,7 +112,7 @@ class DatepickerBase extends DatepickerGen
      * @param string $mixValue Property value
      *
      * @return mixed|void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {
@@ -154,7 +154,7 @@ class DatepickerBase extends DatepickerGen
             case 'JqDateFormat':
                 try {
                     parent::__set($strName, $mixValue);
-                    $this->strDateTimeFormat = QCalendar::qcFrmt($this->JqDateFormat);
+                    $this->strDateTimeFormat = Calendar::qcFrmt($this->JqDateFormat);
                     // trigger an update to reformat the text with the new format
                     $this->DateTime = $this->dttDateTime;
                     break;
@@ -167,7 +167,7 @@ class DatepickerBase extends DatepickerGen
             case 'DateFormat':
                 try {
                     $this->strDateTimeFormat = Type::Cast($mixValue, Type::STRING);
-                    parent::__set('JqDateFormat', QCalendar::jqFrmt($this->strDateTimeFormat));
+                    parent::__set('JqDateFormat', Calendar::jqFrmt($this->strDateTimeFormat));
                     // trigger an update to reformat the text with the new format
                     $this->DateTime = $this->dttDateTime;
                     break;

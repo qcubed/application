@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 
 /**
@@ -29,14 +29,14 @@ class BlurControl extends ActionBase
     /**
      * Constructor
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @throws Caller
      */
     public function __construct($objControl)
     {
-        if (!($objControl instanceof QControl)) {
-            throw new Caller('First parameter of constructor is expecting an object of type QControl');
+        if (!($objControl instanceof ControlBase)) {
+            throw new Caller('First parameter of constructor is expecting an object of type ControlBase');
         }
 
         $this->strControlId = $objControl->ControlId;
@@ -45,11 +45,11 @@ class BlurControl extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf("qc.getW('%s').blur();", $this->strControlId);
     }

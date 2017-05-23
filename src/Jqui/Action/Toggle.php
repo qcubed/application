@@ -9,8 +9,7 @@
 
 namespace QCubed\Jqui\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Type;
+use QCubed\Control\ControlBase;
 
 /**
  * Class Toggle
@@ -22,12 +21,21 @@ use QCubed\Type;
  */
 class Toggle extends ActionBase
 {
-    public function __construct(QControl $objControl, $strMethod = "slow")
+    /**
+     * Toggle constructor.
+     * @param ControlBase $objControl
+     * @param string $strMethod
+     */
+    public function __construct(ControlBase $objControl, $strMethod = "slow")
     {
         parent::__construct($objControl, $strMethod);
     }
 
-    public function renderScript(QControl $objControl)
+    /**
+     * @param ControlBase $objControl
+     * @return string
+     */
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf('$j("#%s").toggle("%s");', $this->strControlId, $this->strMethod);
     }

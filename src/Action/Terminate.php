@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class Terminate
@@ -29,11 +29,11 @@ class Terminate extends ActionBase
     /**
      * Returns the JS for the browser
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string JS to prevent the default action
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return 'event.preventDefault();';
     }

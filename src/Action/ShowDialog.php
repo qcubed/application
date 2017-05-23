@@ -9,8 +9,9 @@
 
 namespace QCubed\Action;
 
+use QCubed\Control\DialogInterface;
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class ShowDialog
@@ -30,11 +31,11 @@ class ShowDialog extends ActionBase
     /**
      * Constructor
      *
-     * @param QDialog $objControl
+     * @param DialogInterface $objControl
      *
      * @throws Caller
      */
-    public function __construct(\QCubed\Control\DialogInterface $objControl)
+    public function __construct(DialogInterface $objControl)
     {
         $strControlId = $objControl->getJqControlId();
         $this->strJavaScript = sprintf('jQuery("#%s").dialog("open");', $strControlId);
@@ -43,11 +44,11 @@ class ShowDialog extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side for opening/showing the dialog
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return null|string JS that will be run on the client side
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return $this->strJavaScript;
     }

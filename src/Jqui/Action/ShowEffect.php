@@ -9,7 +9,7 @@
 
 namespace QCubed\Jqui\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -23,18 +23,18 @@ use QCubed\Type;
 class ShowEffect extends ActionBase
 {
     protected $strOptions = null;
-    protected $strSpeed = null;
+    protected $intSpeed = null;
 
-    public function __construct(QControl $objControl, $strMethod = "default", $strOptions = "", $strSpeed = 1000)
+    public function __construct(ControlBase $objControl, $strMethod = "default", $strOptions = "", $intSpeed = 1000)
     {
         $this->strOptions = Type::cast($strOptions, Type::STRING);
-        $this->strSpeed = Type::cast($strSpeed, Type::STRING);
+        $this->intSpeed = Type::cast($intSpeed, Type::INTEGER);
 
         parent::__construct($objControl, $strMethod);
     }
 
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
-        return sprintf('$j("#%s").show("%s", {%s}, %s);', $this->strControlId, $this->strMethod, $this->strOptions, $this->strSpeed);
+        return sprintf('$j("#%s").show("%s", {%s}, %d);', $this->strControlId, $this->strMethod, $this->strOptions, $this->intSpeed);
     }
 }

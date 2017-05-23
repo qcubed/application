@@ -9,7 +9,8 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
+use QCubed\Exception\Caller;
 
 /**
  * Class Redirect
@@ -44,7 +45,7 @@ class Redirect extends ActionBase
      * @param string $strName Name of the property
      *
      * @return mixed|null|string
-     * @throws \QCubed\Exception\Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -54,7 +55,7 @@ class Redirect extends ActionBase
             default:
                 try {
                     return parent::__get($strName);
-                } catch (\QCubed\Exception\Caller $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -63,11 +64,11 @@ class Redirect extends ActionBase
 
     /**
      * Returns the JS which runs on the client side
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf('%s;', $this->strJavaScript);
     }

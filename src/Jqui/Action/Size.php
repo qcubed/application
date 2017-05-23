@@ -9,7 +9,7 @@
 
 namespace QCubed\Jqui\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -23,18 +23,28 @@ use QCubed\Type;
 class Size extends ActionBase
 {
     protected $strOptions = null;
-    protected $strSpeed = null;
+    protected $intSpeed = null;
 
-    public function __construct(QControl $objControl, $strOptions, $strSpeed = 1000)
+    /**
+     * Size constructor.
+     * @param ControlBase $objControl
+     * @param $strOptions
+     * @param int $intSpeed
+     */
+    public function __construct(ControlBase $objControl, $strOptions, $intSpeed = 1000)
     {
         $this->strOptions = Type::cast($strOptions, Type::STRING);
-        $this->strSpeed = Type::cast($strSpeed, Type::STRING);
+        $this->intSpeed = Type::cast($intSpeed, Type::INTEGER);
 
         parent::__construct($objControl, 'size');
     }
 
-    public function renderScript(QControl $objControl)
+    /**
+     * @param ControlBase $objControl
+     * @return string
+     */
+    public function renderScript(ControlBase $objControl)
     {
-        return sprintf('$j("#%s").effect("size", {%s}, %s);', $this->strControlId, $this->strOptions, $this->strSpeed);
+        return sprintf('$j("#%s").effect("size", {%s}, %d);', $this->strControlId, $this->strOptions, $this->intSpeed);
     }
 }

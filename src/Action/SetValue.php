@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class SetValue
@@ -30,10 +30,10 @@ class SetValue extends ActionBase {
     }
 
     /**
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      * @return mixed|string
      */
-    public function renderScript(QControl $objControl) {
+    public function renderScript(ControlBase $objControl) {
         return sprintf("jQuery('#%s').val('%s');", $this->strControlId, $this->strValue);
     }
 }

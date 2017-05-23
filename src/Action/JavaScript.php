@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\QString;
 
 /**
@@ -64,10 +64,10 @@ class JavaScript extends ActionBase
     /**
      * Returns the JS which will be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      * @return string
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf('%s;', $this->strJavaScript);
     }

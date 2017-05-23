@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class CssClass
@@ -44,11 +44,11 @@ class CssClass extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string The JavaScript to be executed on the client side
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         // Specified a Temporary Css Class to use?
         if (is_null($this->strTemporaryCssClass)) {

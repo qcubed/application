@@ -11,7 +11,7 @@ namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
 use QCubed\Js;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 
 /**
@@ -63,11 +63,11 @@ class Alert extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         $strMessage = Js\Helper::toJsObject($this->strMessage);
 

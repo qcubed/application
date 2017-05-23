@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Control\Calendar;
 
 /**
@@ -27,7 +27,7 @@ class ShowCalendar extends ActionBase
     protected $strControlId = null;
 
     /**
-     * @param QCalendar $calControl
+     * @param ControlBase $calControl
      *
      * @throws Caller
      */
@@ -41,11 +41,11 @@ class ShowCalendar extends ActionBase
 
     /**
      * Returns the JavaScript to be executed on the client side
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function RenderScript(QControl $objControl)
+    public function RenderScript(ControlBase $objControl)
     {
         return sprintf("qc.getC('%s').showCalendar();", $this->strControlId);
     }

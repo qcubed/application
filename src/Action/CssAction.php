@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class CssAction
@@ -36,7 +36,7 @@ class CssAction extends ActionBase
      *
      * @param string $strCssProperty
      * @param string $strCssValue
-     * @param null|QControl $objControl
+     * @param null|ControlBase $objControl
      */
     public function __construct($strCssProperty, $strCssValue, $objControl = null)
     {
@@ -50,11 +50,11 @@ class CssAction extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string JavaScript to be executed on the client side for setting the CSS
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         if ($this->strControlId == null) {
             $this->strControlId = $objControl->ControlId;

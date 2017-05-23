@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -29,14 +29,14 @@ class ToggleDisplay extends ActionBase
     protected $blnDisplay = null;
 
     /**
-     * @param QControl|QControlBase $objControl
+     * @param ControlBase $objControl
      * @param bool $blnDisplay
      *
-     * @throws Exception|Caller|\QCubed\Exception\InvalidCast
+     * @throws Caller
      */
     public function __construct($objControl, $blnDisplay = null)
     {
-        if (!($objControl instanceof QControl)) {
+        if (!($objControl instanceof ControlBase)) {
             throw new Caller('First parameter of constructor is expecting an object of type QControl');
         }
 
@@ -50,11 +50,11 @@ class ToggleDisplay extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string Returns the JavaScript to be executed on the client side
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         if ($this->blnDisplay === true) {
             $strShowOrHide = 'show';

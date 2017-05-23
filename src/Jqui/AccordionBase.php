@@ -117,7 +117,7 @@ class AccordionBase extends AccordionGen
      * @param string $mixValue Value of the property
      *
      * @return mixed|void
-     * @throws Exception|InvalidCast
+     * @throws InvalidCast
      */
     public function __set($strName, $mixValue)
     {

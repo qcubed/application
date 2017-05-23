@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Project\Control\TextBox as QTextBox;
 
 /**
@@ -45,11 +45,11 @@ class SelectControl extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf("qc.getW('%s').select();", $this->strControlId);
     }

@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class ServerControl
@@ -23,13 +23,13 @@ use QCubed\Project\Control\ControlBase as QControl;
 class ServerControl extends Server
 {
     /**
-     * @param QControl $objControl Control where the action handler is defined
+     * @param ControlBase $objControl Control where the action handler is defined
      * @param string $strMethodName Name of the method which acts as the action handler
      * @param mixed $mixCausesValidationOverride Override for CausesValidation (if needed)
      * @param string $strJsReturnParam Override for ActionParameter
      */
     public function __construct(
-        QControl $objControl,
+        ControlBase $objControl,
         $strMethodName,
         $mixCausesValidationOverride = null,
         $strJsReturnParam = ""

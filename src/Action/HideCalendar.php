@@ -11,7 +11,7 @@ namespace QCubed\Action;
 
 use QCubed\Control\Calendar;
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class HideCalendar
@@ -28,7 +28,7 @@ class HideCalendar extends ActionBase
 
     /**
      * Constructor
-     * @param QCalendar $calControl
+     * @param Calendar $calControl
      *
      * @throws Caller
      */
@@ -42,11 +42,11 @@ class HideCalendar extends ActionBase
 
     /**
      * Returns the JavaScript to be executed on the client side
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf("qc.getC('%s').hideCalendar();", $this->strControlId);
     }

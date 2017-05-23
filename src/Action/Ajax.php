@@ -9,9 +9,10 @@
 
 namespace QCubed\Action;
 
+use QCubed\Control\WaitIcon;
 use QCubed\Exception\Caller;
 use QCubed\Js\Closure;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class Ajax
@@ -20,7 +21,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * the entire page. They generally are faster than server requests and give a better user experience.
  *
  * The QAjaxAction will associate a callback (strMethodName) with an event as part of an AddAction call. The callback will be
- * a method in the current QForm object. To associate a method that is part of a QControl, or any kind of a callback,
+ * a method in the current QForm object. To associate a method that is part of a ControlBase, or any kind of a callback,
  * use a QAjaxControlAction.
  *
  * The wait icon is a spinning gif file that can be overlayed on top of the control to show that the control is in
@@ -38,7 +39,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  *
  * @property-read           $MethodName               Name of the (event-handler) method to be called
  *              the event handler - function containing the actual code for the Ajax action
- * @property-read QWaitIcon $WaitIconControl          the waiting icon control for this Ajax Action
+ * @property-read WaitIcon $WaitIconControl          the waiting icon control for this Ajax Action
  * @property-read mixed     $CausesValidationOverride what kind of validation over-ride is to be implemented
  *              on this action.(See the QCausesValidation class and QFormBase class to understand in greater depth)
  * @property-read string    JsReturnParam             The line of javascript which would set the 'strParameter' value on the
@@ -55,7 +56,7 @@ class Ajax extends ActionBase
     protected $strId;
     /** @var string The event handler function name */
     protected $strMethodName;
-    /** @var QWaitIcon Wait Icon to be used for this particular action */
+    /** @var WaitIcon Wait Icon to be used for this particular action */
     protected $objWaitIconControl;
 
     protected $blnAsync = false;
@@ -72,17 +73,36 @@ class Ajax extends ActionBase
 
     /**
      * AjaxAction constructor.
-     * @param string           $strMethodName               Name of the event handler function to be called
-     * @param string|QWaitIcon $objWaitIconControl          Wait Icon for the action
+     * @param string|callable     $strMethodName            Name of the event handler function to be called, or a callable on the form or control
+     * @param string|WaitIcon $objWaitIconControl          Wait Icon for the action
      * @param null|mixed       $mixCausesValidationOverride what kind of validation over-ride is to be implemented
      * @param string           $strJsReturnParam            the line of javascript which would set the 'strParameter' value on the
      *                                                      client-side when the action occurs!
      * @param boolean  		   $blnAsync            		True to have the events for this action fire asynchronously.
      * 														Be careful when setting this to true. See class description.
+     * @throws Caller
      */
     public function __construct($strMethodName = null, $objWaitIconControl = 'default',
         $mixCausesValidationOverride = null, $strJsReturnParam = "", $blnAsync = false)
     {
+        global $_FORM;
+
+        if (is_string($strMethodName)) {
+            if (!method_exists($_FORM, $strMethodName)) {
+                throw new Caller("If method name is a string, the method must belong to a form.");
+            }
+        }
+        elseif (is_array($strMethodName) && is_callable($strMethodName)) {
+            // Assume first item is a control or form
+            if ($strMethodName[0] instanceof ControlBase) {
+                $strMethodName = $strMethodName[0]->ControlId . ':' . $strMethodName[1];
+            }
+            elseif (!method_exists($_FORM, $strMethodName[1])) {
+                throw new Caller("If method name is a string, the method must belong to a form.");
+            }
+            $strMethodName = $strMethodName[1];
+        }
+
         $this->strId = null;
         $this->strMethodName = $strMethodName;
         $this->objWaitIconControl = $objWaitIconControl;
@@ -130,7 +150,7 @@ class Ajax extends ActionBase
     /**
      * Returns the control's ActionParameter in string format
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string
      */
@@ -155,11 +175,11 @@ class Ajax extends ActionBase
      * The returned script is to be executed on the client side when the action is executed
      * (in this case qc.pA function is executed)
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         $strWaitIconControlId = null;
         if ($this->strId == null) {

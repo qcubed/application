@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class ToggleCssClass
@@ -31,7 +31,11 @@ class ToggleCssClass extends ActionBase
         $this->strTargetSelector = $strTargetSelector;
     }
 
-    public function renderScript(QControl $objControl)
+    /**
+     * @param ControlBase $objControl
+     * @return string
+     */
+    public function renderScript(ControlBase $objControl)
     {
         // Specified a Temporary Css Class to use?
         if ($this->strTargetSelector) {

@@ -9,7 +9,7 @@
 
 namespace QCubed\Jqui\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -24,20 +24,31 @@ class Transfer extends ActionBase
 {
     protected $strTargetControlId = null;
     protected $strOptions = null;
-    protected $strSpeed = null;
+    protected $intSpeed = null;
 
-    public function __construct(QControl $objControl, QControl $objTargetControl, $strOptions = "", $strSpeed = 1000)
+    /**
+     * Transfer constructor.
+     * @param ControlBase $objControl
+     * @param ControlBase $objTargetControl
+     * @param string $strOptions
+     * @param int $intSpeed
+     */
+    public function __construct(ControlBase $objControl, ControlBase $objTargetControl, $strOptions = "", $intSpeed = 1000)
     {
         $this->strTargetControlId = $objTargetControl->ControlId;
 
         $this->strOptions = Type::cast($strOptions, Type::STRING);
-        $this->strSpeed = Type::cast($strSpeed, Type::STRING);
+        $this->intSpeed = Type::cast($intSpeed, Type::INTEGER);
 
         parent::__construct($objControl, 'transfer');
     }
 
-    public function renderScript(QControl $objControl)
+    /**
+     * @param ControlBase $objControl
+     * @return string
+     */
+    public function renderScript(ControlBase $objControl)
     {
-        return sprintf('$j("#%s").effect("transfer", {to: "#%s_ctl" %s}, %s);', $this->strControlId, $this->strTargetControlId, $this->strOptions, $this->strSpeed);
+        return sprintf('$j("#%s").effect("transfer", {to: "#%s_ctl" %s}, %d);', $this->strControlId, $this->strTargetControlId, $this->strOptions, $this->intSpeed);
     }
 }

@@ -66,7 +66,7 @@ class ProgressbarBase extends ProgressbarGen
      * @param string $strName Name of the property
      * @param string $mixValue Value of the property
      *
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __set($strName, $mixValue)
     {

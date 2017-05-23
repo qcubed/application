@@ -9,7 +9,7 @@
 
 namespace QCubed\Jqui\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -25,7 +25,7 @@ class Bounce extends ActionBase
     protected $strOptions = null;
     protected $strSpeed = null;
 
-    public function __construct(QControl $objControl, $strOptions = "", $strSpeed = 1000)
+    public function __construct(ControlBase $objControl, $strOptions = "", $strSpeed = 1000)
     {
         $this->strOptions = Type::cast($strOptions, Type::STRING);
         $this->strSpeed = Type::cast($strSpeed, Type::STRING);
@@ -33,7 +33,11 @@ class Bounce extends ActionBase
         parent::__construct($objControl, 'bounce');
     }
 
-    public function renderScript(QControl $objControl)
+    /**
+     * @param ControlBase $objControl
+     * @return string
+     */
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf('$j("#%s_ctl").effect("bounce", {%s}, %s);', $this->strControlId, $this->strOptions, $this->strSpeed);
     }

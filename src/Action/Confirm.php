@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Js;
 
 /**
@@ -68,7 +68,7 @@ class Confirm extends ActionBase
      *
      * @return string The JS to be executed
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         $strMessage = Js\Helper::toJsObject($this->strMessage);
 

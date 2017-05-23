@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * @package Actions
@@ -28,11 +28,11 @@ class ResetTimer extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side (to clear the timeout on the control)
      *
-     * @param QControl $objControl Control on which the timeout has to be cleared
+     * @param ControlBase $objControl Control on which the timeout has to be cleared
      *
      * @return string JavaScript to be executed on the client side
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf("qcubed.clearTimeout('%s');", $objControl->ControlId);
     }

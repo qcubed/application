@@ -10,9 +10,12 @@
 namespace QCubed\Jqui;
 
 use QCubed as Q;
+use QCubed\Exception\Caller;
+use QCubed\Exception\InvalidCast;
 use QCubed\Jqui;
 use QCubed\Project\Control\Dialog;
 use QCubed\Project\Application;
+use QCubed\Type;
 
 /**
  * Class DialogBase
@@ -463,7 +466,7 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
     public function close()
     {
         Application::instance()->executeControlCommand($this->getJqControlId(), $this->getJqSetupFunction(), "close",
-            \QCubed\ApplicationBase::PRIORITY_LAST);
+            Application::PRIORITY_LAST);
     }
 
     /**
@@ -471,16 +474,17 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
      *
      * @param string $strName
      * @param string $mixValue
-     *
-     * @throws Exception|Q\Exception\Caller|Q\Exception\InvalidCast
+     * @throws Caller
+     * @throws InvalidCast
+     * @return void
      */
     public function __set($strName, $mixValue)
     {
         switch ($strName) {
             case '_ClickedButton': // Internal only. Do not use. Used by JS above to keep track of clicked button.
                 try {
-                    $this->strClickedButtonId = Q\Type::cast($mixValue, Q\Type::STRING);
-                } catch (Q\Exception\InvalidCast $objExc) {
+                    $this->strClickedButtonId = Type::cast($mixValue, Type::STRING);
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -488,9 +492,9 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
 
             case '_IsOpen': // Internal only, to detect when dialog has been opened or closed.
                 try {
-                    $this->blnIsOpen = Q\Type::cast($mixValue, Q\Type::BOOLEAN);
+                    $this->blnIsOpen = Type::cast($mixValue, Type::BOOLEAN);
                     $this->blnAutoOpen = $this->blnIsOpen;  // in case it gets redrawn
-                } catch (Q\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -500,11 +504,11 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
             // escape key as well
             case 'HasCloseButton':
                 try {
-                    $this->blnHasCloseButton = Q\Type::cast($mixValue, Q\Type::BOOLEAN);
+                    $this->blnHasCloseButton = Type::cast($mixValue, Type::BOOLEAN);
                     $this->blnCloseOnEscape = $this->blnHasCloseButton;
                     $this->blnModified = true;    // redraw
                     break;
-                } catch (Q\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -520,7 +524,7 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
                         parent::__set($strName, $mixValue);
                     }
                     break;
-                } catch (Q\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -536,16 +540,16 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
                         parent::__set($strName, $mixValue);
                     }
                     break;
-                } catch (Q\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
 
             case 'DialogState':
                 try {
-                    $this->strDialogState = Q\Type::cast($mixValue, Q\Type::STRING);
+                    $this->strDialogState = Type::cast($mixValue, Type::STRING);
                     break;
-                } catch (Q\Exception\InvalidCast $objExc) {
+                } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -554,7 +558,7 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
                 try {
                     parent::__set($strName, $mixValue);
                     break;
-                } catch (Q\Exception\Caller $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
@@ -567,7 +571,7 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception|Q\Exception\Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -581,7 +585,7 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
             default:
                 try {
                     return parent::__get($strName);
-                } catch (Q\Exception\Caller $objExc) {
+                } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }

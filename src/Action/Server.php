@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Js;
 
 /**
@@ -42,18 +42,35 @@ class Server extends ActionBase
      * Server constructor.
      *
      *
-     * @param string $strMethodName The method name which is to be assigned as the event handler
+     * @param string|callable $strMethodName The method name which is to be assigned as the event handler
      *                                             (for the event being created). If blank, the whole page will just refresh.
      * @param string $mixCausesValidationOverride A constant from CausesValidation
      *                                             (or $this or an array of QControls)
      * @param string $strJsReturnParam The parameter to be returned when this event occurs
-     *                                             (this is an override for the control's ActionParameter)
+     * @throws Caller
      */
     public function __construct(
         $strMethodName = null,
         $mixCausesValidationOverride = null,
         $strJsReturnParam = ''
     ) {
+        global $_FORM;
+        if (is_string($strMethodName)) {
+            if (!method_exists($_FORM, $strMethodName)) {
+                throw new Caller("If method name is a string, the method must belong to the form.");
+            }
+        }
+        elseif (is_array($strMethodName) && is_callable($strMethodName)) {
+            // Assume first item is a control or form
+            if ($strMethodName[0] instanceof ControlBase) {
+                $strMethodName = $strMethodName[0]->ControlId . ':' . $strMethodName[1];
+            }
+            elseif (!method_exists($_FORM, $strMethodName[1])) {
+                throw new Caller("If method name is a string, the method must belong to a form.");
+            }
+            $strMethodName = $strMethodName[1];
+        }
+
         $this->strMethodName = $strMethodName;
         $this->mixCausesValidationOverride = $mixCausesValidationOverride;
         $this->strJsReturnParam = $strJsReturnParam;
@@ -89,7 +106,7 @@ class Server extends ActionBase
     /**
      * Determines the ActionParameter associated with the action and returns it
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string The action parameter
      */
@@ -113,11 +130,11 @@ class Server extends ActionBase
      * Returns the JS which will be called on the client side
      * which will result in the event handler being called
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         return sprintf("qc.pB('%s', '%s', '%s', %s);",
             $objControl->Form->FormId, $objControl->ControlId, addslashes(get_class($this->objEvent)),

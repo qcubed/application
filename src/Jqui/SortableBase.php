@@ -27,7 +27,7 @@ use QCubed as Q;
  * will use the top level html objects inside the panel to decide what to sort. Make sure
  * they have ids so it can return the ids of the items in sort order.
  *
- * @property-read Array $ItemArray    List of ControlIds in sort order.
+ * @property-read array $ItemArray    List of ControlIds in sort order.
  *
  * @link http://jqueryui.com/sortable/
  * @was QSortableBase

@@ -25,7 +25,7 @@ use QCubed\Type;
  * whatever top level items drown inside of it will become selectable. Make sure
  * the items have ids.
  *
- * @property Array $SelectedItems ControlIds of the items selected
+ * @property array $SelectedItems ControlIds of the items selected
  *
  * @link http://jqueryui.com/selectable/
  * @was QSelectableBase

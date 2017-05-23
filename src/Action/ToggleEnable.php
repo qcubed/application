@@ -10,7 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -30,14 +30,14 @@ class ToggleEnable extends ActionBase
     protected $blnEnabled = null;
 
     /**
-     * @param QControl|QControlBase $objControl
+     * @param ControlBase $objControl
      * @param boolean $blnEnabled
      *
-     * @throws Exception|Caller|\QCubed\Exception\InvalidCast
+     * @throws Caller
      */
     public function __construct($objControl, $blnEnabled = null)
     {
-        if (!($objControl instanceof QControl)) {
+        if (!($objControl instanceof ControlBase)) {
             throw new Caller('First parameter of constructor is expecting an object of type QControl');
         }
 
@@ -51,11 +51,11 @@ class ToggleEnable extends ActionBase
     /**
      * Returns the JavaScript to be executed on the client side
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @return string Client side JS
      */
-    public function renderScript(QControl $objControl)
+    public function renderScript(ControlBase $objControl)
     {
         if ($this->blnEnabled === true) {
             $strEnableOrDisable = 'enable';

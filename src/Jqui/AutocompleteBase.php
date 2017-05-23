@@ -10,10 +10,12 @@
 namespace QCubed\Jqui;
 
 use QCubed as Q;
+use QCubed\Control\ListItem;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Control\Base as QControl;
+use QCubed\Control\ControlBase as QControl;
+use QCubed\Control\FormBase as QForm;
 use QCubed\Type;
 
 /**
@@ -193,7 +195,7 @@ class AutocompleteBase extends AutocompleteGen
      * @param string $strName Property Name
      * @param string $mixValue Property Value
      *
-     * @throws Exception|InvalidCast
+     * @throws InvalidCast
      */
     public function __set($strName, $mixValue)
     {
@@ -228,7 +230,7 @@ class AutocompleteBase extends AutocompleteGen
 
             case 'Source':
                 try {
-                    if (is_array($mixValue) && count($mixValue) > 0 && $mixValue[0] instanceof QListItem) {
+                    if (is_array($mixValue) && count($mixValue) > 0 && $mixValue[0] instanceof ListItem) {
                         // figure out what item is selected
                         foreach ($mixValue as $objItem) {
                             if ($objItem->Selected) {
@@ -260,7 +262,7 @@ class AutocompleteBase extends AutocompleteGen
      * @param string $strName Name of the property
      *
      * @return mixed
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -283,7 +285,7 @@ class AutocompleteBase extends AutocompleteGen
     /**
      * If this control is attachable to a codegenerated control in a ModelConnector, this function will be
      * used by the ModelConnector designer dialog to display a list of options for the control.
-     * @return QModelConnectorParam[]
+     * @return Q\ModelConnector\Param[]
      **/
     public static function getModelConnectorParams()
     {

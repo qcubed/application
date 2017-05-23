@@ -10,12 +10,12 @@
 namespace QCubed\Jqui;
 
 require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
-use QCubed\Application\t;
-
+use QCubed\Control\Calendar;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\QDateTime;
 use QCubed\Type;
+use QCubed as Q;
 
 
 /**
@@ -113,7 +113,7 @@ class DatepickerBoxBase extends DatepickerBoxGen
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -148,7 +148,7 @@ class DatepickerBoxBase extends DatepickerBoxGen
      * @param string $strName Property name
      * @param string $mixValue Property value to be set
      *
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {
@@ -208,7 +208,7 @@ class DatepickerBoxBase extends DatepickerBoxGen
             case 'JqDateFormat':
                 try {
                     parent::__set($strName, $mixValue);
-                    $this->strDateTimeFormat = QCalendar::qcFrmt($this->JqDateFormat);
+                    $this->strDateTimeFormat = Calendar::qcFrmt($this->JqDateFormat);
                     // trigger an update to reformat the text with the new format
                     $this->DateTime = $this->dttDateTime;
                 } catch (InvalidCast $objExc) {
@@ -221,7 +221,7 @@ class DatepickerBoxBase extends DatepickerBoxGen
             case 'DateFormat':
                 try {
                     $this->strDateTimeFormat = Type::cast($mixValue, Type::STRING);
-                    parent::__set('JqDateFormat', QCalendar::jqFrmt($this->strDateTimeFormat));
+                    parent::__set('JqDateFormat', Calendar::jqFrmt($this->strDateTimeFormat));
                     // trigger an update to reformat the text with the new format
                     $this->DateTime = $this->dttDateTime;
                 } catch (InvalidCast $objExc) {
@@ -255,12 +255,12 @@ class DatepickerBoxBase extends DatepickerBoxGen
     }
 
     /**
-     * @return QModelConnectorParam[]
+     * @return Q\ModelConnector\Param[]
      */
     public static function getModelConnectorParams()
     {
         return array_merge(parent::getModelConnectorParams(), array(
-            new QModelConnectorParam (get_called_class(), 'DateFormat', 'How to format the date. Default: MM/DD/YY',
+            new Q\ModelConnector\Param (get_called_class(), 'DateFormat', 'How to format the date. Default: MM/DD/YY',
                 Type::STRING)
         ));
     }
