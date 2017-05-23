@@ -10,6 +10,7 @@
 namespace QCubed\Action;
 
 use QCubed\Control\WaitIcon;
+use QCubed\Database\PostgreSql\Exception;
 use QCubed\Exception\Caller;
 use QCubed\Js\Closure;
 use QCubed\Control\ControlBase;
@@ -95,12 +96,20 @@ class Ajax extends ActionBase
         elseif (is_array($strMethodName) && is_callable($strMethodName)) {
             // Assume first item is a control or form
             if ($strMethodName[0] instanceof ControlBase) {
+                if (!$strMethodName[0]->ControlId) {
+                    throw new Caller('You must add a control to the form before giving it an action.');
+                }
                 $strMethodName = $strMethodName[0]->ControlId . ':' . $strMethodName[1];
             }
             elseif (!method_exists($_FORM, $strMethodName[1])) {
                 throw new Caller("If method name is a string, the method must belong to a form.");
             }
-            $strMethodName = $strMethodName[1];
+            else {
+                $strMethodName = $strMethodName[1];
+            }
+        }
+        else {
+            throw new Caller ("Unknown method.");
         }
 
         $this->strId = null;

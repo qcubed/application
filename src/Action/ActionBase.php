@@ -97,7 +97,7 @@ abstract class ActionBase extends ObjectBase
                     $objControl->Form->FormId, $strEventName, $objControl->ControlId, $strToReturn);
             } else {
                 $strOut = sprintf('$j("#%s").on("%s", function(event, ui){%s});',
-                    $objControl->getJControlBaseId(),
+                    $objControl->getJqControlId(),
                     $strEventName, $strToReturn);
             }
 

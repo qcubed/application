@@ -34,7 +34,7 @@ class ServerControl extends Server
         $mixCausesValidationOverride = null,
         $strJsReturnParam = ""
     ) {
-        parent::__construct($objControl->ControlId . ':' . $strMethodName, $mixCausesValidationOverride,
+        parent::__construct([$objControl, $strMethodName], $mixCausesValidationOverride,
             $strJsReturnParam);
     }
 }

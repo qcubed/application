@@ -68,7 +68,12 @@ class Server extends ActionBase
             elseif (!method_exists($_FORM, $strMethodName[1])) {
                 throw new Caller("If method name is a string, the method must belong to a form.");
             }
-            $strMethodName = $strMethodName[1];
+            else {
+                $strMethodName = $strMethodName[1];
+            }
+        }
+        else {
+            throw new Caller ("Unknown method.");
         }
 
         $this->strMethodName = $strMethodName;

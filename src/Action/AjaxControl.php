@@ -9,7 +9,7 @@
 
 namespace QCubed\Action;
 
-use QCubed\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 
 /**
  * Class AjaxControl
@@ -23,7 +23,7 @@ use QCubed\Control\ControlBase as QControl;
 class AjaxControl extends Ajax
 {
     /**
-     * @param QControl $objControl Control where the action handler is defined
+     * @param ControlBase $objControl Control where the action handler is defined
      * @param string $strMethodName Name of the action handler method
      * @param string $objWaitIconControl The wait icon to be implemented
      * @param null $mixCausesValidationOverride Override for CausesValidation (if needed)
@@ -31,15 +31,14 @@ class AjaxControl extends Ajax
      * @param boolean $blnAsync True to have the events for this action fire asynchronously
      */
     public function __construct(
-        QControl $objControl,
+        ControlBase $objControl,
         $strMethodName,
         $objWaitIconControl = 'default',
         $mixCausesValidationOverride = null,
         $strJsReturnParam = "",
         $blnAsync = false
     ) {
-        assert($objControl->ControlId != '');    // Are you adding an action before adding the control to the form?
-        parent::__construct($objControl->ControlId . ':' . $strMethodName, $objWaitIconControl,
+        parent::__construct([$objControl, $strMethodName], $objWaitIconControl,
             $mixCausesValidationOverride, $strJsReturnParam, $blnAsync);
     }
 }
