@@ -11,8 +11,6 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\Project\Application;
@@ -32,7 +30,7 @@ use QCubed as Q;
  * @property boolean $HtmlEntities hould htmlentities be used on the contents of this control
  * @was QBlockControl
  */
-abstract class BlockControl extends QControl
+abstract class BlockControl extends Q\Project\Control\ControlBase
 {
     ///////////////////////////
     // Private Member Variables
@@ -64,7 +62,7 @@ abstract class BlockControl extends QControl
     protected $objIsDropZoneFor = array();
 
     /**
-     * @param QControl $objTargetControl
+     * @param ControlBase $objTargetControl
      */
     public function addControlToMove($objTargetControl = null)
     {
@@ -83,7 +81,7 @@ abstract class BlockControl extends QControl
         return;
     }
 
-    public function removeControlToMove(QControl $objTargetControl)
+    public function removeControlToMove(ControlBase $objTargetControl)
     {
         unset($this->objMovesControlsArray[$objTargetControl->ControlId]);
     }
@@ -104,7 +102,7 @@ abstract class BlockControl extends QControl
 
     public function removeDropZone($objParentObject)
     {
-        if ($objParentObject instanceof QForm) {
+        if ($objParentObject instanceof FormBase) {
             $this->objDropsControlsArray[$objParentObject->FormId] = false;
         } else {
             if ($objParentObject instanceof BlockControl) {
@@ -172,7 +170,7 @@ abstract class BlockControl extends QControl
 
 
     /**
-     * Returns the HTML of the QControl
+     * Returns the HTML of the Control
      * @return string The HTML string
      */
     protected function getControlHtml()
@@ -244,7 +242,7 @@ abstract class BlockControl extends QControl
      * @param string $strName Name of the property
      *
      * @return mixed
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -286,7 +284,7 @@ abstract class BlockControl extends QControl
      * @param string $strName Property Name
      * @param string $mixValue Property Value
      *
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      * @return void
      */
     public function __set($strName, $mixValue)
@@ -400,7 +398,7 @@ abstract class BlockControl extends QControl
     /**
      * Returns a description of the options available to modify by the designer for the code generator.
      *
-     * @return ModelConnectorParam[]
+     * @return Q\ModelConnector\Param[]
      */
     public static function getModelConnectorParams()
     {

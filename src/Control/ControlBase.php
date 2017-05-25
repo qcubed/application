@@ -561,7 +561,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * @param string $strFormId
      * @param mixed $params Parameters coming from javascript
      */
-    public static function _CallActionMethod(ControlBase $objDestControl, $strMethodName, $strFormId, $params)
+    public static function _callActionMethod(ControlBase $objDestControl, $strMethodName, $strFormId, $params)
     {
         /**
          * To transition to actions that just take a $params array and nothing else, we use reflection

@@ -40,7 +40,7 @@ class FloatTextBox extends NumericTextBox
     /**
      * Constructor
      *
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      */
     public function __construct($objParentObject, $strControlId = null)

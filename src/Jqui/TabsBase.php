@@ -13,7 +13,7 @@ use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
 use QCubed as Q;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -97,7 +97,7 @@ class TabsBase extends TabsGen
                 array_key_exists($key = $i, $this->objTabHeadersArray)
             ) {
                 $objHeader = $this->objTabHeadersArray[$key];
-                if ($objHeader instanceof QControl) {
+                if ($objHeader instanceof Q\Control\ControlBase) {
                     $strText = $objHeader->getControlHtml();
                 } else {
                     $strText = (string)$objHeader;
@@ -120,24 +120,24 @@ class TabsBase extends TabsGen
      *
      * TBD: impelment ajax fetch of tab content
      *
-     * @param integer|QControl|string $mixHeaderIndicator either the 0-based index of the header, or the section control or that control's id
-     * @param string|QControl $mixHeader string or control to render as the tab header
+     * @param integer|ControlBase|string $mixHeaderIndicator either the 0-based index of the header, or the section control or that control's id
+     * @param string|ControlBase $mixHeader string or control to render as the tab header
      * @return void
      */
     public function setHeader($mixHeaderIndicator, $mixHeader)
     {
-        $key = ($mixHeaderIndicator instanceof QControl) ? $mixHeaderIndicator->ControlId : $mixHeaderIndicator;
+        $key = ($mixHeaderIndicator instanceof ControlBase) ? $mixHeaderIndicator->ControlId : $mixHeaderIndicator;
         $this->objTabHeadersArray[$key] = $mixHeader;
     }
 
     /**
-     * Generated method overrides the built-in QControl method, causing it to not redraw completely. We restore
+     * Generated method overrides the built-in Control method, causing it to not redraw completely. We restore
      * its functionality here.
      */
     public function refresh()
     {
         parent::refresh();
-        QControl::refresh();
+        ControlBase::refresh();
     }
 
 
@@ -257,9 +257,9 @@ class TabsBase extends TabsGen
 
     /**
      * Overriding to keep info in sync.
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      */
-    public function addChildControl(QControl $objControl)
+    public function addChildControl(ControlBase $objControl)
     {
         parent::addChildControl($objControl);
         if (count($this->objChildControlArray) == 1) {

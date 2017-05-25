@@ -15,7 +15,6 @@ use QCubed\Exception\Caller;
 use QCubed\Exception\DataBind;
 use QCubed\Html;
 use QCubed\ObjectBase;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Watcher\Watcher;
 use QCubed\Type;
@@ -36,7 +35,7 @@ use QCubed\Action\ActionBase as QAction;
  * It must also detect whether data is submitted via HTML Submit actions or Ajax actions (JavaScript HttpRequest actions),
  * and act accordingly.
  *
- * As of this writing, QCubed can only manage one form on a page, and all QControls must be drawn inside that form
+ * As of this writing, QCubed can only manage one form on a page, and all Controls must be drawn inside that form
  * (InternetExplorer in particular does not support controls drawn outside of a form).
  *
  * Typically, you will subclass this class and implement a few key overrides (formCreate() for one), and also implement a template to draw the
@@ -79,7 +78,7 @@ abstract class FormBase extends ObjectBase
     protected $strFormId;
     /** @var integer representational integer value of what state the form currently is in */
     protected $intFormStatus;
-    /** @var QControl[] Array of QControls with this form as the parent */
+    /** @var ControlBase[] Array of Controls with this form as the parent */
     protected $objControlArray;
     /**
      * @var QControlGrouping List of Groupings in the form (for old drag and drop)
@@ -135,7 +134,7 @@ abstract class FormBase extends ObjectBase
 
 
     /**
-     * Generates Control ID used to keep track of those QControls whose ID was not explicitly set.
+     * Generates Control ID used to keep track of those Controls whose ID was not explicitly set.
      * It uses the counter variable to maintain uniqueness for Control IDs during the life of the page
      * Life of the page is untill the time when the formstate expired and is removed by the
      * garbage collection of the formstate handler
@@ -312,10 +311,10 @@ abstract class FormBase extends ObjectBase
 
     /**
      * Helper function for below GetModifiedControls
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      * @return boolean
      */
-    protected static function isControlModified($objControl)
+    protected static function isControlModified(ControlBase $objControl)
     {
         return $objControl->isModified();
     }
@@ -689,8 +688,8 @@ abstract class FormBase extends ObjectBase
     /**
      * Calls a data binder associated with the form. Does this so data binder can be protected. Mostly for legacy code.
      * @param callable $callable
-     * @param  QControl $objPaginatedControl
-     * @throws QDataBindException
+     * @param  ControlBase $objPaginatedControl
+     * @throws DataBind
      */
     public function callDataBinder($callable, $objPaginatedControl)
     {
@@ -703,7 +702,7 @@ abstract class FormBase extends ObjectBase
 
     /**
      * Renders the AjaxHelper for the QForm
-     * @param QControl $objControl
+     * @param ControlBase|null $objControl
      *
      * @return string The Ajax helper string (should be JS commands)
      */
@@ -918,12 +917,12 @@ abstract class FormBase extends ObjectBase
     }
 
     /**
-     * Add a QControl to the current QForm.
-     * @param  QControl $objControl
+     * Add a Control to the current QForm.
+     * @param  ControlBase $objControl
      *
      * @throws Caller
      */
-    public function addControl(QControl $objControl)
+    public function addControl(ControlBase $objControl)
     {
         $strControlId = $objControl->ControlId;
         $objControl->markAsModified(); // make sure new controls get drawn
@@ -941,7 +940,7 @@ abstract class FormBase extends ObjectBase
      * @param string $strControlId The Control ID of the control which is needed to be fetched
      *               from the current QForm (should be the child of the current QForm).
      *
-     * @return null|QControl
+     * @return null|ControlBase
      */
     public function getControl($strControlId)
     {
@@ -953,7 +952,7 @@ abstract class FormBase extends ObjectBase
     }
 
     /**
-     * Removes a QControl (and its children) from the current QForm
+     * Removes a Control (and its children) from the current QForm
      * @param string $strControlId
      */
     public function removeControl($strControlId)
@@ -986,7 +985,7 @@ abstract class FormBase extends ObjectBase
 
     /**
      * Returns all controls belonging to the Form as an array.
-     * @return mixed|QControl[]
+     * @return mixed|ControlBase[]
      */
     public function getAllControls()
     {
@@ -1117,12 +1116,12 @@ abstract class FormBase extends ObjectBase
     }
 
     /**
-     * Returns the child controls of the current QForm or a QControl object
+     * Returns the child controls of the current Form or a Control object
      *
      * @param FormBase|ControlBase $objParentObject The object whose child controls are to be searched for
      *
      * @throws Caller
-     * @return QControl[]
+     * @return ControlBase[]
      */
     public function getChildControls($objParentObject)
     {
@@ -1130,7 +1129,7 @@ abstract class FormBase extends ObjectBase
 
         if ($objParentObject instanceof QForm) {
             // They want all the ChildControls for this Form
-            // Basically, return all objControlArray QControls where the Qcontrol's parent is NULL
+            // Basically, return all objControlArray Controls where the Qcontrol's parent is NULL
             foreach ($this->objControlArray as $objChildControl) {
                 if (!($objChildControl->ParentControl)) {
                     array_push($objControlArrayToReturn, $objChildControl);
@@ -1139,10 +1138,10 @@ abstract class FormBase extends ObjectBase
             return $objControlArrayToReturn;
 
         } else {
-            if ($objParentObject instanceof QControl) {
+            if ($objParentObject instanceof ControlBase) {
                 return $objParentObject->getChildControls();
                 // THey want all the ChildControls for a specific Control
-                // Basically, return all objControlArray QControls where the Qcontrol's parent is the passed in parentobject
+                // Basically, return all objControlArray Controls where the Qcontrol's parent is the passed in parentobject
                 /*				$strControlId = $objParentObject->ControlId;
                                 foreach ($this->objControlArray as $objChildControl) {
                                     $objParentControl = $objChildControl->ParentControl;
@@ -1152,7 +1151,7 @@ abstract class FormBase extends ObjectBase
                                 }*/
 
             } else {
-                throw new Caller('ParentObject must be either a QForm or QControl object');
+                throw new Caller('ParentObject must be either a Form or Control object');
             }
         }
     }
@@ -1209,7 +1208,7 @@ abstract class FormBase extends ObjectBase
     {
         $mixParameter = $_POST['Qform__FormParameter'];
         $objSourceControl = $this->objControlArray[$strControlId];
-        $params = QControl::_ProcessActionParams($objSourceControl, $objAction, $mixParameter);
+        $params = Q\Project\Control\ControlBase::_processActionParams($objSourceControl, $objAction, $mixParameter);
         $params[ControlBase::ACTION_FORM_ID] = $this->strFormId;
 
         if (strpos($strMethodName, '::')) {
@@ -1233,7 +1232,7 @@ abstract class FormBase extends ObjectBase
             $strDestControlId = substr($strMethodName, 0, $intPosition);
             $strMethodName = substr($strMethodName, $intPosition + 1);
             $objDestControl = $this->objControlArray[$strDestControlId];
-            QControl::_CallActionMethod($objDestControl, $strMethodName, $this->strFormId, $params);
+            Q\Project\Control\ControlBase::_callActionMethod($objDestControl, $strMethodName, $this->strFormId, $params);
         } else {
             /**
              * To transition to actions that just take a $params array and nothing else, we use reflection
@@ -1250,12 +1249,12 @@ abstract class FormBase extends ObjectBase
     }
 
     /**
-     * Calles 'Validate' method on a QControl recursively
-     * @param QControl $objControl
+     * Calles 'Validate' method on a Control recursively
+     * @param ControlBase $objControl
      *
      * @return bool
      */
-    protected function validateControlAndChildren(QControl $objControl)
+    protected function validateControlAndChildren(ControlBase $objControl)
     {
         return $objControl->validateControlAndChildren();
     }
@@ -1326,13 +1325,13 @@ abstract class FormBase extends ObjectBase
 
                     // Now, Do Something with mixCauseValidation...
 
-                    // Starting Point is a QControl
-                    if ($mixCausesValidation instanceof QControl) {
+                    // Starting Point is a Control
+                    if ($mixCausesValidation instanceof ControlBase) {
                         if (!$this->validateControlAndChildren($mixCausesValidation)) {
                             $blnValid = false;
                         }
 
-                        // Starting Point is an Array of QControls
+                        // Starting Point is an Array of Controls
                     } else {
                         if (is_array($mixCausesValidation)) {
                             foreach (((array)$mixCausesValidation) as $objControlToValidate) {
@@ -1343,7 +1342,7 @@ abstract class FormBase extends ObjectBase
 
                             // Validate All the Controls on the Form
                         } else {
-                            if ($mixCausesValidation === QControl::CAUSES_VALIDATION_ALL) {
+                            if ($mixCausesValidation === ControlBase::CAUSES_VALIDATION_ALL) {
                                 foreach ($this->getChildControls($this) as $objControl) {
                                     // Only Enabled and Visible and Rendered controls that are children of this form should be validated
                                     if (($objControl->Visible) && ($objControl->Enabled) && ($objControl->RenderMethod) && ($objControl->OnPage)) {
@@ -1354,7 +1353,7 @@ abstract class FormBase extends ObjectBase
                                 }
 
                             } else {
-                                if ($mixCausesValidation == QControl::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN) {
+                                if ($mixCausesValidation == ControlBase::CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN) {
                                     // Get only the Siblings of the ActionControl's ParentControl
                                     // If not ParentControl, then the parent is the form itself
                                     if (!($objParentObject = $objActionControl->ParentControl)) {
@@ -1371,7 +1370,7 @@ abstract class FormBase extends ObjectBase
                                         }
                                     }
                                 } else {
-                                    if ($mixCausesValidation == QControl::CAUSES_VALIDATION_SIBLINGS_ONLY) {
+                                    if ($mixCausesValidation == ControlBase::CAUSES_VALIDATION_SIBLINGS_ONLY) {
                                         // Get only the Siblings of the ActionControl's ParentControl
                                         // If not ParentControl, tyhen the parent is the form itself
                                         if (!($objParentObject = $objActionControl->ParentControl)) {
@@ -1740,10 +1739,10 @@ abstract class FormBase extends ObjectBase
     }
 
     /**
-     * Will return an array of QControls from the form which have either an error or warning message.
+     * Will return an array of Controls from the form which have either an error or warning message.
      *
      * @param bool $blnErrorsOnly Return controls that have just errors (otherwise, show both warnings and errors)
-     * @return QControl[] an array of controls representing the (multiple) errors and warnings
+     * @return ControlBase[] an array of controls representing the (multiple) errors and warnings
      */
     public function getErrorControls($blnErrorsOnly = false)
     {

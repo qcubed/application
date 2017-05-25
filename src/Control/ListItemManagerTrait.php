@@ -61,12 +61,12 @@ trait ListItemManagerTrait
      * only a ListItem object can be passed (as opposed to an object or strings)
      *
      * @param integer $intIndex index at which the item should be inserted
-     * @param QListItemBase $objListItem the ListItem which shall be inserted
+     * @param ListItemBase $objListItem the ListItem which shall be inserted
      *
      * @throws IndexOutOfRange
-     * @throws Exception|InvalidCast
+     * @throws InvalidCast
      */
-    public function addItemAt($intIndex, \QCubed\Control\ListItemBase $objListItem)
+    public function addItemAt($intIndex, ListItemBase $objListItem)
     {
         try {
             $intIndex = Type::cast($intIndex, Type::INTEGER);
@@ -126,7 +126,7 @@ trait ListItemManagerTrait
         try {
             $objListItemArray = Type::cast($objListItemArray, Type::ARRAY_TYPE);
             if ($objListItemArray) {
-                if (!reset($objListItemArray) instanceof \QCubed\Control\ListItemBase) {
+                if (!reset($objListItemArray) instanceof ListItemBase) {
                     throw new Caller('Not an array of ListItemBase types');
                 }
             }
@@ -150,7 +150,7 @@ trait ListItemManagerTrait
      * @param integer $intIndex
      *
      * @throws IndexOutOfRange
-     * @throws Exception|InvalidCast
+     * @throws InvalidCast
      * @return ListItemBase
      */
     public function getItem($intIndex)
@@ -197,7 +197,7 @@ trait ListItemManagerTrait
      * @param integer $intIndex
      *
      * @throws IndexOutOfRange
-     * @throws Exception|InvalidCast
+     * @throws InvalidCast
      */
     public function removeItem($intIndex)
     {
@@ -228,7 +228,7 @@ trait ListItemManagerTrait
      * @param integer $intIndex
      * @param ListItem $objListItem
      *
-     * @throws Exception|InvalidCast
+     * @throws InvalidCast
      */
     public function replaceItem($intIndex, ListItem $objListItem)
     {
@@ -263,7 +263,7 @@ trait ListItemManagerTrait
      * find the item.
      *
      * @param string $strId If this is a sub-item, it will be an id fragment
-     * @return null|QListItem
+     * @return null|ListItemBase
      */
     public function findItem($strId)
     {

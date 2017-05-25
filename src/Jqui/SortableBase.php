@@ -16,7 +16,7 @@ use QCubed\Type;
 use QCubed as Q;
 
 /**
- * Class QSortableBase
+ * Class SortableBase
  *
  * The SortableBase class defined here provides an interface between the generated
  * SortableGen class, and QCubed. This file is part of the core and will be overwritten

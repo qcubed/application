@@ -16,7 +16,6 @@ use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
@@ -55,14 +54,10 @@ abstract class ListBoxBase extends ListControl
     /** @var string Error to be shown If the box is empty, doesn't have a name and is marked as required */
     protected $strLabelForRequiredUnnamed;
 
-    //////////
-    // Methods
-    //////////
     /**
-     * QControl-Constructor
-     *
-     * @param QControl|QForm $objParentObject
-     * @param string $strControlId
+     * ListBoxBase constructor.
+     * @param ControlBase|FormBase $objParentObject
+     * @param string|null $strControlId
      */
     public function __construct($objParentObject, $strControlId = null)
     {
@@ -305,7 +300,7 @@ abstract class ListBoxBase extends ListControl
      * @param string $mixValue
      *
      * @return void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {
@@ -369,10 +364,10 @@ abstract class ListBoxBase extends ListControl
     public static function getModelConnectorParams()
     {
         return array_merge(parent::getModelConnectorParams(), array(
-            new QModelConnectorParam(get_called_class(), 'Rows', 'Height of field for multirow field',
+            new Q\ModelConnector\Param(get_called_class(), 'Rows', 'Height of field for multirow field',
                 Type::INTEGER),
-            new QModelConnectorParam(get_called_class(), 'SelectionMode', 'Single or multiple selections',
-                QModelConnectorParam::SELECTION_LIST,
+            new Q\ModelConnector\Param(get_called_class(), 'SelectionMode', 'Single or multiple selections',
+                Q\ModelConnector\Param::SELECTION_LIST,
                 array(
                     null => 'Default',
                     'self::SELECTION_MODE_SINGLE' => 'Single',

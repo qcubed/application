@@ -14,8 +14,6 @@ use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\TextBox;
 use QCubed\Type;
 use QCubed as Q;
@@ -62,7 +60,7 @@ abstract class NumericTextBox extends TextBox
     /**
      * Constructor for the control
      *
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      */
     public function __construct($objParentObject, $strControlId = null)
@@ -136,8 +134,8 @@ abstract class NumericTextBox extends TextBox
      * PHP __get magic method implementation
      * @param string $strName Name of the property
      *
-     * @return array|bool|int|mixed|null|QControl|QForm|string
-     * @throws Exception|Caller
+     * @return mixed
+     * @throws Caller
      */
     public function __get($strName)
     {

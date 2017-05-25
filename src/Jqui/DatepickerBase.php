@@ -10,12 +10,12 @@
 namespace QCubed\Jqui;
 
 use QCubed\Control\Calendar;
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\QDateTime;
 use QCubed\Type;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 
 /**
  * Class DatepickerBase
@@ -47,7 +47,7 @@ class DatepickerBase extends DatepickerGen
     protected $dttDateTime;    // default to no selection
 
     /**
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      *
      * @throws Caller|InvalidCast

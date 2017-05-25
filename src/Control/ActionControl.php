@@ -9,7 +9,7 @@
 
 namespace QCubed\Control;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed as Q;
 
 /**
  * Class ActionControl
@@ -22,7 +22,7 @@ use QCubed\Project\Control\ControlBase as QControl;
  * @was QActionControl
  * @package QCubed\Control
  */
-abstract class ActionControl extends QControl
+abstract class ActionControl extends Q\Project\Control\ControlBase
 {
     /**
      * This function should contain the POST data parsing mechanism

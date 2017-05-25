@@ -10,8 +10,6 @@
 namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 
 
 /**
@@ -36,7 +34,7 @@ trait DataBinderTrait
      * - legacy mode: method name followed by optional control to call the method on. If not specified, will call on the form.
      * - modern mode: a php callable.
      * @param callable|string $mixMethodName
-     * @param null|QForm|QControl $objParentControl
+     * @param null|FormBase|ControlBase $objParentControl
      */
     public function setDataBinder($mixMethodName, $objParentControl = null)
     {
@@ -54,7 +52,6 @@ trait DataBinderTrait
 
     /**
      * Bind the data by calling the data binder. Will pass the current control as the parameter to the data binder.
-     * @throws Exception
      * @throws Caller
      */
     public function callDataBinder()
@@ -63,7 +60,7 @@ trait DataBinderTrait
             if (is_array($this->objDataBinder)) {
                 if ($this->objDataBinder[0] === $this) {
                     call_user_func($this->objDataBinder); // assume data binder is in a qcontrol, or is public
-                } elseif ($this->objDataBinder[0] instanceof QForm) {
+                } elseif ($this->objDataBinder[0] instanceof FormBase) {
                     $this->objDataBinder[0]->callDataBinder($this->objDataBinder,
                         $this); // Let form call the data binder, so that binder can be private to form
                 } else {
@@ -85,17 +82,17 @@ trait DataBinderTrait
      */
     public function sleep()
     {
-        $this->objDataBinder = QControl::sleepHelper($this->objDataBinder);
+        $this->objDataBinder = ControlBase::sleepHelper($this->objDataBinder);
         parent::sleep();
     }
 
     /**
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->objDataBinder = QControl::wakeupHelper($objForm, $this->objDataBinder);
+        $this->objDataBinder = ControlBase::wakeupHelper($objForm, $this->objDataBinder);
     }
 
     /**
@@ -107,8 +104,8 @@ trait DataBinderTrait
     }
 
     /**
-     * Returns the QForm. All QControls implement this.
-     * @return QForm
+     * Returns the FormBase. All ControlBases implement this.
+     * @return FormBase
      */
     abstract function getForm();
 }

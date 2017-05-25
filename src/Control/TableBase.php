@@ -9,11 +9,11 @@
 
 namespace QCubed\Control;
 
+use QCubed as Q;
 use QCubed\Exception\Caller;
 use QCubed\Exception\IndexOutOfRange;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Table\CallableColumn;
 use QCubed\Table\ColumnBase;
 use QCubed\QString;
@@ -23,8 +23,6 @@ use QCubed\Table\NodeColumn;
 use QCubed\Table\PropertyColumn;
 use QCubed\Table\VirtualAttributeColumn;
 use QCubed\Type;
-use QCubed\Project\Control\FormBase as QForm;
-use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 
 /**
@@ -91,10 +89,9 @@ abstract class TableBase extends PaginatedControl
     /**
      * Constructor method
      *
-     * @param QControl|QControlBase|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null $strControlId
      *
-     * @throws Exception
      * @throws Caller
      */
     public function __construct($objParentObject, $strControlId = null)
@@ -222,16 +219,16 @@ abstract class TableBase extends PaginatedControl
      * @param null|string|array $mixText The text to display as the label of the anchor, a callable callback to get the text,
      *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same. Depends on
      *   what time of row item is passed.
-     * @param null|string|array|QControlProxy $mixDestination The text representing the destination of the anchor, a callable callback to get the destination,
+     * @param null|string|array|Proxy $mixDestination The text representing the destination of the anchor, a callable callback to get the destination,
      *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same,
-     *   or a QControlProxy. Depends on what type of row item is passed.
+     *   or a Proxy. Depends on what type of row item is passed.
      * @param null|string|array $getVars An array of key=>value pairs to use as the GET variables in the link URL,
-     *   or in the case of a QControlProxy, possibly a string to represent the action parameter. In either case, each item
+     *   or in the case of a Proxy, possibly a string to represent the action parameter. In either case, each item
      *   can be a property chain, an array index list, or a callable callback as specified above.  If the destination is a
-     *   QControlProxy, this would be what to use as the action parameter.
+     *   Proxy, this would be what to use as the action parameter.
      * @param null|array $tagAttributes An array of key=>value pairs to use as additional attributes in the tag.
      *   For example, could be used to add a class or an id to each tag.
-     * @param bool $blnAsButton Only used if this is drawing a QControlProxy. Will draw the proxy as a button.
+     * @param bool $blnAsButton Only used if this is drawing a Proxy. Will draw the proxy as a button.
      * @param int $intColumnIndex
      * @return LinkColumn
      */
@@ -625,7 +622,6 @@ abstract class TableBase extends PaginatedControl
      *                                    only the visual row number currently on screen.
      *
      * @return string
-     * @throws Exception
      * @throws Caller
      */
     protected function getDataGridRowHtml($objObject, $intCurrentRowIndex)
@@ -821,19 +817,19 @@ abstract class TableBase extends PaginatedControl
                 $objColumn->sleep();
             }
         }
-        $this->rowParamsCallback = QControl::sleepHelper($this->rowParamsCallback);
+        $this->rowParamsCallback = Q\Project\Control\ControlBase::sleepHelper($this->rowParamsCallback);
         parent::sleep();
     }
 
     /**
      * Restore references.
      *
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->rowParamsCallback = QControl::wakeupHelper($objForm, $this->rowParamsCallback);
+        $this->rowParamsCallback = Q\Project\Control\ControlBase::wakeupHelper($objForm, $this->rowParamsCallback);
         if ($this->objColumnArray) {
             foreach ($this->objColumnArray as $objColumn) {
                 $objColumn->wakeup($objForm);
@@ -847,7 +843,6 @@ abstract class TableBase extends PaginatedControl
      * @param string $strName
      *
      * @return bool|int|mixed|null
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -892,8 +887,7 @@ abstract class TableBase extends PaginatedControl
      * @param string $strName
      * @param string $mixValue
      *
-     * @return mixed|void
-     * @throws Exception
+     * @return void
      * @throws Caller
      * @throws InvalidCast
      */
@@ -1005,27 +999,27 @@ abstract class TableBase extends PaginatedControl
     /**
      * Returns an description of the options available to modify by the designer for the code generator.
      *
-     * @return QModelConnectorParam[]
+     * @return Q\ModelConnector\Param[]
      */
     public static function getModelConnectorParams()
     {
         return array_merge(parent::getModelConnectorParams(), array(
-            new QModelConnectorParam(get_called_class(), 'RowCssClass', 'Css class given to each row',
+            new Q\ModelConnector\Param(get_called_class(), 'RowCssClass', 'Css class given to each row',
                 Type::STRING),
-            new QModelConnectorParam(get_called_class(), 'AlternateRowCssClass', 'Css class given to every other row',
+            new Q\ModelConnector\Param(get_called_class(), 'AlternateRowCssClass', 'Css class given to every other row',
                 Type::STRING),
-            new QModelConnectorParam(get_called_class(), 'HeaderRowCssClass', 'Css class given to the header rows',
+            new Q\ModelConnector\Param(get_called_class(), 'HeaderRowCssClass', 'Css class given to the header rows',
                 Type::STRING),
-            new QModelConnectorParam(get_called_class(), 'ShowHeader',
+            new Q\ModelConnector\Param(get_called_class(), 'ShowHeader',
                 'Whether or not to show the header. Default is true.', Type::BOOLEAN),
-            new QModelConnectorParam(get_called_class(), 'ShowFooter',
+            new Q\ModelConnector\Param(get_called_class(), 'ShowFooter',
                 'Whether or not to show the footer. Default is false.', Type::BOOLEAN),
-            new QModelConnectorParam(get_called_class(), 'RenderColumnTags',
+            new Q\ModelConnector\Param(get_called_class(), 'RenderColumnTags',
                 'Whether or not to render html column tags for the columns. Column tags are only needed in special situations. Default is false.',
                 Type::BOOLEAN),
-            new QModelConnectorParam(get_called_class(), 'Caption', 'Text to print in the caption tag of the table.',
+            new Q\ModelConnector\Param(get_called_class(), 'Caption', 'Text to print in the caption tag of the table.',
                 Type::STRING),
-            new QModelConnectorParam(get_called_class(), 'HideIfEmpty',
+            new Q\ModelConnector\Param(get_called_class(), 'HideIfEmpty',
                 'Whether to draw nothing if there is no data, or draw the table tags with no cells instead. Default is to drag the table tags.',
                 Type::BOOLEAN)
         ));

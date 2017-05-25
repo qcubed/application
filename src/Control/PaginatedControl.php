@@ -12,10 +12,9 @@ namespace QCubed\Control;
 require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
+use QCubed as Q;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Query\QQ;
 use QCubed\Type;
 use QCubed\Project\Control\Paginator;
@@ -40,7 +39,7 @@ use QCubed\Project\Control\Paginator;
  * @was QPaginatedControl
  * @package QCubed\Control
  */
-abstract class PaginatedControl extends QControl
+abstract class PaginatedControl extends Q\Project\Control\ControlBase
 {
     use DataBinderTrait;
 
@@ -68,7 +67,7 @@ abstract class PaginatedControl extends QControl
 
     /**
      * PaginatedControl constructor.
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      */
     public function __construct($objParentObject, $strControlId = null)
@@ -107,15 +106,12 @@ abstract class PaginatedControl extends QControl
         }
     }
 
-    /////////////////////////
-    // Public Properties: GET
-    /////////////////////////
     /**
      * PHP magic method
      * @param string $strName Property name
      *
      * @return mixed
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -198,13 +194,13 @@ abstract class PaginatedControl extends QControl
         }
     }
 
-
-
-
-
-    /////////////////////////
-    // Public Properties: SET
-    /////////////////////////
+    /**
+     * @param string $strName
+     * @param string $mixValue
+     * @throws Caller
+     * @throws InvalidCast
+     * @return void
+     */
     public function __set($strName, $mixValue)
     {
         switch ($strName) {

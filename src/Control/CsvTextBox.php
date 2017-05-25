@@ -48,7 +48,7 @@ class CsvTextBox extends TextBox
     /**
      * Constructor
      *
-     * @param QControl|QForm $objParentObject Parent of this textbox
+     * @param ControlBase|FormBase $objParentObject Parent of this textbox
      * @param null|string $strControlId Desired control ID for the textbox
      */
     public function __construct($objParentObject, $strControlId = null)
@@ -93,7 +93,7 @@ class CsvTextBox extends TextBox
      * @param string $strName Property name
      *
      * @return mixed
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -135,7 +135,7 @@ class CsvTextBox extends TextBox
      * @param string $mixValue Value of the property
      *
      * @return mixed|void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {

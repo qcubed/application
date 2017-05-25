@@ -12,8 +12,6 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed as Q;
 use QCubed\Type;
 
@@ -40,7 +38,7 @@ use QCubed\Type;
  * @was QJsTimerBase
  * @package QCubed\Event
  */
-class JsTimerBase extends QControl
+class JsTimerBase extends Q\Project\Control\ControlBase
 {
     // Values determining the state of the timer
     /** Constant used to indicate that the timer has stopped */
@@ -61,7 +59,7 @@ class JsTimerBase extends QControl
 
 
     /**
-     * @param QForm|QControl $objParentObject the form or parent control
+     * @param FormBase|ControlBase $objParentObject the form or parent control
      * @param int $intTime timer interval in ms
      * @param boolean $blnPeriodic if true the timer is "restarted" automatically after it has fired
      * @param boolean $blnStartNow starts the timer automatically after adding the first action
@@ -284,7 +282,7 @@ class JsTimerBase extends QControl
      * PHP magic function to get value of properties of an object of this class
      * @param string $strName Name of the properties
      *
-     * @return array|bool|int|mixed|null|QControl|QForm|string
+     * @return mixed
      * @throws Caller
      */
     public function __get($strName)
@@ -384,11 +382,11 @@ class JsTimerBase extends QControl
 
     /**
      * Add a child control to the current control (useless because JsTimer cannot have children)
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      *
      * @throws Caller
      */
-    public function addChildControl(QControl $objControl)
+    public function addChildControl(ControlBase $objControl)
     {
         throw new Caller('Do not add child-controls to an instance of JsTimer!');
     }

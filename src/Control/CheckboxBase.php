@@ -12,10 +12,10 @@ namespace QCubed\Control;
 require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
+use QCubed as Q;
 use QCubed\Css\TextAlignType;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\TagStyler;
@@ -37,7 +37,7 @@ use QCubed\Html;
  * @property boolean $HtmlEntities specifies whether the checkbox text will have to be run through htmlentities or not.
  * @package QCubed\Control
  */
-class CheckboxBase extends QControl
+class CheckboxBase extends Q\Project\Control\ControlBase
 {
     /** @var string Tag for rendering the control */
     protected $strTag = 'input';
@@ -46,7 +46,7 @@ class CheckboxBase extends QControl
     // APPEARANCE
     /** @var string Text opposite to the checkbox */
     protected $strText = null;
-    /** @var TextAlign|string the alignment of the string */
+    /** @var string the alignment of the string */
     protected $strTextAlign = TextAlignType::RIGHT;
 
     // BEHAVIOR

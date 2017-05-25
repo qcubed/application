@@ -11,8 +11,6 @@ namespace QCubed\Control;
 
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
-use QCubed\Project\Control\FormBase as QForm;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Exception\Caller;
 use QCubed\Type;
 
@@ -187,22 +185,22 @@ class DataRepeater extends PaginatedControl
      */
     public function sleep()
     {
-        $this->itemHtmlCallback = QControl::sleepHelper($this->itemHtmlCallback);
-        $this->itemAttributesCallback = QControl::sleepHelper($this->itemAttributesCallback);
-        $this->itemInnerHtmlCallback = QControl::sleepHelper($this->itemInnerHtmlCallback);
+        $this->itemHtmlCallback = ControlBase::sleepHelper($this->itemHtmlCallback);
+        $this->itemAttributesCallback = ControlBase::sleepHelper($this->itemAttributesCallback);
+        $this->itemInnerHtmlCallback = ControlBase::sleepHelper($this->itemInnerHtmlCallback);
         parent::sleep();
     }
 
     /**
      * Restore serialized references.
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->itemHtmlCallback = QControl::wakeupHelper($objForm, $this->itemHtmlCallback);
-        $this->itemAttributesCallback = QControl::wakeupHelper($objForm, $this->itemAttributesCallback);
-        $this->itemInnerHtmlCallback = QControl::wakeupHelper($objForm, $this->itemInnerHtmlCallback);
+        $this->itemHtmlCallback = ControlBase::wakeupHelper($objForm, $this->itemHtmlCallback);
+        $this->itemAttributesCallback = ControlBase::wakeupHelper($objForm, $this->itemAttributesCallback);
+        $this->itemInnerHtmlCallback = ControlBase::wakeupHelper($objForm, $this->itemInnerHtmlCallback);
     }
 
     /////////////////////////
@@ -245,7 +243,7 @@ class DataRepeater extends PaginatedControl
      * @param string $mixValue Property value
      *
      * @return mixed|void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {

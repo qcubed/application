@@ -14,14 +14,10 @@ use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QDateTime;
 use QCubed\Type;
 use QCubed as Q;
 
-//use QCubed\Project\Control\FormBase as QForm;
-//use QCubed\ModelConnector\Param as QModelConnectorParam;
 
 /**
  * This class is meant to be a date-picker.  It will essentially render an uneditable HTML textbox
@@ -43,7 +39,7 @@ use QCubed as Q;
  * @property int $HourInterval Hours are shown in these intervals
  * @was QDateTimePicker
  */
-class DateTimePicker extends QControl
+class DateTimePicker extends Q\Project\Control\ControlBase
 {
     const SHOW_DATE = 'Date';
     const SHOW_DATE_TIME = 'DateTime';
@@ -83,6 +79,11 @@ class DateTimePicker extends QControl
 
     protected $strCssClass = 'datetimepicker';
 
+    /**
+     * DateTimePicker constructor.
+     * @param ControlBase|FormBase $objParent
+     * @param null $strControlId
+     */
     public function __construct($objParent, $strControlId = null)
     {
         parent::__construct($objParent, $strControlId);

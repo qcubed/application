@@ -14,7 +14,6 @@ use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Type;
 use QCubed as Q;
 
@@ -39,7 +38,7 @@ use QCubed as Q;
  * @was QWaitIcon
  * @package QCubed\Control
  */
-class WaitIcon extends QControl
+class WaitIcon extends Q\Project\Control\ControlBase
 {
     ///////////////////////////
     // Private Member Variables
@@ -100,7 +99,7 @@ class WaitIcon extends QControl
      * @param string $strName Property name
      *
      * @return mixed|null|string
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -137,7 +136,7 @@ class WaitIcon extends QControl
      * @param string $mixValue Property value
      *
      * @return mixed|void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {

@@ -12,8 +12,6 @@ namespace QCubed\Control;
 use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Type;
 use QCubed as Q;
 
@@ -39,7 +37,7 @@ class IntegerTextBox extends NumericTextBox
     /**
      * Constructor
      *
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      */
     public function __construct($objParentObject, $strControlId = null)

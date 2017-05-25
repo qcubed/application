@@ -14,8 +14,8 @@ use QCubed\Control\ListItem;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Control\ControlBase as QControl;
-use QCubed\Control\FormBase as QForm;
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Type;
 
 /**
@@ -113,7 +113,7 @@ class AutocompleteBase extends AutocompleteGen
      * where the term will not be the same as the contents of the field.
      *
      * @param string $strMethodName Name of the method which has to be bound
-     * @param QForm|QControl $objParentControl The parent control on which the action is to be bound
+     * @param FormBase|ControlBase $objParentControl The parent control on which the action is to be bound
      */
     public function setDataBinder($strMethodName, $objParentControl = null)
     {

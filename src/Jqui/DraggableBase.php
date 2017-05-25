@@ -9,21 +9,21 @@
 
 namespace QCubed\Jqui;
 
+use QCubed\Control\ControlBase;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
 use QCubed\Type;
-use QCubed\Project\Control\ControlBase as QControl;
 
 /**
  * Class DraggableBase
  *
  * The DraggableBase class defined here provides an interface between the generated
- * QDraggableGen class, and QCubed. This file is part of the core and will be overwritten
+ * DraggableGen class, and QCubed. This file is part of the core and will be overwritten
  * when you update QCubed. To override, make your changes to the Draggable.php file instead.
  *
- * This class is designed to work as a kind of add-on class to a QControl, giving its capabilities
- * to the control. To make a QControl draggable, simply set $ctl->Dragable = true. You can then
+ * This class is designed to work as a kind of add-on class to a QCubed Control, giving its capabilities
+ * to the control. To make a QCubed Control draggable, simply set $ctl->Dragable = true. You can then
  * get to this class to further manipulate the aspects of the draggable through $ctl->DragObj.
  *
  * @property-read Integer $DeltaX Amount of change in left that happened on the last drag
@@ -100,13 +100,13 @@ class DraggableBase extends DraggableGen
 
             case 'Handle':
                 // Override to let you set the handle to:
-                //	a QControl, or selector, or array of QControls or selectors
-                if ($mixValue instanceof QControl) {
+                //	a Control, or selector, or array of Controls or selectors
+                if ($mixValue instanceof ControlBase) {
                     parent::__set($strName, '#' . $mixValue->ControlId);
                 } elseif (is_array($mixValue)) {
                     $aHandles = array();
                     foreach ($mixValue as $mixItem) {
-                        if ($mixItem instanceof QControl) {
+                        if ($mixItem instanceof ControlBase) {
                             $aHandles[] = '#' . $mixItem->ControlId;
                         } elseif (is_string($mixItem)) {
                             $aHandles[] = $mixItem;

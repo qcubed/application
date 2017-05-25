@@ -12,8 +12,8 @@ use QCubed\Exception\Caller;
 use QCubed as Q;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
+use QCubed\Project\Control\ControlBase;
+use QCubed\Project\Control\FormBase;
 use QCubed\Table\ColumnBase;
 use QCubed\Table\DataColumn;
 use QCubed\Table\DataGridCheckboxColumn;
@@ -66,7 +66,7 @@ class DataGridBase extends TableBase
 
     /**
      * DataGridBase constructor.
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      * @throws Caller
      */

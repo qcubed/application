@@ -13,8 +13,8 @@ require_once(dirname(dirname(__DIR__)) . '/i18n/i18n-lib.inc.php');
 use QCubed\Application\t;
 
 use QCubed\Exception\Caller;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Type;
+use QCubed as Q;
 
 /**
  * Class FileControl
@@ -30,7 +30,7 @@ use QCubed\Type;
  * @was QFileControl
  * @package QCubed\Control
  */
-class FileControl extends QControl
+class FileControl extends Q\Project\Control\ControlBase
 {
     ///////////////////////////
     // Private Member Variables
@@ -114,7 +114,6 @@ class FileControl extends QControl
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)

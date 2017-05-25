@@ -12,7 +12,6 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Type;
 
 /**
@@ -97,8 +96,8 @@ class RadioButtonBase extends CheckboxBase
      * PHP __get magic method implementation for the QRadioButton class
      * @param string $strName Name of the property
      *
-     * @return array|bool|int|mixed|null|QControl|QForm|string
-     * @throws Exception|Caller
+     * @return mixed
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -127,7 +126,7 @@ class RadioButtonBase extends CheckboxBase
      * @param string $mixValue Value of the property
      *
      * @return void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {

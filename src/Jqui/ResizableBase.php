@@ -17,14 +17,14 @@ use QCubed\Type;
 /**
  * Class ResizableBase
  *
- * Implements the JQuery UI Resizable capabilities into a QControl
+ * Implements the JQuery UI Resizable capabilities into a QCubed Control
  *
- * The QResizableBase class defined here provides an interface between the generated
- * QResizableGen class, and QCubed. This file is part of the core and will be overwritten
+ * The ResizableBase class defined here provides an interface between the generated
+ * ResizableGen class, and QCubed. This file is part of the core and will be overwritten
  * when you update QCubed. To override, make your changes to the QResizable.class.php file instead.
  *
- * This class is designed to work as a kind of add-on class to a QControl, giving its capabilities
- * to the control. To make a QControl resizable, simply set $ctl->Resizable = true. You can then
+ * This class is designed to work as a kind of add-on class to a QCubed Control, giving its capabilities
+ * to the control. To make a QCubed Control resizable, simply set $ctl->Resizable = true. You can then
  * get to this class to further manipulate the aspects of the resizable through $ctl->ResizeObj.
  *
  * @property-read Integer $DeltaX Amount of change in width that happened on the last drag

@@ -15,8 +15,6 @@ use QCubed\Application\t;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QString;
 use QCubed\Type;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
@@ -56,7 +54,7 @@ use QCubed as Q;
  * @was QTextBoxBase
  * @package QCubed\Control
  */
-abstract class TextBoxBase extends QControl
+abstract class TextBoxBase extends Q\Project\Control\ControlBase
 {
     // Text modes
     const SINGLE_LINE = 'text'; // Single line text inputs INPUT type="text" boxes
@@ -125,7 +123,7 @@ abstract class TextBoxBase extends QControl
 
     /**
      * TextBoxBase constructor.
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null $strControlId
      */
     public function __construct($objParentObject, $strControlId = null)
@@ -378,8 +376,8 @@ abstract class TextBoxBase extends QControl
      * PHP __get magic method implementation
      * @param string $strName Name of the property
      *
-     * @return array|bool|int|mixed|null|QControl|QForm|string
-     * @throws Exception|Caller
+     * @return mixed
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -458,7 +456,7 @@ abstract class TextBoxBase extends QControl
      * @param string $mixValue Value of the property
      *
      * @return void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {

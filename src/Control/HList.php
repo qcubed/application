@@ -12,7 +12,6 @@ namespace QCubed\Control;
 use QCubed\Cryptography;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Type;
 use QCubed as Q;
 
@@ -36,7 +35,7 @@ use QCubed as Q;
  * @was QHListControl
  * @package QCubed\Control
  */
-class HList extends QControl
+class HList extends Q\Project\Control\ControlBase
 {
     use ListItemManagerTrait, DataBinderTrait;
 
@@ -260,7 +259,7 @@ class HList extends QControl
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception|Caller
+     * @throws Caller
      */
     public function __get($strName)
     {
@@ -291,7 +290,7 @@ class HList extends QControl
      * @param string $mixValue
      *
      * @return void
-     * @throws Exception|Caller|InvalidCast
+     * @throws Caller|InvalidCast
      */
     public function __set($strName, $mixValue)
     {

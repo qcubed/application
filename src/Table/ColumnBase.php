@@ -16,8 +16,8 @@ use QCubed\ObjectBase;
 use QCubed\Project\Application;
 use QCubed\TagStyler;
 use QCubed\Type;
-use QCubed\Project\Control\FormBase as QForm;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Control\FormBase;
+use QCubed\Project\Control\ControlBase;
 use QCubed\Control\TableBase;
 
 /**
@@ -293,16 +293,16 @@ abstract class ColumnBase extends ObjectBase
      */
     public function sleep()
     {
-        $this->cellParamsCallback = QControl::sleepHelper($this->cellParamsCallback);
+        $this->cellParamsCallback = ControlBase::sleepHelper($this->cellParamsCallback);
     }
 
     /**
      * The object has been unserialized, so fix up pointers to embedded objects.
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
-        $this->cellParamsCallback = QControl::wakeupHelper($objForm, $this->cellParamsCallback);
+        $this->cellParamsCallback = ControlBase::wakeupHelper($objForm, $this->cellParamsCallback);
     }
 
     /**
@@ -318,7 +318,6 @@ abstract class ColumnBase extends ObjectBase
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -376,7 +375,6 @@ abstract class ColumnBase extends ObjectBase
      * @param string $mixValue
      *
      * @return mixed|void
-     * @throws Exception
      * @throws Caller
      * @throws InvalidCast
      */
@@ -432,7 +430,7 @@ abstract class ColumnBase extends ObjectBase
                 try {
                     $this->intSpan = Type::cast($mixValue, Type::INTEGER);
                     if ($this->intSpan < 1) {
-                        throw new Exception("Span must be 1 or greater.");
+                        throw new Caller("Span must be 1 or greater.");
                     }
                     break;
                 } catch (InvalidCast $objExc) {

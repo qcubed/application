@@ -12,9 +12,9 @@ namespace QCubed\Control;
 use QCubed\Exception\Caller;
 use QCubed\Exception\IndexOutOfRange;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\ModelConnector\Param as QModelConnectorParam;
 use QCubed\Type;
+use QCubed as Q;
 
 /**
  * Class ListControl
@@ -27,7 +27,7 @@ use QCubed\Type;
  * @property integer $SelectedIndex  is the index number of the control that is selected. "-1" means that nothing is selected. If multiple items are selected, it will return the lowest index number of all ListItems that are currently selected. Set functionality: selects that specific ListItem and will unselect all other currently selected ListItems.
  * @property-read array $SelectedIndexes  An array if index numbers corresponding to the selectiong in a multi-select situation.
  * @property string $SelectedName   simply returns ListControl::SelectedItem->Name, or null if nothing is selected.
- * @property-read QListItem $SelectedItem   (readonly!) returns the ListItem object, itself, that is selected (or the ListItem with the lowest index number of a ListItems that are currently selected if multiple items are selected). It will return null if nothing is selected.
+ * @property-read ListItem $SelectedItem   (readonly!) returns the ListItem object, itself, that is selected (or the ListItem with the lowest index number of a ListItems that are currently selected if multiple items are selected). It will return null if nothing is selected.
  * @property-read array $SelectedItems  returns an array of selected ListItems (if any).
  * @property mixed $SelectedValue  simply returns ListControl::SelectedItem->Value, or null if nothing is selected.
  * @property array $SelectedNames  returns an array of all selected names
@@ -38,7 +38,7 @@ use QCubed\Type;
  * @was QListControl
  * @package QCubed\Control
  */
-abstract class ListControl extends QControl
+abstract class ListControl extends Q\Project\Control\ControlBase
 {
     use ListItemManagerTrait;
 
@@ -455,7 +455,7 @@ abstract class ListControl extends QControl
             case "ItemStyle":
                 try {
                     $this->blnModified = true;
-                    $this->objItemStyle = Type::cast($mixValue, "\QCubed\Control\ListItemStyle");
+                    $this->objItemStyle = Type::cast($mixValue, "\\QCubed\\Control\\ListItemStyle");
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;

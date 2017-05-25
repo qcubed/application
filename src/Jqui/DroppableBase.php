@@ -21,8 +21,8 @@ use QCubed\Type;
  * DroppableGen class, and QCubed. This file is part of the core and will be overwritten
  * when you update QCubed. To override, make your changes to the Droppable.php file instead.
  *
- * This class is designed to work as a kind of add-on class to a QControl, giving its capabilities
- * to the control. To make a QControl droppable, simply set $ctl->Droppable = true. You can then
+ * This class is designed to work as a kind of add-on class to a QCubed Control, giving its capabilities
+ * to the control. To make a QCubed Control droppable, simply set $ctl->Droppable = true. You can then
  * get to this class to further manipulate the aspects of the droppable through $ctl->DropObj.
  *
  * @property String $DroppedId ControlId of a control that was dropped onto this

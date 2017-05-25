@@ -15,7 +15,6 @@ use QCubed\Application\t;
 use QCubed as Q;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Type;
 
 /**
@@ -35,7 +34,7 @@ use QCubed\Type;
  * @was QPaginatorBase
  * @package QCubed\Control
  */
-abstract class PaginatorBase extends QControl
+abstract class PaginatorBase extends Q\Project\Control\ControlBase
 {
     /** @var string Label for the 'Previous' link */
     protected $strLabelForPrevious;
@@ -59,7 +58,7 @@ abstract class PaginatorBase extends QControl
     protected $intIndexCount = 10;
 
 
-    /** @var null|\QControlProxy  */
+    /** @var null|Proxy  */
     protected $prxPagination = null;
 
     // SETUP
@@ -74,10 +73,9 @@ abstract class PaginatorBase extends QControl
     /**
      * Constructor method
      *
-     * @param QControl|QControlBase|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string                     $strControlId
      *
-     * @throws Exception
      * @throws Caller
      */
     public function __construct($objParentObject, $strControlId = null)
@@ -130,13 +128,11 @@ abstract class PaginatorBase extends QControl
     /**
      * Respond to the Page_Click event
      *
-     * @param string $strFormId
-     * @param string $strControlId
-     * @param string $strParameter
+     * @param array $params
      */
-    public function page_Click($strFormId, $strControlId, $strParameter)
+    public function page_Click($params)
     {
-        $this->objPaginatedControl->PageNumber = Type::cast($strParameter, Type::INTEGER);
+        $this->objPaginatedControl->PageNumber = Type::cast($params[ControlBase::ACTION_PARAM], Type::INTEGER);
     }
 
     /**
@@ -236,7 +232,6 @@ abstract class PaginatorBase extends QControl
      * Returns the HTML for rendering the control
      *
      * @return string HTML for the control
-     * @throws Exception
      * @throws Caller
      */
     public function getControlHtml()
@@ -381,17 +376,13 @@ abstract class PaginatorBase extends QControl
         return $intCount;
     }
 
-    /////////////////////////
-    // Public Properties: GET
-    /////////////////////////
     /**
      * PHP magic method to get property value
      *
      * @param string $strName Name of the property
      *
-     * @return bool|float|int|mixed|string
+     * @return mixed
      *
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -425,9 +416,6 @@ abstract class PaginatorBase extends QControl
     }
 
 
-    /////////////////////////
-    // Public Properties: SET
-    /////////////////////////
     /**
      * PHP magic method to set the value of property of class
      *
@@ -435,8 +423,6 @@ abstract class PaginatorBase extends QControl
      * @param string $mixValue
      *
      * @return void
-     *
-     * @throws Exception
      * @throws Caller
      * @throws InvalidCast
      */

@@ -65,8 +65,8 @@ class LinkButton extends ActionControl
      * The PHP __get magic method
      * @param string $strName Name of the property
      *
-     * @return array|bool|int|mixed|null|QControl|QForm|string
-     * @throws Exception|Caller
+     * @return mixed
+     * @throws Caller
      */
     public function __get($strName)
     {
