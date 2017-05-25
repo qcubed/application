@@ -18,7 +18,6 @@ use QCubed\Html;
 use QCubed\Project\Application;
 use QCubed\QString;
 use QCubed\Type;
-use QCubed\ModelConnector\Param as QModelConnectorParam;
 use QCubed as Q;
 
 /**
@@ -359,7 +358,7 @@ abstract class ListBoxBase extends ListControl
     /**
      * Returns an description of the options available to modify by the designer for the code generator.
      *
-     * @return QModelConnectorParam[]
+     * @return Q\ModelConnector\Param[]
      */
     public static function getModelConnectorParams()
     {

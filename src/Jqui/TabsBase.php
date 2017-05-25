@@ -47,14 +47,11 @@ class TabsBase extends TabsGen
 
     /**
      * Return the javascript associated with the control.
-     * @return string
      */
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
         Application::executeJsFunction('qcubed.tabs', $this->getJqControlId(), Application::PRIORITY_HIGH);
-
-        return $strJS;
     }
 
     /**

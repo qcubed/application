@@ -71,12 +71,11 @@ class DraggableBase extends DraggableGen
     }
 
 
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
         Application::executeJsFunction('qcubed.draggable', $this->getJqControlId(), $this->ControlId,
             Application::PRIORITY_HIGH);
-        return $strJS;
     }
 
 

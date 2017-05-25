@@ -156,15 +156,12 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
      * Overrides the parent to add code to cause the default button to be fired if an enter key is pressed
      * on a control. This purposefully does not include textarea controls, which should get the enter key to
      * insert a newline.
-     *
-     * @return string
      */
 
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
         Application::executeJsFunction('qc.dialog', $this->getJqControlId(), Application::PRIORITY_HIGH);
-        return $strJS;
     }
 
     /**

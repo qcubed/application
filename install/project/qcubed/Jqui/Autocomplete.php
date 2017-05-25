@@ -16,13 +16,4 @@ use QCubed as Q;
  */
 class Autocomplete extends Q\Jqui\AutocompleteBase
 {
-    /**
-     * Returns the generator corresponding to this control.
-     *
-     * @return Q\Codegen\Generator\GeneratorBase
-     */
-    public static function getCodeGenerator() {
-        return new Q\Codegen\Generator\Autocomplete(__CLASS__);
-    }
-
 }

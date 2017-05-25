@@ -79,14 +79,12 @@ class AccordionBase extends AccordionGen
 
     /**
      * Returns the Javascript needed as the part of control's behavior
-     * @return string The control's JS
      */
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
-        Application::executeJsFunction('qcubed.accordion', $this->getJqControlId(), Application::PRIORITY_HIGH);
+        parent::makeJqWidget();
 
-        return $strJS;
+        Application::executeJsFunction('qcubed.accordion', $this->getJqControlId(), Application::PRIORITY_HIGH);
     }
 
     /**

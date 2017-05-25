@@ -122,7 +122,7 @@ class AccordionGen extends QCubed\Control\Panel
      * @return array key=>value array of options
      */
     protected function makeJqOptions() {
-        $jqOptions = null;
+        $jqOptions = parent::MakeJqOptions();
         if (!is_null($val = $this->Active)) {$jqOptions['active'] = $val;}
         if (!is_null($val = $this->Animate)) {$jqOptions['animate'] = $val;}
         if (!is_null($val = $this->Classes)) {$jqOptions['classes'] = $val;}
@@ -145,32 +145,6 @@ class AccordionGen extends QCubed\Control\Panel
         return 'accordion';
     }
 
-    /**
-     * Returns the script that attaches the JQueryUI widget to the html object.
-     *
-     * @return string
-     */
-    public function getEndScript()
-    {
-        $strId = $this->getJqControlId();
-        $jqOptions = $this->makeJqOptions();
-        $strFunc = $this->getJqSetupFunction();
-
-        if ($strId !== $this->ControlId && Application::isAjax()) {
-            // If events are not attached to the actual object being drawn, then the old events will not get
-            // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
-            Application::executeControlCommand($strId, 'off', Application::PRIORITY_HIGH);
-        }
-
-        // Attach the javascript widget to the html object
-        if (empty($jqOptions)) {
-            Application::executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
-        } else {
-            Application::executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
-        }
-
-        return parent::getEndScript();
-    }
 
     /**
      * Removes the accordion functionality completely. This will return the

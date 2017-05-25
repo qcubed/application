@@ -39,11 +39,11 @@ class SelectableBase extends SelectableGen
 
     // These functions are used to keep track of the selected items
 
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
+
         Application::executeJsFunction('qcubed.selectable', $this->getJqControlId(), Application::PRIORITY_HIGH);
-        return $strJS;
     }
 
 

@@ -12,8 +12,6 @@ use QCubed\Exception\Caller;
 use QCubed as Q;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase;
-use QCubed\Project\Control\FormBase;
 use QCubed\Table\ColumnBase;
 use QCubed\Table\DataColumn;
 use QCubed\Table\DataGridCheckboxColumn;
@@ -339,14 +337,11 @@ class DataGridBase extends TableBase
 
     /**
      * Override to enable the datagrid2 javascript.
-     *
-     * @return string
      */
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
         Application::executeJsFunction('qcubed.datagrid2', $this->ControlId);
-        return $strJS;
     }
 
 

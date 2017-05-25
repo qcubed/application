@@ -134,14 +134,12 @@ class AutocompleteBase extends AutocompleteGen
     // optional autocomplete functionality.
     /**
      * Gets the Javascript part of the control which is sent to the client side upon the completion of Render
-     * @return string The JS string
      */
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
-        Application::executeJsFunction('qc.autocomplete', $this->getJqControlId(), Application::PRIORITY_HIGH);
+        parent::makeJqWidget();
 
-        return $strJS;
+        Application::executeJsFunction('qc.autocomplete', $this->getJqControlId(), Application::PRIORITY_HIGH);
     }
 
 

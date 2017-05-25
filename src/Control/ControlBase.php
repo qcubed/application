@@ -15,7 +15,6 @@ use QCubed\HtmlAttributeManager;
 use QCubed\Exception;
 use QCubed as Q;
 use QCubed\Project\Application;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Action\ActionBase as QAction;
 use QCubed\Event\EventBase as QEvent;
 use QCubed\Project\Jqui\Draggable;
@@ -94,7 +93,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  *             when using an ajax or server action.
  * @property mixed $CausesValidation flag says whether or not the form should run through its validation routine if this control has an action defined and is acted upon
  * @property-read string $ControlId returns the id of this control
- * @property-read QForm $Form returns the parent form object
+ * @property-read FormBase $Form returns the parent form object
  * @property-read array $FormAttributes
  * @property string $HtmlAfter HTML that is shown after the control {@link ControlBase::RenderWithName}
  * @property string $HtmlBefore HTML that is shown before the control {@link ControlBase::RenderWithName}
@@ -191,7 +190,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *            and used for the HTML 'id' attribute on the control.
      */
     protected $strControlId;
-    /** @var QForm Redundant copy of the global $_FORM variable. */
+    /** @var FormBase Redundant copy of the global $_FORM variable. */
     protected $objForm = null;
     /** @var ControlBase Immediate parent of this control,if a control */
     protected $objParentControl = null;
@@ -293,7 +292,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function __construct($objParentObject, $strControlId = null)
     {
-        if ($objParentObject instanceof QForm) {
+        if ($objParentObject instanceof FormBase) {
             $this->objForm = $objParentObject;
         } else {
             if ($objParentObject instanceof ControlBase) {
@@ -375,7 +374,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *
      * This implementation puts the state into the session. Override to provide a different method if so desired.
      *
-     * Should normally be called only by QForm code. See GetState and PutState for the control side implementation.
+     * Should normally be called only by Form code. See GetState and PutState for the control side implementation.
      */
     public function _WriteState()
     {
@@ -476,7 +475,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
 
     /**
      * This function evaluates a template and is used by a variety of controls. It is similar to the function found in the
-     * QForm, but recreated here so that the "$this" in the template will be the control, instead of the form,
+     * Form, but recreated here so that the "$this" in the template will be the control, instead of the form,
      * and the protected members of the control are available to draw directly.
      * @param string $strTemplate Path to the HTML template file
      *
@@ -554,7 +553,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
-     * Used by the QForm engine to call the method in the control, allowing the method to be a protected method.
+     * Used by the Form engine to call the method in the control, allowing the method to be a protected method.
      *
      * @param ControlBase $objDestControl
      * @param string $strMethodName
@@ -592,9 +591,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
 
     /**
      * The object has just been unserialized, so fix up pointers to embedded forms.
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         $this->objForm = $objForm;
     }
@@ -1409,16 +1408,18 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
 
         $strToReturn = '';
 
+        $this->makeJqWidget();
+
         if ($this->objResizable) {
-            $strToReturn .= $this->objResizable->getEndScript();
+            $this->objResizable->makeJqWidget();
         }
 
         if ($this->objDraggable) {
-            $strToReturn .= $this->objDraggable->getEndScript();
+            $this->objDraggable->makeJqWidget();
         }
 
         if ($this->objDroppable) {
-            $strToReturn .= $this->objDroppable->getEndScript();
+            $this->objDroppable->makeJqWidget();
         }
 
         $strToReturn .= $this->renderActionScripts();
@@ -2026,12 +2027,66 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
+     * Support for jquery widgets.
+     * Many jquery widgets, including those in JQuery UI, are instantiated by a javascript setup function that causes
+     * the widget to attach itself to the control. Since any kind of control can be a jquery widget, the following
+     * support code is here.
+     */
+
+    /**
+     * Return the name of the javascript setup function that should get called on this control's html object. Returning
+     * a value triggers the other jquery widget support.
+     *
+     * @return string
+     */
+    protected function getJqSetupFunction()
+    {
+        return '';
+    }
+
+    /**
+     * Attaches the JQueryUI widget to the html object, if a widget is specified.
+     */
+    protected function makeJqWidget()
+    {
+        $strFunc = $this->getJqSetupFunction();
+        if ($strFunc == '') {
+            return;
+        }
+
+        $jqOptions = $this->makeJqOptions();
+        $strId = $this->getJqControlId();
+
+        if ($strId !== $this->ControlId && Application::isAjax()) {
+            // If events are not attached to the actual object being drawn, then the old events will not get
+            // deleted during redraw. We delete the old events here. This must happen before any other event processing code.
+            Application::executeControlCommand($strId, 'off', Application::PRIORITY_HIGH);
+        }
+
+        // Attach the javascript widget to the html object
+        if (empty($jqOptions)) {
+            Application::executeControlCommand($strId, $strFunc, Application::PRIORITY_HIGH);
+        } else {
+            Application::executeControlCommand($strId, $strFunc, $jqOptions, Application::PRIORITY_HIGH);
+        }
+    }
+
+    /**
+     * Returns a key/value array that will be a javascript object of parameters passed to the jquery setup function.
+     *
+     * @return array
+     */
+    protected function makeJqOptions() {
+        return [];
+    }
+
+    /**
      * Used by jQuery UI wrapper controls to find the element on which to apply the jQuery  function
      *
      * NOTE: Some controls that use jQuery will get wrapped with extra divs by the jQuery library.
      * If such a control then gets replaced by Ajax during a redraw, the jQuery effects will be deleted. To solve this,
      * the corresponding QCubed control should set UseWrapper to true, attach the jQuery effect to
-     * the wrapper, and override this function to return the id of the wrapper. See QDialogBase.class.php for
+     * the wrapper, and override this function to return the id of the wrapper. See DialogBase.php for
      * an example.
      *
      * @return string the DOM element id on which to apply the jQuery UI function

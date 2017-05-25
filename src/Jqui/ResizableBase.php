@@ -64,13 +64,14 @@ class ResizableBase extends ResizableGen
     {
     }
 
-    public function getEndScript()
+    /**
+     * Attach the javascript to the control.
+     */
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
-        // Attach the qcubed tracking functions just after parent script attaches the widget to the html object
+        parent::makeJqWidget();
         Application::executeJsFunction('qcubed.resizable', $this->getJqControlId(), $this->ControlId,
             Application::PRIORITY_HIGH);
-        return $strJS;
     }
 
 

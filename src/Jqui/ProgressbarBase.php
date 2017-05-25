@@ -31,13 +31,12 @@ class ProgressbarBase extends ProgressbarGen
 {
     /**
      * The javascript for the control to be sent to the client.
-     * @return string The control's JS
      */
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
+
         Application::executeJsFunction('qcubed.progressbar', $this->getJqControlId(), Application::PRIORITY_HIGH);
-        return $strJS;
     }
 
     /**

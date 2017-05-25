@@ -36,11 +36,11 @@ class SliderBase extends SliderGen
     const VERTICAL = 'vertical';
     const HORIZONTAL = 'horizontal';
 
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
+
         Application::executeJsFunction('qcubed.slider', $this->getJqControlId(), Application::PRIORITY_HIGH);
-        return $strJS;
     }
 
     /**

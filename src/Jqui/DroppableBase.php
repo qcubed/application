@@ -59,12 +59,11 @@ class DroppableBase extends DroppableGen
     {
     }
 
-    public function getEndScript()
+    protected function makeJqWidget()
     {
-        $strJS = parent::getEndScript();
+        parent::makeJqWidget();
         Application::executeJsFunction('qcubed.droppable', $this->getJqControlId(), $this->ControlId,
             Application::PRIORITY_HIGH);
-        return $strJS;
     }
 
     /**

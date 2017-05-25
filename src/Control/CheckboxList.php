@@ -101,10 +101,8 @@ class CheckboxList extends ListControl
 
     /**
      * Return the javascript associated with the control.
-     *
-     * @return string
      */
-    public function getEndScript()
+    protected function makeJqWidget()
     {
         $ctrlId = $this->ControlId;
         if ($this->intButtonMode == self::BUTTON_MODE_SET) {
@@ -112,8 +110,6 @@ class CheckboxList extends ListControl
         } elseif ($this->intButtonMode == self::BUTTON_MODE_JQ) {
             Application::executeSelectorFunction(["input:checkbox", "#" . $ctrlId], 'button', Application::PRIORITY_HIGH);
         }
-        $strScript = parent::getEndScript();
-        return $strScript;
     }
 
     /**

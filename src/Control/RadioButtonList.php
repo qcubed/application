@@ -103,7 +103,7 @@ class RadioButtonList extends ListControl
         }
     }
 
-    public function getEndScript()
+    public function makeJqWidget()
     {
         $ctrlId = $this->ControlId;
         if ($this->intButtonMode == self::BUTTON_MODE_SET) {
@@ -111,8 +111,6 @@ class RadioButtonList extends ListControl
         } elseif ($this->intButtonMode == self::BUTTON_MODE_JQ) {
             Application::executeSelectorFunction(["input:radio", "#" . $ctrlId], 'button', Application::PRIORITY_HIGH);
         }
-        $strScript = parent::getEndScript();
-        return $strScript;
     }
 
     protected function getItemHtml($objItem, $intIndex, $strTabIndex, $blnWrapLabel)
