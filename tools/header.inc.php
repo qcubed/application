@@ -10,8 +10,12 @@ use QCubed as Q;
 <?php if (isset($strPageTitle)) { ?>
 		<title><?php Q\QString::htmlEntities($strPageTitle); ?></title>
 <?php } ?>
-		<link href="<?= QCUBED_CSS_URL ?>/styles.css" rel="stylesheet">
-		<?php if (isset($this)) $this->RenderStyles(); ?>
+		<?php
+        if (isset($this)) {
+            $this->renderStyles();
+        }  else { // for start page and other pages without form ?>
+        <link href="<?= QCUBED_CSS_URL ?>/qcubed.css" rel="stylesheet">
+<?php   } ?>
 	</head>
 	<body>
 		<section id="content">

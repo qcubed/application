@@ -18,7 +18,6 @@ use QCubed\Project\Application;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Action\ActionBase as QAction;
 use QCubed\Event\EventBase as QEvent;
-use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Jqui\Draggable;
 use QCubed\Project\Jqui\Droppable;
 use QCubed\Project\Jqui\Resizable;
@@ -30,7 +29,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
 
 
 /**
- * This is the base class of all QControl and shares their common properties.
+ * This is the base class of all QCubed Controls and shares their common properties.
  *
  * Not every control will utilize every single one of these properties.
  *
@@ -41,10 +40,10 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  *        <li>{@link Base::validate()}</li>
  * </ul>
  *
- * A QControl conceptually is an object in an html form that manages data or that can be controlled via PHP.
+ * A QCubed Control conceptually is an object in an html form that manages data or that can be controlled via PHP.
  * In the early days of the internet, this was simply an html input or select tag that was submitted via a POST.
- * As the internet has evolved, so has QControl, but its basic idea is the same. Its an object on the screen that
- * you would like to either control from PHP, or receive information from. The parts of a QControl that are
+ * As the internet has evolved, so has QCubed Controls, but the basic idea is the same. Its an object on the screen that
+ * you would like to either control from PHP, or receive information from. The parts of a QCubed Control that are
  * sent to the browser are:
  *  - The base tag and its contents, as returned by GetControlHtml(). This would be an Input tag, or a Button, or
  *    even just a div. Many Javascript widget libraries will take a div and add to it to create a control. The tag
@@ -56,7 +55,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  *    that are handled by a jQuery wrapper function of some kind.
  *  - Optional Javascript attached to the control through the AddActions mechanism.
  *
- * You control how these parts are rendered by implementing Render* methods in your own QControl class. Some basic
+ * You control how these parts are rendered by implementing Render* methods in your own QCubed Control class. Some basic
  * ones are included in this class for you to start with.
  *
  * Depending on the control, and the implementation, the control might need or want to be rendered with a wrapper tag,
@@ -67,18 +66,18 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  * you should include a wrapper here so the additional html is included inside your wrapper, and thus the entire
  * control will get redrawn on a refresh (jQueryUI's Dialog is an example of this kind of widget.)
  *
- * QControl are part of a tree type hierarchy, whose parent can either be a FormBase, or another QControl.
+ * QCubed Controls are part of a tree type hierarchy, whose parent can either be a FormBase, or another QCubed Control.
  *
- * The QControl system is designed to manage the process of redrawing a control automatically when something about
+ * The QCubed Control system is designed to manage the process of redrawing a control automatically when something about
  * the control changes. You can force a redraw by using the Refresh command from outside of a control, or by setting
  * the blnModified member variable from a subclass. You can also use the Watcher mechanism to automatically redraw
  * when something in the database changes.
  *
- * QControl are the base objects for actions to be attached to events. When attaching actions to multiple objects
+ * QCubed Controls are the base objects for actions to be attached to events. When attaching actions to multiple objects
  * of the same type, considering attaching the event to a parent object and using event delegation for your action,
  * as it can be more efficient in certain cases.
  *
- * QControl can trigger validation and are part of the validation system. QControl that are not Enabled or not
+ * QCubed Controls can trigger validation and are part of the validation system. QCubed Controls that are not Enabled or not
  * Visible will not go through the form's Validation routine.
  *
  * Controls can be made visible using either the Visible or Display PHP parameters. Both are booleans.
@@ -97,16 +96,16 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  * @property-read string $ControlId returns the id of this control
  * @property-read QForm $Form returns the parent form object
  * @property-read array $FormAttributes
- * @property string $HtmlAfter HTML that is shown after the control {@link QControl::RenderWithName}
- * @property string $HtmlBefore HTML that is shown before the control {@link QControl::RenderWithName}
- * @property string $Instructions instructions that is shown next to the control's name label {@link QControl::RenderWithName}
+ * @property string $HtmlAfter HTML that is shown after the control {@link ControlBase::RenderWithName}
+ * @property string $HtmlBefore HTML that is shown before the control {@link ControlBase::RenderWithName}
+ * @property string $Instructions instructions that is shown next to the control's name label {@link ControlBase::RenderWithName}
  * @property-read string $JavaScripts
  * @property-read boolean $Modified indicates if the control has been changed. Used to tell Qcubed to rerender the control or not (Ajax calls).
  * @property boolean $Moveable
  * @property boolean $Resizable
- * @property string $Name sets the Name of the Control (see {@link QControl::RenderWithName})
+ * @property string $Name sets the Name of the Control (see {@link ControlBase::RenderWithName})
  * @property-read boolean $OnPage is true if the control is connected to the form
- * @property-read QForm|QControl $ParentControl returns the parent control
+ * @property-read FormBase|ControlBase $ParentControl returns the parent control
  * @property-read boolean $Rendered
  * @property-read boolean $Rendering
  * @property-read string $RenderMethod carries the name of the function, which were initially used for rendering
@@ -115,7 +114,7 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
  * @property-read string $StyleSheets
  * @property string $ValidationError is the string that contains the validation error (if applicable) or will be blank if (1) the form did not undergo its validation routine or (2) this control had no error
  * @property boolean $Visible specifies whether or not the control should be rendered in the page.  This is in contrast to Display, which will just hide the control via CSS styling.
- * @property string $Warning is warning text that will be shown next to the control's name label {@link QControl::RenderWithName}
+ * @property string $Warning is warning text that will be shown next to the control's name label {@link ControlBase::RenderWithName}
  * @property boolean $UseWrapper defaults to true
  * @property NodeBase $LinkedNode A database node that this control is directly editing
  * @property-read boolean $WrapperModified
@@ -194,9 +193,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     protected $strControlId;
     /** @var QForm Redundant copy of the global $_FORM variable. */
     protected $objForm = null;
-    /** @var QControl Immediate parent of this control,if a control */
+    /** @var ControlBase Immediate parent of this control,if a control */
     protected $objParentControl = null;
-    /** @var QControl[] Controls which have this control as their parent */
+    /** @var ControlBase[] Controls which have this control as their parent */
     protected $objChildControlArray = array();
     /** @var string|null Name of the control - used as a lable for the control when RenderWithName is used to render */
     protected $strName = null;
@@ -281,11 +280,11 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     //////////
     /**
      * Creates a ControlBase object
-     * This constructor will generally not be used to create a QControl object.  Instead it is used by the
+     * This constructor will generally not be used to create a QCubed Control object.  Instead it is used by the
      * classes which extend the class.  Only the parent object parameter is required.  If the option strControlId
      * parameter is not used, QCubed will generate the id.
      *
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param string $strControlId
      *   optional id of this Control. In html, this will be set as the value of the id attribute. The id can only
      *   contain alphanumeric characters.  If this parameter is not passed, QCubed will generate the id.
@@ -297,7 +296,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
         if ($objParentObject instanceof QForm) {
             $this->objForm = $objParentObject;
         } else {
-            if ($objParentObject instanceof QControl) {
+            if ($objParentObject instanceof ControlBase) {
                 $this->objParentControl = $objParentObject;
                 $this->objForm = $objParentObject->Form;
             } else {
@@ -602,10 +601,10 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
 
     /**
      * A helper function to fix up a 'callable', a formObj, or any other object that we would like to represent
-     * in the serialized stream differently than the default. If a QControl, make sure this isn't the only
+     * in the serialized stream differently than the default. If a QCubed Control, make sure this isn't the only
      * instance of the control in the stream, or have some other way to serialize the control.
      *
-     * @param QForm|QControl|array|callable $obj
+     * @param FormBase|ControlBase|array|callable $obj
      * @return mixed
      */
     public static function sleepHelper($obj)
@@ -628,7 +627,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * A helper function to restore something possibly serialized with SleepHelper.
      *
-     * @param QForm $objForm
+     * @param FormBase $objForm
      * @param array|string $obj
      *
      * @return mixed
@@ -654,9 +653,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Adds a control as a child of this control.
      *
-     * @param QControl $objControl the control to add
+     * @param ControlBase $objControl the control to add
      */
-    public function addChildControl(QControl $objControl)
+    public function addChildControl(ControlBase $objControl)
     {
         $this->blnModified = true;
         $this->objChildControlArray[$objControl->ControlId] = $objControl;
@@ -667,7 +666,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * Returns all child controls as an array
      *
      * @param boolean $blnUseNumericIndexes
-     * @return QControl[]
+     * @return ControlBase[]
      */
     public function getChildControls($blnUseNumericIndexes = true)
     {
@@ -685,7 +684,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Returns the child control with the given id
      * @param string $strControlId
-     * @return QControl
+     * @return ControlBase
      */
     public function getChildControl($strControlId)
     {
@@ -1057,7 +1056,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * This is utilized by Render methods to display various name-value HTML attributes for the
      * control.
      *
-     * QControl's implementation contains the very-basic set of HTML attributes... it is expected
+     * This implementation contains the very-basic set of HTML attributes... it is expected
      * that most subclasses will extend this method's functionality to add Control-specific HTML
      * attributes (e.g. textbox will likely add the maxlength html attribute, etc.)
      *
@@ -1085,7 +1084,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
-     * Returns the html for the attributes for the base control of the QControl.
+     * Returns the html for the attributes for the base control of the Control.
      * Allows the given arrays to override the attributes and styles before
      * rendering. This inserts the control id into the rendering of the tag.
      * @param null|string $attributeOverrides
@@ -1102,7 +1101,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
-     * Returns all action attributes for this QControl
+     * Returns all action attributes for this Control
      *
      * @return string
      */
@@ -1290,24 +1289,23 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * </ul>
      * Proper usage within the first line of any Render() method is:
      *        <code>$this->renderHelper(func_get_args(), __FUNCTION__);</code>
-     * See {@link QControl::renderWithName()} as example.
+     * See {@link ControlBase::renderWithName()} as example.
      *
      * @param mixed $mixParameterArray the parameters given to the render call
      * @param string $strRenderMethod the method which has been used to render the
      *                           control. This is important for ajax rerendering
      *
      * @throws Exception\Caller
-     * @throws Exception|Exception\Caller
      * @see QControlBase::renderOutput()
      */
     protected function renderHelper($mixParameterArray, $strRenderMethod)
     {
         // Make sure the form is already "RenderBegun"
-        if ((!$this->objForm) || ($this->objForm->FormStatus != QForm::FORM_STATUS_RENDER_BEGUN)) {
+        if ((!$this->objForm) || ($this->objForm->FormStatus != FormBase::FORM_STATUS_RENDER_BEGUN)) {
             if (!$this->objForm) {
                 $objExc = new Exception\Caller('Control\'s form does not exist.  It could be that you are attempting to render after RenderEnd() has been called on the form.');
             } else {
-                if ($this->objForm->FormStatus == QForm::FORM_STATUS_RENDER_ENDED) {
+                if ($this->objForm->FormStatus == FormBase::FORM_STATUS_RENDER_ENDED) {
                     $objExc = new Exception\Caller('Control cannot be rendered after RenderEnd() has been called on the form.');
                 } else {
                     $objExc = new Exception\Caller('Control cannot be rendered until RenderBegin() has been called on the form.');
@@ -1465,7 +1463,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
-     * For any HTML code that needs to be rendered at the END of the QForm when this control is
+     * For any HTML code that needs to be rendered at the END of the FormBase when this control is
      * INITIALLY rendered.
      *
      */
@@ -1581,7 +1579,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * This method will render the control, itself, and will return the rendered HTML as a string
      *
-     * As an abstract method, any class extending QControl must implement it.  This ensures that
+     * As an abstract method, any class extending ControlBase must implement it.  This ensures that
      * each control has its own specific html.
      *
      * When outputting html, you should call GetHtmlAttributes to get the attributes for the main control.
@@ -1848,7 +1846,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Format a comment block if we are not in MINIMIZE mode.
      *
-     * @param string $strType Either QControl::COMMENT_START or QControl::COMMENT_END
+     * @param string $strType Either ControlBase::COMMENT_START or ControlBase::COMMENT_END
      * @return string
      */
     public function renderComment($strType)
@@ -1961,8 +1959,8 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
-     * Sets the Form of this QControl
-     * @param QForm $objForm
+     * Sets the Form of this Control
+     * @param FormBase $objForm
      */
     public function setForm($objForm)
     {
@@ -1971,7 +1969,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
 
     /**
      * Sets the parent control for this control
-     * @param QControl $objControl The control which has to be set as this control's parent
+     * @param ControlBase $objControl The control which has to be set as this control's parent
      */
     public function setParentControl($objControl)
     {
@@ -2002,7 +2000,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     }
 
     /**
-     * Runs var_export on this QControl
+     * Runs var_export on this Control
      * @param bool $blnReturn Does the result of var_export have to be returned?
      *
      * @return mixed
@@ -2112,7 +2110,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * @param string $strMethodName Name of the method
      * @param bool $blnIncludeCurrentControl Include this control as well?
      *
-     * @return null|QControl The control found in the hierarchy to have the method
+     * @return null|ControlBase The control found in the hierarchy to have the method
      *                       Or null if no control was found in the hierarchy with the given name
      */
     public function getControlFromHierarchyByMethodName($strMethodName, $blnIncludeCurrentControl = true)
@@ -2121,7 +2119,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
             $ctlDelegatorControl = $this;
         } else {
             if (!$this->ParentControl) {
-                // ParentControl is null. This means the parent is a QForm.
+                // ParentControl is null. This means the parent is a Form.
                 $ctlDelegatorControl = $this->Form;
             } else {
                 $ctlDelegatorControl = $this->ParentControl;
@@ -2133,13 +2131,13 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                 return $ctlDelegatorControl;
             } else {
                 if (!$ctlDelegatorControl->ParentControl) {
-                    // ParentControl is null. This means the parent is a QForm.
+                    // ParentControl is null. This means the parent is a Form.
                     $ctlDelegatorControl = $ctlDelegatorControl->Form;
                 } else {
                     $ctlDelegatorControl = $ctlDelegatorControl->ParentControl;
                 }
             }
-        } while (!($ctlDelegatorControl instanceof QForm));
+        } while (!($ctlDelegatorControl instanceof FormBase));
 
         // If we are here, we could not find the method in the hierarchy/lineage of this control.
         return null;
@@ -2147,7 +2145,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
 
     /**
      * Returns the form associated with the control. Used by the QDataBinder trait.
-     * @return QForm
+     * @return FormBase
      */
     public function getForm()
     {
@@ -2162,7 +2160,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * @param string $strName Property Name
      *
      * @return mixed
-     * @throws Exception|Exception\Caller
+     * @throws Exception\Caller
      */
     public function __get($strName)
     {

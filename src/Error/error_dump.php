@@ -43,7 +43,7 @@ if (stristr($__exc_strMessage, "Invalid Form State Data") !== false) {
 <html>
 	<head>
 		<title>PHP <?= htmlentities($__exc_strType); ?> - <?= htmlentities($__exc_strMessage) ?></title>
-		<style type="text/css">@import url("<?= QCUBED_CSS_URL ?>/styles.css");</style>
+		<style type="text/css">@import url("<?= QCUBED_CSS_URL ?>/qcubed.css");</style>
 	</head>
 	<body>
 		<header>

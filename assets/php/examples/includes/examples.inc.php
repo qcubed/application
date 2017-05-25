@@ -116,7 +116,7 @@
 			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/master_detail/project_list.php'] = array(
 				'records.summary.php',
 				'records.summary.tpl.php',
-				'styles.css');
+				'qcubed.css');
 			self::AddCoreExampleFile($intIndex, '/datarepeater/ajax.php * Simple \QCubed\Control\DataRepeater using AJAX-triggered Pagination');
 			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/datarepeater/ajax.php'] = array('dtr_persons.tpl.php');
 

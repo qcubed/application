@@ -93,7 +93,7 @@ abstract class FormBase extends ObjectBase
     protected $checkableControlValues = array();
     /** @var string The type of call made to the QForm (Ajax, Server or Fresh GET request) */
     //protected $strCallType;   Use Application::isAjax() or Application::instance->context->requestMode() instead
-    /** @var null|QWaitIcon Default wait icon for the page/QForm */
+    /** @var null|WaitIcon Default wait icon for the page/QForm */
     protected $objDefaultWaitIcon = null;
 
     /** @var array List of included JavaScript files for this QForm */
@@ -1495,7 +1495,7 @@ abstract class FormBase extends ObjectBase
         $this->strIncludedStyleSheetFileArray = array();
 
         // Figure out initial list of StyleSheet includes
-        $strStyleSheetArray = array();
+        $strStyleSheetArray = $this->getFormStyles();
 
         foreach ($this->getAllControls() as $objControl) {
             // Include any StyleSheets?  The control would have a
@@ -1804,6 +1804,19 @@ abstract class FormBase extends ObjectBase
             QCUBED_JQUI_JS,
             QCUBED_JS_URL . '/ajaxq/ajaxq.js',
             QCUBED_JS
+        );
+    }
+
+    /**
+     * Returns an array of URLS that point to the style sheets required by every
+     * form in the application. Override and add your own style sheets if needed.
+     *
+     * @return array
+     */
+    protected function getFormStyles()
+    {
+        return array(
+            QCUBED_BASE_URL . '/application/assets/css/qcubed.css'
         );
     }
 

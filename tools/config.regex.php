@@ -50,6 +50,9 @@ $a['regex']['__URL_REWRITE__'] = 'QCUBED_URL_REWRITE';
 $a['regex']['__APPLICATION_ENCODING_TYPE__'] = 'QCUBED_ENCODING';
 
 $a['regex']['__APP_CSS_ASSETS__'] = 'QCUBED_PROJECT_CSS_URL';
+$a['regex']['__APP_IMAGE_ASSETS__'] = 'QCUBED_PROJECT_IMAGE_URL';
+$a['regex']['__APP_JS_ASSETS__'] = 'QCUBED_PROJECT_JS_URL';
+
 $a['regex']['__MINIMIZE__'] = 'QCUBED_MINIMIZE';
 $a['regex']['__VIRTUAL_DIRECTORY__\\s*\\.\\s*__SUBDIRECTORY__'] = 'QCUBED_URL_PREFIX';
 

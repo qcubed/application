@@ -25,7 +25,7 @@ if (!$strScript) {
 	<head>
 		<meta charset="<?php _p(\QCubed\Project\Application::encodingType()); ?>" />
 		<title>QCubed PHP 5 Development Framework - View Source</title>
-		<link rel="stylesheet" type="text/css" href="<?php _p(QCUBED_CSS_URL . '/styles.css'); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php _p(QCUBED_CSS_URL . '/qcubed.css'); ?>" />
 		<link rel="stylesheet" type="text/css" href="<?php _p(QCUBED_EXAMPLES_URL . '/includes/examples.css'); ?>" />
 	</head>
 	<body>

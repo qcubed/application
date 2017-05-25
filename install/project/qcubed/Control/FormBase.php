@@ -40,32 +40,56 @@ abstract class FormBase extends \QCubed\Control\FormBase
      */
     public static $FormStateHandler = __FORM_STATE_HANDLER__;
 
-    // TODO: Improve explanation here.
     /**
-     * These are the list of core QForm JavaScript files, or JavaScript files needed by
-     * a QControl, which QForm should IGNORE trying to load during a RenderBegin() or RenderAjax() call.
+     * These are the list of JavaScript files that should NOT be loaded by the framework,
+     * event if a particular control asks for it.
      *
-     * It is used in the ProcessJavaScriptList function in the QFormBase class.
+     * In particular, specify any files that you know to be already loaded by a hardcoded
+     * include of the javascript in your html or template files.
+     *
      * @var array
      */
     protected $strIgnoreJavaScriptFileArray = array();
-    /* protected $strIgnoreJavaScriptFileArray = array(
-        'date_time_picker.js',
-        'treenav.js'); */
 
     /**
-     * This should be very rarely used.
+     * These are the list of style sheet files that should NOT be loaded by the framework,
+     * event if a particular control asks for it.
      *
-     * This mechanism acts similarly to the strIgnoreJavascriptFileArray, except it applies to StyleSheets.
-     * However, any QControl that specifies a StyleSheet file to include is MEANT to have that property
-     * be modified / customized.
-     *
-     * Therefore, there should be little to no need for this attribute.  However, it is here anyway, just in case.
-     * Also note that QFormBase does not implement its feature. It is there if you (a developer building
-     * your application using QCubed) want to use it.
+     * In particular, specify any files that you know to be already loaded by a hardcoded
+     * include of the style sheet in your html or template files.
      *
      * @var array
      */
     protected $strIgnoreStyleSheetFileArray = array();
-    // protected $strIgnoreStyleSheetFileArray = array('datagrid.css', 'calendar.css', 'textbox.css', 'listbox.css');
+
+    /**
+     * Return any java scripts that should be loaded always. In particular, these would
+     * be javascripts that you would use in your application even if no particular control
+     * asked for it. For example, if you did some manual styling with Bootstrap and you
+     * needed the bootstrap javascript file.
+     *
+     * @return array
+     */
+    protected function getFormJavaScripts() {
+        $a = parent::getFormJavaScripts();
+        //$a[] = QCUBED_PROJECT_JS_URL . '/myJsFile.js';
+        //$a[] = QCUBED_BOOTSTRAPT_JS_URL;
+        return $a;
+    }
+
+    /**
+     * Return any style sheet files that should be loaded always. In particular, these would
+     * be javascripts that you would use in your application even if no particular control
+     * asked for it. For example, if you did some manual styling with Bootstrap on a form
+     * that did not have any bootstrap controls on it.
+     *
+     * @return array
+     */
+
+    protected function getFormStyles() {
+        $a = parent::getFormStyles();
+        //$a[] = QCUBED_BOOTSTRAP_CSS;
+        return $a;
+    }
+
 }
