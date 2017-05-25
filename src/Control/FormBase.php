@@ -618,7 +618,7 @@ abstract class FormBase extends ObjectBase
                     }
                 });
             } else {
-                throw new Exception ('Unknown Post Var Type');
+                throw new \Exception ('Unknown Post Var Type');
             }
         }
         return $val;
@@ -1119,7 +1119,7 @@ abstract class FormBase extends ObjectBase
     /**
      * Returns the child controls of the current QForm or a QControl object
      *
-     * @param QForm|QControl $objParentObject The object whose child controls are to be searched for
+     * @param FormBase|ControlBase $objParentObject The object whose child controls are to be searched for
      *
      * @throws Caller
      * @return QControl[]
@@ -1210,21 +1210,42 @@ abstract class FormBase extends ObjectBase
         $mixParameter = $_POST['Qform__FormParameter'];
         $objSourceControl = $this->objControlArray[$strControlId];
         $params = QControl::_ProcessActionParams($objSourceControl, $objAction, $mixParameter);
+        $params[ControlBase::ACTION_FORM_ID] = $this->strFormId;
 
         if (strpos($strMethodName, '::')) {
             // Calling a static method in a class
             $f = explode('::', $strMethodName);
             if (is_callable($f)) {
-                $f($this->strFormId, $params['controlId'], $params['param'], $params);
+                /**
+                 * To transition to actions that just take a $params array and nothing else, we use reflection
+                 */
+                $ref = new \ReflectionClass(get_class($f[0]));
+                $argCount = $ref->getMethod($f[1])->getNumberOfParameters();
+
+                if ($argCount > 1) {
+                    $f($this->strFormId, $params[ControlBase::ACTION_CONTROL_ID], $params[ControlBase::ACTION_PARAM],
+                        $params);
+                } else {
+                    $f($params);
+                }
             }
         } elseif (($intPosition = strpos($strMethodName, ':')) !== false) {
             $strDestControlId = substr($strMethodName, 0, $intPosition);
             $strMethodName = substr($strMethodName, $intPosition + 1);
-
             $objDestControl = $this->objControlArray[$strDestControlId];
             QControl::_CallActionMethod($objDestControl, $strMethodName, $this->strFormId, $params);
         } else {
-            $this->$strMethodName($this->strFormId, $params['controlId'], $params['param'], $params);
+            /**
+             * To transition to actions that just take a $params array and nothing else, we use reflection
+             */
+            $ref = new \ReflectionClass(get_class($this));
+            $argCount = $ref->getMethod($strMethodName)->getNumberOfParameters();
+
+            if ($argCount > 1) {
+                $this->$strMethodName($this->strFormId, $params['controlId'], $params['param'], $params);
+            } else {
+                $this->$strMethodName($params);
+            }
         }
     }
 
@@ -1246,7 +1267,7 @@ abstract class FormBase extends ObjectBase
      *
      * @param null|string $strControlIdOverride If supplied, the control with the supplied ID is selected
      *
-     * @throws Exception|Caller
+     * @throws \Exception|Caller
      */
     protected function triggerActions($strControlIdOverride = null)
     {
@@ -1281,7 +1302,7 @@ abstract class FormBase extends ObjectBase
                             $objActions = $objActionControl->getAllActions($strEvent, 'QCubed\\Action\\Server');
                             break;
                         default:
-                            throw new Exception('Unknown request mode: ' . Application::instance()->context()->requestMode());
+                            throw new \Exception('Unknown request mode: ' . Application::instance()->context()->requestMode());
                     }
 
                     // Validation Check

@@ -132,9 +132,6 @@ use QCubed\ModelConnector\Param as ModelConnectorParam;
 abstract class ControlBase extends Q\Project\HtmlAttributeManager
 {
 
-    /*
-     * Constannts
-     */
     const COMMENT_START = 'Begin';
     const COMMENT_END = 'End';
 
@@ -144,13 +141,15 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
 
     const CAUSES_VALIDATION_NONE = false;
-    /** Does not cause the validation */
     const CAUSES_VALIDATION_ALL = true;
-    /** Cause validation of all controls */
     const CAUSES_VALIDATION_SIBLINGS_AND_CHILDREN = 2;
-    /** Cause validation of the control, siblings and children */
     const CAUSES_VALIDATION_SIBLINGS_ONLY = 3;
-    /** Cause validation of siblings only */
+
+    const ACTION_PARAM = 'param';
+    const ACTION_ORIGINAL_PARAM = 'originalParam';
+    const ACTION_OBJ = 'action';
+    const ACTION_CONTROL_ID = 'controlId';
+    const ACTION_FORM_ID = 'formId'; // This not really used. Its here in the event we ever support more than one form on a page.
 
     /**
      * Protected members
@@ -525,14 +524,14 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * simple string, and allows actions to get more information as well. This also allows widgets to modify
      * the action parameter, while preserving the original action parameter so that the action can see both.
      *
-     * @param QControl $objSourceControl
+     * @param ControlBase $objSourceControl
      * @param QAction $objAction
      * @param $mixParameter
      * @return mixed
      */
-    public static function _ProcessActionParams(QControl $objSourceControl, QAction $objAction, $mixParameter)
+    public static function _processActionParams(ControlBase $objSourceControl, QAction $objAction, $mixParameter)
     {
-        $mixParameters['param'] = null;
+        $mixParameters[self::ACTION_PARAM] = null;
         $mixParameters = $objSourceControl->processActionParameters($objAction, $mixParameter);
         return $mixParameters;
     }
@@ -548,10 +547,10 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     protected function processActionParameters(QAction $objAction, $mixParameter)
     {
-        $params['param'] = $mixParameter;    // this value can be modified by subclass if needed
-        $params['originalParam'] = $mixParameter;
-        $params['action'] = $objAction;
-        $params['controlId'] = $this->strControlId;
+        $params[self::ACTION_PARAM] = $mixParameter;    // this value can be modified by subclass if needed
+        $params[self::ACTION_ORIGINAL_PARAM] = $mixParameter;
+        $params[self::ACTION_OBJ] = $objAction;
+        $params[self::ACTION_CONTROL_ID] = $this->strControlId;
         return $params;
     }
 
@@ -565,7 +564,18 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public static function _CallActionMethod(ControlBase $objDestControl, $strMethodName, $strFormId, $params)
     {
-        $objDestControl->$strMethodName($strFormId, $params['controlId'], $params['param'], $params);
+        /**
+         * To transition to actions that just take a $params array and nothing else, we use reflection
+         */
+        $ref = new \ReflectionClass(get_class($objDestControl));
+        $argCount = $ref->getMethod($strMethodName)->getNumberOfParameters();
+
+        if ($argCount > 1) {
+            $objDestControl->$strMethodName($strFormId, $params[self::ACTION_CONTROL_ID], $params[self::ACTION_PARAM], $params);
+        }
+        else {
+            $objDestControl->$strMethodName($params);
+        }
     }
 
     /**
@@ -796,6 +806,18 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     {
         $this->addAction(new Q\Event\Click(5, null, null, true), $objAction);
     }
+
+    /**
+     * Shortcut for adding a change event action.
+     *
+     * @param QAction $objAction
+     */
+    public function onChange(QAction $objAction)
+    {
+        $this->addAction(new Q\Event\Change(), $objAction);
+    }
+
+
 
     /**
      * Returns all actions that are connected with specific events
