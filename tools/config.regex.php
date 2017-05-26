@@ -56,4 +56,6 @@ $a['regex']['__APP_JS_ASSETS__'] = 'QCUBED_PROJECT_JS_URL';
 $a['regex']['__MINIMIZE__'] = 'QCUBED_MINIMIZE';
 $a['regex']['__VIRTUAL_DIRECTORY__\\s*\\.\\s*__SUBDIRECTORY__'] = 'QCUBED_URL_PREFIX';
 
+$a['regex']['__FONT_AWESOME__'] = 'QCUBED_FONT_AWESOME_CSS';
+
 return $a;

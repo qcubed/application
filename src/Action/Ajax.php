@@ -108,7 +108,7 @@ class Ajax extends ActionBase
                 $strMethodName = $strMethodName[1];
             }
         }
-        else {
+        else if ($strMethodName !== null) {
             throw new Caller ("Unknown method.");
         }
 

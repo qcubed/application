@@ -18,8 +18,8 @@ use QCubed\Table\DataGridCheckboxColumn;
 use QCubed\Type;
 
 
-if (!defined('__FONT_AWESOME__')) {
-    define('__FONT_AWESOME__', 'https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css');
+if (!defined('QCUBED_FONT_AWESOME_CSS')) {
+    define('QCUBED_FONT_AWESOME_CSS', 'https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css');
 }
 
 /**
@@ -73,7 +73,7 @@ class DataGridBase extends TableBase
         try {
             parent::__construct($objParentObject, $strControlId);
 
-            $this->addCssFile(__FONT_AWESOME__);
+            $this->addCssFile(QCUBED_FONT_AWESOME_CSS);
 
             $this->addActions();
         } catch (Caller  $objExc) {
