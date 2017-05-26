@@ -9,11 +9,9 @@
 
 namespace QCubed\Table;
 
-use Prophecy\Exception\InvalidArgumentException;
+use QCubed\Control\FormBase;
 use QCubed\Exception\Caller;
-use QCubed\Exception\InvalidArgument;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
+use QCubed\Project\Control\ControlBase;
 use QCubed\Type;
 
 /**
@@ -47,7 +45,7 @@ class CallableColumn extends DataColumn
     public function __construct($strName, callable $objCallable, $mixParams = null)
     {
         parent::__construct($strName);
-        if ($objCallable instanceof Closure) {
+        if ($objCallable instanceof \Closure) {
             throw new Caller('\$objCallable Cannot be a Closure.');
         }
         $this->callback = $objCallable;
@@ -68,18 +66,18 @@ class CallableColumn extends DataColumn
      */
     public function sleep()
     {
-        $this->callback = QControl::sleepHelper($this->callback);
+        $this->callback = ControlBase::sleepHelper($this->callback);
         parent::sleep();
     }
 
     /**
      * Restore serialized references.
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->callback = QControl::wakeupHelper($objForm, $this->callback);
+        $this->callback = ControlBase::wakeupHelper($objForm, $this->callback);
     }
 
     /**
@@ -88,7 +86,6 @@ class CallableColumn extends DataColumn
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -113,9 +110,7 @@ class CallableColumn extends DataColumn
      * @param string $mixValue
      *
      * @return mixed|void
-     * @throws Exception
      * @throws Caller
-     * @throws \QCubed\Exception\InvalidCast
      */
     public function __set($strName, $mixValue)
     {

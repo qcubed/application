@@ -9,12 +9,12 @@
 
 namespace QCubed\Table;
 
+use QCubed\Control\FormBase;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
+use QCubed\Project\Control\ControlBase;
 use QCubed\Type;
-use QCubed\Project\Control\FormBase as QForm;
-use QCubed\Project\Control\ControlBase as QControl;
 
 /**
  * Class CheckboxColumn
@@ -180,19 +180,19 @@ class CheckboxColumn extends DataColumn
      */
     public function sleep()
     {
-        $this->checkParamCallback = QControl::sleepHelper($this->checkParamCallback);
+        $this->checkParamCallback = ControlBase::sleepHelper($this->checkParamCallback);
         parent::sleep();
     }
 
     /**
      * Restore embedded objects.
      *
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->checkParamCallback = QControl::wakeupHelper($objForm, $this->checkParamCallback);
+        $this->checkParamCallback = ControlBase::wakeupHelper($objForm, $this->checkParamCallback);
     }
 
     /**
@@ -201,7 +201,6 @@ class CheckboxColumn extends DataColumn
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -226,7 +225,6 @@ class CheckboxColumn extends DataColumn
      * @param string $mixValue
      *
      * @return mixed|void
-     * @throws Exception
      * @throws Caller
      * @throws InvalidCast
      */

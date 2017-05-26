@@ -10,11 +10,12 @@
 namespace QCubed\Table;
 
 use QCubed as Q;
+use QCubed\Control\FormBase;
+use QCubed\Control\Proxy;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Query\Node\NodeBase;
-use QCubed\Project\Control\FormBase as QForm;
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed\Query\Node\ReverseReference;
 use QCubed\Type;
 
 
@@ -40,7 +41,7 @@ use QCubed\Type;
  * Other options:
  * - Specify null for $mixDestination, and no link will be created, just text. This is helpful for turning off the
  *   link mode without having to create a completely different kind of column.
- * - Specify a QControlProxy for $mixDestination to draw it as a proxy control. In this case, $blnAsButton can be
+ * - Specify a Proxy for $mixDestination to draw it as a proxy control. In this case, $blnAsButton can be
  *   used to draw the proxy as a button rather than a link.
  *
  * Examples:
@@ -52,8 +53,8 @@ use QCubed\Type;
  *
  *  Create a similar column, but use a proxy instead, with the person id as the action parameter to the proxy and
  *   drawing the proxy as a button.
- *  $objProxy = new QControlProxy($this);
- *  $objColumn = new QHtmlTableLinkColumn ("Edit", "Edit", $objProxy, "->Id", null, true);
+ *  $objProxy = new \QCubed\Control\Proxy($this);
+ *  $objColumn = new \QCubed\Table\LinkColumn ("Edit", "Edit", $objProxy, "->Id", null, true);
  *
  *  Create a "zoom" column for a table that uses an array of arrays as its source. Pass the 'id' index from the item
  *   as the id to the destination link. Use the "title" index as the label for the link.
@@ -65,15 +66,15 @@ use QCubed\Type;
  *  $objTable->createLinkColumn("", "->Name", "#", null, ["data-id"=>"->Id"]);
  *  $objTable->addAction(new QClickEvent(0, null, "a"), new QAjaxAction("myActionScript", null, null, '$j(this).data("id")'));
  *
- * @property bool $AsButton    Only used if this is drawing a QControlProxy. Will draw the proxy as a button.
+ * @property bool $AsButton    Only used if this is drawing a Proxy. Will draw the proxy as a button.
  * @property-write null|string|array $Text The text to display as the label of the anchor, a callable callback to get the text,
  *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same. Depends on
  *   what time of row item is passed.
- * @property-write null|string|array|QControlProxy $Destination The text representing the destination of the anchor, a callable callback to get the destination,
+ * @property-write null|string|array|Proxy $Destination The text representing the destination of the anchor, a callable callback to get the destination,
  *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same,
- *   or a QControlProxy. Depends on what time of row item is passed.
+ *   or a Proxy. Depends on what time of row item is passed.
  * @property-write null|string|array $GetVars An array of key=>value pairs to use as the GET variables in the link URL,
- *   or in the case of a QControlProxy, possibly a string to represent the action parameter. In either case, each item
+ *   or in the case of a Proxy, possibly a string to represent the action parameter. In either case, each item
  *   can be a property chain, an array index list, or a callable callback as specified above.
  * @property-write null|array $TagAttributes An array of key=>value pairs to use as additional attributes in the tag.
  *   For example, could be used to add a class or an id to each tag.
@@ -87,7 +88,7 @@ class LinkColumn extends DataColumn
 
     /** @var  string|array */
     protected $mixText;
-    /** @var  string|array|QControlProxy|null */
+    /** @var  string|array|Proxy|null */
     protected $mixDestination;
     /** @var  array|string|null */
     protected $getVars;
@@ -103,16 +104,16 @@ class LinkColumn extends DataColumn
      * @param null|string|array|NodeBase $mixText The text to display as the label of the anchor, a callable callback to get the text,
      *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same, or a NodeBase representing the property.
      *   Depends on what type of row item is passed.
-     * @param null|string|array|QControlProxy $mixDestination The text representing the destination of the anchor, a callable callback to get the destination,
+     * @param null|string|array|Proxy $mixDestination The text representing the destination of the anchor, a callable callback to get the destination,
      *   a string that represents a property chain or a multi-dimensional array, or an array that represents the same,
      *   or a Q\Control\Proxy. Depends on what type of row item is passed.
      * @param null|string|array $getVars An array of key=>value pairs to use as the GET variables in the link URL,
-     *   or in the case of a QControlProxy, possibly a string to represent the action parameter. In either case, each item
+     *   or in the case of a Proxy, possibly a string to represent the action parameter. In either case, each item
      *   can be a property chain, an array index list, a NodeBase, or a callable callback as specified above. If the destination is a
-     *   QControlProxy, this would be what to use as the action parameter.
+     *   Proxy, this would be what to use as the action parameter.
      * @param null|array $tagAttributes An array of key=>value pairs to use as additional attributes in the tag.
      *   For example, could be used to add a class or an id to each tag.
-     * @param bool $blnAsButton Only used if this is drawing a QControlProxy. Will draw the proxy as a button.
+     * @param bool $blnAsButton Only used if this is drawing a Proxy. Will draw the proxy as a button.
      */
     public function __construct(
         $strName,
@@ -203,7 +204,7 @@ class LinkColumn extends DataColumn
                 if (!($objNode instanceof NodeBase)) {
                     throw new Caller('NodeBase cannot go through any "To Many" association nodes.');
                 }
-                if (($objNode instanceof QQNode\ReverseReference) && !$objNode->isUnique()) {
+                if (($objNode instanceof ReverseReference) && !$objNode->isUnique()) {
                     throw new Caller('NodeBase cannot go through any "To Many" association nodes.');
                 }
                 if ($strPropName = $objNode->_PropertyName) {
@@ -274,7 +275,7 @@ class LinkColumn extends DataColumn
 
         if ($this->mixDestination === null) {
             return Q\QString::htmlEntities($strText);
-        } elseif ($this->mixDestination instanceof Q\Control\Proxy) {
+        } elseif ($this->mixDestination instanceof Proxy) {
             if ($this->blnAsButton) {
                 return $this->mixDestination->renderAsButton($strText, $getVars, $tagAttributes);
             } else {
@@ -291,25 +292,25 @@ class LinkColumn extends DataColumn
      */
     public function sleep()
     {
-        $this->mixText = QControl::sleepHelper($this->mixText);
-        $this->mixDestination = QControl::sleepHelper($this->mixDestination);
-        $this->getVars = QControl::sleepHelper($this->getVars);
-        $this->tagAttributes = QControl::sleepHelper($this->tagAttributes);
+        $this->mixText = Q\Project\Control\ControlBase::sleepHelper($this->mixText);
+        $this->mixDestination = Q\Project\Control\ControlBase::sleepHelper($this->mixDestination);
+        $this->getVars = Q\Project\Control\ControlBase::sleepHelper($this->getVars);
+        $this->tagAttributes = Q\Project\Control\ControlBase::sleepHelper($this->tagAttributes);
         parent::sleep();
     }
 
     /**
      * Restore embedded objects.
      *
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->mixText = QControl::wakeupHelper($objForm, $this->mixText);
-        $this->mixDestination = QControl::wakeupHelper($objForm, $this->mixDestination);
-        $this->getVars = QControl::wakeupHelper($objForm, $this->getVars);
-        $this->tagAttributes = QControl::wakeupHelper($objForm, $this->tagAttributes);
+        $this->mixText = Q\Project\Control\ControlBase::wakeupHelper($objForm, $this->mixText);
+        $this->mixDestination = Q\Project\Control\ControlBase::wakeupHelper($objForm, $this->mixDestination);
+        $this->getVars = Q\Project\Control\ControlBase::wakeupHelper($objForm, $this->getVars);
+        $this->tagAttributes = Q\Project\Control\ControlBase::wakeupHelper($objForm, $this->tagAttributes);
     }
 
 
@@ -319,7 +320,6 @@ class LinkColumn extends DataColumn
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -344,7 +344,7 @@ class LinkColumn extends DataColumn
      * @param string $mixValue
      *
      * @return mixed|void
-     * @throws Exception
+     * @throws \Exception
      * @throws Caller
      * @throws InvalidCast
      */
@@ -365,7 +365,7 @@ class LinkColumn extends DataColumn
                 break;
 
             case "Destination":
-                if ($mixValue instanceof Q\Control\Proxy) {
+                if ($mixValue instanceof Proxy) {
                     $this->mixDestination = $mixValue;
                 } else {
                     $this->mixDestination = self::splitSpec($mixValue);
@@ -386,7 +386,7 @@ class LinkColumn extends DataColumn
                     } elseif ($mixValue instanceof NodeBase) {
                         $this->getVars = $mixValue;
                     } else {
-                        throw new Exception("Invalid type");
+                        throw new \Exception("Invalid type");
                     }
                     break;
                 } catch (InvalidCast $objExc) {
@@ -404,7 +404,7 @@ class LinkColumn extends DataColumn
                             $this->tagAttributes[$key] = self::splitSpec($val);
                         }
                     } else {
-                        throw new Exception("Invalid type");
+                        throw new \Exception("Invalid type");
                     }
                     break;
                 } catch (InvalidCast $objExc) {

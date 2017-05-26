@@ -9,13 +9,12 @@
 
 namespace QCubed\Table;
 
+use QCubed\Control\FormBase;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\Project\Control\ControlBase;
 use QCubed\QDateTime;
 use QCubed\Type;
-use QCubed\Project\Control\FormBase as QForm;
-use QCubed\Project\Control\ControlBase as QControl;
-
 
 /**
  * Class DataColumn
@@ -101,18 +100,18 @@ abstract class DataColumn extends ColumnBase
      */
     public function sleep()
     {
-        $this->objPostCallback = QControl::sleepHelper($this->objPostCallback);
+        $this->objPostCallback = ControlBase::sleepHelper($this->objPostCallback);
         parent::sleep();
     }
 
     /**
      * The object has been unserialized, so fix up pointers to embedded objects.
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->objPostCallback = QControl::wakeupHelper($objForm, $this->objPostCallback);
+        $this->objPostCallback = ControlBase::wakeupHelper($objForm, $this->objPostCallback);
     }
 
     /**
@@ -121,7 +120,6 @@ abstract class DataColumn extends ColumnBase
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -151,7 +149,7 @@ abstract class DataColumn extends ColumnBase
      * @param string $mixValue
      *
      * @return mixed|void
-     * @throws Exception
+     * @throws \Exception
      * @throws Caller
      * @throws InvalidCast
      */
