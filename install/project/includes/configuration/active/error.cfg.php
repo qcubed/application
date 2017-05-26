@@ -4,7 +4,7 @@
 //ini_set("error_log", "/tmp/php-error.log");
 
 // Define the Filepath for the error page
-define('QCUBED_ERROR_PAGE_PHP', QCUBED_BASE_DIR . '/application/src/Error/error_page.php');
+define('QCUBED_ERROR_PAGE_PHP', QCUBED_BASE_DIR . '/common/src/Error/error_page.php');
 
 // Define the Filepath for any logged errors
 //define('ERROR_LOG_PATH', QCUBED_TMP_DIR . '/error_log');
