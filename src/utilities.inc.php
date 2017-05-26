@@ -137,7 +137,7 @@ function _indent($strText, $intCount = 1) {
  * and php now has a shorthand way of printing items by using the opening tag <?= .
  * 
  * @usage <?= _r($obj, {renderFunc}, ...); ?>
- * @param QControl $obj
+ * @param Q\Control\ControlBase $obj
  * @param null|string $strRenderFunc
  * @return null|string
  */
