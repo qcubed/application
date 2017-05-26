@@ -16,7 +16,7 @@ if (!defined('__PREPEND_INCLUDED__')) {
     require(__DIR__ . '/configuration.inc.php');
 
     require_once(APP_DIR . '/src/version.inc.php');     // Include the hard-coded QCubed version number
-    require_once(APP_DIR . '/src/Error/Manager.php');   // Include the error manager so we can process errors immediately
+    require_once(QCUBED_BASE_DIR . '/common/src/Error/Manager.php');   // Include the error manager so we can process errors immediately
     \QCubed\Error\Manager::initialize();
 
     //////////////////////////////
