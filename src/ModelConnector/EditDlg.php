@@ -22,6 +22,7 @@ use QCubed\ModelConnector\Options as QModelConnectorOptions;
 use QCubed\Project\Control\Table;
 use QCubed\Project\Jqui\Tabs;
 use QCubed\Type;
+use QCubed\Project\Codegen\CodegenBase as QCodeGen;
 
 /**
  * Class EditDlg
@@ -54,11 +55,12 @@ class EditDlg extends QDialog
     protected $params;
     protected $objModelConnectorOptions;
 
+    /** @var   QModelConnectorParam[] */
     protected $generalOptions;
     /** @var  Table */
     protected $dtgGeneralOptions;
 
-    /** @var  QModelConnectorParam[] */
+    /** @var  QModelConnectorParam[][] */
     protected $categories;
 
     protected $datagrids;
@@ -126,7 +128,7 @@ class EditDlg extends QDialog
                         QModelConnectorOptions::FORMGEN_LABEL_ONLY => 'Label'
                     )),
                 new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'Name', 'Control\'s Name',
-                    Type::STRING),
+                    Type::STRING, ["translate"=>true]),
                 new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'NoColumn',
                     'True to prevent a column in the lister from being generated.', Type::BOOLEAN)
             );
@@ -138,10 +140,10 @@ class EditDlg extends QDialog
                     'Override of the PHP type for the control. If you change this, save the dialog and reopen to reload the tabs to show the control specific options.',
                     QModelConnectorParam::SELECTION_LIST, $strClassNames),
                 new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'Name',
-                    'The Control\'s Name. Generally leave this blank, or use a plural name.', Type::STRING),
+                    'The Control\'s Name. Generally leave this blank, or use a plural name.', Type::STRING, ["translate"=>true]),
                 new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'ItemName',
                     'The public name of an item in the list. Its used by the title of the edit form, for example. Defaults to the name of the table in the database.',
-                    Type::STRING),
+                    Type::STRING, ["translate"=>true]),
                 new QModelConnectorParam(QModelConnectorParam::GENERAL_CATEGORY, 'CreateFilter',
                     'Whether to generate a separate control to filter the data. If the data list control does its own filtering, set this to false. Default is true.',
                     Type::BOOLEAN),
@@ -162,9 +164,13 @@ class EditDlg extends QDialog
             $strName = $objControl->Name;
 
             if (isset($this->params[$strName])) {
-                $objControl->Value = $this->params[$strName];
+                $value = $this->params[$strName];
+                if (is_array($value)) {
+                    $value = $value["value"];
+                }
+                $objControl->Value = $value;
                 if ($strName == 'ControlClass') {
-                    $strControlClass = $this->params[$strName];
+                    $strControlClass = $value;
                 }
             } else {
                 $objControl->Value = null;
@@ -189,7 +195,11 @@ class EditDlg extends QDialog
                 $strName = $objControl->Name;
 
                 if (isset($this->params[$strName])) {
-                    $objControl->Value = $this->params[$strName];
+                    $value = $this->params[$strName];
+                    if (is_array($value)) {
+                        $value = $value["value"];
+                    }
+                    $objControl->Value = $value;
                 } else {
                     $objControl->Value = null;
                 }
@@ -223,7 +233,11 @@ class EditDlg extends QDialog
                     $strName = $objControl->Name;
 
                     if (isset($this->params['Overrides'][$strName])) {
-                        $objControl->Value = $this->params['Overrides'][$strName];
+                        $value = $this->params['Overrides'][$strName];
+                        if (is_array($value)) {
+                            $value = $value["value"];
+                        }
+                        $objControl->Value = $value;
                     } else {
                         $objControl->Value = null;
                     }
@@ -335,6 +349,10 @@ class EditDlg extends QDialog
                     $strName = $objControl->Name;
                     $value = $objControl->Value;
 
+                    if ($objParam->getOption('translate')) {
+                        $value = ["value"=>$value, "translate"=>true];
+                    }
+
                     if (!is_null($value)) {
                         $this->params['Overrides'][$strName] = $value;
                     } else {
@@ -365,7 +383,7 @@ class EditDlg extends QDialog
             } else {
                 // Table options
                 $this->objModelConnectorOptions->setOptions($node->_ClassName,
-                    QModelConnectorOptions::TableOptionsFieldName, $this->params);
+                    QModelConnectorOptions::TABLE_OPTIONS_FIELD_NAME, $this->params);
                 $this->objModelConnectorOptions->save();
             }
         }
@@ -386,7 +404,7 @@ class EditDlg extends QDialog
             } else {
                 // Table options
                 $this->params = $this->objModelConnectorOptions->getOptions($node->_ClassName,
-                    QModelConnectorOptions::TableOptionsFieldName);
+                    QModelConnectorOptions::TABLE_OPTIONS_FIELD_NAME);
             }
             return true;
         }

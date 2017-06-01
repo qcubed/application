@@ -56,7 +56,7 @@ abstract class <?= $strPropertyName ?>ListPanelGen extends \QCubed\Control\Panel
 
 	public function __construct($objParent, $strControlId = null) {
 		parent::__construct($objParent, $strControlId);
-
+<?= $listCodegenerator->dataListInstantiate($objCodeGen, $objTable); ?>
 <?php if ($blnUseDialog) {
     ?>
 		$this->dlgEdit = new <?= $strPropertyName ?>EditDlg($this);
@@ -67,7 +67,6 @@ abstract class <?= $strPropertyName ?>ListPanelGen extends \QCubed\Control\Panel
 		$this->createFilterPanel();
 <?php 
 } ?>
-<?= $listCodegenerator->dataListInstantiate($objCodeGen, $objTable); ?>
 <?php if ($blnUseFilter) {
     ?>
 		$this-><?= $strListVarName ?>->setDataBinder('BindData', $this);

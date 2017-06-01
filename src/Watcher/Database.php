@@ -10,16 +10,16 @@
 namespace QCubed\Watcher;
 
 /**
- * Class QWatcherDB
+ * Class Watcher\Database
  *
- * QWatcher is a helper class that allows controls to watch a database table
- * and automatically update when changes are detected. It works together with the codegened
- * model classes, the controls, and the QForm class to draw when needed.
+ * This is a helper class that allows controls to watch a database table
+ * and automatically update the UI when changes are detected. It works together with the codegened
+ * model classes, the controls, and the Form class to draw when needed.
  *
  * It relies on the presence of a SQL database table in the system. Define the following
- * in your config file to tell it which tables to use:
- *        __WATCHER_DB_INDEX__ - The database index to look for the table
- *        __WATCHER_TABLE_NAME__ - The name of the table.
+ * in your Watcher subclass file to tell it which tables to use:
+ *        static::$intDbIndex - The database index to look for the table
+ *        static::$strTableName - The name of the table.
  *
  * To create the database, use the following SQL:
  * CREATE TABLE IF NOT EXISTS qc_watchers (
@@ -28,33 +28,22 @@ namespace QCubed\Watcher;
  * PRIMARY KEY (table_key)
  * );
  *
- * Static functions handle the database updating, while member variables store the current state
- * of a control's watched tables.
  *
  * @package QCubed\Watcher
  * @was QWatcherDB
  */
 
-// TODO: Move this to a contstructor?
-if (!defined('__WATCHER_DB_INDEX__')) {
-    define('__WATCHER_DB_INDEX__', 1);
-}
-if (!defined('__WATCHER_TABLE_NAME__')) {
-    define('__WATCHER_TABLE_NAME__', 'qc_watchers');
-}
-
-class Database extends WatcherBase
+abstract class Database extends WatcherBase
 {
-
-    /**
+    /*** The following two variables must be initialized by a subclass **/
+    /** @var  integer The database index to use */
+    protected static $intDbIndex;
+    /** 
+     * @var  string
      * The table name which will keep info about changed tables. It must have the following columns:
      * 1. table_key: varchar(largest key size)
-     * 2. time: varchar(30)
-     *
-     */
-    public static $intDbIndex = __WATCHER_DB_INDEX__;
-
-    public static $strTableName = __WATCHER_TABLE_NAME__;
+     * 2. time: varchar(30)     */
+    protected static $strTableName;
 
     /**
      * @var string[] Caches results of database lookups. Will not be saved with the formstate.
@@ -64,18 +53,18 @@ class Database extends WatcherBase
     /**
      * Override
      */
-    public function MakeCurrent()
+    public function makeCurrent()
     {
-        $objDatabase = \QCubed\Database\Service::getDatabase(__WATCHER_DB_INDEX__);
-        $strIn = implode(',', $objDatabase->EscapeValues(array_keys($this->strWatchedKeys)));
+        $objDatabase = \QCubed\Database\Service::getDatabase(static::$intDbIndex);
+        $strIn = implode(',', $objDatabase->escapeValues(array_keys($this->strWatchedKeys)));
         $strSQL = sprintf("SELECT * FROM %s WHERE %s in (%s)",
-            $objDatabase->EscapeIdentifier(__WATCHER_TABLE_NAME__),
-            $objDatabase->EscapeIdentifier("table_key"),
+            $objDatabase->escapeIdentifier(static::$strTableName),
+            $objDatabase->escapeIdentifier("table_key"),
             $strIn);
 
-        $objDbResult = $objDatabase->Query($strSQL);
+        $objDbResult = $objDatabase->query($strSQL);
 
-        while ($strRow = $objDbResult->FetchRow()) {
+        while ($strRow = $objDbResult->fetchRow()) {
             $this->strWatchedKeys[$strRow[0]] = $strRow[1];
         }
     }
@@ -87,7 +76,7 @@ class Database extends WatcherBase
      *
      * @return bool
      */
-    public function IsCurrent()
+    public function isCurrent()
     {
         // check cache
         $ret = true;
@@ -106,17 +95,17 @@ class Database extends WatcherBase
         } // cache had everything we were looking for
 
         // cache did not have what we were looking for, so check database
-        $objDatabase = \QCubed\Database\Service::getDatabase(__WATCHER_DB_INDEX__);
-        $strIn = implode(',', $objDatabase->EscapeValues(array_keys($this->strWatchedKeys)));
+        $objDatabase = \QCubed\Database\Service::getDatabase(static::$intDbIndex);
+        $strIn = implode(',', $objDatabase->escapeValues(array_keys($this->strWatchedKeys)));
         $strSQL = sprintf("SELECT * FROM %s WHERE %s in (%s)",
-            $objDatabase->EscapeIdentifier(__WATCHER_TABLE_NAME__),
-            $objDatabase->EscapeIdentifier("table_key"),
+            $objDatabase->escapeIdentifier(static::$strTableName),
+            $objDatabase->escapeIdentifier("table_key"),
             $strIn);
 
-        $objDbResult = $objDatabase->Query($strSQL);
+        $objDbResult = $objDatabase->query($strSQL);
 
         // fill cache and check result
-        while ($strRow = $objDbResult->FetchRow()) {
+        while ($strRow = $objDbResult->fetchRow()) {
             self::$strKeyCaches[$strRow[0]] = $strRow[1];
             if ($ret && $this->strWatchedKeys[$strRow[0]] !== $strRow[1]) {
                 $ret = false;
@@ -131,22 +120,16 @@ class Database extends WatcherBase
      * @param string $strDbName
      * @param string $strTableName
      */
-    static public function MarkTableModified($strDbName, $strTableName)
+    static public function markTableModified($strDbName, $strTableName)
     {
-        $key = static::GetKey($strDbName, $strTableName);
-        $objDatabase = \QCubed\Database\Service::getDatabase(__WATCHER_DB_INDEX__);
+        $key = static::getKey($strDbName, $strTableName);
+        $objDatabase = \QCubed\Database\Service::getDatabase(static::$intDbIndex);
         $time = microtime();
 
-        $objDatabase->InsertOrUpdate(__WATCHER_TABLE_NAME__,
+        $objDatabase->insertOrUpdate(static::$strTableName,
             array(
                 'table_key' => $key,
                 'ts' => $time
             ));
-        $objDatabase->InsertOrUpdate(__WATCHER_TABLE_NAME__,
-            array(
-                'table_key' => static::GetKey('', static::$strAppKey),
-                'ts' => $time
-            ));
-
     }
 }

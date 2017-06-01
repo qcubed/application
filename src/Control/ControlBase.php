@@ -1244,7 +1244,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Returns an array of the wrapper attributes to be used for drawing, including CSS styles. Makes sure the control is hidden if display is off.
      * @param array $attributeOverrides
-     * @return string
+     * @return array
      */
     protected function getWrapperAttributes($attributeOverrides = null)
     {
@@ -1602,7 +1602,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *
      * @param boolean $blnDisplayOutput render the control or return as string
      *
-     * @throws Exception|Exception\Caller
+     * @throwsException\Caller
      * @return string
      */
     public function render($blnDisplayOutput = true /* ... */)
@@ -2119,8 +2119,8 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     public function watch(NodeBase $objNode)
     {
         if (!$this->objWatcher) {
-            if (defined('WATCHER_CLASS')) {
-                $class = WATCHER_CLASS;
+            if (defined('QCUBED_WATCHER_CLASS')) {
+                $class = QCUBED_WATCHER_CLASS;
                 $this->objWatcher = new $class(); // only create a watcher object when needed, since it is stored in the form state
             } else {
                 $this->objWatcher = new Watcher(); // only create a watcher object when needed, since it is stored in the form state
@@ -2678,13 +2678,13 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
                 'Will it fail validation if nothing is entered (default depends on data definition, if NULL is allowed.)?',
                 Type::BOOLEAN),
             new ModelConnectorParam ('Control', 'TabIndex', '', Type::INTEGER),
-            new ModelConnectorParam ('Control', 'ToolTip', '', Type::STRING),
+            new ModelConnectorParam ('Control', 'ToolTip', '', Type::STRING, ["translate"=>true]),
             new ModelConnectorParam ('Control', 'Visible', '', Type::BOOLEAN),
             new ModelConnectorParam ('Control', 'Height',
                 'Height in pixels. However, you can specify a different unit (e.g. 3.0 em).', Type::STRING),
             new ModelConnectorParam ('Control', 'Width',
                 'Width in pixels. However, you can specify a different unit (e.g. 3.0 em).', Type::STRING),
-            new ModelConnectorParam ('Control', 'Instructions', 'Additional help for user.', Type::STRING),
+            new ModelConnectorParam ('Control', 'Instructions', 'Additional help for user.', Type::STRING, ["translate"=>true]),
             new ModelConnectorParam ('Control', 'Moveable', '', Type::BOOLEAN),
             new ModelConnectorParam ('Control', 'Resizable', '', Type::BOOLEAN),
             new ModelConnectorParam ('Control', 'Droppable', '', Type::BOOLEAN),

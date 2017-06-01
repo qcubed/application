@@ -52,6 +52,8 @@ use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Project\Control\Paginator;
 use QCubed\Type;
 use QCubed\Exception\Caller;
+use QCubed\Query\QQ;
+
 
 TMPL;
         return $strCode;

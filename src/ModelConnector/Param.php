@@ -17,7 +17,7 @@ use QCubed\Control\RadioButtonList;
 use QCubed\Exception\Caller;
 use QCubed;
 use QCubed\ObjectBase;
-use QCubed\Project\Control\ControlBase;
+use QCubed\Control\ControlBase;
 use QCubed\Project\Control\ListBox;
 use QCubed\Project\Control\TextBox;
 use QCubed\Type;
@@ -45,10 +45,15 @@ class Param extends ObjectBase
 
     const GENERAL_CATEGORY = 'General';
 
+    /** @var string  */
     protected $strCategory;
+    /** @var string  */
     protected $strName;
+    /** @var string  */
     protected $strDescription;
+    /** @var  string One of the controlType constants */
     protected $controlType;
+    /** @var mixed Options dependent on the control type */
     protected $options;
 
     /** @var  ControlBase caching the created control */
@@ -137,16 +142,25 @@ class Param extends ObjectBase
         return $ctl;
     }
 
+    /**
+     * @param string $strOptName
+     * @return mixed
+     */
+    public function getOption($strOptName) {
+        if (isset($this->options[$strOptName])) {
+            return $this->options[$strOptName];
+        }
+        return null;
+    }
+
     public function __get($strName)
     {
         switch ($strName) {
             case 'Name':
                 return $this->strName;
-                break;
 
             case 'Category':
                 return $this->strCategory;
-                break;
 
             default:
                 try {

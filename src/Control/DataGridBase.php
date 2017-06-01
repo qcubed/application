@@ -320,7 +320,7 @@ class DataGridBase extends TableBase
         } else {
             if ($objColumn->OrderByClause) {    // sortable, but not currently being sorted
                 $strCellValue = $strCellValue . ' ' . Q\Html::renderTag('i',
-                        ['class' => 'fa fa-sort fa-lg', 'style' => 'opacity:0.8']);
+                        ['class' => 'fa fa-sort fa-lg']);
                 $blnSortable = true;
             }
         }

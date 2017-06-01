@@ -4,6 +4,8 @@ namespace QCubed\Project;
 
 use QCubed;
 use QCubed\Purifier;
+use QCubed\Project\Watcher\Watcher;
+
 
 /**
  * Class Application
@@ -43,6 +45,7 @@ class Application extends QCubed\ApplicationBase
     {
         $this->startSession();  // make sure we start the session first in case other services need it.
         $this->initTranslator();
+        $this->initWatcher();
 
         //$this->authService = new \Project\Service\Auth();
     }
@@ -85,6 +88,14 @@ class Application extends QCubed\ApplicationBase
     public function initPurifier() {
         $this->objPurifier = new Purifier();
     }
+
+    /**
+     * Initialize your watcher class here, if needed.
+     */
+    protected function initWatcher() {
+        Watcher::initialize();
+    }
+
 
     /**
      * This is a stub function for you to check permissions for the current user.

@@ -1493,8 +1493,7 @@ abstract class FormBase extends ObjectBase
         $strToReturn = '';
         $this->strIncludedStyleSheetFileArray = array();
 
-        // Figure out initial list of StyleSheet includes
-        $strStyleSheetArray = $this->getFormStyles();
+        $strStyleSheetArray = [];
 
         foreach ($this->getAllControls() as $objControl) {
             // Include any StyleSheets?  The control would have a
@@ -1513,6 +1512,11 @@ abstract class FormBase extends ObjectBase
                 break;
             }
         }
+
+        foreach ($this->getFormStyles() as $strScript) {
+            $strStyleSheetArray[$strScript] = $strScript;
+        }
+
 
         // Include styles that need to be included
         foreach ($strStyleSheetArray as $strScript) {
@@ -1815,7 +1819,7 @@ abstract class FormBase extends ObjectBase
     protected function getFormStyles()
     {
         return array(
-            QCUBED_BASE_URL . '/application/assets/css/qcubed.css'
+            QCUBED_CSS
         );
     }
 

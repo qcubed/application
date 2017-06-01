@@ -699,7 +699,7 @@ abstract class TextBoxBase extends Q\Project\Control\ControlBase
             new QModelConnectorParam(get_called_class(), 'Format', 'printf format string to use',
                 Type::STRING),
             new QModelConnectorParam(get_called_class(), 'Placeholder', 'HTML5 Placeholder attribute',
-                Type::STRING),
+                Type::STRING, ["translate"=>true]),
             new QModelConnectorParam(get_called_class(), 'ReadOnly', 'Editable or not', Type::BOOLEAN),
             new QModelConnectorParam(get_called_class(), 'TextMode', 'Field type', QModelConnectorParam::SELECTION_LIST,
                 array(

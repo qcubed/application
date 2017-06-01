@@ -40,6 +40,7 @@ $_TEMPLATE_SETTINGS = array(
  *
  */
 class <?= $objTable->ClassName ?>ListGen extends <?= $strClassName ?>
+
 {
 <?= $listCodegenerator->dataListConnector($objCodeGen, $objTable); ?>
 }

@@ -103,9 +103,12 @@ TMPL;
                         $strVal = $val;
                     } else {
                         $strVal = var_export($val, true);
-                        $strVal = 't(' . $strVal . ')';
                     }
-                } else {
+                } elseif (is_array($val) && isset($val["translate"])) {
+                    $strVal = var_export($val["value"], true);
+                    $strVal = 't(' . $strVal . ')';
+                }
+                else {
                     $strVal = var_export($val, true);
                 }
                 $strRet .= <<<TMPL

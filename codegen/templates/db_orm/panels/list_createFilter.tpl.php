@@ -12,7 +12,7 @@
 	}
 
 	protected function addFilterActions() {
-		$this->txtFilter->addAction(new \QCubed\Event\Input(300), new \QCubed\Action\AjaxControl ($this, 'FilterChanged'));
+		$this->txtFilter->addAction(new \QCubed\Event\Input(300), new \QCubed\Action\AjaxControl ($this, 'filterChanged'));
 		$this->txtFilter->addActionArray(new \QCubed\Event\EnterKey(),
 			[
 				new Q\Action\AjaxControl($this, 'FilterChanged'),

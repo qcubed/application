@@ -35,6 +35,10 @@ define ('QCUBED_PROJECT_CSS_URL', QCUBED_PROJECT_ASSETS_URL . '/css');
 define ('QCUBED_PROJECT_PHP_URL', QCUBED_PROJECT_ASSETS_URL . '/php');
 define ('QCUBED_PROJECT_IMAGE_URL', QCUBED_PROJECT_ASSETS_URL . '/images');
 
+// Location of base qcubed css file. Swap comments to use your own version.
+define ('QCUBED_CSS', QCUBED_CSS_URL . '/qcubed.css');
+//define ('QCUBED_CSS', QCUBED_PROJECT_CSS_URL . '/qcubed.css');
+
 // There are two ways to add jQuery JS files to QCubed. Either by absolute paths (Google CDN of
 // the jQuery library is awesome! It's the default option below) - or by using the jQuery
 // installation that's local to QCubed (in that case, paths must be relative to __JS_ASSETS__

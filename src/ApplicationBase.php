@@ -228,7 +228,7 @@ abstract class ApplicationBase extends ObjectBase
         return Application::instance()->objPurifier->purify($strText, $objCustomConfig);
     }
 
-    abstract public function initPurifier();
+    abstract protected function initPurifier();
 
     /**
      * Whether or not we are currently trying to Process the Output of the page.
