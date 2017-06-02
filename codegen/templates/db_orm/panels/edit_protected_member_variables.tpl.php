@@ -26,6 +26,7 @@ use QCubed as Q;
 <?php } ?>
 <?php foreach ($objTable->ReverseReferenceArray as $objReverseReference) { ?>
 <?php if ($objReverseReference->Unique) { ?>
+<?php	if (isset ($objReverseReference->Options['FormGen']) && ($objReverseReference->Options['FormGen'] == 'none' || $objReverseReference->Options['FormGen'] == 'meta')) continue; ?>
 	/** @var <?= $objCodeGen->ModelConnectorControlClass($objReverseReference) ?> */
 	protected $<?= $objCodeGen->ModelConnectorVariableName($objReverseReference);  ?>;
 <?php } ?>
@@ -35,6 +36,7 @@ use QCubed as Q;
 
 <?php } ?>
 <?php foreach ($objTable->ManyToManyReferenceArray as $objManyToManyReference) { ?>
+<?php	if (isset ($objManyToManyReference->Options['FormGen']) && ($objManyToManyReference->Options['FormGen'] == 'none' || $objManyToManyReference->Options['FormGen'] == 'meta')) continue; ?>
 	/**  @var <?= $objCodeGen->ModelConnectorControlClass($objManyToManyReference) ?>  */
 	protected $<?= $objCodeGen->ModelConnectorVariableName($objManyToManyReference);  ?>;
 <?php }

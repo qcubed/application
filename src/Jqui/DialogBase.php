@@ -94,8 +94,6 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
     protected $blnAutoRender = true;
     /** @var bool Whether to show the dialog as a modal dialog. Most dialogs are modal, so this defaults to true. */
     protected $blnModal = true;
-    /** @var bool Whether to automatically remove the dialog from the form when it closes. */
-    protected $blnAutoRemove = false;
 
 
     public function __construct($objParentObject = null, $strControlId = null)
@@ -107,13 +105,14 @@ class DialogBase extends DialogGen implements Q\Control\DialogInterface
             $objParentObject = $_FORM;    // The parent object should be the form. Prevents spurious redrawing.
             $this->blnDisplay = true;
             $this->blnAutoOpen = true;
-            $this->blnAutoRemove = true;
+            $blnAutoRemove = true;
         } else {
             $this->blnDisplay = false;
+            $blnAutoRemove = false;
         }
         parent::__construct($objParentObject, $strControlId);
         $this->mixCausesValidation = $this;
-        if ($this->blnAutoRemove) {
+        if ($blnAutoRemove) {
             // We need to immediately detect a close so we can remove it from the form
             // Delay in an attempt to make sure this is the very last thing processed for the dialog.
             // If you want to do something just before closing, trap the QDialog_BeforeCloseEvent
