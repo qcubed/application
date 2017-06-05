@@ -525,26 +525,25 @@ abstract class ApplicationBase extends ObjectBase
             empty($_FORM) ||
             !Application::instance()->blnProcessOutput
         ) {
-            return trim($strBuffer);
+            /*
+             * Normally, FormBase->renderEnd will render the javascripts. In the unusual case
+             * of not rendering with a Form object ($_FORM is empty), this will still output embedded javascript commands.
+             */
+            $strScript = Application::instance()->jsResponse()->renderJavascript();
+            if ($strScript) {
+                $strBuffer =  $strBuffer . '<script type="text/javascript">' . $strScript . '</script>';
+            }
+            return $strBuffer;
         } else {
             $file = "";
             $line = 0;
             if (!headers_sent()) {
-                // We are outputting a QForm
+                // We are outputting a Form
                 header('Cache-Control: ' . static::$strCacheControl);
                 // make sure the server does not override the character encoding value by explicitly sending it out as a header.
                 // some servers will use an internal default if not specified in the header, and that will override the "encoding" value sent in the text.
                 header(sprintf('Content-Type: %s; charset=%s', strtolower(static::$strContentType),
                     strtolower(QCUBED_ENCODING)));
-            }
-
-            /*
-             * Normally, FormBase->renderEnd will render the javascripts. In the unusual case
-             * of not rendering with a QForm object, this will still output embedded javascript commands.
-             */
-            $strScript = Application::instance()->jsResponse()->renderJavascript();
-            if ($strScript) {
-                return $strBuffer . '<script type="text/javascript">' . $strScript . '</script>';
             }
 
             return $strBuffer;

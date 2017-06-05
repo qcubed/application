@@ -23,7 +23,6 @@
 		</footer>
 		
 		<script type="text/javascript">
-			// jQuery isn't always available
 			var viewSource = document.getElementById('viewSource');
 			if (viewSource) {
 				viewSource.onclick = function (){
