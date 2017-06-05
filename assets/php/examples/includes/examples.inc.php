@@ -590,4 +590,4 @@
 	//require_once(__PLUGINS__ . "/plugin_examples.php");
 
 	Examples::Init();
-?>
+
