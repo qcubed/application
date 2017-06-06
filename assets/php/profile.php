@@ -62,12 +62,12 @@
 <html>
 <head>
 	<title>QCubed Development Framework - Database Profiling Tool</title>
-	<style type="text/css">@import url("<?php _p(QCUBED_CSS_URL, false); ?>/qcubed.css");</style>
+	<style type="text/css">@import url("<?= QCUBED_BASE_URL ?>/application/assets/css/corepage.css");</style>
 <?php
     foreach ($strJsFileArray as $strJsFile) {
         if (false !== strpos($strJsFile, "http")) {
             ?>
-	<script type="text/javascript" src="<?php _p($strJsFile); ?>"></script>
+	<script type="text/javascript" src="<?= $strJsFile ?>"></script>
 <?php
 
         } else {
@@ -103,7 +103,7 @@
 		function showAll() {
 			jQuery(".querySection, .explainSection").each(function() {
 				if ($(this).css('display') == "none") {
-					Toggle(this.id);
+					toggle(this.id);
 				}
 			});
 
@@ -113,7 +113,7 @@
 		function hideAll() {
 			jQuery(".querySection, .explainSection").each(function() {
 				if ($(this).css('display') == "block") {
-					Toggle(this.id);
+					toggle(this.id);
 				}
 			});
 			return false;
@@ -168,8 +168,8 @@
 		</span>
 		<br/>
 		<br/>
-		<a href="#" onClick="return ShowAll();" class="smallbutton">Show All</a>
-		<a href="#" onClick="return HideAll();" class="smallbutton">Hide All</a>
+		<a href="#" onClick="return showAll();" class="smallbutton">Show All</a>
+		<a href="#" onClick="return hideAll();" class="smallbutton">Hide All</a>
 		<br/>
 		<br/>
 <?php
@@ -201,13 +201,13 @@
             }
             printf("Query took %.1f ms", $dblTimeInfo * 1000); ?>
 			<?php $explainStatement = PrintExplainStatement($strQuery); ?>
-			<a href="#" onClick="return Toggle('query<?php _p($intIndex); ?>')" id="buttonquery<?php _p($intIndex); ?>" class="queryButton smallbutton">
+			<a href="#" onClick="return toggle('query<?php _p($intIndex); ?>')" id="buttonquery<?php _p($intIndex); ?>" class="queryButton smallbutton">
 				Show SQL
 			</a>
 			<?php if ($explainStatement) {
                 ?>
 			&nbsp;&nbsp;
-			<a href="#" onClick="return Toggle('explain<?php _p($intIndex); ?>')" id="buttonexplain<?php _p($intIndex); ?>" class="explainButton smallbutton">
+			<a href="#" onClick="return toggle('explain<?php _p($intIndex); ?>')" id="buttonexplain<?php _p($intIndex); ?>" class="explainButton smallbutton">
 				Show EXPLAIN statement
 			</a>
 			<?php 
@@ -224,7 +224,7 @@
 ?>			</div>
 	</div>
 	<script>
-		if (<?php _p($intCount); ?> <= 5) ShowAll();
+		if (<?php _p($intCount); ?> <= 5) showAll();
 	</script>
 </body>
 </html>

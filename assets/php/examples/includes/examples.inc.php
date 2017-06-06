@@ -42,10 +42,10 @@
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Querying in QCubed';
 			Examples::$Categories[$intIndex]['description'] = 'Ad Hoc Queries, Custom Load Methods, and QCubed Query';
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/\QCubed\Query\QQ.php * QCubed Query: Object Oriented Database Querying');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/\QCubed\Query\Node\NodeBase.php * QCubed Query: The \QCubed\Query\QQ Node Classes');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/\QCubed\Query\Condition\ConditionBase.php * QCubed Query: The \QCubed\Query\QQ Condition Classes');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqclause.php * QCubed Query: The \QCubed\Query\QQ Clause Classes');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/qq.php * QCubed Query: Object Oriented Database Querying');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqnode.php * QCubed Query: The Node Classes');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqcondition.php * QCubed Query: The Condition Classes');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqclause.php * QCubed Query: The QQ\Clause Classes');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/conditional_expand.php * QCubed Query: Conditional Joins');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/association.php * QCubed Query: Handling Association Tables');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/reverse.php * QCubed Query: Handling Reverse Relationships');
