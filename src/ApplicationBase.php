@@ -520,15 +520,16 @@ abstract class ApplicationBase extends ObjectBase
     {
         global $_FORM;
 
+        if (!Application::instance()->blnProcessOutput) {
+            // We are processing a template, or outputting some other kind of file, like a jpeg or pdf
+            return $strBuffer;
+        }
+
         if (Q\Error\Manager::isError() ||
             Application::isAjax() ||
-            empty($_FORM) ||
-            !Application::instance()->blnProcessOutput
+            empty($_FORM)
         ) {
-            /*
-             * Normally, FormBase->renderEnd will render the javascripts. In the unusual case
-             * of not rendering with a Form object ($_FORM is empty), this will still output embedded javascript commands.
-             */
+            // Render scripts in the rare situation there is no $_FORM or render_end did not process them
             $strScript = Application::instance()->jsResponse()->renderJavascript();
             if ($strScript) {
                 $strBuffer =  $strBuffer . '<script type="text/javascript">' . $strScript . '</script>';

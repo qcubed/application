@@ -43,8 +43,8 @@ define ('QCUBED_CSS', QCUBED_CSS_URL . '/qcubed.css');
 // the jQuery library is awesome! It's the default option below) - or by using the jQuery
 // installation that's local to QCubed (in that case, paths must be relative to __JS_ASSETS__
 
-define ('QCUBED_JQUERY_JS', ' http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
-define ('QCUBED_JQUI_JS', ' http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js');
+define ('QCUBED_JQUERY_JS', ' https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+define ('QCUBED_JQUI_JS', ' https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js');
 
 // The original, non-minified jQuery for debugging purposes.
 //define ('QCUBED_JQUERY', ' http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js');
