@@ -712,7 +712,10 @@ abstract class TextBoxBase extends Q\Project\Control\ControlBase
                     '\\QCubed\\Project\\Control\\TextBox::EMAIL' => 'Email',
                     '\\QCubed\\Project\\Control\\TextBox::TEL' => 'Telephone',
                     '\\QCubed\\Project\\Control\\TextBox::URL' => 'Url'
-                ))
+                )),
+            new QModelConnectorParam(get_called_class(), 'MinLength', 'Minimum length to pass validation', Type::INTEGER),
+            new QModelConnectorParam(get_called_class(), 'MaxLength', 'Maximum length to pass validation', Type::INTEGER)
+
         ));
     }
 
