@@ -34,9 +34,24 @@ class IndexedColumn extends DataColumn
         $this->mixIndex = $mixIndex;
     }
 
+    /**
+     * Returns the displayed value given an item in the data array.
+     *
+     * @param mixed $item
+     * @return string
+     */
     public function fetchCellObject($item)
     {
-        if (isset($item[$this->mixIndex])) {
+        if (is_array($this->mixIndex)) {
+            foreach ($this->mixIndex as $i) {
+                if (!isset($item[$i])) {
+                    return '';
+                }
+                $item = $item[$i];
+            }
+            return $item;
+        }
+        elseif (isset($item[$this->mixIndex])) {
             return $item[$this->mixIndex];
         } else {
             return '';
@@ -49,7 +64,6 @@ class IndexedColumn extends DataColumn
      * @param string $strName
      *
      * @return mixed
-     * @throws Exception
      * @throws Caller
      */
     public function __get($strName)
@@ -74,7 +88,6 @@ class IndexedColumn extends DataColumn
      * @param string $mixValue
      *
      * @return mixed|void
-     * @throws Exception
      * @throws Caller
      */
     public function __set($strName, $mixValue)
