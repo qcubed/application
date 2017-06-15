@@ -121,7 +121,8 @@ abstract class TableBase extends PaginatedControl
      * Index columns assume that each data item is an array, and mixIndex is an offset in the array.
      *
      * @param string $strName column name
-     * @param mixed $mixIndex the index to use to access the cell date. i.e. $item[$index]
+     * @param mixed $mixIndex the index to use to access the cell date. i.e. $item[$index]. If an array, each item in the array
+     *                        is an additional dereference. i.e. ['a', 'b'] becomes $item['a']['b'].
      * @param integer $intColumnIndex column position
      *
      * @return IndexedColumn
