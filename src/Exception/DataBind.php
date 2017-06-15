@@ -40,8 +40,6 @@ class DataBind extends Caller
             $this->strQuery = $objExc->Query;
         }
 
-        $this->file = $this->strTraceArray[$this->intOffset]['file'];
-        $this->line = $this->strTraceArray[$this->intOffset]['line'];
     }
 
     /**
