@@ -10,5 +10,5 @@
 			sprintf(t('Are you SURE you want to DELETE this %s?'),  t('<?= $strPropertyName ?>')),
 			array('class'=>'ui-button-left')
 		);
-		$this->addAction(new Q\Event\DialogButton(0, null, null, true), new Q\Action\AjaxControl($this, 'ButtonClick'));
+		$this->addAction(new Q\Event\DialogButton(0, null, null, true), new Q\Action\AjaxControl($this, 'buttonClick'));
 	}
