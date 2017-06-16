@@ -283,14 +283,10 @@ abstract class FormBase extends ObjectBase
     {
         if ($this->objControlArray) {
             foreach ($this->objControlArray as $objControl) {
-                $objControl->varExport(false);
+                $objControl->varExport(true);  // force the controls to be prepared to serialize
             }
         }
-        if ($blnReturn) {
-            return var_export($this, true);
-        } else {
-            return null;
-        }
+         return var_export($this, $blnReturn);
     }
 
     /**
