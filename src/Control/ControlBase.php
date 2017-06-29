@@ -9,9 +9,9 @@
 
 namespace QCubed\Control;
 
+use QCubed\Action\ActionParams;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
-use QCubed\HtmlAttributeManager;
 use QCubed\Exception;
 use QCubed as Q;
 use QCubed\Project\Application;
@@ -517,39 +517,31 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
 
     /**
      * This function passes control of action parameter processing to the control that caused the action, so that
-     * the control can further process the action parameters. It also saves additional information in the returned
-     * parameter array. This is useful for widgets that need to pass more information to the action than just a
+     * the control can further process the action parameters.
+     * This is useful for widgets that need to pass more information to the action than just a
      * simple string, and allows actions to get more information as well. This also allows widgets to modify
      * the action parameter, while preserving the original action parameter so that the action can see both.
      *
-     * @param ControlBase $objSourceControl
-     * @param QAction $objAction
-     * @param $mixParameter
-     * @return mixed
+     * @param ActionParams $params
+     * @return void
      */
-    public static function _processActionParams(ControlBase $objSourceControl, QAction $objAction, $mixParameter)
+    public static function _processActionParams(ActionParams $params)
     {
-        $mixParameters[self::ACTION_PARAM] = null;
-        $mixParameters = $objSourceControl->processActionParameters($objAction, $mixParameter);
-        return $mixParameters;
+        $objSourceControl =  $params->Control;
+        $objSourceControl->processActionParameters($params);
     }
 
     /**
-     * Breaks down the action parameter if needed to more useful information. Subclasses should override, call
-     * the parent, and then modify the "param" item in the returned array if needed. This also provides additional
+     * An opportunity for a control to process the params coming from javascript and make them more useful
+     * to actions. This also provides additional
      * information to the action about the triggering control.
      *
-     * @param QAction $objAction
-     * @param $mixParameter
-     * @return array
+     * @param ActionParams $params
+     * @return void
      */
-    protected function processActionParameters(QAction $objAction, $mixParameter)
+    protected function processActionParameters(ActionParams $params)
     {
-        $params[self::ACTION_PARAM] = $mixParameter;    // this value can be modified by subclass if needed
-        $params[self::ACTION_ORIGINAL_PARAM] = $mixParameter;
-        $params[self::ACTION_OBJ] = $objAction;
-        $params[self::ACTION_CONTROL_ID] = $this->strControlId;
-        return $params;
+       // Subclasses can alter the Param property if needed.
     }
 
     /**
@@ -560,16 +552,16 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * @param string $strFormId
      * @param mixed $params Parameters coming from javascript
      */
-    public static function _callActionMethod(ControlBase $objDestControl, $strMethodName, $strFormId, $params)
+    public static function _callActionMethod(ControlBase $objDestControl, $strMethodName, Q\Action\ActionParams $params)
     {
         /**
-         * To transition to actions that just take a $params array and nothing else, we use reflection
+         * To transition to actions that just take a $params object and nothing else, we use reflection
          */
         $ref = new \ReflectionClass(get_class($objDestControl));
         $argCount = $ref->getMethod($strMethodName)->getNumberOfParameters();
 
         if ($argCount > 1) {
-            $objDestControl->$strMethodName($strFormId, $params[self::ACTION_CONTROL_ID], $params[self::ACTION_PARAM], $params);
+            $objDestControl->$strMethodName($params->FormId, $params->Control->ControlId, $params->Param);
         }
         else {
             $objDestControl->$strMethodName($params);

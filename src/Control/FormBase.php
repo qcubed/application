@@ -1203,9 +1203,8 @@ abstract class FormBase extends ObjectBase
     protected function triggerMethod($strControlId, $strMethodName, QAction $objAction)
     {
         $mixParameter = $_POST['Qform__FormParameter'];
-        $objSourceControl = $this->objControlArray[$strControlId];
-        $params = Q\Project\Control\ControlBase::_processActionParams($objSourceControl, $objAction, $mixParameter);
-        $params[ControlBase::ACTION_FORM_ID] = $this->strFormId;
+        $objMethodParam = new Q\Action\ActionParams($objAction, $this, $strControlId, $mixParameter);
+        Q\Project\Control\ControlBase::_processActionParams($objMethodParam);
 
         if (strpos($strMethodName, '::')) {
             // Calling a static method in a class
@@ -1218,17 +1217,16 @@ abstract class FormBase extends ObjectBase
                 $argCount = $ref->getMethod($f[1])->getNumberOfParameters();
 
                 if ($argCount > 1) {
-                    $f($this->strFormId, $params[ControlBase::ACTION_CONTROL_ID], $params[ControlBase::ACTION_PARAM],
-                        $params);
+                    $f($this->strFormId, $strControlId, $objMethodParam->Param);
                 } else {
-                    $f($params);
+                    $f($objMethodParam);
                 }
             }
         } elseif (($intPosition = strpos($strMethodName, ':')) !== false) {
             $strDestControlId = substr($strMethodName, 0, $intPosition);
             $strMethodName = substr($strMethodName, $intPosition + 1);
-            $objDestControl = $this->objControlArray[$strDestControlId];
-            Q\Project\Control\ControlBase::_callActionMethod($objDestControl, $strMethodName, $this->strFormId, $params);
+            $objDestControl = $this->getControl($strDestControlId);
+            Q\Project\Control\ControlBase::_callActionMethod($objDestControl, $strMethodName, $objMethodParam);
         } else {
             /**
              * To transition to actions that just take a $params array and nothing else, we use reflection
@@ -1237,9 +1235,9 @@ abstract class FormBase extends ObjectBase
             $argCount = $ref->getMethod($strMethodName)->getNumberOfParameters();
 
             if ($argCount > 1) {
-                $this->$strMethodName($this->strFormId, $params['controlId'], $params['param'], $params);
+                $this->$strMethodName($this->strFormId, $strControlId, $objMethodParam->Param, $objMethodParam);
             } else {
-                $this->$strMethodName($params);
+                $this->$strMethodName($objMethodParam);
             }
         }
     }

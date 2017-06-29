@@ -102,9 +102,9 @@ abstract class PaginatorBase extends Q\Project\Control\ControlBase
         // Setup Pagination Events
         $this->prxPagination->removeAllActions( Q\Event\Click::EVENT_NAME);
         if ($this->blnUseAjax) {
-            $this->prxPagination->addAction(new Q\Event\Click(), new Q\Action\AjaxControl($this, 'Page_Click'));
+            $this->prxPagination->addAction(new Q\Event\Click(), new Q\Action\AjaxControl($this, 'pageClick'));
         } else {
-            $this->prxPagination->addAction(new Q\Event\Click(), new Q\Action\ServerControl($this, 'Page_Click'));
+            $this->prxPagination->addAction(new Q\Event\Click(), new Q\Action\ServerControl($this, 'pageClick'));
         }
         $this->prxPagination->addAction(new Q\Event\Click, new Q\Action\Terminate());
     }
@@ -126,13 +126,13 @@ abstract class PaginatorBase extends Q\Project\Control\ControlBase
     }
 
     /**
-     * Respond to the Page_Click event
+     * Respond to the pageClick event
      *
      * @param array $params
      */
-    public function page_Click($params)
+    public function pageClick(Q\Action\ActionParams $params)
     {
-        $this->objPaginatedControl->PageNumber = Type::cast($params[ControlBase::ACTION_PARAM], Type::INTEGER);
+        $this->objPaginatedControl->PageNumber = Type::cast($params->Param, Type::INTEGER);
     }
 
     /**

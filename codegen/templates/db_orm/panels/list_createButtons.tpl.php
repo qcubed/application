@@ -10,6 +10,6 @@
 		$this->btnNew->addAction(new Q\Event\Click(), new Q\Action\AjaxControl ($this, 'btnNew_Click'));
 	}
 
-	protected function btnNew_Click($strFormId, $strControlId, $strParameter) {
+	protected function btnNew_Click() {
 		$this->editItem();
 	}
