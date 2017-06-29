@@ -77,6 +77,10 @@ qcubed = {
             }
             return name;
         }
+        else if (name && !id) {
+            name = name.replace('[]', ''); // remove brackets if they are there for array
+            return name;
+        }
         return id;
     },
     /**
@@ -315,6 +319,7 @@ qcubed = {
                 strControlId = $element.attr("id"),
                 strControlName = $element.attr("name"),
                 strPostValue = $element.val();
+            var strPostName = (strControlName ? strControlName: strControlId);
 
             switch (strType) {
                 case "select-multiple":
@@ -324,15 +329,14 @@ qcubed = {
                         values = $j.map($j.makeArray(items), function(item) {
                             return $j(item).val();
                         });
-                        postData[strControlId] = values;
+                        postData[strPostName] = values;
                     }
                     else {
-                        postData[strControlId] = null;    // mark it as set to nothing
+                        postData[strPostName] = null;    // mark it as set to nothing
                     }
                     break;
 
                 default:
-                    var strPostName = (strControlName ? strControlName: strControlId);
                     postData[strPostName] = strPostValue;
                     break;
             }
