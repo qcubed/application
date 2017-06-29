@@ -72,7 +72,7 @@ class Server extends ActionBase
                 $strMethodName = $strMethodName[1];
             }
         }
-        else {
+        elseif ($strMethodName !== null) {
             throw new Caller ("Unknown method.");
         }
 
