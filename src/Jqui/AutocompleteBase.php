@@ -59,6 +59,18 @@ class AutocompleteBase extends AutocompleteGen
         parent::__construct($objParentObject, $strControlId);
 
         $this->addJavascriptFile(QCUBED_JS_URL . '/qcubed.autocomplete.js');
+
+        /**
+         * Fixing a problem with placing an autocomplete in a modal that is not a jquery ui modal (like a bootstrap modal)
+         * We must append the menu to the modal, or the modal will obscure the menu.
+         */
+        while ($objParentObject) {
+            if ($objParentObject->AutoRender) {
+                $this->AppendTo = '#' . $objParentObject->ControlId; // selector for that control
+                break;
+            }
+            $objParentObject = $objParentObject->ParentControl;
+        }
     }
 
     /**
@@ -105,12 +117,9 @@ class AutocompleteBase extends AutocompleteGen
      * Set the data binder for ajax filtering
      *
      * Call this at creation time to set the data binder of the item list you will display. The data binder
-     * will be an AjaxAction function, and so will receive the following parameters:
-     * - FormId
-     * - ControlId
-     * - Parameter
-     * The Parameter in particular will be the term that you should use for filtering. There are situations
-     * where the term will not be the same as the contents of the field.
+     * will be an AjaxAction function.
+     *
+     * The 'param' value in the params item passed to the action in particular will be the term that you should use for filtering.
      *
      * @param string $strMethodName Name of the method which has to be bound
      * @param FormBase|ControlBase $objParentControl The parent control on which the action is to be bound
