@@ -94,7 +94,7 @@ if ($objColumn->VariableType == \QCubed\Type::STRING) {
             $this->blnEditMode = false;
         }
         if ($this-><?= $objCodeGen->ModelVariableName($objTable->Name); ?>) {
-            $this->Refresh ();
+            $this->refresh ();
         }
         return $this-><?= $objCodeGen->ModelVariableName($objTable->Name); ?>;
     }
