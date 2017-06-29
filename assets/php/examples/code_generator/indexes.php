@@ -5,11 +5,12 @@
 	<h1>Load Methods that Utilize Database Indexes</h1>
 
 	<p>As you saw in the previous example, the Code Generator will always generate two load methods,
-		<strong>Load</strong> and <strong>LoadAll</strong>, for every code generated class.  <strong>Load</strong> takes in the primary
+		<strong>load()</strong> and <strong>loadAll()</strong>, for every code generated class.
+        <strong>load()</strong> takes in the primary
 		key (or primary keys if you have multiple PKs defined on the table) as the parameter, while
-		<strong>LoadAll</strong> simply returns all the rows in the table.</p>
+		<strong>loadAll()</strong> simply returns all the rows in the table.</p>
 
-	<p>Using database indexes, the code generator will also generate additional Load-type methods
+	<p>Using database indexes, the code generator will also generate additional load-type methods
 		given the way you have defined those indexes.  In our <strong>Examples Site Database</strong>, there are quite a
 		few indexes defined, but we will highlight two:</p>
 	<ul>
@@ -17,10 +18,10 @@
 		<li>login.username (UNIQUE)</li>
 	</ul>
 
-	<p>Given these two indexes, the code generator has generated <strong>LoadArrayByLastName</strong> in the
-		<strong>Person</strong> object, and it has defined <strong>LoadByUsername</strong> in the <strong>Login</strong> object.</p>
+	<p>Given these two indexes, the code generator has generated <strong>loadArrayByLastName()</strong> in the
+		<strong>Person</strong> object, and it has defined <strong>loadByUsername()</strong> in the <strong>Login</strong> object.</p>
 
-	<p>Note that the <strong>LastName</strong> load method returns an array while the <strong>Username</strong> load method
+	<p>The <strong>LastName</strong> load method returns an array while the <strong>Username</strong> load method
 		returns just a single object.  The code generator has recognized the UNIQUE property on the column,
 		and it generated code accordingly.</p>
 
@@ -30,31 +31,31 @@
 
 
 <div id="demoZone">
-	<h3>Using LoadByUsername to get a Single Login Object</h3>
+	<h3>Using loadByUsername() to get a single Login object</h3>
 <?php
 	// Let's load a login object -- let's select the username 'jdoe'
-	$objLogin = Login::LoadByUsername('jdoe');
+	$objLogin = Login::loadByUsername('jdoe');
 ?>
-	<p>Login ID: <?php _p($objLogin->Id); ?><br/>
-		Login Username: <?php _p($objLogin->Username); ?><br/>
-		Login Password: <?php _p($objLogin->Password); ?></p>
+	<p>Login ID: <?php _p($objLogin->getId()); ?><br/>
+		Login Username: <?php _p($objLogin->getUsername()); ?><br/>
+		Login Password: <?php _p($objLogin->getPassword()); ?></p>
 
 
-	<h3>Using LoadArrayByLastName to get an Array of Person Objects</h3>
+	<h3>Using loadArrayByLastName() to get an array of Person objects</h3>
 	<ul>
 <?php
 		// We'll load all the persons who has a last name of "Smith" into an array
-		$objPersonArray = Person::LoadArrayByLastName('Smith');
+		$objPersonArray = Person::loadArrayByLastName('Smith');
 
 		// Use foreach to iterate through that array and output the first and last
 		// name of each person
 		foreach ($objPersonArray as $objPerson) {
-			printf('<li>' . $objPerson->FirstName . ' ' . $objPerson->LastName . '</li>');
+			printf('<li>' . $objPerson->getFirstName() . ' ' . $objPerson->getLastName() . '</li>');
 		}
 ?>
 	</ul>
-	<h3>Using CountByLastName to get a Count of All "Smiths" in the Database</h3>
-	<p>There are <?php _p(Person::CountByLastName('Smith')); ?> person(s) who have a last name of "Smith" in the system.</p>
+	<h3>Using countByLastName() to get a count of all "Smiths" in the database</h3>
+	<p>There are <?php _p(Person::countByLastName('Smith')); ?> person(s) who have a last name of "Smith" in the system.</p>
 </div>
 
 <?php require('../includes/footer.inc.php'); ?>

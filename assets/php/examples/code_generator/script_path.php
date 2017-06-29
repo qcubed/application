@@ -5,9 +5,9 @@
 	<h1>Using a Relationships Script</h1>
 
 	<p>Our <strong>Examples Site Database</strong> uses the InnoDB storage engine in MySQL, which has
-		full support for Foreign Keys to help define relationships between tables.</p>
+		full support for foreign keys to help define relationships between tables.</p>
 
-	<p>However, sometimes you maybe using a platform which does not offer Foreign Key support
+	<p>However, sometimes you maybe using a platform which does not offer foreign key support
 		(e.g. MySQL with MyISAM tables), or alternatively, you may want to have relationships
 		defined in your objects but you do not want to incur the performance and/or restriction
 		of using a programmatic foreign key constraint.</p>

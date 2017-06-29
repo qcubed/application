@@ -7,7 +7,7 @@
 	<p>QCubed also supports handling many-to-many relationships.  Typically, many-to-many relationships are
 		mapped in the database using an <strong>Association Table</strong> (sometimes also called a <strong>Mapping</strong>
 		or a <strong>Join Table</strong>).  It is basically a two-column table where both
-		columns are Foreign Keys to two different tables.</p>
+		columns are foreign keys to two different tables.</p>
 
 	<p>QCubed allows you to define a set suffix for all <strong>Association Tables</strong> (the default is "_assn").
 		Whenever the code generator sees any table that ends in "_assn", it will mark it as a special
@@ -21,21 +21,21 @@
 	<p>QCubed will generate the following five methods in <strong>Person</strong> to deal with this many-to-many
 		relationship:</p>
 	<ul>
-		<li>GetProjectAsTeamMemberArray</li>
-		<li>CountProjectsAsTeamMember</li>
-		<li>AssociateProjectAsTeamMember</li>
-		<li>UnassociateProjectAsTeamMember</li>
-		<li>UnassociateAllProjectsAsTeamMember</li>
+		<li>getProjectAsTeamMemberArray()</li>
+		<li>countProjectsAsTeamMember()</li>
+		<li>associateProjectAsTeamMember()</li>
+		<li>unassociateProjectAsTeamMember()</li>
+		<li>unassociateAllProjectsAsTeamMember()</li>
 	</ul>
 
 	<p>QCubed will also generate the following five methods in <strong>Project</strong> to deal with this many-to-many
 		relationship:</p>
 	<ul>
-		<li>GetPersonAsTeamMemberArray</li>
-		<li>CountPeopleAsTeamMember</li>
-		<li>AssociatePersonAsTeamMember</li>
-		<li>UnassociatePersonAsTeamMember</li>
-		<li>UnassociateAllPeopleAsTeamMember</li>
+		<li>getPersonAsTeamMemberArray()</li>
+		<li>countPeopleAsTeamMember()</li>
+		<li>associatePersonAsTeamMember()</li>
+		<li>unassociatePersonAsTeamMember()</li>
+		<li>unassociateAllPeopleAsTeamMember()</li>
 	</ul>
 
 	<p>Note that the structure of these five methods are very similar for both objects (get, count,
@@ -48,7 +48,7 @@
 	<p>Also, similar to our previous example, note that the "AsTeamMember" token in all these methods are
 		there because we named the <strong>Association Table</strong> in the database <strong>team_member_project_assn</strong>.
 		If we had use that actuale names of the two tables, as in <strong>person_project_assn</strong>, then
-		the methods would be named without the "AsTeamMember" token (e.g. "GetProjectArray", "AssociatePerson",
+		the methods would be named without the "AsTeamMember" token (e.g. "getProjectArray", "associatePerson",
 		etc.).</p>
 		
 	<p>When associating two tables together that also use hyphens in their table names, the association table name can get
@@ -65,9 +65,9 @@
 	$objPerson = Person::Load(2);
 ?>
 	<ul class="project-list">
-		<li>Person ID: <?php _p($objPerson->Id); ?></li>
-		<li>First Name: <?php _p($objPerson->FirstName); ?></li>
-		<li>Last Name: <?php _p($objPerson->LastName); ?></li>
+		<li>Person ID: <?php _p($objPerson->getId()); ?></li>
+		<li>First Name: <?php _p($objPerson->getFirstName()); ?></li>
+		<li>Last Name: <?php _p($objPerson->getLastName()); ?></li>
 	</ul>
 
 
@@ -75,7 +75,7 @@
 	<ul>
 <?php
 		foreach ($objPerson->GetProjectAsTeamMemberArray() as $objProject) {
-			_p('<li>' . $objProject->Name . '</li>', false);
+			_p('<li>' . $objProject->getName() . '</li>', false);
 		}
 ?>
 	</ul>
@@ -87,19 +87,19 @@
 	$objProject = Project::Load(1);
 ?>
 	<ul class="project-list">
-		<li>Project ID: <?php _p($objProject->Id); ?></li>
-		<li>Project Name: <?php _p($objProject->Name); ?></li>
+		<li>Project ID: <?php _p($objProject->getId()); ?></li>
+		<li>Project Name: <?php _p($objProject->getName()); ?></li>
 	</ul>
 
 	<h2>Listing of the Person(s) that This Project has as Team Members</h2>
 	<ul>
 <?php
 	foreach ($objProject->GetPersonAsTeamMemberArray() as $objPerson){
-		_p('<li>' . $objPerson->FirstName . ' ' . $objPerson->LastName . '</li>', false);
+		_p('<li>' . $objPerson->getFirstName() . ' ' . $objPerson->getLastName() . '</li>', false);
 	}
 ?>
 	</ul>
-	<p>There are <?php _p($objProject->CountPeopleAsTeamMember()); ?> person(s) that this project has as team members.</p>
+	<p>There are <?php _p($objProject->countPeopleAsTeamMember()); ?> person(s) that this project has as team members.</p>
 </div>
 
 <?php require('../includes/footer.inc.php'); ?>

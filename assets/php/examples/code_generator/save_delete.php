@@ -3,57 +3,54 @@
 
 <div id="instructions">
 	<h1>Saving and Deleting Objects</h1>
-	<p>The C, U and D in CRUD is handled by the code generated <strong>Save</strong> and <strong>Delete</strong> methods in
+	<p>The C, U and D in CRUD is handled by the code generated <strong>save()</strong> and <strong>delete()</strong> methods in
 		every object.</p>
 
-	<p><strong>Delete</strong> should hopefully be self-explanatory.  <strong>Save</strong> will either call a SQL INSERT
+	<strong>delete()</strong> should hopefully be self-explanatory.  <strong>save()</strong> will either call a SQL INSERT
 		or a SQL UPDATE, depending on whether the object was created brand new or if it was restored via
-		a Load method of some kind.</p>
-
-	<p>Note that you can also call <strong>Save</strong> passing in true for the optional <strong>$blnForceInsert</strong>
-		parameter.  If you pass in true, then it will force the <strong>Save</strong> method to call SQL INSERT.
-		Note that depending on how your table is set up (e.g. if you have certain columns marked as
-		UNIQUE), forcing the INSERT <em>may</em> throw an exception.</p>
+        one of the <strong>load*</strong> methods. If you have the need,
+        you can call <strong>save()</strong> passing in true for the optional <strong>$blnForceInsert</strong>
+		or <strong>$blnForceUpdate</strong> parameters to force it to do an INSERT or UPDATE.  </p>
 </div>
 
 <div id="demoZone">
-	<h2>Load a Person Object, Modify It, and Save</h2>
+	<h2>Load a Person object, modify it, and save</h2>
 <?php
 	// Let's load a Person object -- let's select the Person with ID #3
 	$objPerson = Person::Load(3);
 ?>
-	<h3><em>Before the Save</em></h3>
+	<h3><em>Before the save</em></h3>
 	<ul>
-		<li>Person ID: <?php _p($objPerson->Id); ?></li>
-		<li>First Name: <?php _p($objPerson->FirstName); ?></li>
-		<li>Last Name: <?php _p($objPerson->LastName); ?></li>
+		<li>Person ID: <?php _p($objPerson->getId()); ?></li>
+		<li>First Name: <?php _p($objPerson->getFirstName()); ?></li>
+		<li>Last Name: <?php _p($objPerson->getLastName()); ?></li>
 	</ul>
 <?php
 	// Update the field and save
-	$objPerson->FirstName = 'FooBar';
-	$objPerson->Save();
+	$objPerson->setFirstName('FooBar');
+	$objPerson->save();
 
 	// Restore the same person object just to make sure we
-	// have a clean object from the database
-	$objPerson = Person::Load(3);
+	// have a clean object in the database
+	$objPerson = Person::load(3);
 ?>
-	<h3><em>After the Save</em></h3>
+	<h3><em>After the save</em></h3>
 	<ul>
-		<li>Person ID: <?php _p($objPerson->Id); ?></li>
-		<li>First Name: <?php _p($objPerson->FirstName); ?></li>
-		<li>Last Name: <?php _p($objPerson->LastName); ?></li>
+		<li>Person ID: <?php _p($objPerson->getId()); ?></li>
+		<li>First Name: <?php _p($objPerson->getFirstName()); ?></li>
+		<li>Last Name: <?php _p($objPerson->getLastName()); ?></li>
 	</ul>
 
 <?php
 	// Let's clean up -- once again update the field and save
-	$objPerson->FirstName = 'Ben';
-	$objPerson->Save();
+	$objPerson->setFirstName('Ben');
+	$objPerson->save();
 ?>
-	<h3><em>Cleaning Up</em></h3>
+	<h3><em>Cleaning up</em></h3>
 	<ul>
-		<li>Person ID: <?php _p($objPerson->Id); ?></li>
-		<li>First Name: <?php _p($objPerson->FirstName); ?></li>
-		<li>Last Name: <?php _p($objPerson->LastName); ?></li>
+		<li>Person ID: <?php _p($objPerson->getId()); ?></li>
+		<li>First Name: <?php _p($objPerson->getFirstName()); ?></li>
+		<li>Last Name: <?php _p($objPerson->getLastName()); ?></li>
 	</ul>
 </div>
 
