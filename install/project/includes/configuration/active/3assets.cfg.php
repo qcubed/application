@@ -60,6 +60,9 @@ define ('QCUBED_JS',  QCUBED_JS_URL . '/qcubed.js');
 
 define ('QCUBED_JQUI_CSS', QCUBED_CSS_URL . '/jquery-ui-themes/ui-qcubed/jquery-ui.custom.css');
 
+// A wonderful, free, library of scalable icons as fonts. We use it in DataGrid. Point to a local copy for offline development if needed.
+define('QCUBED_FONT_AWESOME_CSS', 'https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css');
+
 
 // The following defines are deprecated for various reasons
 
