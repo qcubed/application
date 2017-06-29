@@ -64,7 +64,7 @@ class AutocompleteBase extends AutocompleteGen
          * Fixing a problem with placing an autocomplete in a modal that is not a jquery ui modal (like a bootstrap modal)
          * We must append the menu to the modal, or the modal will obscure the menu.
          */
-        while ($objParentObject) {
+        while ($objParentObject && $objParentObject instanceof ControlBase) {
             if ($objParentObject->AutoRender) {
                 $this->AppendTo = '#' . $objParentObject->ControlId; // selector for that control
                 break;
