@@ -34,12 +34,12 @@ use QCubed\QString;
     */
     protected function dlgOptimisticLocking_ButtonEvent($strFormId, $strControlId, $btn) {
         if ($btn == "Overwrite") {
-            $this->pnl<?= $strPropertyName ?>->Save(true);
-            $this->getControl($strControlId)->Close();
+            $this->pnl<?= $strPropertyName ?>->save(true);
+            $this->getControl($strControlId)->close();
             $this->redirectToListPage();
         } else { // Refresh
-            $this->getControl($strControlId)->Close();
-            $this->pnl<?= $strPropertyName ?>->Refresh(true);
+            $this->getControl($strControlId)->close();
+            $this->pnl<?= $strPropertyName ?>->refresh(true);
         }
     }
 
@@ -51,7 +51,7 @@ use QCubed\QString;
     * @param string $strParameter   The control parameter, not used
     */
 	protected function btnDelete_Click($strFormId, $strControlId, $strParameter) {
-		$this->pnl<?= $strPropertyName ?>->Delete();
+		$this->pnl<?= $strPropertyName ?>->delete();
 		$this->redirectToListPage();
 	}
 
