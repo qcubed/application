@@ -13,7 +13,7 @@ use QCubed\Action\AjaxControl;
 use QCubed\Codegen\ControlCategoryType;
 use QCubed\Table\CallableColumn;
 use QCubed\Project\Application;
-use QCubed\Project\Control\Dialog as QDialog;
+use QCubed\Jqui\DialogBase as QDialog;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Event;
 use QCubed\Control\Panel;
