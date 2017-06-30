@@ -84,7 +84,10 @@ if (!defined('__PREPEND_INCLUDED__')) {
     // Initialize the Application and DB Connections
     ////////////////////////////////////////////////
     \QCubed\Database\Service::initializeDatabaseConnections();
-    \QCubed\Project\Application::instance()->initializeServices();
+
+    if (!defined('QCUBED_CODE_GENERATING')) {
+        \QCubed\Project\Application::instance()->initializeServices();
+    }
 
     \QCubed\Project\Application::startOutputBuffering();
 }
