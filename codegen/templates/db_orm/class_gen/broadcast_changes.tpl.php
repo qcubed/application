@@ -56,3 +56,31 @@ if (count($objTable->PrimaryKeyColumnArray) == 1) {
             \QCubed\Project\Watcher\Watcher::markTableModified (static::getDatabase()->Database, '<?= $objTable->Name ?>');
         }
 	}
+
+   /**
+    * An association table entry has just been added. Let everyone know.
+    *
+    * @params string $strTableName
+    * @param <?= $pkType ?>	$pk1
+    * @param mixed	$pk2
+    */
+    protected static function broadcastAssociationAdded($strTableName, $pk1, $pk2)
+    {
+        if (static::$blnWatchChanges) {
+            \QCubed\Project\Watcher\Watcher::markTableModified (static::getDatabase()->Database, $strTableName);
+        }
+    }
+
+   /**
+    * An association table entry has just been removed. Let everyone know.
+    *
+    * @params string $strTableName
+    * @param <?= $pkType ?>|null$pk1    Null if we are removing all associations
+    * @param mixed|null	$pk2            Null if we are removing all associations
+    */
+    protected static function broadcastAssociationRemoved($strTableName, $pk1 = null, $pk2 = null)
+    {
+        if (static::$blnWatchChanges) {
+            \QCubed\Project\Watcher\Watcher::markTableModified (static::getDatabase()->Database, $strTableName);
+        }
+    }
