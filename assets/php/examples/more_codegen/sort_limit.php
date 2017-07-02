@@ -1,62 +1,78 @@
-<?php require_once('../qcubed.inc.php'); ?>
+<?php
+
+use QCubed\Query\QQ;
+
+require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions">
-	<h1>Manipulating LoadAll and LoadArrayBy Results</h1>
+	<h1>Manipulating loadAll and loadArrayBy Results</h1>
 
-	<p>(Note: for more information about "\QCubed\Query\QQ::"-related classes (a.k.a. <strong>QCubed Query</strong>), please refer to section 3 of the
-	Examples Site.)</p>
 
-	<p>All Code Generated <strong>LoadAll</strong> and <strong>LoadArrayBy...</strong> methods take in an optional
-	<strong>QCubed Query Clauses</strong> parameter, where you can specify an unlimited number of <strong>QQClause</strong>
-	objects, including (but not limited) functionality that handles <strong>ORDER BY</strong>, <strong>LIMIT</strong>
+
+	<p>All code generated <strong>loadAll()</strong> and <strong>loadArrayBy...()</strong> methods accept an optional
+	<strong>QCubed Query Clause Array</strong> parameter, where you can specify a <strong>Clause</strong>
+	objects, including functionality that handles <strong>ORDER BY</strong>, <strong>LIMIT</strong>
 	and <strong>Object Expansion</strong>.  We will
 	discuss <strong>Object Expansion</strong> in the examples that deal with <strong>Late Binding</strong>
-	and <strong>Early Binding</strong>.  But for this example, we'll focus on using
-	using <strong>\QCubed\Query\QQ::OrderBy()</strong> and <strong>\QCubed\Query\QQ::LimitInfo()</strong> to manipulate how the results come out of the database.</p>
+	and <strong>Early Binding</strong>.  But for this example, we'll focus on
+	using <strong>QQ::orderBy()</strong> and <strong>QQ::limitInfo()</strong> to manipulate how the results come out of the database.</p>
 
-	<p><strong>OrderBy</strong> and <strong>LimitInfo</strong> are actually really straightforward to use.  Order By takes
+	<p><strong>orderBy()</strong> and <strong>limitInfo()</strong> are straightforward to use.  OrderBy takes
 	in any number of QCubed Query Node columns, followed by an optional boolean (to specify ascending/descending),
 	which will be used in a SQL ORDER BY clause in the SELECT statement.  So you can simply say
 	<strong>\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName)</strong> to sort all the Person objects by last name.</p>
 
-	<p><strong>LimitInfo</strong> takes in a Maximum Row Count, followed by an optional offset.
+	<p><strong>limitInfo()</strong> accepts a maximum row count, followed by an optional offset.
 	So if you specified "10, 4", the result set would contain at most 10 rows, starting with row #5
-	(the offset is based on a 0 index).
-	Depending on which database platform you are on, the database adapter will appropriately handle
-	how to deal with this Limit information.</p>
+	(the offset is based on a 0 index).</p>
 
-	<p>As a final reminder, note that you can use either, both, more or none of these optional <strong>QQClause</strong>
-	parameters whenever you make your <strong>LoadAll</strong> or <strong>LoadArrayBy</strong> calls.</p>
+	<p>You can use either, both, more or none of these optional <strong>Clause</strong>
+	parameters whenever you make your <strong>loadAll()</strong> or <strong>loadArrayBy()</strong> calls.
+    In the section about DataGrids, you will learn how to take sort and limit information from a DataGrid to
+        populate the DataGrid with the data the user is asking for, in the order of the sort column.
+    </p>
+
+    <p>For more information about "QQ::"-related classes (a.k.a. <strong>QCubed Query</strong>), please refer to section 3 of the
+        Examples Site.</p>
 </div>
 
 <div id="demoZone">
-	<h2>List All Persons, Ordered by Last Name then First Name</h2>
+	<h2>List All Persons, Ordered by LastName then FirstName</h2>
 
 <?php
-	// Load the Person array, sorted
-	$objPersonArray = Person::LoadAll(\QCubed\Query\QQ::Clause(
-		\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
-	));
-	foreach ($objPersonArray as $objPerson) {
-		_p($objPerson->LastName . ', ' . $objPerson->FirstName . ' (ID #' . $objPerson->Id . ')');
-		_p('<br/>', false);
-	}
+    // Load the Person array, sorted
+
+
+    $objPersonArray = Person::LoadAll(
+        [   // starts an array
+
+            // Note the "use" at the top of this file that imports the QQ class
+            // Also, the QQN class here is a "Node" class, that helps describe relationships in the database. More on these is coming in another example.
+            QQ::orderBy(QQN::person()->LastName, QQN::person()->FirstName)
+        ]
+    );
+    foreach ($objPersonArray as $objPerson) {
+        _p($objPerson->getLastName() . ', ' . $objPerson->getFirstName() . ' (ID #' . $objPerson->getId() . ')');
+        _p('<br/>', false);
+    }
 ?>
 
 
 	<h2>List Five People, Start with the Third from the Top, Ordered by Last Name then First Name</h2>
 <?php
-	// Load the Person array, sorted and limited
-	// Note that because we want to start with row #3, we need to define "2" as the offset
-	$objPersonArray = Person::LoadAll(\QCubed\Query\QQ::Clause(
-		\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName),
-		\QCubed\Query\QQ::LimitInfo(5, 2)
-	));
-	foreach ($objPersonArray as $objPerson) {
-		_p($objPerson->LastName . ', ' . $objPerson->FirstName . ' (ID #' . $objPerson->Id . ')');
-		_p('<br/>', false);
-	}
+    // Load the Person array, sorted and limited
+    // Note that because we want to start with row #3, we need to define "2" as the offset
+    $objPersonArray = Person::loadAll(
+        [
+            QQ::orderBy(QQN::Person()->LastName, QQN::Person()->FirstName),
+            QQ::limitInfo(5, 2)
+        ]
+    );
+    foreach ($objPersonArray as $objPerson) {
+        _p($objPerson->getLastName() . ', ' . $objPerson->getFirstName() . ' (ID #' . $objPerson->getId() . ')');
+        _p('<br/>', false);
+    }
 ?>
 </div>
 
