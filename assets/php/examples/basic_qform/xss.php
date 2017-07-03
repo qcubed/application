@@ -76,10 +76,11 @@ class ExamplesForm extends FormBase
         // htmlentities mode
         $this->txtTextbox2 = new TextBox($this);
         $this->txtTextbox2->CrossScripting = TextBox::XSS_HTML_ENTITIES;
-        $this->txtTextbox2->Text = 'Hello! <script>alert("I am an evil attacker.")</script>';
+        $this->txtTextbox2->Text = 'Hello!';
         $this->txtTextbox2->Width = 500;
 
         $this->lblLabel2 = new Label($this);
+        $this->lblLabel2->HtmlEntities = false;
         $this->lblLabel2->Text = "";
 
         $this->btnButton2 = new Button($this);
@@ -89,10 +90,11 @@ class ExamplesForm extends FormBase
         // full protection with the HTMLPurifier defaults
         $this->txtTextbox3 = new TextBox($this);
         $this->txtTextbox3->CrossScripting = TextBox::XSS_HTML_PURIFIER;
-        $this->txtTextbox3->Text = 'Hello! <script>alert("I am an evil attacker.")</script>';
+        $this->txtTextbox3->Text = 'Hello!';
         $this->txtTextbox3->Width = 500;
 
         $this->lblLabel3 = new Label($this);
+        $this->lblLabel3->HtmlEntities = false;
         $this->lblLabel3->Text = "";
 
         $this->btnButton3 = new Button($this);
@@ -103,7 +105,7 @@ class ExamplesForm extends FormBase
         $this->txtTextbox4 = new TextBox($this);
         $this->txtTextbox4->CrossScripting = TextBox::XSS_HTML_PURIFIER;
         $this->txtTextbox4->setPurifierConfig("HTML.Allowed", "b,strong,i,em,img[src]");
-        $this->txtTextbox4->Text = 'Hello! <script>alert("I am an evil attacker.")</script><b>Hello</b> <i>again</i>!';
+        $this->txtTextbox4->Text = 'Hello!';
         $this->txtTextbox4->Width = 500;
 
         $this->lblLabel4 = new Label($this);
@@ -117,7 +119,7 @@ class ExamplesForm extends FormBase
         // the textbox won't have the XSS protection!
         $this->txtTextbox5 = new TextBox($this);
         $this->txtTextbox5->CrossScripting = TextBox::XSS_ALLOW;
-        $this->txtTextbox5->Text = 'Hello! <script>alert("I am an evil attacker.")</script><b>Hello</b> again!';
+        $this->txtTextbox5->Text = 'Hello!';
         $this->txtTextbox5->Width = 500;
 
         $this->lblLabel5 = new Label($this);

@@ -45,7 +45,7 @@ class Purifier {
 
     public function purify($strText, $objCustomConfig = null) {
         if ($objCustomConfig) {
-            $objPurifier = new HTMLPurifier($objCustomConfig);
+            $objPurifier = new \HTMLPurifier($objCustomConfig);
         } else {
             if (!$this->objPurifier) {
                 $this->objPurifier = new \HTMLPurifier($this->objConfig);

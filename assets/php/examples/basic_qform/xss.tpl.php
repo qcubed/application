@@ -53,7 +53,12 @@
 			$this->txtTextbox2->SetPurifierConfig("HTML.Allowed", "b,i");
 		</code></div>
 
-	<p>See the five textboxes below to learn more about how this XSS protection works.</p>
+	<p>See the five textboxes below to learn more about how this XSS protection works. For each box, paste the following
+    into the text box to test it.
+    </p>
+    <code>
+        Hello! &lt;script&gt;alert("I am an evil attacker.")&lt;/script&gt;&lt;b&gt;Hello&lt;/b&gt; &lt;i&gt;again&lt;/i&gt;!
+    </code>
 </div>
 
 <div id="demoZone">
