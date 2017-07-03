@@ -1,7 +1,15 @@
 <?php
+use QCubed\Action\Server;
+use QCubed\Control\Label;
+use QCubed\Event\Click;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\FormBase;
+use QCubed\Project\Control\ListBox;
+use QCubed\Project\Control\TextBox;
+
 require_once('../qcubed.inc.php');
 
-class CalculatorForm extends \QCubed\Project\Control\FormBase {
+class CalculatorForm extends FormBase {
 
 	// Our Calculator needs 2 Textboxes (one for each operand)
 	// A listbox of operations to choose from
@@ -15,21 +23,21 @@ class CalculatorForm extends \QCubed\Project\Control\FormBase {
 
 	// Define all the QContrtol objects for our Calculator
 	protected function formCreate() {
-		$this->txtValue1 = new \QCubed\Project\Control\TextBox($this);
+		$this->txtValue1 = new TextBox($this);
 
-		$this->txtValue2 = new \QCubed\Project\Control\TextBox($this);
+		$this->txtValue2 = new TextBox($this);
 
-		$this->lstOperation = new \QCubed\Project\Control\ListBox($this);
-		$this->lstOperation->AddItem('+', 'add');
-		$this->lstOperation->AddItem('-', 'subtract');
-		$this->lstOperation->AddItem('*', 'multiply');
-		$this->lstOperation->AddItem('/', 'divide');
+		$this->lstOperation = new ListBox($this);
+		$this->lstOperation->addItem('+', 'add');
+		$this->lstOperation->addItem('-', 'subtract');
+		$this->lstOperation->addItem('*', 'multiply');
+		$this->lstOperation->addItem('/', 'divide');
 
-		$this->btnCalculate = new \QCubed\Project\Jqui\Button($this);
+		$this->btnCalculate = new Button($this);
 		$this->btnCalculate->Text = 'Calculate';
-		$this->btnCalculate->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('btnCalculate_Click'));
+		$this->btnCalculate->addAction(new Click(), new Server('btnCalculate_Click'));
 
-		$this->lblResult = new \QCubed\Control\Label($this);
+		$this->lblResult = new Label($this);
 		$this->lblResult->HtmlEntities = false;
 	}
 
@@ -57,5 +65,4 @@ class CalculatorForm extends \QCubed\Project\Control\FormBase {
 }
 
 // And now run our defined form
-CalculatorForm::Run('CalculatorForm');
-?>
+CalculatorForm::run('CalculatorForm');

@@ -1,8 +1,14 @@
 <?php
+use QCubed\Action\Server;
+use QCubed\Control\Label;
+use QCubed\Event\Click;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\FormBase;
+
 require_once('../qcubed.inc.php');
 
 // Define the \QCubed\Project\Control\FormBase with all our Qcontrols
-class ExamplesForm extends \QCubed\Project\Control\FormBase {
+class ExamplesForm extends FormBase {
 
 	// Local declarations of our Qcontrols
 	protected $lblMessage;
@@ -18,12 +24,12 @@ class ExamplesForm extends \QCubed\Project\Control\FormBase {
 	protected function formCreate() {
 		_p('<b>formCreate</b> called<br/>', false);
 		// Define the Label -- Set HtmlEntities to false because we intend on hard coding HTML into the Control
-		$this->lblMessage = new \QCubed\Control\Label($this);
+		$this->lblMessage = new Label($this);
 		$this->lblMessage->HtmlEntities = false;
 		$this->lblMessage->Text = 'Click the button to change my message.';
 
 		// Definte the Button
-		$this->btnButton = new \QCubed\Project\Jqui\Button($this);
+		$this->btnButton = new Button($this);
 		$this->btnButton->Text = 'Click Me!';
 
 		// We add CausesValidation to the Button so that formValidate() will get called
@@ -31,7 +37,7 @@ class ExamplesForm extends \QCubed\Project\Control\FormBase {
 
 		// Add a Click event handler to the button -- the action to run is a ServerAction (e.g. PHP method)
 		// called "btnButton_Click"
-		$this->btnButton->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('btnButton_Click'));
+		$this->btnButton->addAction(new Click(), new Server('btnButton_Click'));
 	}
 
 	protected function formLoad() {
@@ -63,5 +69,4 @@ class ExamplesForm extends \QCubed\Project\Control\FormBase {
 }
 
 // Run the Form we have defined
-ExamplesForm::Run('ExamplesForm');
-?>
+ExamplesForm::run('ExamplesForm');

@@ -67,7 +67,7 @@
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator.php Calculator Example');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator_2.php Calculator Example with Validation');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator_3.php Calculator Example with &quot;Design&quot;');
-			self::AddCoreExampleFile($intIndex, '/basic_qform/listbox.php * Introduction to \QCubed\Control\ListControl');
+			self::AddCoreExampleFile($intIndex, '/basic_qform/listbox.php * Introduction to ListControl');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/hlist.php * Generating Html Lists');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/textbox.php * Introduction to TextBox Controls');
 			

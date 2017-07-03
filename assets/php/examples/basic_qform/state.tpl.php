@@ -4,13 +4,15 @@
 <div id="instructions">
 	<h1>Understanding State</h1>
 	
-	<p>NWhen you clicked on the button in the previous example, the form actually posted back to itself.  However,
-		the state of the form was remembered from one webpage view to the next.  This is known as
-		<strong>FormState</strong>.</p>
+	<p>When you clicked on the button in the previous example, the HTML form posted its information back to itself.  However,
+		the state of the form was remembered from one webpage view to the next.  <strong>Form</strong> objects, in fact,
+        are stateful objects that maintain state from one post to the next. QCubed
+    does this by serializing the entire form object, together with all its controls and subcontrols, into one
+    long string and saving this information. This is known as <strong>formstate</strong></p>. Before QCubed reads the
+    information being submitted by the HTML form, it will unserialize the formstate to reconstruct the entire internal form structure,
+    and then it will add the information being submitted from the HTML form.
 
-	<p><strong>Form</strong> objects, in fact, are stateful objects that maintain state from one post to the next.</p>
-
-	<p>In this example, we have an <strong>$intCounter</strong> defined in the form.  And basically, whenever
+	<p>In the example here, we have an <strong>$intCounter</strong> defined in the form.  And basically, whenever
 		you click on the button, we will increment <strong>$intCounter</strong> by one.  Note that the HTML template
 		file is displaying <strong>$intCounter</strong> directly via a standard PHP <strong>print</strong> statement.</p>
 

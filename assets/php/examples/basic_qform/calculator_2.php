@@ -1,4 +1,11 @@
 <?php
+use QCubed\Action\Server;
+use QCubed\Control\IntegerTextBox;
+use QCubed\Control\Label;
+use QCubed\Event\Click;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\ListBox;
+
 require_once('../qcubed.inc.php');
 
 class CalculatorForm extends \QCubed\Project\Control\FormBase {
@@ -16,28 +23,28 @@ class CalculatorForm extends \QCubed\Project\Control\FormBase {
 	// Define all the QContrtol objects for our Calculator
 	// Make our textboxes IntegerTextboxes and make them required
 	protected function formCreate() {
-		$this->txtValue1 = new \QCubed\Control\IntegerTextBox($this);
+		$this->txtValue1 = new IntegerTextBox($this);
 		$this->txtValue1->Required = true;
 
-		$this->txtValue2 = new \QCubed\Control\IntegerTextBox($this);
+		$this->txtValue2 = new IntegerTextBox($this);
 		$this->txtValue2->Required = true;
 
-		$this->lstOperation = new \QCubed\Project\Control\ListBox($this);
-		$this->lstOperation->AddItem('+', 'add');
-		$this->lstOperation->AddItem('-', 'subtract');
-		$this->lstOperation->AddItem('*', 'multiply');
-		$this->lstOperation->AddItem('/', 'divide');
+		$this->lstOperation = new ListBox($this);
+		$this->lstOperation->addItem('+', 'add');
+		$this->lstOperation->addItem('-', 'subtract');
+		$this->lstOperation->addItem('*', 'multiply');
+		$this->lstOperation->addItem('/', 'divide');
 
-		$this->btnCalculate = new \QCubed\Project\Jqui\Button($this);
+		$this->btnCalculate = new Button($this);
 		$this->btnCalculate->Text = 'Calculate';
-		$this->btnCalculate->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Server('btnCalculate_Click'));
+		$this->btnCalculate->addAction(new Click(), new Server('btnCalculate_Click'));
 
 		// With btnCalculate being responsible for the action, we set this \QCubed\Project\Jqui\Button's CausesValidation to true
 		// so that validation will occur on the form when click the button.
 		// But if you set it to false, you'll see that integers and null entries would instead be always allowed.
 		$this->btnCalculate->CausesValidation = true;
 
-		$this->lblResult = new \QCubed\Control\Label($this);
+		$this->lblResult = new Label($this);
 		$this->lblResult->HtmlEntities = false;
 	}
 
@@ -89,5 +96,4 @@ class CalculatorForm extends \QCubed\Project\Control\FormBase {
 }
 
 // And now run our defined form
-CalculatorForm::Run('CalculatorForm');
-?>
+CalculatorForm::run('CalculatorForm');
