@@ -1,4 +1,6 @@
-<?php require_once('../qcubed.inc.php'); ?>
+<?php use QCubed\Query\QQ;
+
+require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions">
@@ -16,8 +18,8 @@
 	mechanism instead just for illustration purposes.</p>
 
 	<p>Important gotcha: you have to define your subquery as a part of a
-	<strong>\QCubed\Query\Condition\ConditionBase</strong>! To make it available in the returned array as a Virtual
-	Attribute, you also have to put in a <strong>\QCubed\Query\QQ::Expand</strong> clause to have the
+	<strong>Condition</strong>! To make it available in the returned array as a Virtual
+	Attribute, you also have to put in a <strong>QQ::expand()</strong> clause to have the
 	SELECT clause of the query include the subquery result.
 
 	<p>Note: the code below generates <a href="http://docs.hp.com/en/36216-90103/ch03s02.html">
@@ -37,11 +39,11 @@
 	<h2>Select names of project managers whose projects are over budget by at least $20</h2>
 <?php
 
- \QCubed\Database\Service::getDatabase(1)->EnableProfiling();
-	$objPersonArray = Person::QueryArray(
+ Person::getDatabase()->enableProfiling();
+	$objPersonArray = Person::queryArray(
 		/* Only return the persons who have AT LEAST ONE overdue project */
-		\QCubed\Query\QQ::IsNotNull(
-			\QCubed\Query\QQ::Virtual(
+		QQ::isNotNull(
+			QQ::virtual(
 				/* this will be the alias of our virtual attribute */
 				'over_budget_projects',
 
@@ -50,7 +52,7 @@
 				  of the QQuery. Think of the sprintf-like syntax - that's
 				  really what this is.
 				*/
-				\QCubed\Query\QQ::SubSql("SELECT COUNT(*)
+				QQ::subSql("SELECT COUNT(*)
 							FROM project
 							WHERE (spent - budget > 20)
 								AND manager_person_id={1}
@@ -59,31 +61,31 @@
 							/* the value to be used for the {1} placeholder
 							   at the time of query evaluation
 							*/
-							QQN::Person()->Id
+							QQN::person()->Id
 				)
 			)
 		),
-		\QCubed\Query\QQ::Clause(
+		QQ::clause(
 			/* Sort by the number of over-budget projects -
               biggest offenders first.
 			*/
-			\QCubed\Query\QQ::OrderBy(\QCubed\Query\QQ::Virtual('over_budget_projects'), false),
+			QQ::orderBy(QQ::virtual('over_budget_projects'), false),
 
 			/* We want to return the actual number of the over-budget
 			  projects - not just filter based on them. Thus, we have
 			  to put in an expand statement.
 			*/
-			\QCubed\Query\QQ::Expand(\QCubed\Query\QQ::Virtual('over_budget_projects'))
+			QQ::expand(QQ::virtual('over_budget_projects'))
 		)
 	);
 
 	foreach ($objPersonArray as $objPerson){
 		_p($objPerson->FirstName . ' ' . $objPerson->LastName . ': ' .
-			$objPerson->GetVirtualAttribute("over_budget_projects") . " project(s) over budget");
+			$objPerson->getVirtualAttribute("over_budget_projects") . " project(s) over budget");
 		_p('<br/>', false);
 	}
 ?>
-	<p><?php \QCubed\Database\Service::getDatabase(1)->OutputProfiling(); ?></p>
+	<p><?php Person::getDatabase()->outputProfiling(); ?></p>
 </div>
 
 <?php require('../includes/footer.inc.php'); ?>

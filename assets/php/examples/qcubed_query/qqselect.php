@@ -1,4 +1,7 @@
-<?php require_once('../qcubed.inc.php'); ?>
+<?php use QCubed\QString;
+use QCubed\Query\QQ;
+
+require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions">
@@ -20,28 +23,25 @@
 		situation. However, it would be perfectly fine to select a last name, because each group has the same last name.
 		You need a way to specify particular database fields to select.</p>
 	
-	<p><strong>\QCubed\Query\QQ::Select</strong> solves this problem by allowing you to pick particular columns to fetch from
+	<p><strong>QQ::select</strong> solves this problem by allowing you to pick particular columns to fetch from
 	the database.</p>
 	
-	<p>\QCubed\Query\QQ::Select can be passed as a clause to any query method.
-	As shown in the second example below, it can also be passed as an argument to \QCubed\Query\QQ::Expand()
+	<p>QQ::Select can be passed as a clause to any query method.
+	As shown in the second example below, it can also be passed as an argument to QQ::expand()
 	to pick specific columns to fetch for the object to be expanded.</p>
 	
-	<p>Note, that when \QCubed\Query\QQ::Select is used, by default the primary keys are automatically added to the select list.
-	This is illustrated by the first example below, where QQN::Person()->Id is not part of the \QCubed\Query\QQ::Select list,
+	<p>Note, that when QQ::Select is used, by default the primary keys are automatically added to the select list.
+	This is illustrated by the first example below, where QQN::person()->Id is not part of the QQ::Select list,
 	but $objPerson->Id is populated and used afterwards. This behaviour can be changed by using using the <strong>SetSkipPrimaryKey()</strong>
 	method of <strong>QQSelect</strong>, as shown in the second example. This is typically useful for simple queries with the <em>distict</em>
 	clause, where the presence of the primary keys would prevent <em>distinct</em> from having the desired effect</p>
 	
-	<p>One \QCubed\Query\QQ::Select() can be used to select multiple columns, as shown in the fourth example below:</p>
-	<pre><code>\QCubed\Query\QQ::Select(QQN::Person()->Address->Street, QQN::Person()->Address->City)</code></pre>
+	<p>One QQ::select() can be used to select multiple columns, as shown in the fourth example below:</p>
+	<pre><code>QQ::select(QQN::person()->Address->Street, QQN::person()->Address->City)</code></pre>
 
-	<p>The same example also shows the use of \QCubed\Query\QQ::Select in \QCubed\Query\QQ::ExpandAsArray.</p>
+	<p>The same example also shows the use of QQ::select() in QQ::expandAsArray().</p>
 
-	<p>The examples also have some <code>assert(is_null(...))</code> calls, to show that the data for not selected columns is indeed not loaded.
-	You can also verify this by examining the performed queries in the profiling details.</p>
-
-	<p>You may also notice, that many times the \QCubed\Query\QQ::Select clause is passed as the last argument to the query method.
+	<p>You may also notice, that many times the QQ::Select clause is passed as the last argument to the query method.
 	Even though this is not ideal (since in SQL the select clause is the first in a statement),
 	it was necessary for backward compatibility reasons with older versions of QCubed.</p>
 </div>
@@ -50,14 +50,13 @@
 	<h2>1. Get <em>the first names</em> of all the people</h2>
 	<ul>
 <?php
-\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
-	$objPersonArray = Person::LoadAll(\QCubed\Query\QQ::Select(QQN::Person()->FirstName));
+    Person::getDatabase()->enableProfiling();
+	$objPersonArray = Person::loadAll(QQ::select(QQN::person()->FirstName));
 
 	foreach ($objPersonArray as $objPerson) {
 		printf('<li>%s %s</li>',
-			   \QCubed\QString::htmlEntities($objPerson->Id),
-			   \QCubed\QString::htmlEntities($objPerson->FirstName));
-		assert(is_null($objPerson->LastName));
+			   QString::htmlEntities($objPerson->Id),
+			   QString::htmlEntities($objPerson->FirstName));
 	}
 ?>
 	</ul>
@@ -65,16 +64,13 @@
 	<h2>2. Get all the distinct <em>first names</em> of all the people</h2>
 	<ul>
 <?php
-\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
-	$objSelect = \QCubed\Query\QQ::Select(QQN::Person()->FirstName);
-	$objSelect->SetSkipPrimaryKey(true);
-	$objPersonArray = Person::LoadAll(\QCubed\Query\QQ::Clause($objSelect, \QCubed\Query\QQ::Distinct()));
+	$objSelect = QQ::select(QQN::person()->FirstName);
+	$objSelect->setSkipPrimaryKey(true);
+	$objPersonArray = Person::loadAll(QQ::clause($objSelect, QQ::distinct()));
 
 	foreach ($objPersonArray as $objPerson) {
 		printf('<li>%s</li>',
-			   \QCubed\QString::htmlEntities($objPerson->FirstName));
-		assert(is_null($objPerson->Id));
-		assert(is_null($objPerson->LastName));
+			   QString::htmlEntities($objPerson->FirstName));
 	}
 ?>
 	</ul>
@@ -84,48 +80,46 @@
 	<p><i>Notice how some people may be listed twice, if they manage more than one project.</i></p>
 	<ul>
 <?php
-	$objPersonArray = Person::QueryArray(
-		\QCubed\Query\QQ::OrCondition(
-			\QCubed\Query\QQ::Like(QQN::Person()->ProjectAsManager->Name, '%ACME%'),
-			\QCubed\Query\QQ::Like(QQN::Person()->ProjectAsManager->Name, '%HR%')
+	$objPersonArray = Person::queryArray(
+		QQ::orCondition(
+			QQ::like(QQN::person()->ProjectAsManager->Name, '%ACME%'),
+			QQ::like(QQN::person()->ProjectAsManager->Name, '%HR%')
 		),
 		// Let's expand on the Project, itself
-		\QCubed\Query\QQ::Clause(
-			\QCubed\Query\QQ::Select(QQN::Person()->LastName),
-			\QCubed\Query\QQ::Expand(QQN::Person()->ProjectAsManager, null, \QCubed\Query\QQ::Select(QQN::Person()->ProjectAsManager->Spent)),
-			\QCubed\Query\QQ::OrderBy(QQN::Person()->LastName, QQN::Person()->FirstName)
-		)
+		[
+			QQ::select(QQN::person()->LastName),
+			QQ::expand(QQN::person()->ProjectAsManager, null, QQ::select(QQN::person()->ProjectAsManager->Spent)),
+			QQ::orderBy(QQN::person()->LastName, QQN::person()->FirstName)
+		]
 	);
 
 	foreach ($objPersonArray as $objPerson) {
 		printf("<li>%s's project spent \$%0.2f</li>",
-			   \QCubed\QString::htmlEntities($objPerson->LastName),
-			   \QCubed\QString::htmlEntities($objPerson->_ProjectAsManager->Spent));
+			   QString::htmlEntities($objPerson->LastName),
+			   QString::htmlEntities($objPerson->_ProjectAsManager->Spent));
 	}
 ?>
 	</ul>
 	<h2>4. Projects and Addresses for each Person</h2>
 	<ul>
 <?php
-	$people = Person::LoadAll(
-		\QCubed\Query\QQ::Clause(
-			\QCubed\Query\QQ::Select(QQN::Person()->FirstName),
-			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->Address, \QCubed\Query\QQ::Select(QQN::Person()->Address->Street, QQN::Person()->Address->City)),
-			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager, \QCubed\Query\QQ::Select(QQN::Person()->ProjectAsManager->StartDate)),
-			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone, \QCubed\Query\QQ::Select(QQN::Person()->ProjectAsManager->Milestone->Name))
-		)
+	$people = Person::loadAll(
+		[
+			QQ::select(QQN::person()->FirstName),
+			QQ::expandAsArray(QQN::person()->Address, QQ::select(QQN::person()->Address->Street, QQN::person()->Address->City)),
+			QQ::expandAsArray(QQN::person()->ProjectAsManager, QQ::select(QQN::person()->ProjectAsManager->StartDate)),
+			QQ::expandAsArray(QQN::person()->ProjectAsManager->Milestone, QQ::select(QQN::person()->ProjectAsManager->Milestone->Name))
+		]
 	);
 
 	foreach ($people as $person) {
 		echo "<li><b>" . $person->FirstName . "</b><br />";
-		assert(is_null($person->LastName));
 		echo "Addresses: ";
 		if (sizeof($person->_AddressArray) == 0) {
 			echo "none";
 		} else {
 			foreach ($person->_AddressArray as $address) {
 				echo $address->Street . ', ' . $address->City . "; ";
-				assert(is_null($address->PersonId));
 			}
 		}
 		echo "<br />";
@@ -135,7 +129,6 @@
 			echo "none<br />";
 		} else {
 			foreach($person->_ProjectAsManagerArray as $project) {
-				assert(is_null($project->Name));
 				echo "started on " . $project->StartDate . " (milestones: ";
 
 				if (sizeof($project->_MilestoneArray) == 0) {
@@ -152,7 +145,7 @@
 	}
 ?>
 	</ul>
-	<p><?php \QCubed\Database\Service::getDatabase(1)->OutputProfiling(); ?></p>
+	<p><?php Person::getDatabase()->outputProfiling(); ?></p>
 </div>
 
 <?php require('../includes/footer.inc.php'); ?>

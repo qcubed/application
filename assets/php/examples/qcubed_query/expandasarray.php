@@ -1,8 +1,10 @@
-<?php require_once('../qcubed.inc.php'); ?>
+<?php use QCubed\Query\QQ;
+
+require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions">
-	<h1>ExpandAsArray: Multiple Related Tables in One Swift Query</h1>
+	<h1>ExpandAsArray: Multiple Related Tables in One Query</h1>
 
 	<p>You've certainly had to deal with some sort of hierarchical data in your
 	database. Let's say you have a set of <strong>Persons</strong>; each person can be
@@ -18,27 +20,27 @@
 	you'd then need to somehow merge the two arrays to be able to output the
 	address and the projects of the same person at once. Pain..</p>
 
-	<p>Well, no more pain. <strong>ExpandAsArray</strong> to your rescue. Note that this
+	<p>Well, no more pain. <strong>expandAsArray()</strong> to your rescue. Note that this
 	is a somewhat advanced topic - so if you're not comfortable with the
 	concepts of <a href="../more_codegen/early_bind.php">QCubed Early Binding</a> and
-	<a href="qqclause.php">\QCubed\Query\QQ::Clauses</a>, read up on those first. </p>
+	<a href="qqclause.php">Clauses</a>, read up on those first. </p>
 
 	<p>We'll issue one mega-powerful query that will allow you to get BOTH the
 	<strong>Address</strong> and the <strong>Project</strong> data (with the related info on
 	the <strong>Milestones</strong> for each project) in one powerful sweep. Moreover,
 	this will only execute a single query against your database backend.
 	Essentially, what will happen here is you'll get an object and ALL
-	types of related objects for it - something that SQL isn't really meant
-	to do. Object-oriented databases would be an exit, but we love our
-	relational systems too much, don't we?</p>
+	types of related objects for it. </p>
 
 	<p>Here's that magical expression:</p>
 
-	<pre><code>$arrPersons = Person::LoadAll(\QCubed\Query\QQ::Clause(
-\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->Address),
-\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager),
-\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
-));</code></pre>
+	<pre><code>
+    $arrPersons = Person::loadAll(QQ::clause(
+        QQ::expandAsArray(QQN::person()->Address),
+        QQ::expandAsArray(QQN::person()->ProjectAsManager),
+        QQ::expandAsArray(QQN::person()->ProjectAsManager->Milestone)
+    ));
+    </code></pre>
 
 	<p>The resulting <strong>$arrPersons</strong> will be an array of objects of type
 	<strong>Person</strong>. Each of those objects will have member variables called
@@ -66,13 +68,13 @@
 <div id="demoZone">
 	<h2>Projects and Addresses for each Person</h2>
 <?php
-	\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
+	Person::getDatabase()->enableProfiling();   // For profiling the database for this example
 
-	$people = Person::LoadAll(
-		\QCubed\Query\QQ::Clause(
-			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->Address),
-			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager),
-			\QCubed\Query\QQ::ExpandAsArray(QQN::Person()->ProjectAsManager->Milestone)
+	$people = Person::loadAll(
+		QQ::clause(
+			QQ::expandAsArray(QQN::person()->Address),
+			QQ::expandAsArray(QQN::person()->ProjectAsManager),
+			QQ::expandAsArray(QQN::person()->ProjectAsManager->Milestone)
 		)
 	);
 
@@ -109,7 +111,7 @@
 		echo "<br />";
 	}
 
-	\QCubed\Database\Service::getDatabase(1)->OutputProfiling();
+	Person::getDatabase()->outputProfiling();
 ?>
 </div>
 

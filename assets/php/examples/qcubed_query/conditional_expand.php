@@ -1,8 +1,10 @@
-<?php require_once('../qcubed.inc.php'); ?>
+<?php use QCubed\Query\QQ;
+
+require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
 
 <div id="instructions">
-	<h1>Conditional Joins with \QCubed\Query\QQ::Expand() and \QCubed\Query\QQ::ExpandAsArray()</h1>
+	<h1>Conditional Joins with QQ::expand() and QQ::expandAsArray()</h1>
 
 	<p>Sometimes, you find yourself in a situation when you want to issue a
 	query for ALL items in a given table, and only some information in
@@ -27,16 +29,16 @@
 		</li>
 	</ol>
 
-	<p>As you'd expect, there's a better way. Introducing conditional joins: when
-	you use <strong>\QCubed\Query\QQ::Expand</strong>, you can specify conditions on the table with
+	<p>As you'd expect, there's a better way. When
+	you use <strong>QQ::Expand</strong>, you can specify conditions on the table with
 	which you want to join, and get only those values that you care about.
-	Remember that a <strong>\QCubed\Query\QQ::Expand</strong> is always a
+	<strong>QQ::Expand</strong> clauses produce a
 	<a href="http://en.wikipedia.org/wiki/Join_(SQL)#Left_outer_join">left
 	join</a> - so if a row of a table with which you are joining does not
 	have a matching record, the left side of your join will still be there,
 	and the right side will contain nulls.</p>
 
-	<p>Remember that conditional joins only impact how tables are joined together, and so the conditions
+	<p>Conditional joins only impact how tables are joined together, and so the conditions
 	   must apply only to the joined table.</p>
 </div>
 
@@ -44,24 +46,24 @@
 	<h2>Names of every person, their username, and open projects they are managing.</h2>
 	<ul>
 <?php
-	\QCubed\Database\Service::getDatabase(1)->EnableProfiling();
-	$objPersonArray = Person::QueryArray(
+    Person::getDatabase()->enableProfiling();
+	$objPersonArray = Person::queryArray(
 		// We want *every single person*
-		\QCubed\Query\QQ::All(),
+		QQ::all(),
 		array(
-			\QCubed\Query\QQ::Expand(
+			QQ::expand(
 				// We also want the login information for each person
-				QQN::Person()->Login,
+				QQN::person()->Login,
 
 				// But only the login information for folks that have
 				// their logins ON; for everyone else, just the Person
-				\QCubed\Query\QQ::Equal(QQN::Person()->Login->IsEnabled, 1)
+				QQ::equal(QQN::person()->Login->IsEnabled, 1)
 			),
-			\QCubed\Query\QQ::ExpandAsArray(
+			QQ::expandAsArray(
 				// We also want the proejcts that are managed by each person
-				QQN::Person()->ProjectAsManager,
+				QQN::person()->ProjectAsManager,
 				// but only if the project is open
-				\QCubed\Query\QQ::Equal(QQN::Person()->ProjectAsManager->ProjectStatusTypeId, ProjectStatusType::Open)
+				QQ::equal(QQN::person()->ProjectAsManager->ProjectStatusTypeId, ProjectStatusType::Open)
 			)
 		)
 	);
@@ -89,7 +91,7 @@
 
 ?>
 	</ul>
-	<p><?php \QCubed\Database\Service::getDatabase(1)->OutputProfiling(); ?></p>
+	<p><?php Person::getDatabase()->outputProfiling(); ?></p>
 </div>
 
 <?php require('../includes/footer.inc.php'); ?>

@@ -1,21 +1,23 @@
-<?php require_once('../qcubed.inc.php'); ?>
+<?php use QCubed\Query\QQ;
+
+require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
 
 	<div id="instructions">
-		<h1>SQL Queries in QCubed</h1>
-		Although the QCubed can generate the SQL query code for most of your application, you will undoubtedly
+		<h1>Custom SQL Queries in QCubed</h1>
+		Although the QCubed Query can generate the SQL query code for most of your application, you will undoubtedly
 		need to write your own custom queries, to either perform more refined Load methods, execute searches,
 		generate reports, etc.<br/><br/>
 		
 		The framework offers multiple ways for performing your own custom SQL queries, from completely free
 		form queries using just the database adapter, itself, to completely structured object-oriented queries
-		using <strong>QCubed Query</strong>, or <strong>\QCubed\Query\QQ</strong> for short.
+		using <strong>QCubed Query</strong>.
 
 		In general, there are three main ways to perform queries, with pros and cons for each:
 		<ul><li><p><strong>Ad Hoc Queries</strong>: Completely custom, ad hoc queries can be executed by accessing the
 		database adapter, itself.  The advantage of this is that you have complete, total free form control
 		over how you want the query to run.  Moreover, you can also run "NonQuery" commands like UPDATE and DELETE.
-		The disadvantage is that because the queries are completely free form, there is no structure, and the Qcubed
+		The disadvantage is that because the queries are completely free form, there is no structure, and the QCubed
 		generated ORM cannot take advantage or use your query results at all.</p></li>
 
 		<li><p><strong>Custom Load Queries</strong>: These custom SQL SELECT statements do require a bit more structure, but by
@@ -28,9 +30,9 @@
 		
 		<li><p><strong>QCubed Query</strong>: This is a fully structure, object-oriented approach to performing SQL SELECT queries,
 		without needing to write a single line of SQL code.  Utilizing code generated code and per-table-specific QCubed Query
-		nodes, the <strong>\QCubed\Query\QQ</strong> API offers almost the full set of functionality that free form <strong>Custom Load Queries</strong> provide,
+		nodes, the <strong>QQ</strong> API offers almost the full set of functionality that free form <strong>Custom Load Queries</strong> provide,
 		but with the added advantage that whenever you make changes to your data model and re-code generate, you do not have
-		to worry about updating any hard-coded SQL statements in your code.  Of course, the drawback is that <strong>\QCubed\Query\QQ</strong> is
+		to worry about updating any hard-coded SQL statements in your code.  Of course, the drawback is that <strong>QQ</strong> is
 		a new methodology for performing queries, so there will be a learning curve.</p></li>
 		</ul>
 		
@@ -40,7 +42,7 @@
 		
 		As a final note, all the examples here are coded below on the page, itself.  However, it is always a good practice
 		to have query code like this written within the classes, themselves.  Especially for any Load-related methods,
-		QCubed tries to be consistent in following the Singleton design pattern with static "LoadBy" and "LoadArrayBy" methods,
+		QCubed tries to be consistent in following the Singleton design pattern with static "loadBy" and "loadArrayBy" methods,
 		so the SELECT queries for any table can reside in that table's ORM class, itself.  For more on this, be sure to
 		view the code generated commented out sample code in your custom ORM subclasses in <strong>/includes/data_classes</strong>.  See
 		<a href="../more_codegen/custom_load.php">Customized Load Methods</a> in Section 2 for more information.
@@ -75,14 +77,14 @@
 	// Be sure to specify the database index (as you defined in configuration.inc.php)
 	// For purposes of this example, we're assuming that the "Examples" database connection string is defined
 	// in the DB_CONNECTION_1 constant.
-	$objDatabase = \QCubed\Database\Service::getDatabase(1);
+	$objDatabase = Project::getDatabase();
 
 	// Perform the Query
-	$objDbResult = $objDatabase->Query($strQuery);
+	$objDbResult = $objDatabase->query($strQuery);
 
-	// Iterate through the Database Result using ->FetchRow() or ->FetchArray(), as you would if
+	// Iterate through the Database Result using ->fetchRow() or ->fetchArray(), as you would if
 	// you used the a database connector, directly.
-	while ($mixRow = $objDbResult->FetchArray()) {
+	while ($mixRow = $objDbResult->fetchArray()) {
 		_p(sprintf('%s, managed by %s %s (with %s team members)',
 			$mixRow['project_name'], $mixRow['manager_first'], $mixRow['manager_last'], $mixRow['team_member_count']));
 		_p('<br/>', false);
@@ -94,7 +96,7 @@
 	$strQuery = 'UPDATE project SET budget=2500 WHERE id=3';
 
 	// Use that same database connection to perform a "NonQuery"
-	$objDatabase->NonQuery($strQuery);
+	$objDatabase->nonQuery($strQuery);
 ?>
 	<p>Updated.  (Use <strong>View Source</strong> above to see the code for this)</p>
 
@@ -107,10 +109,10 @@
 	$strQuery = 'SELECT project.* FROM project WHERE budget > 5000 ORDER BY budget DESC';
 	
 	// perform the query
-	$objDbResult = $objDatabase->Query($strQuery);
+	$objDbResult = $objDatabase->query($strQuery);
 	
 	// Use the Project::InstantiateDbResult on the $objDbResult to get an array of Project objects
-	$objProjectArray = Project::InstantiateDbResult($objDbResult);
+	$objProjectArray = Project::instantiateDbResult($objDbResult);
 
 	// Iterate through the Project Array as you would any other ORM object
 	foreach ($objProjectArray as $objProject) {
@@ -122,13 +124,13 @@
 <?php
 	// Perform the Query using Project::QueryArray, which will return an array of Project objects
 	// given a \QCubed\Query\QQ Condition, and any optional \QCubed\Query\QQ Clauses.
-	$objProjectArray = Project::QueryArray(
-		\QCubed\Query\QQ::AndCondition(
-			\QCubed\Query\QQ::GreaterThan(QQN::Project()->Budget, 5000),
-			\QCubed\Query\QQ::LessThan(QQN::Project()->Budget, 10000)
+	$objProjectArray = Project::queryArray(
+		QQ::andCondition(
+			QQ::greaterThan(QQN::project()->Budget, 5000),
+			QQ::lessThan(QQN::project()->Budget, 10000)
 		),
-		\QCubed\Query\QQ::Clause(
-			\QCubed\Query\QQ::OrderBy(QQN::Project()->Budget, false)
+		QQ::clause(
+			QQ::orderBy(QQN::project()->Budget, false)
 		)
 	);
 

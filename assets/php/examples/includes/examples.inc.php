@@ -44,7 +44,7 @@
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/qq.php * QCubed Query: Object Oriented Database Querying');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqnode.php * QCubed Query: The Node Classes');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqcondition.php * QCubed Query: The Condition Classes');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqclause.php * QCubed Query: The QQ\Clause Classes');
+			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqclause.php * QCubed Query: The Clause Classes');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/conditional_expand.php * QCubed Query: Conditional Joins');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/association.php * QCubed Query: Handling Association Tables');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/reverse.php * QCubed Query: Handling Reverse Relationships');
@@ -55,7 +55,6 @@
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/subsql.php * Custom SQL Subqueries for QQuery');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/intro.php * Performing Custom SQL Queries');
             self::AddCoreExampleFile($intIndex, '/qcubed_query/virtual_attributes.php * Virtual Attributes and Custom SQL');
-            self::AddCoreExampleFile($intIndex, '/qcubed_query/qcache.php * Caching Query Results with QueryArrayCached');
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
