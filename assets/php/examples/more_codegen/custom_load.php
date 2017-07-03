@@ -1,20 +1,21 @@
-<?php require_once('../qcubed.inc.php'); ?>
+<?php use QCubed\QString;
+use QCubed\Query\QQ;
+
+require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
 
 	<div id="instructions">
-		<h1>Implementing a Customized LoadBy or LoadArrayBy</h1>
-		
-		<p>(Note: for more information about creating custom queries, please refer to Section 3 of the Examples Site.)</p>
+		<h1>Implementing a Customized loadBy() or loadArrayBy()</h1>
 
-		<p>With the <strong>InstantiateDbResult</strong> method that is code generated for you in each
-		generated class, it is very simple to create your own custom <strong>LoadBy</strong> or <strong>LoadArrayBy</strong>
-		method using your own custom SQL. Simply specify a custom Load query by using <strong>QCubed Query</strong> (or by writing your
-		own SQL statement and passing the results into <strong>InstantiateDbResult</strong>).  The code generated logic will take care
+		<p>By using the <strong>instantiateDbResult()</strong> method that is code generated for you in each
+		generated class, it is very simple to create your own custom <strong>loadBy()</strong> or <strong>loadArrayBy()</strong>
+		method using your own custom SQL. Specify a custom Load query by using a <strong>QCubed Query</strong>, or by writing your
+		own SQL statement and passing the results into <strong>InstantiateDbResult</strong>.  The code generated logic will take care
 		of the rest, transforming your DB result into an array of that object.</p>
 
-		<p>In our example below, we have a custom load function to get an array of all 
+		<p>In our example here, we have a custom load function to get an array of all
 		<strong>Project</strong> objects where the budget is over a given amount.  We pass this amount
-		as a parameter to <strong>LoadArrayByBudgetMinimum</strong>.</p>
+		as a parameter to <strong>loadArrayByBudgetMinimum()</strong>.</p>
 	</div>
 
 <div id="demoZone">
@@ -34,9 +35,9 @@
 		// Note that this custom load method is based on the sample LoadArrayBySample that is generated
 		// in the Project custom subclass.  Because it utilizes the QCubed Query mechanism,
 		// we can easily take full advantage of any \QCubed\Query\QQ Clauses by taking it in as an optional parameter.
-		public static function LoadArrayByBudgetMinimum($fltBudgetMinimum, $objOptionalClauses = null) {
-			return Project::QueryArray(
-				\QCubed\Query\QQ::GreaterOrEqual(QQN::Project()->Budget, $fltBudgetMinimum),
+		public static function loadArrayByBudgetMinimum($fltBudgetMinimum, $objOptionalClauses = null) {
+			return Project::queryArray(
+				QQ::greaterOrEqual(QQN::project()->Budget, $fltBudgetMinimum),
 				$objOptionalClauses
 			);
 		}
@@ -46,9 +47,9 @@
 	<ul>
 <?php
 	// Let's load all Projects > $10,000 in budget
-	$objProjectArray = Project::LoadArrayByBudgetMinimum(8000);
+	$objProjectArray = Project::loadArrayByBudgetMinimum(8000);
 	foreach ($objProjectArray as $objProject)
-		_p('<li>' . \QCubed\QString::htmlEntities($objProject->Name) . ' (Budget: $' . \QCubed\QString::htmlEntities($objProject->Budget) . ')</li>', false);
+		_p('<li>' . QString::htmlEntities($objProject->Name) . ' (Budget: $' . QString::htmlEntities($objProject->Budget) . ')</li>', false);
 ?>
 	</ul>
 </div>

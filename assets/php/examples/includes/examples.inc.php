@@ -32,7 +32,6 @@
 			self::AddCoreExampleFile($intIndex, '/more_codegen/sort_limit.php * Sorting and Limiting Array Results');
 			self::AddCoreExampleFile($intIndex, '/more_codegen/late_bind.php * Late Binding of Related Objects');
 			self::AddCoreExampleFile($intIndex, '/more_codegen/early_bind.php * Early Binding of Related Objects');
-			self::AddCoreExampleFile($intIndex, '/more_codegen/virtual_attributes.php * Virtual Attributes');
 			self::AddCoreExampleFile($intIndex, '/more_codegen/type_tables.php * Type Tables');
 			self::AddCoreExampleFile($intIndex, '/more_codegen/custom.php * Customized Business Logic');
 			self::AddCoreExampleFile($intIndex, '/more_codegen/custom_load.php * Customized Load Methods');
@@ -55,7 +54,8 @@
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/qqfuncnmath.php * SQL functions and math operations for QQuery');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/subsql.php * Custom SQL Subqueries for QQuery');
 			self::AddCoreExampleFile($intIndex, '/qcubed_query/intro.php * Performing Custom SQL Queries');
-			self::AddCoreExampleFile($intIndex, '/qcubed_query/qcache.php * Caching Query Results with QueryArrayCached');
+            self::AddCoreExampleFile($intIndex, '/qcubed_query/virtual_attributes.php * Virtual Attributes and Custom SQL');
+            self::AddCoreExampleFile($intIndex, '/qcubed_query/qcache.php * Caching Query Results with QueryArrayCached');
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();

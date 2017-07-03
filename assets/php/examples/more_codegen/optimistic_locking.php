@@ -1,4 +1,6 @@
 <?php use QCubed\Database\Exception\OptimisticLocking;
+use QCubed\Project\Application;
+use QCubed\QDateTime;
 
 require_once('../qcubed.inc.php'); ?>
 <?php require('../includes/header.inc.php'); ?>
@@ -15,7 +17,7 @@ require_once('../qcubed.inc.php'); ?>
 	works best for database-driven web-based applications.  In short, everyone is always
 	allowed to read any row/object.  However, on save, you are only allowed to save if your
 	object is considered "fresh".  Once your object is "stale", then you are locked out from being
-	able to save that stale object. (Note that this is sometimes also called a
+	able to save that stale object. (This is also called a
 	"mid-air collision".) Objects might go stale if two browsers are editing the same object in the database,
     or in certain situations if the user presses the back button on the browser to re-edit a record already edited.</p>
 
@@ -31,14 +33,15 @@ require_once('../qcubed.inc.php'); ?>
     the user to overwrite data that someone else changed, but the user did not get a chance to see.</p>
 
 	<p>How you create your TIMESTAMP column will depend on the database you are using. MySQL TIMESTAMP columns by
-	default will have the current time inserted into them, and be automatically updated, provided there are no other
-	timestamp columns in that table. QCubed will automatically detect a column set up this way.</p>
+	default will have the current time inserted into them, and be automatically updated.
+        MySQL 5.6 limits each table to only having one of these columns, but 5.7 lifts this restriction.
+        QCubed will automatically detect a column set up this way.</p>
 
 	<p>However, other databases, like PostgresSQL, require you to set up a trigger to auto-update a TIMESTAMP
 	column, which QCubed cannot detect. You can work around this limitation by specifying in a comment on the
 	column in the database that you would like a column to be considered a Timestamp for purposes of
 	<strong>Optimistic Locking</strong>. You can also tell QCubed to automatically update such a column with
-	the current timestamp. To do this, you enter a JSON expression into the comments field that sets the Timestampand
+	the current timestamp. To do this, you enter a JSON expression into the comments field that sets the Timestamp and
 	the AutoUpdate values to 1. You can find an example of how to do this in the <strong>pgsql.sql</strong> file for the
 	examples database. Essentially, you want your comment to contain this:
 	<code>
@@ -53,7 +56,7 @@ require_once('../qcubed.inc.php'); ?>
 
 <div id="demoZone">
 	<h2>Object Save and Double Saves on the PersonWithLock Object</h2>
-	<form method="post" action="<?php _p(\QCubed\Project\Application::instance()->context()->scriptName()); ?>">
+	<form method="post" action="<?php _p(Application::instance()->context()->scriptName()); ?>">
 		<p>Saving a Single Object will perform the save normally<br />
 		<input type="submit" id="single" name="single" value="Save 1 Object"/></p>
 
@@ -68,29 +71,29 @@ require_once('../qcubed.inc.php'); ?>
 
     </form>
 <?php
-	// Load the Two Person objects (same instance -- let them both be Person ID #4)
-	$objPerson1 = PersonWithLock::Load(5);
-	$objPerson2 = PersonWithLock::Load(5);
-	$objPerson3 = PersonWithLock::Load(5);
+    // Load the Two Person objects (same instance -- let them both be Person ID #4)
+    $objPerson1 = PersonWithLock::load(5);
+    $objPerson2 = PersonWithLock::load(5);
+    $objPerson3 = PersonWithLock::load(5);
 
-	// Some RDBMS Vendors' TIMESTAMP is only precise to the second
-	// Let's force a delay to the next second to ensure timestamp functionality
-	// Note: on most web applications, because Optimistic Locking are more application user-
-	// level constraints instead of systematic ones, this delay is inherit with the web
-	// application paradigm.  The following delay is just to simulate that paradigm.
-	$dttNow = new \QCubed\QDateTime(\QCubed\QDateTime::NOW);
-	while ($objPerson1->SysTimestamp == $dttNow->qFormat(\QCubed\QDateTime::FORMAT_ISO)) {
-		$dttNow = new \QCubed\QDateTime(\QCubed\QDateTime::NOW);
-	}
+    // Some RDBMS Vendors' TIMESTAMP is only precise to the second
+    // Let's force a delay to the next second to ensure timestamp functionality
+    // Note: on most web applications, because Optimistic Locking are more application user-
+    // level constraints instead of systematic ones, this delay is inherit with the web
+    // application paradigm.  The following delay is just to simulate that paradigm.
+    $dttNow = new QDateTime(QDateTime::NOW);
+    while ($objPerson1->SysTimestamp == $dttNow->qFormat(QDateTime::FORMAT_ISO)) {
+        $dttNow = new QDateTime(QDateTime::NOW);
+    }
 
-	// Make Changes to the Object so that the Save Will Update Something
-	if ($objPerson1->FirstName == 'Alfred') {
-		$objPerson1->FirstName = 'Fred';
-	} else {
-		$objPerson1->FirstName = 'Alfred';
-	}
+    // Make Changes to the Object so that the Save Will Update Something
+    if ($objPerson1->FirstName == 'Alfred') {
+        $objPerson1->FirstName = 'Fred';
+    } else {
+        $objPerson1->FirstName = 'Alfred';
+    }
 
-	if ($objPerson2->FirstName == 'Bob') {
+    if ($objPerson2->FirstName == 'Bob') {
         $objPerson2->FirstName = 'Sally';
     } else {
         $objPerson2->FirstName = 'Bob';
@@ -107,47 +110,47 @@ require_once('../qcubed.inc.php'); ?>
 
 
 switch (true) {
-		case array_key_exists('single', $_POST):
-			$objPerson1->Save();
-			_p('Person Id #' . $objPerson1->Id . ' saved.  Name is now ' . $objPerson1->FirstName);
-			_p('.<br/>', false);
-			break;
+        case array_key_exists('single', $_POST):
+            $objPerson1->save();
+            _p('Person Id #' . $objPerson1->Id . ' saved.  Name is now ' . $objPerson1->FirstName);
+            _p('.<br/>', false);
+            break;
 
 
-		case array_key_exists('double', $_POST):
-			$objPerson1->Save();
-			_p('Person Id #' . $objPerson1->Id . ' saved.  Name is now ' . $objPerson1->FirstName);
-			_p('.<br/>', false);
+        case array_key_exists('double', $_POST):
+            $objPerson1->Save();
+            _p('Person Id #' . $objPerson1->Id . ' saved.  Name is now ' . $objPerson1->FirstName);
+            _p('.<br/>', false);
 
-			// Try Saving Person #2 -- this should fail and throw an exception
-			try {
-				$objPerson2->Save();
-				_p('Person Id #' . $objPerson2->Id . ' saved.  Name is now ' . $objPerson2->FirstName);
-				_p('.<br/>', false);
-			} catch (OptimisticLocking $ex) {
-				\QCubed\Project\Application::DisplayAlert('The optimistic locking exception was caught: ' . $ex->getMessage());
-			}
-			break;
+            // Try Saving Person #2 -- this should fail and throw an exception
+            try {
+                $objPerson2->Save();
+                _p('Person Id #' . $objPerson2->Id . ' saved.  Name is now ' . $objPerson2->FirstName);
+                _p('.<br/>', false);
+            } catch (OptimisticLocking $ex) {
+                Application::DisplayAlert('The optimistic locking exception was caught: ' . $ex->getMessage());
+            }
+            break;
 
 
-		case array_key_exists('double_force', $_POST):
-			$objPerson1->Save();
-			_p('Person Id #' . $objPerson1->Id . ' saved.  Name is now ' . $objPerson1->FirstName);
-			_p('.<br/>', false);
+        case array_key_exists('double_force', $_POST):
+            $objPerson1->save();
+            _p('Person Id #' . $objPerson1->Id . ' saved.  Name is now ' . $objPerson1->FirstName);
+            _p('.<br/>', false);
 
-			// Try Saving Person #2 -- use $blnForceUpdate to avoid an exception
-			$objPerson2->Save(false, true);
-			_p('Person Id #' . $objPerson2->Id . ' saved.  Name is now ' . $objPerson2->FirstName);
-			_p('.<br/>', false);
-			break;
+            // Try Saving Person #2 -- use $blnForceUpdate to avoid an exception
+            $objPerson2->save(false, true);
+            _p('Person Id #' . $objPerson2->Id . ' saved.  Name is now ' . $objPerson2->FirstName);
+            _p('.<br/>', false);
+            break;
 
         case array_key_exists('no_collision', $_POST):
-            $objPerson1->Save();
+            $objPerson1->save();
             _p('Person Id #' . $objPerson1->Id . ' saved.  First name is now ' . $objPerson1->FirstName);
             _p('.<br/>', false);
 
             // Try Saving Person #3 -- no exception is thrown here because there is no collision
-            $objPerson3->Save(false, true);
+            $objPerson3->save(false, true);
             _p('Person Id #' . $objPerson2->Id . ' saved.  Last name is now ' . $objPerson3->LastName);
             _p('.<br/>', false);
             break;
