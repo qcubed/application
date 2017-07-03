@@ -10,7 +10,7 @@
 namespace QCubed\FormState;
 
 use QCubed\ObjectBase;
-use \QCubed\Project\Control\FormBase as QForm;
+use \QCubed\Project\Control\FormBase;
 use QCubed\Cryptography;
 
 /**
@@ -40,7 +40,9 @@ class SessionHandler extends ObjectBase
     
     public static $BackButtonMax = 20; // maximum number of back button states we remember
 
-    public static function Save($strFormState, $blnBackButtonFlag)
+    public static $EncryptionHashKey = '23c&jhd';   // Change this if using encryption if you want. Changing it does not enhance security all that much.
+
+    public static function save($strFormState, $blnBackButtonFlag)
     {
         // Compress (if available)
         if (function_exists('gzcompress')) {
@@ -54,9 +56,9 @@ class SessionHandler extends ObjectBase
         } else {
             $strPriorState = $_POST['Qform__FormState'];
 
-            if (!is_null(QForm::$EncryptionKey)) {
+            if (!is_null(FormBase::$EncryptionKey)) {
                 // Use \QCubed\Cryptography to Decrypt
-                $objCrypto = new Cryptography(QForm::$EncryptionKey, true);
+                $objCrypto = new Cryptography(FormBase::$EncryptionKey, true);
                 $strPriorState = $objCrypto->Decrypt($strPriorState);
             }
 
@@ -100,21 +102,21 @@ class SessionHandler extends ObjectBase
         $strPostDataState = $strFormInstance . '_' . $intFormStateIndex;
 
         // Return StateIndex
-        if (!is_null(QForm::$EncryptionKey)) {
+        if (!is_null(FormBase::$EncryptionKey)) {
             // Use \QCubed\Cryptography to Encrypt
-            $objCrypto = new Cryptography(QForm::$EncryptionKey, true);
+            $objCrypto = new Cryptography(FormBase::$EncryptionKey, true, null, self::$EncryptionHashKey);
             return $objCrypto->encrypt($strPostDataState);
         } else {
             return $strPostDataState;
         }
     }
 
-    public static function Load($strPostDataState)
+    public static function load($strPostDataState)
     {
         // Pull Out intStateIndex
-        if (!is_null(QForm::$EncryptionKey)) {
+        if (!is_null(FormBase::$EncryptionKey)) {
             // Use \QCubed\Cryptography to Decrypt
-            $objCrypto = new Cryptography(QForm::$EncryptionKey, true);
+            $objCrypto = new Cryptography(FormBase::$EncryptionKey, true, null, self::$EncryptionHashKey);
             $strPostDataState = $objCrypto->decrypt($strPostDataState);
         }
 

@@ -4,8 +4,8 @@
 <div id="instructions" class="full">
 	<h1>About Sections 4 - 10</h1>
 
-	<p>Sections 4 through 10 focus on the <strong>\QCubed\Project\Control\FormBase</strong> and the <strong>QControl</strong> libraries.  In order
-		to focus on just the view and controller layer functionality that QForms offers, the concepts of
+	<p>Sections 4 through 10 focus on the <strong>Form</strong> and the <strong>Control</strong> libraries.  In order
+		to focus on just the view and controller layer functionality that Forms offers, the concepts of
 		code generated objects and components are only discussed minimally.</p>
 
 	<p>Any examples that utilize code generated objects (which subsequently is using the database)

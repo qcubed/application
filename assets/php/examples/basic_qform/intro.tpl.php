@@ -9,28 +9,28 @@
 <div id="instructions">
 	<h1>Learning the Basics</h1>
 
-	<p>Welcome to your first <strong>\QCubed\Project\Control\FormBase</strong>!  This example shows how you can create a few
-		<strong>QControl</strong> objects (in this case, a <strong>\QCubed\Control\Label</strong> and a <strong>\QCubed\Project\Jqui\Button</strong>) and set their text
-		inside.  It also assigns a <strong>\QCubed\Event\Click</strong> on the button to a <strong>\QCubed\Action\Server</strong>.  
+	<p>Welcome to your first <strong>Form</strong>!  This example shows how you can create a few
+		<strong>Control</strong> objects (in this case, a <strong>Label</strong> and a <strong>Button</strong>) and set their text
+		inside.  It also assigns a <strong>Click</strong> on the button to a <strong>Server</strong> action.
 		This server action (which is a PHP method) will simply modify the label to say
 		"Hello, World!".</p>
 
-	<p>All <strong>\QCubed\Project\Control\FormBase</strong> objects use an HTML include file -- in thise case, we define the HTML in
-		the <strong>intro.tpl.php</strong> file.  Note that there are <strong>RenderBegin()</strong> and <strong>RenderEnd()</strong>
+	<p>All <strong>Form</strong> objects use an HTML include file -- in thise case, we define the HTML in
+		the <strong>intro.tpl.php</strong> file.  Note that there are <strong>renderBegin()</strong> and <strong>renderEnd()</strong>
 		methods which are required to be called within the template in order to output the
 		appropriate &lt;form&gt; tags, and also outputs any additional HTML and JavaScript
-		that makes the <strong>\QCubed\Project\Control\FormBase</strong> work. (QCubed will in fact throw an exception
-		if either <strong>RenderBegin</strong> and <strong>RenderEnd</strong> are not called.)</p>
+		that makes the <strong>Form</strong> work. (QCubed will in fact throw an exception
+		if either <strong>renderBegin()</strong> or <strong>renderEnd()</strong> is not called.)</p>
 
-	<p>Click on the "View Source" link below to view the <strong>intro.php</strong> and <strong>intro.tpl.php</strong> code,
-		which together define this <strong>\QCubed\Project\Control\FormBase</strong> you are seeing.</p>
+	<p>Click on the "View Source" link to view the <strong>intro.php</strong> and <strong>intro.tpl.php</strong> code,
+		which together define this <strong>Form</strong> you are seeing.</p>
 </div>
 
 <div id="demoZone">
 	<h2>Hello World Example</h2>
 
-	<p><?php $this->lblMessage->Render(); ?></p>
-	<p><?php $this->btnButton->Render(); ?></p>
+	<p><?php $this->lblMessage->render(); ?></p>
+	<p><?php $this->btnButton->render(); ?></p>
 </div>
 
 <?php $this->renderEnd(); ?>
