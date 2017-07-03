@@ -69,7 +69,10 @@ abstract class TextBoxBase extends Q\Project\Control\ControlBase
     const XSS_ALLOW = 'Allow';
     const XSS_HTML_ENTITIES = 'HtmlEntities';   // simple entity maker
     const XSS_HTML_PURIFIER = 'HTMLPurifier'; // use html purifier
+    const XSS_PHP_SANITIZE = 'PhpSanitize'; // Use PHP's built in sanitizer
     // Legacy and Deny are remvoed. Use something else.
+
+    public static $DefaultCrossScriptingMode = self::XSS_PHP_SANITIZE;
 
 /** @var int */
     protected $intColumns = 0;
@@ -175,18 +178,17 @@ abstract class TextBoxBase extends Q\Project\Control\ControlBase
             $this->sanitize();
 
             switch ($this->strCrossScripting) {
-                case self::XSS_ALLOW:
-                    // Do Nothing, allow everything
+                case self::XSS_ALLOW: // Do Nothing, allow everything
+                case self::XSS_PHP_SANITIZE: // Already filtered by the built-in PHP sanitizer
                     break;
-                case self::XSS_HTML_ENTITIES:
-                    // Go ahead and perform HtmlEntities on the text
+                case self::XSS_HTML_ENTITIES: // Perform HtmlEntities on the text
                     $this->strText = QString::htmlEntities($this->strText);
                     break;
-                case self::XSS_HTML_PURIFIER:
+                case self::XSS_HTML_PURIFIER: // Very advanced filtering
                     $this->strText = Application::purify($this->strText, $this->objHTMLPurifierConfig); // don't save data as html entities! Encode at display time.
                     break;
                 default:
-                    throw new \Exception("Unknown cross scripting setting. Legacy purifier is not supported any more.");
+                    throw new \Exception("Unknown cross scripting setting. Legacy purifier is not supported any more. Try XSS_PHP_SANITIZE");
                     break;
             }
         }
@@ -564,6 +566,9 @@ abstract class TextBoxBase extends Q\Project\Control\ControlBase
             case "CrossScripting":
                 try {
                     $this->strCrossScripting = Type::cast($mixValue, Type::STRING);
+                    if ($this->strCrossScripting == self::XSS_PHP_SANITIZE) {
+                        $this->intSanitizeFilter = FILTER_SANITIZE_STRING;  // Use PHP's built in sanitizer
+                    }
                     break;
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();

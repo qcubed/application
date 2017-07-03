@@ -12,17 +12,19 @@
 	<p>QCubed comes with two layers of protection against XSS. Both of these are enabled by default, and you don't
 		need to do anything to make use of them.</p>
 
-	<p>The first layer is around filtering input - particularly in <strong>\QCubed\Project\Control\TextBox</strong> controls. This is about filtering
+	<p>The first layer is around filtering input - particularly in <strong>TextBox</strong> controls. This is about filtering
 		the input that the user has placed into the text box, and rejecting or removing any potential script and tags from it.
-		By default QCubed . However this behaviour
-		can be changed per \QCubed\Project\Control\TextBox instance by setting its <strong>CrossScripting</strong>
+		By default QCubed will use either PHP's built-in sanitizer, or HTML Purifier if its installed. However this behaviour
+		can be changed per TextBox instance by setting its <strong>CrossScripting</strong>
 		property to one of the following values:</p>
 	<ul>
-		<li><strong>QCrossScripting::Allow</strong> completely disables any checks and filtering and would let any posted data through. This is the most
+		<li><strong>TextBox::XSS_ALLOW</strong> completely disables any checks and filtering and would let any posted data through. This is the most
 			insecure option and should be avoided unless you have very good reasons for it.</li>
-		<li><strong>QCrossScripting::HtmlEntities</strong> simply calls PHP's htmlentities() function on the submitted text. This will protect against
-			cross-site scripting attacks, however it will not filter anything out, which may still be undesirable.</li>
-		<li><strong>QCrossScripting::HTMLPurifier</strong> is the option that offers fine-grained control over filtering. It uses the well
+        <li><strong>TextBox::XSS_HTML_ENTITIES</strong> simply calls PHP's htmlentities() function on the submitted text. This will protect against
+            cross-site scripting attacks, however it will not filter anything out, which may still be undesirable.</li>
+        <li><strong>TextBox::XSS_PHP_SANITIZE</strong> uses PHP's built-in String sanitizer. Removes tags from the input. You can further refine this
+            by specifying SanitizeFilterOptions.</li>
+		<li><strong>TextBox::XSS_HTML_PURIFIER</strong> is the option that offers fine-grained control over filtering. It uses the well
 			known <a href="http://htmlpurifier.org/">HTML Purifier</a> library. From the library's home page:
 			<blockquote>
 				"HTML Purifier will not only remove all malicious
@@ -35,8 +37,8 @@
 		</li>
 	</ul>
 
-	<p>As mentioned above the default value used for creating \QCubed\Project\Control\TextBox instances can be altered by setting
-		<strong>\QCubed\Project\Application::$DefaultCrossScriptingMode</strong> to one of the values above.</p>
+	<p>The default value used for creating TextBox instances can be altered by setting
+		<strong>$strCrossScripting</strong> in /project/qcubed/Control/TextBox.php to one of the values above.</p>
 
 	<p>The second layer is about escaping output - so that if a piece of undesirable JavaScript somehow made it into
 		the database, QCubed will run it through the HTMLEntities function, escaping each possible entity (such as
@@ -55,28 +57,27 @@
 </div>
 
 <div id="demoZone">
-	<p><strong>Textbox protected with the default <code>QCrossScripting::Deny</code>. If you enter any text that contains one of
-			the disallowed tags, pressing any of the buttons on this page will result in an exception.</strong></p>
+	<p><strong>Textbox protected with the default <code>TextBox::XSS_PHP_SANITIZE</code>. Tags are stripped.</strong></p>
 	<p><?php $this->txtTextbox1->Render() ?></p>
 	<p><?php $this->btnButton1->Render(); ?></p>
 	<p>&nbsp;<?php $this->lblLabel1->Render() ?></p>
 
-	<p><strong>Textbox protected with <code>QCrossScripting::HtmlEntities</code>:</strong></p>
+	<p><strong>Textbox protected with <code>TextBox::XSS_HTML_ENTITIES</code>:</strong></p>
 	<p><?php $this->txtTextbox2->Render() ?></p>
 	<p><?php $this->btnButton2->Render(); ?></p>
 	<p>&nbsp;<?php $this->lblLabel2->Render() ?></p>
 
-	<p><strong>Textbox protected with <code>QCrossScripting::HTMLPurifier</code> with default settings:</strong></p>
+	<p><strong>Textbox protected with <code>TextBox::XSS_HTML_PURIFIER</code> with default settings:</strong></p>
 	<p><?php $this->txtTextbox3->Render() ?></p>
 	<p><?php $this->btnButton3->Render(); ?></p>
 	<p>&nbsp;<?php $this->lblLabel3->Render() ?></p>
 
-	<p><strong>Textbox protected with <code>QCrossScripting::HTMLPurifier</code> with a set of tags that's allowed (ex.&lt;b&gt;, &lt;i&gt;). Note that you should make any change to the text in this input, in order it to be correctly processed. This is because of optimization made in the qcubed 3.0 version: HTML Purifier is designed to filter text coming from the browser, not from the PHP side.</strong></p>
+	<p><strong>Textbox protected with <code>TextBox::XSS_HTML_PURIFIER</code> with a set of tags that's allowed (ex.&lt;b&gt;, &lt;i&gt;). Note that you should make any change to the text in this input, in order it to be correctly processed. This is because of optimization made in the qcubed 3.0 version: HTML Purifier is designed to filter text coming from the browser, not from the PHP side.</strong></p>
 	<p><?php $this->txtTextbox4->Render() ?></p>
 	<p><?php $this->btnButton4->Render(); ?></p>
 	<p>&nbsp;<?php $this->lblLabel4->Render() ?></p>
 
-	<p><strong>Unprotected textbox (uses <code>QCrossScripting::Allow</code>). Not recommended - don't do this unless you have a good reason!:</strong></p>
+	<p><strong>Unprotected textbox (uses <code>TextBox::XSS_ALLOWED</code>). Not recommended - don't do this unless you have a good reason!:</strong></p>
 	<p><?php $this->txtTextbox5->Render() ?></p>
 	<p><?php $this->btnButton5->Render(); ?></p>
 	<p>&nbsp;<?php $this->lblLabel5->Render() ?></p>
