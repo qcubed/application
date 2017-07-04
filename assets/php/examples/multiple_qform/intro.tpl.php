@@ -2,25 +2,25 @@
 <?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Handling "Multiple QForms" on the Same Page</h1>
+	<h1>Handling "Multiple Forms" on the Same Page</h1>
 
-	<p>QCubed only allows each front-end "web page" to only have a maximum of one <strong>\QCubed\Project\Control\FormBase</strong> class per page.  Because of
-		the many issues of managing and maintaining formstate across multiple <strong>QForms</strong>, QCubed simply does not allow
-		for the ability to have multiple <strong>QForms</strong> per page.</p>
+	<p>QCubed only allows each front-end "web page" to only have a maximum of one <strong>Form</strong> class per page.  Because of
+		the many issues of managing and maintaining formstate across multiple <strong>Forms</strong>, QCubed simply does not allow
+		for the ability to have multiple <strong>Forms</strong> per page.</p>
 
 	<p>However, as the development of a QCubed application matures, developers may find themselves wishing for this ability:</p>
 	<ul>
 		<li>As <strong>QForms</strong> are initially developed for simple, single-step tasks (e.g. "Post a Comment", "Edit a Project's Name", etc.),
-			developers may want to be able to combine these simpler QForms together onto a single, larger, more cohesive \QCubed\Project\Control\FormBase,
+			developers may want to be able to combine these simpler QForms together onto a single, larger, more cohesive Form,
 			utilizing AJAX to provide for a more "Single-Page Web Application" type of architecture.</li>
-		<li>Moreover, developers may end up with a library of these <strong>QForms</strong> that they would want to reuse in multiple locations,
+		<li>Moreover, developers may end up with a library of these <strong>Forms</strong> that they would want to reuse in multiple locations,
 			thus allowing for a much better, more modularized codebase.</li>
 	</ul>
 
-	<p>Fortunately, the <strong>\QCubed\Control\Panel</strong> control was specifically designed to provide this kind of "Multiple <strong>\QCubed\Project\Control\FormBase</strong>" functionality.
-		In the example below, we create a couple of custom <strong>QPanels</strong> to help with the viewing and editing of a Project and its team members.  The
-		comments in each of these custom controls explain how a custom <strong>\QCubed\Control\Panel</strong> provides similar functionality to an independent, stand-alone
-		<strong>\QCubed\Project\Control\FormBase</strong>, but also details the small differences in how the certain events need to be coded.</p>
+	<p>Fortunately, the <strong>Panel</strong> control was specifically designed to provide this kind of "Multiple <strong>Form</strong>" functionality.
+		In the example below, we create a couple of custom <strong>Panels</strong> to help with the viewing and editing of a Project and its team members.  The
+		comments in each of these custom controls explain how a custom <strong>Panel</strong> provides similar functionality to an independent, stand-alone
+		<strong>Form</strong>, but also details the small differences in how the certain events need to be coded.</p>
 
 	<p>Next, to illustrate this point further we create a <strong>PersonEditPanel</strong>, which is based on the code generated
 		<strong>PersonEditFormBase</strong> class.</p>

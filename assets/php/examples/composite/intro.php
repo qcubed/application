@@ -1,9 +1,11 @@
 <?php
+use QCubed\Project\Control\FormBase;
+
 require_once('../qcubed.inc.php');
-require('SampleComposite.class.php');
+require('SampleComposite.php');
 
 // Define the \QCubed\Project\Control\FormBase with all our Qcontrols
-class ExamplesForm extends \QCubed\Project\Control\FormBase {
+class ExamplesForm extends FormBase {
 
 	// Local declarations of our Qcontrols
 	protected $lblMessage;

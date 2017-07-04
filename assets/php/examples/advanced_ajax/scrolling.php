@@ -1,8 +1,12 @@
 <?php
+use QCubed\Control\Panel;
+use QCubed\Css\PositionType;
+use QCubed\Project\Control\FormBase;
+
 require_once('../qcubed.inc.php');
 
 // Define the \QCubed\Project\Control\FormBase with all our Qcontrols
-class ExamplesForm extends \QCubed\Project\Control\FormBase {
+class ExamplesForm extends FormBase {
 
 	// Local declarations of our Qcontrols
 	protected $pnlPanel;
@@ -10,11 +14,11 @@ class ExamplesForm extends \QCubed\Project\Control\FormBase {
 	// Initialize our Controls during the Form Creation process
 	protected function formCreate() {
 		// Define the Panel
-		$this->pnlPanel = new \QCubed\Control\Panel($this);
+		$this->pnlPanel = new Panel($this);
 		$this->pnlPanel->Text = 'You can click on me to drag me around.';
 
 		// Make the Panel's Positioning Absolute, and specify a starting location
-		$this->pnlPanel->Position = \QCubed\Css\Position::ABSOLUTE;
+		$this->pnlPanel->Position = PositionType::ABSOLUTE;
 		$this->pnlPanel->Top = 30;
 		$this->pnlPanel->Left = 70;
 
@@ -26,5 +30,4 @@ class ExamplesForm extends \QCubed\Project\Control\FormBase {
 }
 
 // Run the Form we have defined
-ExamplesForm::Run('ExamplesForm');
-?>
+ExamplesForm::run('ExamplesForm');

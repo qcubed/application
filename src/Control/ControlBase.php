@@ -381,9 +381,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
         global $_FORM;
 
         assert($_FORM !== null);
-        if (defined('__SESSION_SAVED_STATE__') && $this->blnSaveState) {
+        if (defined('QCUBED_SESSION_SAVED_STATE') && $this->blnSaveState) {
             $formName = get_class($_FORM);    // must use global $_FORM here instead of $this->objForm, since serialization will have nulled the objForm.
-            $_SESSION[__SESSION_SAVED_STATE__][$formName][$this->ControlId] = $this->getState();
+            $_SESSION[QCUBED_SESSION_SAVED_STATE][$formName][$this->ControlId] = $this->getState();
         }
     }
 
@@ -392,10 +392,10 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function _ReadState()
     {
-        if (defined('__SESSION_SAVED_STATE__') && $this->blnSaveState) {
+        if (defined('QCUBED_SESSION_SAVED_STATE') && $this->blnSaveState) {
             $formName = get_class($this->objForm);
-            if (isset ($_SESSION[__SESSION_SAVED_STATE__][$formName][$this->ControlId])) {
-                $state = $_SESSION[__SESSION_SAVED_STATE__][$formName][$this->ControlId];
+            if (isset ($_SESSION[QCUBED_SESSION_SAVED_STATE][$formName][$this->ControlId])) {
+                $state = $_SESSION[QCUBED_SESSION_SAVED_STATE][$formName][$this->ControlId];
                 $this->putState($state);
             }
         }
@@ -425,9 +425,9 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      */
     public function forgetState()
     {
-        if (defined('__SESSION_SAVED_STATE__')) {
+        if (defined('QCUBED_SESSION_SAVED_STATE')) {
             $formName = get_class($this->objForm);
-            unset($_SESSION[__SESSION_SAVED_STATE__][$formName][$this->ControlId]);
+            unset($_SESSION[QCUBED_SESSION_SAVED_STATE][$formName][$this->ControlId]);
         }
     }
 

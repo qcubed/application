@@ -1,20 +1,27 @@
 <?php
-	require_once('../qcubed.inc.php');
+use QCubed\Action\Alert;
+use QCubed\Project\Control\FormBase;
 
-	class ExampleForm extends \QCubed\Project\Control\FormBase {
-		protected $ctlCustom;
+require_once('../qcubed.inc.php');
 
-		protected function formCreate() {
-			// Get the Custom Control
-			$this->ctlCustom = new QSampleControl($this);
+require_once('SampleControl.php');
 
-			// Note that custom controls can act just like regular controls,
-			// complete with events and attributes
-			$this->ctlCustom->Foo = 'Click on me!';
-			$this->ctlCustom->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Alert('Hello, world!'));
-		}
-	}
+class ExampleForm extends FormBase
+{
+    protected $ctlCustom;
 
-	// And now run our defined form
-	ExampleForm::Run('ExampleForm');
-?>
+    protected function formCreate()
+    {
+        // Get the Custom Control
+        $this->ctlCustom = new SampleControl($this);
+
+        // Note that custom controls can act just like regular controls,
+        // complete with events and attributes
+        $this->ctlCustom->Foo = 'Click on me!';
+        $this->ctlCustom->onClick(new Alert('Hello, world!'));
+    }
+}
+
+// And now run our defined form
+ExampleForm::run('ExampleForm');
+

@@ -4,7 +4,7 @@
 <div id="instructions">
 	<h1>Making Renameable Labels</h1>
 
-	<p>With the use of <strong>\QCubed\Control\Label</strong> and <strong>\QCubed\Project\Control\TextBox</strong> controls that can show, hide and change
+	<p>With the use of <strong>Label</strong> and <strong>TextBox</strong> controls that can show, hide and change
 		<strong>CssClass</strong> names depending on what action we must execute, we use
 		<strong>QAjaxActions</strong> and various events to create
 		a list of "renameable labels", where the interaction is similar to how files
@@ -18,8 +18,8 @@
 <div id="demoZone">
 <?php for ($intIndex = 0; $intIndex < 10; $intIndex++) { ?>
 	<p>
-		<?php $this->lblArray[$intIndex]->Render(); ?>
-		<?php $this->txtArray[$intIndex]->Render('BorderWidth=1px', 'BorderColor=gray', 'BorderStyle=Solid'); ?>
+		<?php $this->lblArray[$intIndex]->render(); ?>
+		<?php $this->txtArray[$intIndex]->render('BorderWidth=1px', 'BorderColor=gray', 'BorderStyle=Solid'); ?>
 	</p>
 <?php } ?>
 </div>

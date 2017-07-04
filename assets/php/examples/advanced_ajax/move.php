@@ -1,51 +1,57 @@
 <?php
-	require_once('../qcubed.inc.php');
+use QCubed\Control\Panel;
+use QCubed\Css\PositionType;
+use QCubed\Project\Control\FormBase;
+use QCubed\Project\Control\TextBox;
 
-	// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
-	class ExamplesForm extends \QCubed\Project\Control\FormBase {
-		// Local declarations of our Qcontrols
-		protected $pnlPanel;
+require_once('../qcubed.inc.php');
 
-		protected $lblHandle;
-		protected $txtTextbox;
-		protected $pnlParent;
+// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
+class ExamplesForm extends FormBase
+{
+    // Local declarations of our Qcontrols
+    protected $pnlPanel;
 
-		// Initialize our Controls during the Form Creation process
-		protected function formCreate() {
-			// Define the Panel
-			$this->pnlPanel = new \QCubed\Control\Panel($this);
-			$this->pnlPanel->Text = 'You can click on me to drag me around.';
+    protected $lblHandle;
+    protected $txtTextbox;
+    protected $pnlParent;
 
-			$this->pnlPanel->Position = \QCubed\Css\Position::ABSOLUTE;
-			$this->pnlPanel->Top = 5;
-			$this->pnlPanel->Left = 5;
+    // Initialize our Controls during the Form Creation process
+    protected function formCreate()
+    {
+        // Define the Panel
+        $this->pnlPanel = new Panel($this);
+        $this->pnlPanel->Text = 'You can click on me to drag me around.';
 
-			$this->pnlPanel->Moveable = true;
+        $this->pnlPanel->Position = PositionType::ABSOLUTE;
+        $this->pnlPanel->Top = 5;
+        $this->pnlPanel->Left = 5;
 
-			$this->pnlParent = new \QCubed\Control\Panel ($this);
-			$this->pnlParent->AutoRenderChildren = true;
-			$this->pnlParent->Position = \QCubed\Css\Position::ABSOLUTE;
-			$this->pnlParent->Top = 100;
-			$this->pnlParent->Left = 100;
+        $this->pnlPanel->Moveable = true;
 
-			$this->lblHandle = new \QCubed\Control\Panel($this->pnlParent);
-			$this->lblHandle->Text = 'Please Enter your Name';
-			$this->lblHandle->Cursor='move';
-			$this->lblHandle->BackColor='#333333';
-			$this->lblHandle->ForeColor='#FFFFFF';
-			$this->lblHandle->Width='250px';
-			$this->lblHandle->Padding='4';
+        $this->pnlParent = new Panel ($this);
+        $this->pnlParent->AutoRenderChildren = true;
+        $this->pnlParent->Position = PositionType::ABSOLUTE;
+        $this->pnlParent->Top = 100;
+        $this->pnlParent->Left = 100;
 
-			$this->txtTextbox = new \QCubed\Project\Control\TextBox($this->pnlParent);
-			$this->txtTextbox->Width='250px';
+        $this->lblHandle = new Panel($this->pnlParent);
+        $this->lblHandle->Text = 'Please Enter your Name';
+        $this->lblHandle->Cursor = 'move';
+        $this->lblHandle->BackColor = '#333333';
+        $this->lblHandle->ForeColor = '#FFFFFF';
+        $this->lblHandle->Width = '250px';
+        $this->lblHandle->Padding = '4';
 
-			// Let's assign the panel as a moveable control, handled
-			// by the label.
-			$this->pnlParent->Moveable = true;
-			$this->pnlParent->DragObj->Handle = $this->lblHandle;
-		}
-	}
+        $this->txtTextbox = new TextBox($this->pnlParent);
+        $this->txtTextbox->Width = '250px';
 
-	// Run the Form we have defined
-	ExamplesForm::Run('ExamplesForm');
-?>
+        // Let's assign the panel as a moveable control, handled
+        // by the label.
+        $this->pnlParent->Moveable = true;
+        $this->pnlParent->DragObj->Handle = $this->lblHandle;
+    }
+}
+
+// Run the Form we have defined
+ExamplesForm::run('ExamplesForm');

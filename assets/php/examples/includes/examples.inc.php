@@ -124,13 +124,13 @@
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Advanced Controls Manipulation';
 			Examples::$Categories[$intIndex]['description'] = 'Dynamically creating controls, Implementing custom controls';
-			self::AddCoreExampleFile($intIndex, '/dynamic/\QCubed\Control\Panel.php Introduction to QBlockControls');
-			self::AddCoreExampleFile($intIndex, '/dynamic/qpanel_2.php Dynamically Changing a Control\'s Parent');
-			self::AddCoreExampleFile($intIndex, '/other_controls/persist.php Persistent Controls: Performance for Reusable Components');
+			self::AddCoreExampleFile($intIndex, '/dynamic/panel.php Introduction to BlockControls');
+			self::AddCoreExampleFile($intIndex, '/dynamic/panel_2.php Dynamically Changing a Control\'s Parent');
+			self::AddCoreExampleFile($intIndex, '/other_controls/persist.php Persistent Controls');
 			self::AddCoreExampleFile($intIndex, '/other_controls/sample.php Creating Your Own Control');
 			self::AddCoreExampleFile($intIndex, '/composite/intro.php Creating a Composite Control');
-			self::AddCoreExampleFile($intIndex, '/multiple_qform/intro.php "Multiple QForms" Functionality via Custom QPanels');
-			self::AddCoreReferencedFile('/dynamic/\QCubed\Control\Panel.php', 'pnl_panel.tpl.php');
+			self::AddCoreExampleFile($intIndex, '/multiple_qform/intro.php "Multiple Forms" Functionality via Custom Panels');
+			self::AddCoreReferencedFile('/dynamic/panel.php', 'pnl_panel.tpl.php');
 			self::AddCoreReferencedFile('/other_controls/sample.php', 'SampleControl.php');
 			self::AddCoreReferencedFile('/composite/intro.php', 'SampleComposite.php');
 			self::AddCoreReferencedFile('/multiple_qform/intro.php', array(

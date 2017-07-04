@@ -4,7 +4,7 @@
 <div id="instructions">
 	<h1>More "J" and Less "A" in AJAX</h1>
 
-	<p>Because our Renameable Labels make full use of <strong>QAjaxActions</strong>, any clicking (including
+	<p>Because our Renameable Labels make full use of <strong>Ajax</strong> actions, any clicking (including
 		just selecting a label) involves an asynchronous server hit.</p>
 
 	<p>Of course, by having all your functionality and display logic in one place, we show
@@ -15,9 +15,9 @@
 
 	<p>But as your application matures, you may want to have some fully server-side Ajax functionality
 		be converted into more performance-efficient client-side-only Javascript functionality.
-		This example shows how you can easily change an existing <strong>\QCubed\Project\Control\FormBase</strong> that uses all QCubed-based Ajax
+		This example shows how you can easily change an existing <strong>Form</strong> that uses all QCubed-based Ajax
 		interactions into a more blended server- and client-side Javascript/Ajax form.  Because the API for
-		<strong>QServerActions</strong>, <strong>QJavaScriptActions</strong> and <strong>QAjaxActions</strong> are all the same, the
+		<strong>Server</strong> actions, <strong>JavaScript</strong> actions and <strong>Ajax</strong> actions are all the same, the
 		process for rewriting specific nuggets of functionality in this manner is straightforward,
 		and the action types (from Ajax- to JavaScript- to Server-) should be very interchangable.</p>
 
@@ -26,8 +26,8 @@
 <div id="demoZone">
 	<?php for ($intIndex = 0; $intIndex < 10; $intIndex++) { ?>
 		<p style="height: 16px;">
-			<?php $this->lblArray[$intIndex]->Render(); ?>
-			<?php $this->txtArray[$intIndex]->Render('BorderWidth=1px', 'BorderColor=gray', 'BorderStyle=Solid'); ?>
+			<?php $this->lblArray[$intIndex]->render(); ?>
+			<?php $this->txtArray[$intIndex]->render('BorderWidth=1px', 'BorderColor=gray', 'BorderStyle=Solid'); ?>
 		</p>
 	<?php } ?>
 </div>

@@ -3,6 +3,7 @@ use QCubed\Exception\Caller;
 use QCubed\Project\Control\ControlBase as QControl;
 use QCubed\Project\Control\FormBase as QForm;
 use QCubed\QString;
+use QCubed\Type;
 
 
 /**
@@ -72,7 +73,8 @@ class SampleControl extends QControl
         return $this->renderTag('span', null, null, $this->getInnerHtml());
     }
 
-    protected function getInnerHtml() {
+    protected function getInnerHtml()
+    {
         return QString::htmlEntities("Sample Control " . $this->intExample . ' - ' . $this->strFoo);
     }
 
@@ -95,8 +97,10 @@ class SampleControl extends QControl
     public function __get($strName)
     {
         switch ($strName) {
-            case 'Example': return $this->intExample;
-            case 'Foo': return $this->strFoo;
+            case 'Example':
+                return $this->intExample;
+            case 'Foo':
+                return $this->strFoo;
 
             default:
                 try {
@@ -119,14 +123,14 @@ class SampleControl extends QControl
 
             case 'Example':
                 try {
-                    return ($this->intExample = QType::cast($mixValue, QType::Integer));
+                    return ($this->intExample = Type::cast($mixValue, Type::INTEGER));
                 } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
                 }
             case 'Foo':
                 try {
-                    return ($this->strFoo = QType::cast($mixValue, QType::String));
+                    return ($this->strFoo = Type::cast($mixValue, Type::STRING));
                 } catch (Caller $objExc) {
                     $objExc->incrementOffset();
                     throw $objExc;
