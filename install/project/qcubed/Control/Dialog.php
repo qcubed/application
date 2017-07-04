@@ -32,3 +32,6 @@ class Dialog extends \QCubed\Jqui\DialogBase implements \QCubed\Control\DialogIn
 {
 }
 
+// If using the bootstrap library:
+//class Dialog extends \QCubed\Bootstrap\Modal implements \QCubed\Control\DialogInterface
+

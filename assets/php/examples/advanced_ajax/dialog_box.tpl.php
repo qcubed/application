@@ -2,7 +2,7 @@
 <?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Extending QPanels to Create Modal "Dialog Boxes"</h1>
+	<h1>Extending Panels to Create Modal "Dialog Boxes"</h1>
 	
 	<p>In general UI programming, there are two kinds of dialog boxes: modal and non-modal.  Modal dialog boxes are
 		the most common. When a program displays a modal dialog box, the user cannot switch between the dialog box
@@ -12,17 +12,19 @@
 		is still the only <em>true</em> way to have any level of a modal dialog interaction.  And unfortunately,
 		<em>alert()</em> has very few features in terms of functionality.</p>
 
-	<p><strong>QCubed</strong> implements the JQuery UI dialog box as a standard extension to the <strong>\QCubed\Control\Panel</strong>, which gives you
-		the ability to create modal and modeless dialog boxes with a wide range of capabilities and complexities.</p>
+	<p>By default, <strong>QCubed</strong> implements the JQuery UI dialog box as a standard extension to the <strong>Panel</strong>, which gives you
+		the ability to create modal and modeless dialog boxes with a wide range of capabilities and complexities.
+        The Bootstrap library also has its version of the dialog. You can configure which you want to use in the
+        /project/qcubed/Control/Dialog.php</p>
 
-	<p>Because it extends the <strong>\QCubed\Control\Panel</strong> control, you have full use of all the <strong>\QCubed\Control\Panel's</strong> resources
+	<p>Because it extends the <strong>Panel</strong> control, you have full use of all the <strong>Panel's</strong> resources
 		to build and design the content of the dialog box itself, including using separate template files and
 		adding child controls, events, actions and validation.</p>
 
 	<p>And since it also uses the JQuery UI <strong>Dialog</strong> control, you have full access to all of the JQuery UI
 		capabilities as well, and a few extra extensions. In particular,
-		you can call <strong>AddButton()</strong> to add buttons to the dialog that will be placed in standard
-		dialog locations and colored with the current theme. Attach actions to the <strong>\QCubed\Event\DialogButton</strong> event to react
+		you can call <strong>addButton()</strong> to add buttons to the dialog that will be placed in standard
+		dialog locations and colored with the current theme. Attach actions to the <strong>DialogButton</strong> event to react
 		to a user's click of the buttons on the dialog,
 		and use the <strong>strParameter</strong> variable to detect which of these buttons were clicked. If for some reason
 		you don't want to use the JQuery UI buttons through AddButton, you
@@ -42,8 +44,8 @@
 			Themeroller styles provided with JQueryUI.</li>
 	</ol></p>
 
-	<p>Note that <strong>\QCubed\Project\Jqui\Dialog</strong>s are rendered automatically once they are attached to a form. You should not
-		call Render on the dialog instance.</p>
+	<p>Note that <strong>Dialog</strong>s are rendered automatically once they are attached to a form. You should not
+		call render() on the dialog instance.</p>
 </div>
 
 <style type="text/css">
