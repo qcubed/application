@@ -2,14 +2,20 @@
 	<?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>jQuery Controls: Server-Side Wrappers</h1>
+	<h1>jQuery UI Controls</h1>
 	
-	<p>QCubed offers a new set of experimental wrappers for all widgets that <a href="http://www.jquery.com/ui">jQuery UI</a> 
-	ships with. These are simple server-side classes that allow you to create PHP objects that will later on be
-	presented as jQuery widgets.</p>
+	<p>QCubed includes a library of controls that implement the JQuery UI set of javascript interactive controls found
+        at <a href="http://www.jquery.com/ui">jQuery UI</a> .
+       </p>
 	
 	<p>Explore the variety of these controls on this page, and proceed to the <a href="js_return_param_example.php">next tutorial</a> 
-	to learn how to attach events to these controls and use them in your QForms.</p>
+	to learn how to attach events to these controls and use them in your Forms.</p>
+
+    <p>QCubed comes with a default JQuery UI theme, but you can use JQuery UI Themeroller to create your own and point to
+    it in your assets.cfg.php file.</p>
+
+
+
 </div>
 
 <div id="demoZone">
@@ -24,86 +30,86 @@
 	</style>
 	
 	<div class="example"><h2>Draggable</h2>
-		<?php $this->Draggable->Render(); ?>
+		<?php $this->Draggable->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Droppable</h2>
-		<?php $this->Droppable->Render(); ?>
+		<?php $this->Droppable->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Resizable</h2>
-		<?php $this->Resizable->Render(); ?>
+		<?php $this->Resizable->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Selectable</h2>
 		<p>Drag a box (aka lasso) with the mouse over the items.
 			Items can be selected by click or drag while holding the Ctrl/Meta key, 
 			allowing for multiple (non-contiguous) selections.</p>
-		<?php $this->Selectable->Render(); ?>
+		<?php $this->Selectable->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Sortable</h2>
 		<p>Drag and drop to reorder</p>
-		<?php $this->Sortable->Render(); ?>
+		<?php $this->Sortable->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Accordion</h2>
-		<?php $this->Accordion->Render(); ?>
+		<?php $this->Accordion->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Autocomplete</h2>
 		 <p>Type "c" to test</p>
-		<?php $this->Autocomplete->RenderWithName(); ?>
+		<?php $this->Autocomplete->renderWithName(); ?>
 	</div>
 	
 	<div class="example"><h2>Ajax Autocomplete</h2>
 		 <p>Type "s" to test</p>
-			<?php $this->AjaxAutocomplete->RenderWithName(); ?>
+			<?php $this->AjaxAutocomplete->renderWithName(); ?>
 		<p>See the Autocomplete2 QCubed plugin for additional extensions to the Autocomplete control. </p>
 	</div>
 	
 	<div class="example"><h2>Buttons</h2>
-		<?php $this->Button->Render(); ?>
-		<?php $this->CheckBox->Render(); ?>
-		<?php $this->RadioButton->Render(); ?>
-		<?php $this->IconButton->Render(); ?>
+		<?php $this->Button->render(); ?>
+		<?php $this->CheckBox->render(); ?>
+		<?php $this->RadioButton->render(); ?>
+		<?php $this->IconButton->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Lists</h2>
-		<?php $this->CheckList1->RenderWithName(); ?>
-		<?php $this->CheckList2->RenderWithName(); ?>
-		<?php $this->RadioList1->RenderWithName(); ?>
-		<?php $this->RadioList2->RenderWithName(); ?>
-		<?php $this->SelectMenu->RenderWithName(); ?>
+		<?php $this->CheckList1->renderWithName(); ?>
+		<?php $this->CheckList2->renderWithName(); ?>
+		<?php $this->RadioList1->renderWithName(); ?>
+		<?php $this->RadioList2->renderWithName(); ?>
+		<?php $this->SelectMenu->renderWithName(); ?>
 	</div>
 	
 	<div class="example"><h2>Datepicker</h2>
-		<?php $this->Datepicker->Render(); ?>
+		<?php $this->Datepicker->render(); ?>
 	</div>
 	
 	<div class="example"><h2>DatepickerBox</h2>
-		<?php $this->DatepickerBox->Render(); ?>
+		<?php $this->DatepickerBox->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Dialog box - floating..</h2>
-        <?php $this->Dialog->Render(); ?>
-        <?php $this->btnShowDialog->Render(); ?>
-        <?php $this->txtDlgTitle->RenderWithName(); ?>
-        <?php $this->txtDlgText->RenderWithName(); ?>
+        <?php $this->Dialog->render(); ?>
+        <?php $this->btnShowDialog->render(); ?>
+        <?php $this->txtDlgTitle->renderWithName(); ?>
+        <?php $this->txtDlgText->renderWithName(); ?>
 
 	</div>
 	
 	<div class="example"><h2>Progressbar</h2>
-		<?php $this->Progressbar->Render(); ?>
+		<?php $this->Progressbar->render(); ?>
 	</div>
 	
 	<div class="example"><h2>Slider</h2>
-		<p><?php $this->Slider->Render(); ?></p>
-		<p><?php $this->Slider2->Render(); ?></p>
+		<p><?php $this->Slider->render(); ?></p>
+		<p><?php $this->Slider2->render(); ?></p>
 	</div>
 	
 	<div class="example"><h2>Tabs</h2>
-		<?php $this->Tabs->Render(); ?>
+		<?php $this->Tabs->render(); ?>
 	</div>
 </div>
 

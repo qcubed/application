@@ -219,7 +219,7 @@ class ExamplesForm extends FormBase
     {
 
         $dlgYesNo = new Dialog();    // Note here there is no "$this" as the first parameter. By leaving this off, you
-        // are telling QCubed to manage the dialog.
+                                     // are telling QCubed to manage the dialog.
         $dlgYesNo->Text = t("Do you like QCubed?");
         $dlgYesNo->addButton('Yes');
         $dlgYesNo->addButton('No');

@@ -59,10 +59,10 @@
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Basic QForms';
-			Examples::$Categories[$intIndex]['description'] = 'An introduction to QForms and QControls';
+			Examples::$Categories[$intIndex]['description'] = 'An introduction to Forms and Controls';
 			self::AddCoreExampleFile($intIndex, '/basic_qform/about.php (About Sections 4 - 10)');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/intro.php Hello World Example');
-			self::AddCoreExampleFile($intIndex, '/basic_qform/state.php QForms: Stateful, Event-Driven Objects');
+			self::AddCoreExampleFile($intIndex, '/basic_qform/state.php Forms: Stateful, Event-Driven Objects');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/process_flow.php Understanding Process Flow');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator.php Calculator Example');
 			self::AddCoreExampleFile($intIndex, '/basic_qform/calculator_2.php Calculator Example with Validation');
