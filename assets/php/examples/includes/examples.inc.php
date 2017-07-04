@@ -82,12 +82,12 @@
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'More About Events and Actions';
-			Examples::$Categories[$intIndex]['description'] = 'Looking more in depth at the capabilities of the \QCubed\Event\EventBase and \QCubed\Action\ActionBase libraries';
+			Examples::$Categories[$intIndex]['description'] = '';
 			self::AddCoreExampleFile($intIndex, '/events_actions/editable_listbox.php Editable ListBox');
 			self::AddCoreExampleFile($intIndex, '/events_actions/editable_listbox_2.php Conditional Events');
 			self::AddCoreExampleFile($intIndex, '/events_actions/delayed.php Trigger-Delayed Events');
 			self::AddCoreExampleFile($intIndex, '/events_actions/javascript_alerts.php Javascript Actions, Alerts and Confirmations');
-			self::AddCoreExampleFile($intIndex, '/events_actions/other_actions.php Other Client-Side QActions');
+			self::AddCoreExampleFile($intIndex, '/events_actions/other_actions.php Other Client-Side Actions');
 			self::AddCoreExampleFile($intIndex, '/events_actions/event_propagation.php Controlling Event Bubbling');
 			self::AddCoreExampleFile($intIndex, '/events_actions/event_delegation.php Event Delegation');
 			self::AddCoreExampleFile($intIndex, '/events_actions/synchronizing.php Blocking Unwanted Events');

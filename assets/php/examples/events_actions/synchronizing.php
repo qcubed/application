@@ -1,11 +1,17 @@
 <?php
-	require_once('../qcubed.inc.php');
+use QCubed\Action\Ajax;
+use QCubed\Control\Label;
+use QCubed\Event\Click;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\FormBase;
+
+require_once('../qcubed.inc.php');
 	
-	class ExampleForm extends \QCubed\Project\Control\FormBase
+	class ExampleForm extends FormBase
 	{
-		/** @var  \QCubed\Project\Jqui\Button */
+		/** @var  Button */
 		protected $btnRegular;
-		/** @var  \QCubed\Project\Jqui\Button */
+		/** @var  Button */
 		protected $btnBlocking;
 		protected $intRegularCount = 0;
 		protected $intBlockingCount = 0;
@@ -16,17 +22,17 @@
 
 		protected function formCreate()
 		{
-			$this->btnRegular = new \QCubed\Project\Jqui\Button($this);
+			$this->btnRegular = new Button($this);
 			$this->btnRegular->Text = "Regular Button";
-			$this->btnRegular->AddAction (new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnRegular_Click'));
-			$this->btnBlocking = new \QCubed\Project\Jqui\Button($this);
+			$this->btnRegular->addAction(new Click(), new Ajax('btnRegular_Click'));
+			$this->btnBlocking = new Button($this);
 			$this->btnBlocking->Text = "Blocking Button";
-			$this->btnBlocking->AddAction (new \QCubed\Event\Click(0, null, null, true), new \QCubed\Action\Ajax('btnBlocking_Click'));
+			$this->btnBlocking->addAction(new Click(0, null, null, true), new Ajax('btnBlocking_Click'));
 
 			// Define a Message label
-			$this->lblRegular = new \QCubed\Control\Label($this);
+			$this->lblRegular = new Label($this);
 			$this->lblRegular->Text = '0';
-			$this->lblBlocking = new \QCubed\Control\Label($this);
+			$this->lblBlocking = new Label($this);
 			$this->lblBlocking->Text = '0';
 		}
 
@@ -43,5 +49,5 @@
 		}
 	}
 
-ExampleForm::Run('ExampleForm');
+ExampleForm::run('ExampleForm');
 

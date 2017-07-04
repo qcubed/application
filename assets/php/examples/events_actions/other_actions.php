@@ -1,68 +1,84 @@
 <?php
-	require_once('../qcubed.inc.php');
+use QCubed\Action\CssAction;
+use QCubed\Action\CssClass;
+use QCubed\Action\FocusControl;
+use QCubed\Action\SelectControl;
+use QCubed\Action\ToggleEnable;
+use QCubed\Control\Panel;
+use QCubed\Event\Click;
+use QCubed\Event\MouseOut;
+use QCubed\Event\MouseOver;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\FormBase;
+use QCubed\Project\Control\TextBox;
 
-	class ExampleForm extends \QCubed\Project\Control\FormBase {
-		protected $btnFocus;
-		protected $btnSelect;
-		protected $txtFocus;
+require_once('../qcubed.inc.php');
 
-		protected $btnToggleDisplay;
-		protected $txtDisplay;
+class ExampleForm extends FormBase
+{
+    protected $btnFocus;
+    protected $btnSelect;
+    protected $txtFocus;
 
-		protected $btnToggleEnable;
-		protected $txtEnable;
-		
-		protected $pnlHover;
-		
-		protected $btnCssAction;
+    protected $btnToggleDisplay;
+    protected $txtDisplay;
 
-		protected function formCreate() {
-			// Define the Textboxes
-			$this->txtFocus = new \QCubed\Project\Control\TextBox($this);
-			$this->txtFocus->Text = 'Example Text Here';
-			$this->txtDisplay = new \QCubed\Project\Control\TextBox($this);
-			$this->txtDisplay->Text = 'Example Text Here';
-			$this->txtEnable = new \QCubed\Project\Control\TextBox($this);
-			$this->txtEnable->Text = 'Example Text Here';
+    protected $btnToggleEnable;
+    protected $txtEnable;
 
-			// \QCubed\Action\FocusControl example
-			$this->btnFocus = new \QCubed\Project\Jqui\Button($this);
-			$this->btnFocus->Text = 'Set Focus';
-			$this->btnFocus->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\FocusControl($this->txtFocus));
+    protected $pnlHover;
 
-			// \QCubed\Action\SelectControl example
-			$this->btnSelect = new \QCubed\Project\Jqui\Button($this);
-			$this->btnSelect->Text = 'Select All in Textbox';
-			$this->btnSelect->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\SelectControl($this->txtFocus));
+    protected $btnCssAction;
 
-			// \QCubed\Action\ToggleDisplay example
-			$this->btnToggleDisplay = new \QCubed\Project\Jqui\Button($this);
-			$this->btnToggleDisplay->Text = 'Toggle the Display (show/hide)';
-			$this->btnToggleDisplay->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ToggleDisplay($this->txtDisplay));
+    protected function formCreate()
+    {
+        // Define the Textboxes
+        $this->txtFocus = new TextBox($this);
+        $this->txtFocus->Text = 'Example Text Here';
+        $this->txtDisplay = new TextBox($this);
+        $this->txtDisplay->Text = 'Example Text Here';
+        $this->txtEnable = new TextBox($this);
+        $this->txtEnable->Text = 'Example Text Here';
 
-			// \QCubed\Action\ToggleEnable example
-			$this->btnToggleEnable = new \QCubed\Project\Jqui\Button($this);
-			$this->btnToggleEnable->Text = 'Toggle the Enable (enabled/disabled)';
-			$this->btnToggleEnable->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\ToggleEnable($this->txtEnable));
+        // \QCubed\Action\FocusControl example
+        $this->btnFocus = new Button($this);
+        $this->btnFocus->Text = 'Set Focus';
+        $this->btnFocus->addAction(new Click(), new FocusControl($this->txtFocus));
 
-			// \QCubed\Action\CssClass example
-			$this->pnlHover = new \QCubed\Control\Panel($this);
-			$this->pnlHover->HtmlEntities = false;
-			$this->pnlHover->Text = 'Change the CSS class of a control using <b>\QCubed\Action\CssClass</b>:<br /><br />(Uses QMouseOver and QMouseOut to Temporarily Override the Panel\'s CSS Style)';
+        // \QCubed\Action\SelectControl example
+        $this->btnSelect = new Button($this);
+        $this->btnSelect->Text = 'Select All in Textbox';
+        $this->btnSelect->addAction(new Click(), new SelectControl($this->txtFocus));
 
-			// Set a Default Style
-			$this->pnlHover->CssClass = 'panelHover';
+        // \QCubed\Action\ToggleDisplay example
+        $this->btnToggleDisplay = new Button($this);
+        $this->btnToggleDisplay->Text = 'Toggle the Display (show/hide)';
+        $this->btnToggleDisplay->addAction(new Click(),
+            new \QCubed\Action\ToggleDisplay($this->txtDisplay));
 
-			// Add QMouseOver and QMouseOut actions to set and then reset temporary style overrides
-			// Setting the TemporaryCssClass to "null" will "reset" the style back to the default
-			$this->pnlHover->AddAction(new \QCubed\Event\MouseOver(), new \QCubed\Action\CssClass('panelHighlight', true));
-			$this->pnlHover->AddAction(new \QCubed\Event\MouseOut(), new \QCubed\Action\CssClass());
-			
-			$this->btnCssAction = new \QCubed\Project\Jqui\Button($this);
-			$this->btnCssAction->Text = "click me to change my background color!";
-			$this->btnCssAction->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\CssAction("background", "green"));
-		}
-	}
+        // \QCubed\Action\ToggleEnable example
+        $this->btnToggleEnable = new Button($this);
+        $this->btnToggleEnable->Text = 'Toggle the Enable (enabled/disabled)';
+        $this->btnToggleEnable->addAction(new Click(), new ToggleEnable($this->txtEnable));
 
-	ExampleForm::Run('ExampleForm');
-?>
+        // \QCubed\Action\CssClass example
+        $this->pnlHover = new Panel($this);
+        $this->pnlHover->HtmlEntities = false;
+        $this->pnlHover->Text = 'Change the CSS class of a control using <strong>CssClass</strong>:<br /><br />(Uses MouseOver and MouseOut to Temporarily Override the Panel\'s CSS Style)';
+
+        // Set a Default Style
+        $this->pnlHover->CssClass = 'panelHover';
+
+        // Add QMouseOver and QMouseOut actions to set and then reset temporary style overrides
+        // Setting the TemporaryCssClass to "null" will "reset" the style back to the default
+        $this->pnlHover->addAction(new MouseOver(), new CssClass('panelHighlight', true));
+        $this->pnlHover->addAction(new MouseOut(), new CssClass());
+
+        $this->btnCssAction = new Button($this);
+        $this->btnCssAction->Text = "click me to change my background color!";
+        $this->btnCssAction->addAction(new Click(), new CssAction("background", "green"));
+    }
+}
+
+ExampleForm::run('ExampleForm');
+

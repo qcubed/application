@@ -1,79 +1,94 @@
 <?php
-	require_once('../qcubed.inc.php');
+use QCubed\Action\Ajax;
+use QCubed\Action\Terminate;
+use QCubed\Action\ToggleEnable;
+use QCubed\Event\Change;
+use QCubed\Event\Click;
+use QCubed\Event\EnterKey;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\FormBase;
+use QCubed\Project\Control\ListBox;
+use QCubed\Project\Control\TextBox;
 
-	class ExampleForm extends \QCubed\Project\Control\FormBase {
-		protected $lstListbox;
-		protected $txtItem;
-		protected $btnAdd;
+require_once('../qcubed.inc.php');
 
-		protected $lblSelected;
+class ExampleForm extends FormBase
+{
+    protected $lstListbox;
+    protected $txtItem;
+    protected $btnAdd;
 
-		protected function formCreate() {
-			// Define the Controls
-			$this->lstListbox = new \QCubed\Project\Control\ListBox($this);
-			$this->lstListbox->Name = 'Items to Choose From';
-			$this->lstListbox->Rows = 6;
+    protected $lblSelected;
 
-			// When the the user changes the selection on the listbox, we'll call lstListbox_Change
-			$this->lstListbox->AddAction(new \QCubed\Event\Change(), new \QCubed\Action\Ajax('lstListbox_Change'));
-			$this->lstListbox->AddItem('Sample Item', 'Sample Item');
+    protected function formCreate()
+    {
+        // Define the Controls
+        $this->lstListbox = new ListBox($this);
+        $this->lstListbox->Name = 'Items to Choose From';
+        $this->lstListbox->Rows = 6;
 
-			$this->txtItem = new \QCubed\Project\Control\TextBox($this);
-			$this->txtItem->Name = 'Item to Add';
+        // When the the user changes the selection on the listbox, we'll call lstListbox_Change
+        $this->lstListbox->addAction(new Change(), new Ajax('lstListbox_Change'));
+        $this->lstListbox->addItem('Sample Item', 'Sample Item');
 
-			$this->btnAdd = new \QCubed\Project\Jqui\Button($this);
-			$this->btnAdd->Text = 'Add Item';
+        $this->txtItem = new TextBox($this);
+        $this->txtItem->Name = 'Item to Add';
 
-			$this->lblSelected = new \QCubed\Control\Label($this);
-			$this->lblSelected->Name = 'Item Currently Selected';
-			$this->lblSelected->Text = '<none>';
+        $this->btnAdd = new Button($this);
+        $this->btnAdd->Text = 'Add Item';
 
-			// When we submit, we want to do the following actions:
-			// * Immediately disable the button, textbox and listbox
-			// * Perform the AddListItem action via AJAX
-			$objSubmitListItemActions = array(
-				new \QCubed\Action\ToggleEnable($this->btnAdd, false),
-				new \QCubed\Action\ToggleEnable($this->txtItem, false),
-				new \QCubed\Action\ToggleEnable($this->lstListbox, false),
-				new \QCubed\Action\Ajax('AddListItem')
-			);
+        $this->lblSelected = new \QCubed\Control\Label($this);
+        $this->lblSelected->Name = 'Item Currently Selected';
+        $this->lblSelected->Text = '<none>';
 
-			// Let's add this set of actions to the Add Button
-			$this->btnAdd->AddActionArray(new \QCubed\Event\Click(), $objSubmitListItemActions);
+        // When we submit, we want to do the following actions:
+        // * Immediately disable the button, textbox and listbox
+        // * Perform the AddListItem action via AJAX
+        $objSubmitListItemActions = array(
+            new ToggleEnable($this->btnAdd, false),
+            new ToggleEnable($this->txtItem, false),
+            new ToggleEnable($this->lstListbox, false),
+            new Ajax('addListItem')
+        );
 
-			// Let's add this set of actions to the Textbox, as a EnterKeyEvent
-			$this->txtItem->AddActionArray(new \QCubed\Event\EnterKey(), $objSubmitListItemActions);
-			
-			// Because the enter key will also call form.submit() on some browsers, which we
-			// absolutely DON'T want to have happen, let's be sure to terminate any additional
-			// actions on EnterKey
-			$this->txtItem->AddAction(new \QCubed\Event\EnterKey(), new \QCubed\Action\Terminate());
-		}
+        // Let's add this set of actions to the Add Button
+        $this->btnAdd->addActionArray(new Click(), $objSubmitListItemActions);
 
-		protected function lstListbox_Change() {
-			// Whenever the user changes the selected listbox item, let's
-			// update the label to reflect the selected item
-			$this->lblSelected->Text = $this->lstListbox->SelectedValue;
-		}
+        // Let's add this set of actions to the Textbox, as a EnterKeyEvent
+        $this->txtItem->addActionArray(new EnterKey(), $objSubmitListItemActions);
 
-		protected function AddListItem() {
-			// First off, let's make sure that data was typed in
-			if (!strlen(trim($this->txtItem->Text))) {
-				$this->txtItem->Warning = 'Nothing was entered';
-			} else {			
-				// Add the new item
-				$this->lstListbox->AddItem(trim($this->txtItem->Text), trim($this->txtItem->Text));
-			}
+        // Because the enter key will also call form.submit() on some browsers, which we
+        // absolutely DON'T want to have happen, let's be sure to terminate any additional
+        // actions on EnterKey
+        $this->txtItem->addAction(new EnterKey(), new Terminate());
+    }
 
-			// Clear the textbox
-			$this->txtItem->Text = '';
+    protected function lstListbox_Change()
+    {
+        // Whenever the user changes the selected listbox item, let's
+        // update the label to reflect the selected item
+        $this->lblSelected->Text = $this->lstListbox->SelectedValue;
+    }
 
-			// Let's re-enable all the controls;
-			$this->txtItem->Enabled = true;
-			$this->lstListbox->Enabled = true;
-			$this->btnAdd->Enabled = true;
-		}
+    protected function addListItem()
+    {
+        // First off, let's make sure that data was typed in
+        if (!strlen(trim($this->txtItem->Text))) {
+            $this->txtItem->Warning = 'Nothing was entered';
+        } else {
+            // Add the new item
+            $this->lstListbox->addItem(trim($this->txtItem->Text), trim($this->txtItem->Text));
+        }
 
-	}
+        // Clear the textbox
+        $this->txtItem->Text = '';
 
-	ExampleForm::Run('ExampleForm');
+        // Let's re-enable all the controls;
+        $this->txtItem->Enabled = true;
+        $this->lstListbox->Enabled = true;
+        $this->btnAdd->Enabled = true;
+    }
+
+}
+
+ExampleForm::run('ExampleForm');

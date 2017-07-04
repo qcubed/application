@@ -15,18 +15,18 @@
 	are written as custom javascript code into the Event constructor itself.</p>
 
 	<p>In this example, we explicitly name the textbox's ControlId as "txtItem" so that we can
-	write custom javascript as conditionals to the button's <b>\QCubed\Event\Click</b> and the textbox's
-	<b>\QCubed\Event\EnterKey</b>.</p>
+	write custom javascript as conditionals to the button's <strong>Click</strong> and the textbox's
+	<strong>EnterKey</strong>.</p>
 </div>
 
 <div id="demoZone">
-	<?php $this->lstListbox->RenderWithName(); ?>
+	<?php $this->lstListbox->renderWithName(); ?>
 
-	<?php $this->txtItem->RenderWithName(); ?>
+	<?php $this->txtItem->renderWithName(); ?>
 
-	<?php $this->btnAdd->Render(); ?>
+	<?php $this->btnAdd->render(); ?>
 
-	<?php $this->lblSelected->RenderWithName(); ?>
+	<?php $this->lblSelected->renderWithName(); ?>
 </div>
 
 <?php $this->renderEnd(); ?>

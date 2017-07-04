@@ -34,10 +34,10 @@
 </div>
 
 <div id="demoZone">
-    <p><?= $this->btnRegular->Render();?></p>
-    <p>The regular button was clicked <?= $this->lblRegular->Render() ?> times.</p>
-    <p><?= $this->btnBlocking->Render();?></p>
-    <p>The blocking button was clicked <?= $this->lblBlocking->Render() ?> times.</p>
+    <p><?= $this->btnRegular->render();?></p>
+    <p>The regular button was clicked <?= $this->lblRegular->render() ?> times.</p>
+    <p><?= $this->btnBlocking->render();?></p>
+    <p>The blocking button was clicked <?= $this->lblBlocking->render() ?> times.</p>
 </div>
 
 <?php $this->renderEnd(); ?>
