@@ -24,7 +24,7 @@ use QCubed\Type;
  * @property string $Width Width in pixels
  * @package QCubed\Control
  */
-class ImageButton extends \QCubed\Project\Control\ControlBase
+class Image extends \QCubed\Project\Control\ControlBase
 {
     /** @var  string */
     protected $strAlternateText;
@@ -46,10 +46,10 @@ class ImageButton extends \QCubed\Project\Control\ControlBase
         if ($this->strImageUrl) {
             $attributeOverrides['src'] = $this->strImageUrl;
         }
-        if ($this->height) {
+        if ($this->intHeight !== null) {
             $attributeOverrides['height'] = (string)$this->intHeight;
         }
-        if ($this->width) {
+        if ($this->intWidth !== null) {
             $attributeOverrides['width'] = (string)$this->intWidth;
         }
 
@@ -109,12 +109,11 @@ class ImageButton extends \QCubed\Project\Control\ControlBase
      */
     public function __set($strName, $mixValue)
     {
-        $this->blnModified = true;
-
         switch ($strName) {
             // APPEARANCE
             case "AlternateText":
                 try {
+                    $this->blnModified = true;
                     $this->strAlternateText = Type::cast($mixValue, Type::STRING);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -123,6 +122,7 @@ class ImageButton extends \QCubed\Project\Control\ControlBase
                 }
             case "ImageUrl":
                 try {
+                    $this->blnModified = true;
                     $this->strImageUrl = Type::cast($mixValue, Type::STRING);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -131,6 +131,7 @@ class ImageButton extends \QCubed\Project\Control\ControlBase
                 }
             case "Height":
                 try {
+                    $this->blnModified = true;
                     $this->intHeight = Type::cast($mixValue, Type::INTEGER);
                     break;
                 } catch (InvalidCast $objExc) {
@@ -139,6 +140,7 @@ class ImageButton extends \QCubed\Project\Control\ControlBase
                 }
             case "Width":
                 try {
+                    $this->blnModified = true;
                     $this->intWidth = Type::cast($mixValue, Type::INTEGER);
                     break;
                 } catch (InvalidCast $objExc) {

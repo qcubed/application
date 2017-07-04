@@ -46,7 +46,7 @@
 		it will be converted to HTML and displayed correctly in a browser. However, if your column is already returning html,
 		you can turn off this processing by setting <strong>HtmlEntities</strong> to false.</p>
 	<h2>Styling</h2>
-	<p>There are a variety of ways to style a \QCubed\Project\Control\Table:</p>
+	<p>There are a variety of ways to style a Table:</p>
 	<ul>
 		<li>Use <strong>AddCssClass()</strong> to add a class to the control, and use css to style the html table. Modern
 			css can now do most things that used to be done using row classes and javascript, including alternating
@@ -68,7 +68,7 @@
 
 <div id="demoZone">
 	<div style="margin-left: 100px">
-		<?php $this->tblProjects->Render(); ?>
+		<?php $this->tblProjects->render(); ?>
 	</div>
 <div>
 

@@ -98,25 +98,25 @@
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Paginated Controls';
-			Examples::$Categories[$intIndex]['description'] = 'The \QCubed\Project\Control\Table, \QCubed\Project\Control\DataGrid and \QCubed\Control\DataRepeater controls';
-			self::AddCoreExampleFile($intIndex, '/datagrid/intro.php * \QCubed\Project\Control\Table');
-			self::AddCoreExampleFile($intIndex, '/datagrid/columns.php * \QCubed\Project\Control\Table Columns');
-			self::AddCoreExampleFile($intIndex, '/datagrid/column_values.php * \QCubed\Project\Control\Table Formatting and Styling');
-			self::AddCoreExampleFile($intIndex, '/datagrid/link_column.php * \QCubed\Project\Control\Table Link Column');
-			self::AddCoreExampleFile($intIndex, '/datagrid/links_images.php * Dynamically adding Controls to \QCubed\Project\Control\Table');
-			self::AddCoreExampleFile($intIndex, '/datagrid/sorting.php * The \QCubed\Project\Control\DataGrid Class and Sorting');
-			self::AddCoreExampleFile($intIndex, '/datagrid/pagination.php * \QCubed\Project\Control\DataGrid Pagination');
+			Examples::$Categories[$intIndex]['description'] = 'The Table, DataGrid and DataRepeater controls';
+			self::AddCoreExampleFile($intIndex, '/datagrid/intro.php * Table Controls');
+			self::AddCoreExampleFile($intIndex, '/datagrid/columns.php * Table Columns');
+			self::AddCoreExampleFile($intIndex, '/datagrid/column_values.php * Table Formatting and Styling');
+			self::AddCoreExampleFile($intIndex, '/datagrid/link_column.php * Table Link Column');
+			self::AddCoreExampleFile($intIndex, '/datagrid/links_images.php * Dynamically adding Controls to Tables');
+			self::AddCoreExampleFile($intIndex, '/datagrid/sorting.php * The DataGrid Class and Sorting');
+			self::AddCoreExampleFile($intIndex, '/datagrid/pagination.php * DataGrid Pagination');
 			self::AddCoreExampleFile($intIndex, '/datagrid/rowactions.php * Detecting Row and Cell Clicks');
 
 			self::AddCoreExampleFile($intIndex, '/datagrid/qcheckboxcolumn.php * The Easy Way to Add a Checkbox Column to a Datagrid');
 			self::AddCoreExampleFile($intIndex, '/dynamic/inline_editing.php * Datagrid with Inline Editing');
 
-			self::AddCoreExampleFile($intIndex, '/master_detail/project_list.php * Nested \QCubed\Project\Control\DataGrid');
+			self::AddCoreExampleFile($intIndex, '/master_detail/project_list.php * Nested DataGrid');
 			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/master_detail/project_list.php'] = array(
 				'records.summary.php',
 				'records.summary.tpl.php',
 				'qcubed.css');
-			self::AddCoreExampleFile($intIndex, '/datarepeater/ajax.php * Simple \QCubed\Control\DataRepeater using AJAX-triggered Pagination');
+			self::AddCoreExampleFile($intIndex, '/datarepeater/ajax.php * Simple DataRepeater using AJAX-triggered Pagination');
 			Examples::$AdditionalCode[QCUBED_EXAMPLES_URL  . '/datarepeater/ajax.php'] = array('dtr_persons.tpl.php');
 
 

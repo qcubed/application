@@ -2,23 +2,23 @@
 <?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Creating a \QCubed\Project\Control\DataGrid with Inline Editing</h1>
+	<h1>Creating a DataGrid with Inline Editing</h1>
 	
 	<p>Using the techniques for dynamically creating controls and utilizing the AJAX
 	features in QCubed, we update our <strong>Person</strong> datagrid to include functionality for
 	inline editing.</p>
 
-	<p>We must first add a <strong>$intEditPersonId</strong> in the \QCubed\Project\Control\FormBase to keep track of which
+	<p>We must first add a <strong>$intEditPersonId</strong> in the FormBase to keep track of which
 	<strong>Person</strong> (if any) we are currently editing.  We then must define the First
-	and Last Name <strong>TextBoxes</strong>, as well as Save and Cancel <strong>QButtons</strong>.
+	and Last Name <strong>TextBoxes</strong>, as well as Save and Cancel <strong>Buttons</strong>.
 	Note that we only need to define one of each, because only one Person can be edited
-	at a time.  The textboxes have <strong>QEscapeKeyEvents</strong> defined on them to
+	at a time.  The textboxes have <strong>EscapeKeyEvents</strong> defined on them to
 	perform a "Cancel", and the "Save" button is set to be a <strong>PrimaryButton</strong>.  This
 	allows the textboxes to be sensitive to the <strong>Enter</strong> and <strong>Escape</strong> keys for
 	saving and cancelling, respectively.</p>
 
 	<p>We also define render methods for each of the columns
-	to properly display either the name or the <strong>\QCubed\Project\Control\TextBox</strong>, depending on the row we are
+	to properly display either the name or the <strong>TextBox</strong>, depending on the row we are
 	rendering and which <strong>Person</strong> we are editing.</p>
 
 	<p>And finally, we add a <strong>btnNew</strong> at the bottom to allow the user to create new

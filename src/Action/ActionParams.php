@@ -21,6 +21,7 @@ use QCubed\ObjectBase;
  *
  * @property-read ActionBase $Action
  * @property mixed $Param
+ * @property mixed $ActionParameter
  * @property-read mixed $OriginalParam
  * @property-read ControlBase $Control
  * @property-read string $FormId
@@ -71,6 +72,7 @@ class ActionParams extends ObjectBase
             case 'Action':
                 return $this->objAction;
             case 'Param':
+            case 'ActionParameter':
                 return $this->mixParam;
             case 'OriginalParam':
                 return $this->mixOriginalParam;

@@ -30,12 +30,12 @@
 
 <div id="instructions">
 	<h1>The LinkColumn Class</h1>
-	<p>The \QCubed\Table\LinkColumn is a versatile column class that offers a variety of ways to create a column that has a link or button in it.
+	<p>The LinkColumn is a versatile column class that offers a variety of ways to create a column that has a link or button in it.
 	  Such links are typically used for navigation, but can be used to popup dialogs or take other actions.</p>
 
-	<p>To create a link column, call CreateLinkColumn like so:</p>
+    <p>To create a link column, call <strong>createLinkColumn()</strong> like so:</p>
 	<code>
-		$objTable->CreateLinkColumn($strColumnName, $mixText, $mixDestination, $getVars, $tagAttributes, $blnAsButton);
+		$objTable->createLinkColumn($strColumnName, $mixText, $mixDestination, $getVars, $tagAttributes, $blnAsButton);
 	</code>
 	<p>A description of each parameter follows:</p>
 	<ul>
@@ -52,10 +52,10 @@
 
 		<li><strong>$mixDestination</strong>: If given, the destination or action to take when the link is clicked. As above,
 			you can pass a static string, or extract this value using a callback, a property, or a key in an array. The returned value should be the name
-			of a file to go to or a URL. You can also pass a \QCubed\Control\Proxy and it will be used as the destination.</li>
+			of a file to go to or a URL. You can also pass a Proxy and it will be used as the destination.</li>
 		<li><strong>$getVars</strong>: If given, one of the following:
 			<ul>
-				<li>If $mixDestination was a \QCubed\Control\Proxy, this will become the action parameter of the proxy. You can use any
+				<li>If $mixDestination was a Proxy, this will become the action parameter of the proxy. You can use any
 					of the above methods to extract this value from the data source. </li>
 				<li>If $mixDestination is a string that represents a file or URL, you should pass in a key/value array.
 					Each key will become a get variable attached to the $mixDestination URL, and each value will be used
@@ -64,13 +64,13 @@
 		</li>
 		<li><strong>$tagAttributes</strong>: If given, a key/value array that becomes attributes for the anchor or button tag.
 			This could be used to specify an class, id, or data- attribute. As above, it can be extracted from the data itself.</li>
-		<li><strong>$blnAsButton</strong>: If drawing a \QCubed\Control\Proxy, you can set this to true to draw it as a button.</li>
+		<li><strong>$blnAsButton</strong>: If drawing a Proxy, you can set this to true to draw it as a button.</li>
 	</ul>
 
 	<p>As you can see, quite elaborate links can be created using this column.</p>
 	<p>In the example, the first column has a link column that you click on, and the second column a link that you hover over.
 		The first column goes to the same page you are viewing, but adds a GET variable to the URL, detects it, and puts
-		a message at the bottom of the table depending on what line you clicked on. The second column use a \QCubed\Control\Proxy
+		a message at the bottom of the table depending on what line you clicked on. The second column use a Proxy
 		to detect when your mouse hovers over a link, and puts up a similar message.</p>
 </div>
 

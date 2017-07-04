@@ -2,9 +2,9 @@
 <?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Dynamically Adding QControls to \QCubed\Project\Control\Table</h1>
+	<h1>Dynamically Adding Controls to Table</h1>
 
-	<p>This example illustrates a technique for creating QControls and placing them in
+	<p>This example illustrates a technique for creating Controls and placing them in
 		a simple table dynamically, during the time each row is drawn. </p>
 
 	<p>The scenario is that you want to build a simple Employee Directory,
@@ -21,7 +21,7 @@
 		the HTML code appear in the column, and not the text formatted by the HTML.</p>
 
 
-	<p><strong>Image</strong>: Inside the renderImage() method, we are creating <strong>QImageControl</strong> controls.
+	<p><strong>Image</strong>: Inside the renderImage() method, we are creating <strong>ImageControl</strong> controls.
 		However, since we may be drawing the same row many times, we need to be careful to only create the control
 		once. To do this, we generate a unique control id using the data object's id and a constant string,
 		and then we check whether the QControl with the pre-formed ID  has already
@@ -30,7 +30,7 @@
 		refresh, for example). If that control doesn't exist yet &mdash; and it won't the first time the datagrid is
 		rendered &mdash; we create the QImageControl, and give it the right Control ID.</p>
 
-	<p><strong>The Edit Column</strong>: i.e. the column with a custom Edit \QCubed\Project\Jqui\Button &mdash; is quite
+	<p><strong>The Edit Column</strong>: i.e. the column with a custom Edit Button &mdash; is quite
 		similar in its structure to the Image column. Note that we are using an
 		ActionParameter to help the click handler determine which row the user clicked on.</p>
 </div>

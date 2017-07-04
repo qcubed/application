@@ -1,46 +1,66 @@
 <?php
-	require_once('../qcubed.inc.php');
-	
-	class ExampleForm extends \QCubed\Project\Control\FormBase {
-		// Declare the Proxy Control
-		// Notice how this control is NEVER RENDERED outright.  Instead, we use
-		// RenderAsHref() and RenderAsEvents() on it.
-		protected $pxyExample;
-		protected $pnlHover;
+use QCubed\Action\Ajax;
+use QCubed\Action\Terminate;
+use QCubed\Action\ToggleDisplay;
+use QCubed\Control\Label;
+use QCubed\Control\Panel;
+use QCubed\Control\Proxy;
+use QCubed\Css\BorderStyleType;
+use QCubed\Event\Click;
+use QCubed\Event\MouseOut;
+use QCubed\Event\MouseOver;
+use QCubed\Project\Control\FormBase;
 
-		// For this example, show how to use custom HTML to trigger events that updates this Message label
-		protected $lblMessage;
+require_once('../qcubed.inc.php');
 
-		protected function formCreate() {
-			// Define the Proxy
-			$this->pxyExample = new \QCubed\Control\Proxy($this);
+class ExampleForm extends FormBase
+{
+    // Declare the Proxy Control
+    // Notice how this control is NEVER RENDERED outright.  Instead, we use
+    // RenderAsHref() and RenderAsEvents() on it.
+    protected $pxyExample;
+    protected $pnlHover;
 
-			// Define a Message label
-			$this->lblMessage = new \QCubed\Control\Label($this);
+    // For this example, show how to use custom HTML to trigger events that updates this Message label
+    protected $lblMessage;
 
-			// Define a Panel to display/hide whenever we're hovering
-			$this->pnlHover = new \QCubed\Control\Panel($this);
-			$this->pnlHover->Text = 'Hovering over a button or link...';
-			$this->pnlHover->Padding = 10;
-			$this->pnlHover->BorderStyle = \QCubed\Css\BorderStyle::SOLID;
-			$this->pnlHover->BorderWidth = 1;
-			$this->pnlHover->Width = 200;
-			$this->pnlHover->BackColor = '#ffffcc';
-			$this->pnlHover->Display = false;
+    /**
+     *
+     */
+    protected function formCreate()
+    {
+        // Define the Proxy
+        $this->pxyExample = new Proxy($this);
 
-			// Define any applicable actions on the Proxy
-			// Note that all events will flow through to any DOM element (in the HTML) that is calling RenderAsEvents.
-			$this->pxyExample->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('pxyExample_Click'));
-			$this->pxyExample->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Terminate());
-			$this->pxyExample->AddAction(new \QCubed\Event\MouseOver(), new \QCubed\Action\ToggleDisplay($this->pnlHover, true));
-			$this->pxyExample->AddAction(new \QCubed\Event\MouseOut(), new \QCubed\Action\ToggleDisplay($this->pnlHover, false));
-		}
+        // Define a Message label
+        $this->lblMessage = new Label($this);
 
-		// Notice how the optional "action parameter" we used in the RenderAsHref() or RenderEvents() call gets passed in as $strParameter here.
-		protected function pxyExample_Click($strFormId, $strControlId, $strParameter) {
-			$this->lblMessage->Text = 'You clicked on: ' . $strParameter;
-		}
-	}
+        // Define a Panel to display/hide whenever we're hovering
+        $this->pnlHover = new Panel($this);
+        $this->pnlHover->Text = 'Hovering over a button or link...';
+        $this->pnlHover->Padding = 10;
+        $this->pnlHover->BorderStyle = BorderStyleType::SOLID;
+        $this->pnlHover->BorderWidth = 1;
+        $this->pnlHover->Width = 200;
+        $this->pnlHover->BackColor = '#ffffcc';
+        $this->pnlHover->Display = false;
 
-	ExampleForm::Run('ExampleForm');
-?>
+        // Define any applicable actions on the Proxy
+        // Note that all events will flow through to any DOM element (in the HTML) that is calling RenderAsEvents.
+        $this->pxyExample->addAction(new Click(), new Ajax('pxyExample_Click'));
+        $this->pxyExample->addAction(new Click(), new Terminate());
+        $this->pxyExample->addAction(new MouseOver(),
+            new ToggleDisplay($this->pnlHover, true));
+        $this->pxyExample->addAction(new MouseOut(),
+            new ToggleDisplay($this->pnlHover, false));
+    }
+
+    // Notice how the optional "action parameter" we used in the RenderAsHref() or RenderEvents() call gets passed in as $strParameter here.
+    protected function pxyExample_Click($strFormId, $strControlId, $strParameter)
+    {
+        $this->lblMessage->Text = 'You clicked on: ' . $strParameter;
+    }
+}
+
+ExampleForm::run('ExampleForm');
+
