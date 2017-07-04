@@ -125,6 +125,7 @@ class DataGridBase extends TableBase
             new Q\Action\StopPropagation()); // prevent check click from bubbling as a row click.
 
         $this->addAction(new Q\Event\DataGridSort(), new Q\Action\AjaxControl($this, 'SortClick'));
+        $this->addAction(new Q\Event\DataGridSort(), new Q\Action\StopPropagation());   // in case datagrid is nested
     }
 
     /**
