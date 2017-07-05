@@ -6,36 +6,33 @@
 </style>
 
 <div id="instructions">
-	<h1>jQuery Effects</h1>
+	<h1>JQuery UI Effects</h1>
 
-	<p>QCubed comes with built-in support of jQuery effects.
-		<a href="http://jquery.com" title="jQuery website">jQuery</a> is one of the most popular
-		JavaScript libraries out there; the native integration with it
-		allows for some really nice effects to show/hide/animate various HTML
-		elements on a page, as well as QCubed controls.</p>
+	<p>QCubed comes with built-in support of jQuery UI effects.
+
 
 	<p>To see this in action: in the example below, use the buttons to apply
-		effects on the <strong>\QCubed\Control\Label</strong> control. To make it happen, use the
-		following QJQ (abbreviation for QCubed jQuery) actions in your code: </p>
+		effects on the <strong>Label</strong> control. To make it happen, use the
+		following actions in your code: </p>
 
 	<h2>To control visibility:</h2>
 	<ul>
-		<li><strong>\QCubed\Jqui\Action\Show</strong>: show a control (if it's hidden)</li>
-		<li><strong>\QCubed\Jqui\Action\ShowEffect</strong>: show a control using one of the additional effects</li>
-		<li><strong>\QCubed\Jqui\Action\Hide</strong>: hide a control</li>
-		<li><strong>\QCubed\Jqui\Action\HideEffect</strong>: hide a control using one of the additional effects</li>
-		<li><strong>\QCubed\Jqui\Action\Toggle</strong>: toggle visibility of a control</li>
-		<li><strong>\QCubed\Jqui\Action\ToggleEffect</strong>: toggle visibility of a control using one of the additional effects</li>
+		<li><strong>Show</strong>: show a control (if it's hidden)</li>
+		<li><strong>ShowEffect</strong>: show a control using one of the additional effects</li>
+		<li><strong>Hide</strong>: hide a control</li>
+		<li><strong>HideEffect</strong>: hide a control using one of the additional effects</li>
+		<li><strong>Toggle</strong>: toggle visibility of a control</li>
+		<li><strong>ToggleEffect</strong>: toggle visibility of a control using one of the additional effects</li>
 	</ul>
 
 	<h2>To perform animations:</h2>
 	<ul>
-		<li><strong>\QCubed\Jqui\Action\Bounce</strong>: make a control bounce up and down</li>
-		<li><strong>\QCubed\Jqui\Action\Shake</strong>: make a control shake left and right</li>
-		<li><strong>\QCubed\Jqui\Action\Highlight</strong>: highlight a control</li>
-		<li><strong>\QCubed\Jqui\Action\Pulsate</strong>: pulsate the contents of a control</li>
-		<li><strong>\QCubed\Jqui\Action\Size</strong>: resize a control</li>
-		<li><strong>\QCubed\Jqui\Action\Transfer</strong>: transfer the border of a control to another control</li>
+		<li><strong>Bounce</strong>: make a control bounce up and down</li>
+		<li><strong>Shake</strong>: make a control shake left and right</li>
+		<li><strong>Highlight</strong>: highlight a control</li>
+		<li><strong>Pulsate</strong>: pulsate the contents of a control</li>
+		<li><strong>Size</strong>: resize a control</li>
+		<li><strong>Transfer</strong>: transfer the border of a control to another control</li>
 	</ul>
 
 	<p>More information on the parameters of each of the available animations
@@ -43,17 +40,17 @@
 </div>
 
 <div id="demoZone">
-	<?php $this->btnToggle->Render() ?>
-	<?php $this->btnHide->Render() ?>
-	<?php $this->btnShow->Render() ?>
-	<?php $this->btnBounce->Render() ?>
-	<?php $this->btnHighlight->Render() ?>
-	<?php $this->btnShake->Render() ?>
-	<?php $this->btnPulsate->Render() ?>
-	<?php $this->btnSize->Render() ?>
-	<?php $this->btnTransfer->Render() ?>
+	<?php $this->btnToggle->render() ?>
+	<?php $this->btnHide->render() ?>
+	<?php $this->btnShow->render() ?>
+	<?php $this->btnBounce->render() ?>
+	<?php $this->btnHighlight->render() ?>
+	<?php $this->btnShake->render() ?>
+	<?php $this->btnPulsate->render() ?>
+	<?php $this->btnSize->render() ?>
+	<?php $this->btnTransfer->render() ?>
 
-	<p><?php $this->txtTextbox->Render(); ?></p>
+	<p><?php $this->txtTextbox->render(); ?></p>
 </div>
 
 <?php $this->renderEnd(); ?>
