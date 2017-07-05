@@ -16,7 +16,7 @@ use QCubed\Exception;
 use QCubed as Q;
 use QCubed\Project\Application;
 use QCubed\Action\ActionBase as QAction;
-use QCubed\Event\EventBase as QEvent;
+use QCubed\Event\EventBase;
 use QCubed\Project\Jqui\Draggable;
 use QCubed\Project\Jqui\Droppable;
 use QCubed\Project\Jqui\Resizable;
@@ -214,8 +214,8 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     protected $strCustomAttributeArray = null;
     /** @var string|null Custom CSS style attributes for the control */
     protected $strCustomStyleArray = null;
-    /** @var array Array of arrays containing the list of actions set on the control (for different events) */
-    protected $objActionArray = array();
+    /** @var array Array of events we are triggering actions on */
+    protected $objEventArray = array();
     /** @var string|Q\Js\Closure|null The action parameter (typically small amount of data) for the Ajax or Server Callback */
     protected $mixActionParameter = null;
     /** @var string|null CSS class for the control's wrapper */
@@ -725,7 +725,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *
      * @throws Exception\Caller
      */
-    public function addAction(QEvent $objEvent, QAction $objAction)
+    public function addAction(EventBase $objEvent, QAction $objAction)
     {
         // Modified
         $this->blnModified = true;
@@ -737,64 +737,65 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
         }
         $objAction->Event = $objEvent;
 
-        // Pull out the Event Name
-        $strEventName = $objEvent->EventName;
-
-        if (!array_key_exists($strEventName, $this->objActionArray)) {
-            $this->objActionArray[$strEventName] = array();
-        }
-        array_push($this->objActionArray[$strEventName], $objAction);
+        $objEvent->setActions([$objAction]);
+        $this->objEventArray[] = $objEvent;
     }
 
     /**
-     * Adds an array of actions to the control
+     * Adds an array of actions to the control for the given event, grouping the actions so that they are fired
+     * one after the other by the specific event parameters.
      *
-     * @param QEvent $objEvent
+     * @param EventBase $objEvent
      * @param array $objActionArray
      *
      * @throws Exception\Caller
      */
     public function addActionArray($objEvent, $objActionArray)
     {
-        if (!($objEvent instanceof QEvent)) {
-            throw new Exception\Caller('First parameter of AddAction is expecting on object of type QEvent');
+        if (!($objEvent instanceof EventBase)) {
+            throw new Exception\Caller('First parameter of AddAction is expecting on object of type EventBase');
         }
 
+        $objActions = [];
         foreach ($objActionArray as $objAction) {
             $objAction = clone($objAction);
-            $this->addAction($objEvent, $objAction);
+            $objAction->Event = $objEvent;
+            $objActions[] = $objAction;
         }
+
+        $this->blnModified = true;
+
+        $objEvent->setActions($objActions);
+        $this->objEventArray[] = $objEvent;
     }
 
     /**
      * Removes all events for a given event name.
      *
-     * Be sure and use a QFooEvent::EventName constant here
-     * (QClickEvent::EventName, for example).
-     *
      * @param string $strEventName
      */
     public function removeAllActions($strEventName = null)
     {
-        // Modified
-        $this->blnModified = true;
-
-        if ($strEventName) {
-            $this->objActionArray[$strEventName] = array();
-        } else {
-            $this->objActionArray = array();
-        }
+        $this->objEventArray = array_filter($this->objEventArray,
+            function($objEvent) use ($strEventName) {
+                return $this->objEvent->EventName != $strEventName;
+            }
+        );
     }
 
     /**
      * Shortcut for adding a debounced click action with a tiny delay. This is effective for most situations like submit
      * buttons and things that need to popup things after other actions, and then wait for a response before proceeding.
      *
-     * @param QAction $objAction
+     * @param QAction|QAction[] $objAction
      */
-    public function onClick(QAction $objAction)
+    public function onClick($objAction)
     {
-        $this->addAction(new Q\Event\Click(5, null, null, true), $objAction);
+        if (is_array($objAction)) {
+            $this->addActionArray(new Q\Event\Click(5, null, null, true), $objAction);
+        } else {
+            $this->addAction(new Q\Event\Click(5, null, null, true), $objAction);
+        }
     }
 
     /**
@@ -812,31 +813,31 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Returns all actions that are connected with specific events
      *
-     * @param string $strEventType the type of the event. Be sure and use a
+     * @param string $strEventName the type of the event. Be sure and use a
      *                              FooEvent::EVENT_NAME here. (\QCubed\Event\Click::EVENT_NAME, for example)
-     * @param string $strActionType if given only actions of this type will be
+     * @param string $strActionClass if given only actions of this type will be
      *                              returned
      *
      * @return QAction[]
      */
-    public function getAllActions($strEventType, $strActionType = null)
+    public function getAllActions($strEventName, $strActionClass = null)
     {
-        $objArrayToReturn = array();
-        if ($this->objActionArray) {
-            foreach ($this->objActionArray as $objActionArray) {
-                foreach ($objActionArray as $objAction) {
-                    if (get_class($objAction->Event) == $strEventType) {
-                        if ((!$strActionType) ||
-                            ($objAction instanceof $strActionType)
-                        ) {
-                            array_push($objArrayToReturn, $objAction);
-                        }
+        $retActions = [];
+        foreach ($this->objEventArray as $objEvent) {
+            $objActions = $objEvent->getActions();
+
+            foreach ($objActions as $objAction) {
+                if ($strActionClass) {
+                    if ($objAction instanceof $strActionClass) {
+                        $retActions[] = $objAction;
                     }
+                } else {
+                    $retActions[] = $objAction;
                 }
             }
         }
 
-        return $objArrayToReturn;
+        return $retActions;
     }
 
     /**
@@ -953,9 +954,11 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      *  - If the file name begins with anything else, an error is thrown
      *
      * @param string $strJsFileName url, path, or file name to include
+     * @throws Exception\Caller
      */
     public function addJavascriptFile($strJsFileName)
     {
+        $strJsFileName = trim($strJsFileName);
         if (strpos($strJsFileName, "http") === 0 || $strJsFileName[0] === "/") {
             if ($this->strJavaScripts) {
                 $this->strJavaScripts .= ',' . $strJsFileName;
@@ -971,12 +974,13 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Add javascript file to be included from a plugin. Plugins should use this function instead of AddJavascriptFile.
      * The  include mechanism will take care of duplicates, and also change the given URL in the following ways:
-     *    - If the file name begins with 'http', it will use it directly as a URL
+     *  - If the file name begins with 'http', it will use it directly as a URL
      *  - If the file name begins with '/', the url will be absolute
      *  - If the file name begins with anything else, an error is thrown
      *
      * @param string $strPluginName name of plugin
      * @param string $strJsFileName url, path, or file name to include
+     * @throws Exception\Caller
      * @deprecated
      */
     public function addPluginJavascriptFile($strPluginName, $strJsFileName)
@@ -996,14 +1000,16 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     /**
      * Add style sheet file to be included in the form.
      * The  include mechanism will take care of duplicates, and also change the given URL in the following ways:
-     *    - If the file name begins with 'http', it will use it directly as a URL
+     *  - If the file name begins with 'http', it will use it directly as a URL
      *  - If the file name begins with '/', the url will be absolute
      *  - If the file name begins with anything else, an error is thrown
      *
      * @param string $strCssFileName url, path, or file name to include
+     * @throws Exception\Caller
      */
     public function addCssFile($strCssFileName)
     {
+        $strCssFileName = trim($strCssFileName);
         if (strpos($strCssFileName, "http") === 0 || $strCssFileName[0] === "/") {
             if ($this->strStyleSheets) {
                 $this->strStyleSheets .= ',' . $strCssFileName;
@@ -1025,6 +1031,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
      * @param string $strPluginName name of plugin
      * @param string $strCssFileName url, path, or file name to include
      * @deprecated
+     * @throws Exception\Caller
      */
     public function addPluginCssFile($strPluginName, $strCssFileName)
     {
@@ -1099,22 +1106,22 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     public function renderActionScripts()
     {
         $strToReturn = '';
-        foreach ($this->objActionArray as $strEventName => $objActions) {
-            $strToReturn .= $this->getJavaScriptForEvent($strEventName);
+        foreach ($this->objEventArray as $objEvent) {
+            $strToReturn .= $this->getJavaScriptForEvent($objEvent);
         }
         return $strToReturn;
     }
 
     /**
-     * Get the JavaScript for a given Element
-     * @param string $strEventName
+     * Get the JavaScript for a given event
+     * @param EventBase $objEvent
      *
      * @return null|string
      */
 
-    public function getJavaScriptForEvent($strEventName)
+    public function getJavaScriptForEvent(EventBase $objEvent)
     {
-        return QAction::renderActions($this, $strEventName, $this->objActionArray[$strEventName]);
+        return $objEvent->renderActions($this);
     }
 
     /**

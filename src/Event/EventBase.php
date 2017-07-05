@@ -9,8 +9,12 @@
 
 namespace QCubed\Event;
 
+use QCubed\Action\ActionBase;
+use QCubed\Control\ControlBase;
+use QCubed\Control\Proxy;
 use QCubed\Exception\Caller;
 use QCubed\ObjectBase;
+use QCubed\Project\Application;
 use QCubed\Type;
 
 /**
@@ -37,6 +41,8 @@ abstract class EventBase extends ObjectBase
     protected $strSelector = null;
     /** @var  boolean True to block all other events until a response is received. */
     protected $blnBlock;
+    /** @var  ActionBase[] Used by the control mechanism to group actions by event. */
+    protected $objActions;
 
     /**
      * Create an event.
@@ -69,6 +75,92 @@ abstract class EventBase extends ObjectBase
             throw $objExc;
         }
     }
+
+    /**
+     * Used internally to set the actions for an event.
+     *
+     * @param ActionBase[] $objActions
+     * @internal
+     */
+    public function setActions(array $objActions)
+    {
+        $this->objActions = $objActions;
+    }
+
+    /**
+     * Returns the actions triggered by this event.
+     *
+     * @return ActionBase[]
+     */
+    public function getActions() {
+        return $this->objActions;
+    }
+
+    /**
+     * Renders the actions associated with the events as javascript.
+     * @param ControlBase $objControl
+     * @return string
+     */
+    public function renderActions(ControlBase $objControl) {
+        if (!$this->objActions) {
+            return '';
+        }
+
+        $strJs = '';
+        $strJqUiProperty = null;
+
+        if ($objControl->ActionsMustTerminate) {
+            $strJs .= 'event.preventDefault();' . _nl();
+        }
+
+        foreach ($this->objActions as $objAction) {
+            $strJs .= $objAction->renderScript($objControl) . ';' . _nl();
+        }
+
+        if ($this->blnBlock) {
+            $strJs .=  'qc.blockEvents = true;' . _nl();
+        }
+
+
+        if ($this->intDelay > 0) {
+            $strJs = sprintf(" qcubed.setTimeout('%s', \$j.proxy(function(){%s},this), %s);",
+                $objControl->ControlId,
+                _nl() . _indent(trim($strJs)) . _nl(),
+                $this->intDelay);
+        }
+
+        // Add Condition (if applicable)
+        if ($this->strCondition) {
+            $strJs = sprintf(' if (%s) {%s}', $this->strCondition,
+                _nl() . _indent(trim($strJs)) . _nl());
+        }
+
+        $strJs = _indent($strJs);
+
+        $strEventName = $this->EventName;
+
+        if ($objControl instanceof Proxy) {
+            $strJs = sprintf('$j("#%s").on("%s", "[data-qpxy=\'%s\']", function(event, ui){%s});',
+                $objControl->Form->FormId, $strEventName, $objControl->ControlId, $strJs);
+        } else {
+            $strJs = sprintf('$j("#%s").on("%s", function(event, ui){%s});',
+                $objControl->getJqControlId(),
+                $strEventName, $strJs);
+        }
+
+        if (!Application::instance()->minimize()) {
+            // Render a comment
+            $strJs = _nl() . _nl() .
+                sprintf('/*** Event: %s  Control Type: %s, Control Name: %s, Control Id: %s  ***/',
+                    $strEventName, get_class($objControl), $objControl->Name, $objControl->ControlId) .
+                _nl() .
+                _indent($strJs) .
+                _nl() . _nl();
+        }
+        return $strJs;
+
+    }
+
 
     /**
      * The PHP Magic function for this class
