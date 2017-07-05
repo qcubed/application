@@ -14,7 +14,6 @@ use QCubed as Q;
 /**
  * Class ActionControl
  *
- * Abstract class which is extended by things like Buttons.
  * It basically pre-sets CausesValidation to be true (b/c most of the time,
  * when a button is clicked we'd assume that we want the validation to kick off)
  * And it pre-defines ParsePostData and Validate.
@@ -24,6 +23,8 @@ use QCubed as Q;
  */
 abstract class ActionControl extends Q\Project\Control\ControlBase
 {
+    protected $mixCausesValidation = self::CAUSES_VALIDATION_ALL;
+
     /**
      * This function should contain the POST data parsing mechanism
      */
