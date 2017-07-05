@@ -14,7 +14,7 @@ use QCubed\Control\ControlBase;
 /**
  * Class RegisterClickPosition
  *
- * Registers the click position on a control
+ * Registers the click position on an ImageInput control.
  *
  * @was QRegisterClickPositionAction
  * @package QCubed\Action

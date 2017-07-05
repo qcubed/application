@@ -1217,9 +1217,10 @@ qcubed.registerControl = function(mixControl) {
     };
 
     objWrapper.registerClickPosition = function(objEvent) {
-        var objControl = (this.control) ? this.control : this,
-            intX = objEvent.pageX - objControl.offsetLeft,
-            intY = objEvent.pageY - objControl.offsetTop;
+        var objControl = (this.control) ? this.control : this;
+        var offset = $j(objControl).offset();
+        var intX = objEvent.pageX - Math.round(offset.left),
+            intY = objEvent.pageY -  Math.round(offset.top);
 
         $j('#' + objControl.id + "_x").val(intX);
         $j('#' + objControl.id + "_y").val(intY);

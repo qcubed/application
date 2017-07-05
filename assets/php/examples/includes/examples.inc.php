@@ -158,12 +158,9 @@
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
-			Examples::$Categories[$intIndex]['name'] = 'Other Advanced Controls';
-			Examples::$Categories[$intIndex]['description'] = 'A collection of examples for some of the more advanced/complex QControls';
-			self::AddCoreExampleFile($intIndex, '/image_label/intro.php Introduction to QImageLabel');
-			self::AddCoreExampleFile($intIndex, '/image_rollover/intro.php Image rollovers using QImageRollover');
-			self::AddCoreExampleFile($intIndex, '/treenav/treenav.php Introduction to QTreeNav');
-			self::AddCoreExampleFile($intIndex, '/other_controls/image.php Introduction to QImageControl');
+			Examples::$Categories[$intIndex]['name'] = 'Other Controls';
+			Examples::$Categories[$intIndex]['description'] = 'Other core controls';
+			self::AddCoreExampleFile($intIndex, '/other_controls/image.php Image and ImageButton');
 			self::AddCoreExampleFile($intIndex, '/other_controls/datetime.php Date and DateTime-based QControls');
 			self::AddCoreExampleFile($intIndex, '/other_controls/file_asset.php Combining Controls, Ex. 1: A Better Way to Upload Files');
 			self::AddCoreExampleFile($intIndex, '/image_browser/test_image_browser.php Combining Controls, Ex. 2: Browsing Image Files');

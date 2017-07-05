@@ -11,12 +11,15 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
+use QCubed\Html;
 use QCubed\Type;
 
 /**
  * Class Image
  *
  * A basic img tag.
+ *
+ * You can turn this into an image map by adding ImageArea controls as child controls of this object.
  *
  * @property string $AlternateText is rendered as the HTML "alt" tag
  * @property string $ImageUrl is the url of the image to be used
@@ -35,31 +38,39 @@ class Image extends \QCubed\Project\Control\ControlBase
     /** @var  integer */
     protected $intWidth;
 
-    public function renderHtmlAttributes($attributeOverrides = null, $styleOverrides = null)
-    {
-        if (!$attributeOverrides) {
-            $attributeOverrides = [];
-        }
-        if ($this->strAlternateText) {
-            $attributeOverrides['alt'] = $this->strAlternateText;
-        }
-        if ($this->strImageUrl) {
-            $attributeOverrides['src'] = $this->strImageUrl;
-        }
-        if ($this->intHeight !== null) {
-            $attributeOverrides['height'] = (string)$this->intHeight;
-        }
-        if ($this->intWidth !== null) {
-            $attributeOverrides['width'] = (string)$this->intWidth;
-        }
-
-        return parent::renderHtmlAttributes($attributeOverrides, $styleOverrides);
-    }
-
     protected function getControlHtml()
     {
-        $strToReturn = $this->renderTag('img', null, null, null, true);
+        $attributes = [];
+        if ($this->strAlternateText) {
+            $attributes['alt'] = $this->strAlternateText;
+        }
+        if ($this->strImageUrl) {
+            $attributes['src'] = $this->strImageUrl;
+        }
+        if ($this->intHeight !== null) {
+            $attributes['height'] = (string)$this->intHeight;
+        }
+        if ($this->intWidth !== null) {
+            $attributes['width'] = (string)$this->intWidth;
+        }
+
+        $strMap = "";
+        if ($this->getChildControls()) {    // These should only be ImageArea controls!
+            $attributes["usemap"] = "#" . $this->ControlId . "_map";
+            $strMap = Html::renderTag("map", ["name"=>$this->ControlId . "_map"], $this->renderChildren(false));
+        }
+
+        $strToReturn = $this->renderTag('img', $attributes, null, null, true) . $strMap;
+
         return $strToReturn;
+    }
+
+    public function addChildControl(ControlBase $objControl)
+    {
+        if (!$objControl instanceof ImageArea) {
+            throw new Caller("Only ImageArea controls are allowed as children of Image controls");
+        }
+        parent::addChildControl($objControl);
     }
 
     public function validate()

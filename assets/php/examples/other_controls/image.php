@@ -1,63 +1,75 @@
 <?php
-	require_once('../qcubed.inc.php');
+use QCubed\Action\ActionParams;
+use QCubed\Action\Ajax;
+use QCubed\Action\RegisterClickPosition;
+use QCubed\Control\Image;
+use QCubed\Control\ImageArea;
+use QCubed\Control\ImageInput;
+use QCubed\Project\Application;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\FormBase;
 
-	class ExampleForm extends \QCubed\Project\Control\FormBase {
-		protected $imgSample;
-		protected $txtWidth;
-		protected $txtHeight;
-		protected $chkScaleCanvasDown;
-		protected $btnUpdate;
+require_once('../qcubed.inc.php');
 
-		protected function formCreate() {
-			// Get a Sample Image
-			$this->imgSample = new QImageControl($this);
-			$this->imgSample->ImagePath = 'earthlights.jpg';
-			$this->imgSample->Width = 400;
-			$this->imgSample->Height = 250;
-			$this->imgSample->CssClass = 'image_canvas';
-			
-			// And finally, let's specify a CacheFolder so that the images are cached
-			// Notice that this CacheFolder path is a complete web-accessible relative-to-docroot path
-			$this->imgSample->CacheFolder = __IMAGE_CACHE_ASSETS__;
+class ExampleForm extends FormBase
+{
+    protected $lblImage;
+    protected $btnImageInput;
+    protected $btnImage;
+    protected $txtMessage2;
+    protected $lblImage2;
+    protected $btnBgImage;
+    protected $btnImageMap;
 
-			$this->txtWidth = new \QCubed\Control\IntegerTextBox($this);
-			$this->txtWidth->Minimum = 0;
-			$this->txtWidth->Maximum = 1000;
-			$this->txtWidth->Name = 'Width';
-			$this->txtWidth->Text = 400;
-			
-			$this->txtHeight = new \QCubed\Control\IntegerTextBox($this);
-			$this->txtHeight->Minimum = 0;
-			$this->txtHeight->Maximum = 700;
-			$this->txtHeight->Name = 'Height';
-			$this->txtHeight->Text = 250;
-			
-			$this->chkScaleCanvasDown = new \QCubed\Project\Control\Checkbox($this);
-			$this->chkScaleCanvasDown->Checked = false;
-			$this->chkScaleCanvasDown->Text = 'Scale Canvas Down';
+    protected function formCreate()
+    {
+        $this->lblImage = new Image($this);
+        $this->lblImage->ImageUrl = "../images/emoticons/1.png";
+        $this->lblImage->AlternateText = "Emoticon";
 
-			$this->btnUpdate = new \QCubed\Project\Jqui\Button($this);
-			$this->btnUpdate->Text = 'Update Image';
-			$this->btnUpdate->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
-			$this->btnUpdate->CausesValidation = true;
-		}
+        $this->btnImageInput = new ImageInput($this);
+        $this->btnImageInput->AlternateText = "Click Me";
+        $this->btnImageInput->ImageUrl = "../images/emoticons/2.png";
+        $this->btnImageInput->onClick (
+            [
+                new RegisterClickPosition(),    // make sure we first register the click position so our click handler can see it.
+                new Ajax("btnImage_Click")
+            ]
+        );
 
-		// Let's ensure that a width or a height value is specified -- just so that we don't get people rendering really large versions of the image
-		protected function formValidate() {
-			if (!trim($this->txtWidth->Text) && !trim($this->txtHeight->Text)) {
-				$this->txtWidth->Warning = 'For this example, you must specifiy at least a width OR a height value';
-				return false;
-			}
-			return true;
-		}
+        $this->btnImage = new Button($this);
+        $this->btnImage->AutoRenderChildren = true;
+        $this->lblImage2 = new Image($this->btnImage);
+        $this->lblImage2->ImageUrl = "../images/emoticons/3.png";
 
-		protected function btnUpdate_Click($strFormId, $strControlId, $strParameter) {
-			$this->imgSample->Width = $this->txtWidth->Text;
-			$this->imgSample->Height = $this->txtHeight->Text;
-			$this->imgSample->ScaleCanvasDown = $this->chkScaleCanvasDown->Checked;
-		}
-	}
+        $this->btnBgImage = new Button($this);
+        $this->btnBgImage->BackgroundImageUrl = "../images/emoticons/4.png";
+        $this->btnBgImage->Width = 200;
+        $this->btnBgImage->Height = 200;
 
-	// And now run our defined form
-	ExampleForm::Run('ExampleForm');
-?>
+        $this->btnImageMap = new Image($this);
+        $this->btnImageMap->ImageUrl = "../images/emoticons/5.png";
+
+        $area = new ImageArea($this->btnImageMap);
+        $area->Shape = ImageArea::SHAPE_CIRCLE;
+        $area->Coordinates = [80, 55, 20];
+        $area->setHtmlAttribute("href", "#"); // Makes the pointer show its clickable
+        $area->onClick(new \QCubed\Action\Alert("Eyeball"));
+    }
+
+    protected function btnImage_Click(ActionParams $params)
+    {
+        /** @var ImageInput $btn */
+        $btn = $params->Control;
+        Application::displayAlert("Clicked at " . $btn->ClickX . "," . $btn->ClickY);
+    }
+
+    protected function lstFont_Change($strFormId, $strControlId, $strParameter)
+    {
+        // Set the lblMessage's font to the new font file
+        $this->lblMessage->FontNames = $this->lstFont->SelectedValue;
+    }
+}
+
+ExampleForm::run('ExampleForm');
+

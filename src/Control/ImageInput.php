@@ -14,65 +14,64 @@ use QCubed\Exception\InvalidCast;
 use QCubed\Type;
 
 /**
- * Class ImageButton
+ * Class ImageInput
  *
- * Needs some cleaning up.
+ * This class will render an HTML Image input <input type="image">.
  *
- * This class will render an HTML ImageButton <input type="image">.
+ * Image inputs act like buttons, but specifically also produce an x and y coordinate for where the image was clicked.
+ * There are other ways to produce image buttons, including using a Button control and adding an Image
+ * control to it, or adding a background image to a Button. You can also just use an Image control and add an onClick handler.
+ * Each produce different html, and you can pick which one is more suitable to your needs.
  *
  * @property string $AlternateText is rendered as the HTML "alt" tag
  * @property string $ImageUrl is the url of the image to be used
- * @property boolean $PrimaryButton
+ * @property boolean $PrimaryButton     Set to true if you want this button to submit the form
  * @property-read integer $ClickX
  * @property-read integer $ClickY
  * @was QImageButton
  * @package QCubed\Control
  */
-class ImageButton extends ActionControl
+class ImageInput extends ActionControl
 {
     protected $strAlternateText = null;
     protected $strImageUrl = null;
-    protected $blnPrimaryButton = false;
     protected $intClickX;
     protected $intClickY;
+    /** @var bool True to make this button submit the form, which is the default for HTML input images */
+    protected $blnPrimaryButton = true;
 
     // SETTINGS
     protected $blnActionsMustTerminate = true;
 
 
-    public function renderHtmlAttributes($attributeOverrides = null, $styleOverrides = null)
-    {
-        if (!$attributeOverrides) {
-            $attributeOverrides = [];
-        }
-        $attributeOverrides['alt'] = $this->strAlternateText;
-        $attributeOverrides['src'] = $this->strImageUrl;
-
-        return parent::renderHtmlAttributes($attributeOverrides, $styleOverrides);
-    }
-
+    /**
+     * MUST be used in conjunction with RegisterClickPosition Action to work.
+     */
     public function parsePostData()
     {
         $strKeyX = sprintf('%s_x', $this->strControlId);
         $strKeyY = sprintf('%s_y', $this->strControlId);
-        if (isset($strKeyX) && $_POST[$strKeyX] !== '') {
+        if (isset ($_POST[$strKeyX]) && $_POST[$strKeyX] !== '') {
             $this->intClickX = $_POST[$strKeyX];
             $this->intClickY = $_POST[$strKeyY];
         }
-        /*
-        else {
-            $this->intClickX = null;
-            $this->intClickY = null;
-        }*/
     }
 
     protected function getControlHtml()
     {
-        if ($this->blnPrimaryButton) {
-            $strToReturn = $this->renderTag('input', ['name'=>$this->strControlId, 'type'=>'image'], null, null, true);
-        } else {
-            $strToReturn = $this->renderTag('img', null, null, null, true);
+        $overrides = [
+            'name'=>$this->strControlId,
+            'type'=>'image',
+            'alt'=>$this->strAlternateText,
+            'src'=>$this->strImageUrl
+        ];
+
+        if (!$this->blnPrimaryButton) {
+            //$overrides['onclick'] = "return false;";   // prevent default behavior
         }
+
+        $strToReturn = $this->renderTag('input', $overrides,
+            null, null, true);
 
         $strToReturn .= sprintf('<input type="hidden" name="%s_x" id="%s_x" value=""/><input type="hidden" name="%s_y" id="%s_y" value=""/>',
             $this->strControlId,
