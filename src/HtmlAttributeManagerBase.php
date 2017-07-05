@@ -33,6 +33,7 @@ use QCubed\Js;
  *
  * @property string $AccessKey allows you to specify what Alt-Letter combination will automatically focus that control on the form
  * @property string $BackColor sets the CSS background-color of the control
+ * @property string $BackgroundImageUrl set the url for a background image
  * @property string $BorderColor sets the CSS border-color of the control
  * @property string $BorderWidth sets the CSS border-width of the control
  * @property string $BorderStyle is used to set CSS border-style by {@link QCubed\Css\BorderStyle}
@@ -489,6 +490,15 @@ class HtmlAttributeManagerBase extends ObjectBase {
 		switch ($strName) {
 			// Styles
 			case "BackColor": return $this->getCssStyle('background-color');
+            case "BackgroundImageUrl":
+                $strUrl = $this->getCssStyle('background-image');
+                if ($strUrl) {
+                    $pieces = explode('"', $strUrl);
+                    if ($pieces && count($pieces) == 3) {
+                        return $pieces[1];  // extract actual url from inside the url("...") block
+                    }
+                }
+                return $strUrl;
 			case "BorderColor": return $this->getCssStyle('border-color');
 			case "BorderStyle": return $this->getCssStyle('border-style');
 			case "BorderWidth": return $this->getCssStyle('border-width');
@@ -558,7 +568,19 @@ class HtmlAttributeManagerBase extends ObjectBase {
 					$objExc->incrementOffset();
 					throw $objExc;
 				}
-			case "BorderColor":
+            case "BackgroundImageUrl":
+                try {
+                    if ($mixValue) {
+                        $this->setCssStyle('background-image', 'url("'  . Type::cast($mixValue, Type::STRING) . '")');
+                    } else {
+                        $this->setCssStyle('background-image', null);
+                    }
+                    break;
+                } catch (InvalidCast $objExc) {
+                    $objExc->incrementOffset();
+                    throw $objExc;
+                }
+            case "BorderColor":
 				try {
 					$this->setCssStyle('border-color', Type::cast($mixValue, Type::STRING));
 					break;
