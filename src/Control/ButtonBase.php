@@ -11,7 +11,6 @@ namespace QCubed\Control;
 
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\QString;
 use QCubed\Type;
 
 /**
@@ -19,25 +18,21 @@ use QCubed\Type;
  *
  * Base class for HTML Button.
  *
+ * Since the html button tag can have any html markup as content, the button is a subclass of a block control. You can
+ * use Text, Template, or subclass and define your own getInnerHtml method to define the content of a button.
+ *
  * @package Controls
  *
- * @property string $Text is used to display the button's text
- * @property boolean $PrimaryButton is a boolean to specify whether or not the button is 'primary' (e.g. makes this button a "Submit" form element rather than a "Button" form element)
- * @property boolean $HtmlEntities
+ * @property boolean $PrimaryButton is a boolean to specify whether or not the button is 'primary'
+ * (e.g. makes this button a "Submit" form element rather than a "Button" form element)
  * @was QButtonBase
  * @package QCubed\Control
  */
-abstract class ButtonBase extends ActionControl
+abstract class ButtonBase extends BlockControl
 {
     ///////////////////////////
     // Private Member Variables
     ///////////////////////////
-
-    // APPEARANCE
-    /** @var string Text on the button */
-    protected $strText = null;
-    /** @var bool Whether or not to use Htmlentities for the control */
-    protected $blnHtmlEntities = true;
 
     // BEHAVIOR
     /** @var bool Is the button a primary button (causes form submission)? */
@@ -49,37 +44,29 @@ abstract class ButtonBase extends ActionControl
      *  causes "event.preventDefault()" to be called on the client side
      */
     protected $blnActionsMustTerminate = true;
+    protected $strTagName = "button";
+    protected $mixCausesValidation = self::CAUSES_VALIDATION_ALL;   //default to causing validation. Can be turned off by user of control.
 
-    //////////
-    // Methods
-    //////////
-    /**
-     * Return the HTML string for the control
-     * @return string The HTML string of the control
-     */
-    protected function getControlHtml()
-    {
-        if ($this->blnPrimaryButton) {
-            $attrOverride['type'] = "submit";
-        } else {
-            $attrOverride['type'] = "button";
-        }
-        $attrOverride['name'] = $this->strControlId;
-        $strInnerHtml = $this->getInnerHtml();
-
-        return $this->renderTag('button', $attrOverride, null, $strInnerHtml);
-    }
 
     /**
-     * Returns the html to appear between the button tags.
+     * Returns the attributes as html
+     *
+     * @param null $attributeOverrides
+     * @param null $styleOverrides
      * @return string
      */
-    protected function getInnerHtml()
-    {
-        return ($this->blnHtmlEntities) ? QString::htmlEntities($this->strText) : $this->strText;
+    public function renderHtmlAttributes($attributeOverrides = null, $styleOverrides = null) {
+        if (!$attributeOverrides) {
+            $attributeOverrides = [];
+        }
+        if ($this->blnPrimaryButton) {
+            $attributeOverrides['type'] = "submit";
+        } else {
+            $attributeOverrides['type'] = "button";
+        }
+        $attributeOverrides['name'] = $this->ControlId;
+        return parent::renderHtmlAttributes($attributeOverrides, $styleOverrides);
     }
-
-
 
     /////////////////////////
     // Public Properties: GET
@@ -94,13 +81,6 @@ abstract class ButtonBase extends ActionControl
     public function __get($strName)
     {
         switch ($strName) {
-            // APPEARANCE
-            case "Text":
-                return $this->strText;
-            case "HtmlEntities":
-                return $this->blnHtmlEntities;
-
-            // BEHAVIOR
             case "PrimaryButton":
                 return $this->blnPrimaryButton;
 
@@ -128,34 +108,6 @@ abstract class ButtonBase extends ActionControl
     public function __set($strName, $mixValue)
     {
         switch ($strName) {
-            // APPEARANCE
-            case "Text":
-                try {
-                    $val = Type::Cast($mixValue, Type::STRING);
-                    if ($val !== $this->strText) {
-                        $this->strText = $val;
-                        $this->blnModified = true;
-                    }
-                    break;
-                } catch (InvalidCast $objExc) {
-                    $objExc->incrementOffset();
-                    throw $objExc;
-                }
-
-            case "HtmlEntities":
-                try {
-                    $val = Type::Cast($mixValue, Type::BOOLEAN);
-                    if ($val !== $this->blnHtmlEntities) {
-                        $this->blnHtmlEntities = $val;
-                        $this->blnModified = true;
-                    }
-                    break;
-                } catch (InvalidCast $objExc) {
-                    $objExc->incrementOffset();
-                    throw $objExc;
-                }
-
-            // BEHAVIOR
             case "PrimaryButton":
                 try {
                     $val = Type::Cast($mixValue, Type::BOOLEAN);
