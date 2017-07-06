@@ -1,10 +1,16 @@
 <?php
+use QCubed\Action\Ajax;
+use QCubed\Control\Label;
+use QCubed\Event\Click;
+use QCubed\Project\Control\Button;
+use QCubed\Project\Control\FormBase;
+
 require_once('../qcubed.inc.php');
 
 if (!isset($this)) {
 
 	// Define the \QCubed\Project\Control\FormBase with all our Qcontrols
-	class ExampleSingleForm extends \QCubed\Project\Control\FormBase {
+	class ExampleSingleForm extends FormBase {
 
 		// Local declarations of our Qcontrols
 		protected $lblMessage;
@@ -13,16 +19,16 @@ if (!isset($this)) {
 		// Initialize our Controls during the Form Creation process
 		protected function formCreate() {
 			// Define the Label
-			$this->lblMessage = new \QCubed\Control\Label($this);
+			$this->lblMessage = new Label($this);
 			$this->lblMessage->Text = 'Click the button to change my message.';
 
 			// Definte the Button
-			$this->btnButton = new \QCubed\Project\Jqui\Button($this);
+			$this->btnButton = new Button($this);
 			$this->btnButton->Text = 'Click Me!';
 
 			// Add a Click event handler to the button -- the action to run is an AjaxAction.
 			// The AjaxAction names a PHP method (which will be run asynchronously) called "btnButton_Click"
-			$this->btnButton->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnButton_Click'));
+			$this->btnButton->addAction(new Click(), new Ajax('btnButton_Click'));
 		}
 
 		// The "btnButton_Click" Event handler
@@ -37,7 +43,7 @@ if (!isset($this)) {
 	// as the template file to use, and that we call "return;" to ensure that the rest
 	// of this script doesn't process on its initial run.  Instead, it will be processed
 	// a second time by QCubed as the \QCubed\Project\Control\FormBase is being rendered.
-	ExampleSingleForm::Run('ExampleSingleForm', __FILE__);
+	ExampleSingleForm::run('ExampleSingleForm', __FILE__);
 	return;
 }
 
@@ -64,8 +70,8 @@ if (!isset($this)) {
 </div>
 
 <div id="demoZone">
-	<p><?php $this->lblMessage->Render(); ?></p>
-	<p><?php $this->btnButton->Render(); ?></p>
+	<p><?php $this->lblMessage->render(); ?></p>
+	<p><?php $this->btnButton->render(); ?></p>
 </div>
 
 <?php $this->renderEnd(); ?>

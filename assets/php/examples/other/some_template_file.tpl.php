@@ -4,7 +4,7 @@
 <div id="instructions">
 	<h1>Hello World, Revisited... Again...</h1>
 
-	<p>By default, the <strong>\QCubed\Project\Control\FormBase</strong> engine will insert <strong>.tpl</strong> to the PHP script's file path to use as the
+	<p>By default, the <strong>Form</strong> engine will insert <strong>.tpl</strong> to the PHP script's file path to use as the
 		template file path.  For example, for the very first example, the script with the form defintion
 		was named <strong>intro.php</strong>. Therefore, by default, QCubed used <strong>intro.tpl.php</strong> as the HTML template
 		include file (the "tpl" signifying that it's an HTML template).</p>
@@ -13,7 +13,7 @@
 		specify a different filepath altogether. In fact, the QCubed Code Generator does this when it generates the
 		form_draft template files into a separate directory than the form_drafts, themselves.</p>
 
-	<p>The <strong>\QCubed\Project\Control\FormBase::Run</strong> method takes in an optional second parameter where you can specify the exact
+	<p>The <strong>FormBase::run</strong> method takes in an optional second parameter where you can specify the exact
 		filepath of the template file you wish to use, overriding the default "script_name.tpl.php".</p>
 </div>
 

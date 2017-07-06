@@ -10,19 +10,13 @@
 		<li>print($strSomeString)</li>
 		<li>print(htmlentities($strSomeString))</li>
 		<li>print(t($strSomeString))</li>
-		<li>print(\QCubed\Project\Application::LocalizeInteger($intSomething)) (not yet implemented)</li>
-		<li>print(\QCubed\Project\Application::LocalizeFloat($fltSomething)) (not yet implemented)</li>
-		<li>print(\QCubed\Project\Application::LocalizeCurrency($fltSomething)) (not yet implemented)</li>
 	</ul>
 
 	<p>Because of this, QCubed has defined several global PHP functions which act as shortcuts
 		to these specific commands:</p>
 	<ul>
-		<li>_p($strSomeString, $blnHtmlEntities = true) - will print the passed in string.  By default, it will also perform <b>\QCubed\Project\Application::HtmlEntities</b> first.  You can override this by setting $blnHtmlEntities = false.</li>
-		<li>_t($strSomeString) -- will print a translated string via <b>\QCubed\Project\Application::Translate</b></li>
-		<li>_i($intSomething)</li>
-		<li>_f($fltSomething)</li>
-		<li>_c($fltSomething)</li>
+		<li>_p($strSomeString, $blnHtmlEntities = true) - will print the passed in string.  By default, it will also perform <b>QString::htmlEntities()</b> first.  You can override this by setting $blnHtmlEntities = false.</li>
+		<li>_t($strSomeString) -- will print a translated string via <b>t()</b></li>
 	</ul>
 
 	<p>Please note: these are simply meant to be shortcuts to actual QCubed functional
