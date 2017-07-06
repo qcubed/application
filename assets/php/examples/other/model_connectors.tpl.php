@@ -3,7 +3,7 @@
 
 <div id="instructions">
 	<h1>Generated ModelConnector Objects</h1>
-	As you build out more and more database-driven <strong>QForms</strong> and <strong>QPanels</strong>, you'll notice
+	As you build out more and more database-driven <strong>Forms</strong> and <strong>Panels</strong>, you'll notice
 	that you may spend quite a bit of time coding the same type of Control
 	definition, setup and data binding procedures over and over again. This becomes
 	especially tedious when you are talking about modifying objects with a large
@@ -17,7 +17,7 @@
 	<strong>ModelConnector</strong> for your own customizations.
 
 <p>For each field in a class, you can have the <strong>ModelConnector</strong> return for you a data bound
-	and setup <strong>QControl</strong> for editing, or a <strong>\QCubed\Control\Label</strong> just for viewing.  But because these ModelConnectors
+	and setup <strong>QControl</strong> for editing, or a <strong>Label</strong> just for viewing.  But because these ModelConnectors
 	are simply returning standard QControls, you can then modify them (stylizing, adding events, etc.) as you normally would
 	any other control.</p>
 
@@ -35,8 +35,8 @@
 	you can use the <strong>ModelConnector Designer</strong>. To use the designer, do the following:</p>
 
 	<ol>
-		<li>Define the <strong>__DESIGN_MODE__</strong> constant in your configuration file.</li>
-		<li>Right click on the <strong>QControl</strong> you want to modify in your browser.</li>
+		<li>Define the <strong>QCUBED_DESIGN_MODE</strong> constant in your configuration file.</li>
+		<li>Right click on the <strong>Control</strong> you want to modify in your browser.</li>
 		<li>Set your options, click the Save button, and the code-generate again.</li>
 	</ol>
 
@@ -56,19 +56,19 @@
 
 <p>Finally, note that since the <strong>ModelConnectors</strong> encapsulate all the functionality for a given
 	instance of a given object, and since it is able to keep track of and maintain its own
-	set of controls, you can easily have multiple <strong>ModelConnectors</strong> on any <strong>\QCubed\Project\Control\FormBase</strong> or <strong>\QCubed\Control\Panel</strong>,
+	set of controls, you can easily have multiple <strong>ModelConnectors</strong> on any <strong>Form</strong> or <strong>Panel</strong>,
 	view or edit multiple objects of any class at the same time.</p>
 </div>
 
 <div id="demoZone">
 	<p>Right-click on any label to edit:</p>
-	<?php $this->txtFirstName->RenderWithName(); ?>
-	<?php $this->txtLastName->RenderWithName(); ?>
-	<?php $this->lstPersonTypes->RenderWithName(); ?>
+	<?php $this->txtFirstName->renderWithName(); ?>
+	<?php $this->txtLastName->renderWithName(); ?>
+	<?php $this->lstPersonTypes->renderWithName(); ?>
 
 	<p>
-		<?php $this->btnSave->Render(); ?>
-		<?php $this->btnCancel->Render(); ?>
+		<?php $this->btnSave->render(); ?>
+		<?php $this->btnCancel->render(); ?>
 	</p>
 </div>
 

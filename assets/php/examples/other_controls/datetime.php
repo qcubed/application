@@ -1,81 +1,92 @@
 <?php
-	require_once('../qcubed.inc.php');
+use QCubed\Action\Ajax;
+use QCubed\Control\Calendar;
+use QCubed\Control\DateTimePicker;
+use QCubed\Control\DateTimeTextBox;
+use QCubed\Event\Click;
+use QCubed\Project\Control\Button;
 
-	class ExampleForm extends \QCubed\Project\Control\FormBase {
-		protected $dtxDateTimeTextBox;
-		protected $btnDateTimeTextBox;
+require_once('../qcubed.inc.php');
 
-		protected $calQJQCalendar;
-		protected $btnQJQCalendar;
-		
-		protected $dtpDatePicker;
-		protected $btnDatePicker;
+class ExampleForm extends \QCubed\Project\Control\FormBase
+{
+    protected $dtxDateTimeTextBox;
+    protected $btnDateTimeTextBox;
 
-		protected $dtpDateTimePicker;
-		protected $btnDateTimePicker;
+    protected $calQJQCalendar;
+    protected $btnQJQCalendar;
 
-		protected $lblResult;
+    protected $dtpDatePicker;
+    protected $btnDatePicker;
 
-		protected function formCreate() {
-			
-			$this->calQJQCalendar = new \QCubed\Control\Calendar($this);
-			
-			$this->dtxDateTimeTextBox = new \QCubed\Control\DateTimeTextBox($this);
+    protected $dtpDateTimePicker;
+    protected $btnDateTimePicker;
 
-			// \QCubed\Control\DateTimePicker can have different "Types"
-			$this->dtpDatePicker = new \QCubed\Control\DateTimePicker($this);
-			$this->dtpDatePicker->DateTimePickerType = \QCubed\Control\DateTimePicker::SHOW_DATE;
+    protected $lblResult;
 
-			$this->dtpDateTimePicker = new \QCubed\Control\DateTimePicker($this);
-			$this->dtpDateTimePicker->DateTimePickerType = \QCubed\Control\DateTimePicker::SHOW_DATE_TIME;
+    protected function formCreate()
+    {
 
-			// To View the "Results"
-			$this->lblResult = new \QCubed\Control\Label($this);
-			$this->lblResult->Text = 'Results...';
+        $this->calQJQCalendar = new Calendar($this);
 
-			// Various Buttons
-			$this->btnQJQCalendar = new \QCubed\Project\Control\Button($this);
-			$this->btnQJQCalendar->Text = 'Update';
-			$this->btnQJQCalendar->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
-			$this->btnQJQCalendar->ActionParameter = $this->calQJQCalendar->ControlId;
-			
-			$this->btnDateTimeTextBox = new \QCubed\Project\Control\Button($this);
-			$this->btnDateTimeTextBox->Text = 'Update';
-			$this->btnDateTimeTextBox->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
-			$this->btnDateTimeTextBox->ActionParameter = $this->dtxDateTimeTextBox->ControlId;
+        $this->dtxDateTimeTextBox = new DateTimeTextBox($this);
 
-			$this->btnDatePicker = new \QCubed\Project\Control\Button($this);
-			$this->btnDatePicker->Text = 'Update';
-			$this->btnDatePicker->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
-			$this->btnDatePicker->ActionParameter = $this->dtpDatePicker->ControlId;
+        // \QCubed\Control\DateTimePicker can have different "Types"
+        $this->dtpDatePicker = new DateTimePicker($this);
+        $this->dtpDatePicker->DateTimePickerType = DateTimePicker::SHOW_DATE;
 
-			$this->btnDateTimePicker = new \QCubed\Project\Control\Button($this);
-			$this->btnDateTimePicker->Text = 'Update';
-			$this->btnDateTimePicker->AddAction(new \QCubed\Event\Click(), new \QCubed\Action\Ajax('btnUpdate_Click'));
-			$this->btnDateTimePicker->ActionParameter = $this->dtpDateTimePicker->ControlId;
-		}
+        $this->dtpDateTimePicker = new DateTimePicker($this);
+        $this->dtpDateTimePicker->DateTimePickerType = DateTimePicker::SHOW_DATE_TIME;
 
-		protected function btnUpdate_Click($strFormId, $strControlId, $strParameter) {
-			$objControlToLookup = $this->GetControl($strParameter);
-			$dttDateTime = $objControlToLookup->DateTime;
+        // To View the "Results"
+        $this->lblResult = new \QCubed\Control\Label($this);
+        $this->lblResult->Text = 'Results...';
 
-			// If a DateTime value is NOT selected or is INVALID, then this will be NULL
-			if ($dttDateTime) {
-				$this->lblResult->Text = '\QCubed\QDateTime object:<br/>';
-				if (!$dttDateTime->IsDateNull())
-					$this->lblResult->Text .= 'Date: <strong>' . $dttDateTime->qFormat('DDD MMM D YYYY') . '</strong><br/>';
-				else
-					$this->lblResult->Text .= 'Date: <strong>Null</strong><br/>';
-				if (!$dttDateTime->IsTimeNull())
-					$this->lblResult->Text .= 'Time: <strong>' . $dttDateTime->qFormat('h:mm:ss z') . '</strong>';
-				else
-					$this->lblResult->Text .= 'Time: <strong>Null</strong>';
-			} else {
-				$this->lblResult->Text = '\QCubed\QDateTime object: <strong>Null</strong>';
-			}
-		}
-	}
+        // Various Buttons
+        $this->btnQJQCalendar = new Button($this);
+        $this->btnQJQCalendar->Text = 'Update';
+        $this->btnQJQCalendar->addAction(new Click(), new Ajax('btnUpdate_Click'));
+        $this->btnQJQCalendar->ActionParameter = $this->calQJQCalendar->ControlId;
 
-	// And now run our defined form
-	ExampleForm::Run('ExampleForm');
-?>
+        $this->btnDateTimeTextBox = new Button($this);
+        $this->btnDateTimeTextBox->Text = 'Update';
+        $this->btnDateTimeTextBox->addAction(new Click(), new Ajax('btnUpdate_Click'));
+        $this->btnDateTimeTextBox->ActionParameter = $this->dtxDateTimeTextBox->ControlId;
+
+        $this->btnDatePicker = new Button($this);
+        $this->btnDatePicker->Text = 'Update';
+        $this->btnDatePicker->addAction(new Click(), new Ajax('btnUpdate_Click'));
+        $this->btnDatePicker->ActionParameter = $this->dtpDatePicker->ControlId;
+
+        $this->btnDateTimePicker = new Button($this);
+        $this->btnDateTimePicker->Text = 'Update';
+        $this->btnDateTimePicker->addAction(new Click(), new Ajax('btnUpdate_Click'));
+        $this->btnDateTimePicker->ActionParameter = $this->dtpDateTimePicker->ControlId;
+    }
+
+    protected function btnUpdate_Click($strFormId, $strControlId, $strParameter)
+    {
+        $objControlToLookup = $this->getControl($strParameter);
+        $dttDateTime = $objControlToLookup->DateTime;
+
+        // If a DateTime value is NOT selected or is INVALID, then this will be NULL
+        if ($dttDateTime) {
+            $this->lblResult->Text = 'QDateTime object:<br/>';
+            if (!$dttDateTime->isDateNull()) {
+                $this->lblResult->Text .= 'Date: <strong>' . $dttDateTime->qFormat('DDD MMM D YYYY') . '</strong><br/>';
+            } else {
+                $this->lblResult->Text .= 'Date: <strong>Null</strong><br/>';
+            }
+            if (!$dttDateTime->isTimeNull()) {
+                $this->lblResult->Text .= 'Time: <strong>' . $dttDateTime->qFormat('h:mm:ss z') . '</strong>';
+            } else {
+                $this->lblResult->Text .= 'Time: <strong>Null</strong>';
+            }
+        } else {
+            $this->lblResult->Text = 'QDateTime object: <strong>Null</strong>';
+        }
+    }
+}
+
+// And now run our defined form
+ExampleForm::run('ExampleForm');

@@ -21,7 +21,7 @@ use QCubed\Type;
  * Timer Control:
  * This control uses a javascript timer to execute Actions after a defined time
  * Periodic or one shot timers are possible.
- * You can add only one type of Event to to this control: QTimerExpiredEvent
+ * You can add only one type of Event to to this control: TimerExpiredEvent
  * but multiple actions can be registered for this event
  * @property int $DeltaTime Time till the timer fires and executes the Actions added.
  * @property boolean $Periodic  <ul>
@@ -174,42 +174,31 @@ class JsTimerBase extends Q\Project\Control\ControlBase
             throw new Caller('First parameter of JsTimer::AddAction is expecting an object of type Event\\TimerExpired');
         }
 
-        $strEventName = $objEvent->EventName;
-        if (!count($this->objActionArray)) {
-            //no event registerd yet
-            $this->objActionArray[$strEventName] = array();
-        }
-
-        // Store the Event object in the Action object
-        $objAction->Event = $objEvent;
-
-        array_push($this->objActionArray[$strEventName], $objAction);
+        parent::addAction($objEvent, $objAction);
 
         if ($this->intState === self::AUTO_START && $this->intDeltaTime != 0) {
             $this->start();
-        } //autostart the timer
+        }
 
-        $this->blnModified = true;
     }
 
     /**
      * Returns all actions connected/attached to the timer
-     * @param string $strEventType  an EVENT_NAME constant
-     * @param null|string $strActionType
-     *
-     * @return array
+     * @param string $strEventName
+     * @param null $strActionClass
+     * @return Q\Action\ActionBase[]
      */
-    public function getAllActions($strEventType, $strActionType = null)
+    public function getAllActions($strEventName, $strActionClass = null)
     {
-        if (($strEventType == Q\Event\TimerExpired::EVENT_NAME && $this->blnPeriodic == false) &&
-            (($strActionType == '\QCubed\Action\Ajax' && Application::isAjax()) ||
-                ($strActionType == '\QCubed\Action\Server' && Application::instance()->context()->requestMode() == Q\Context::REQUEST_MODE_QCUBED_SERVER))
+        if (($strEventName == Q\Event\TimerExpired::EVENT_NAME && $this->blnPeriodic == false) &&
+            (($strActionClass == '\QCubed\Action\Ajax' && Application::isAjax()) ||
+                ($strActionClass == '\QCubed\Action\Server' && Application::instance()->context()->requestMode() == Q\Context::REQUEST_MODE_QCUBED_SERVER))
         ) {
             //if we are in an ajax or server post and our timer is not periodic
             //and this method gets called then the timer has finished(stopped) --> set the State flag to "stopped"
             $this->intState = self::STOPPED;
         }
-        return parent::getAllActions($strEventType, $strActionType);
+        return parent::getAllActions($strEventName, $strActionClass);
     }
 
     /**
@@ -227,12 +216,7 @@ class JsTimerBase extends Q\Project\Control\ControlBase
      */
     public function getEvent()
     {
-        if (!count($this->objActionArray)) {
-            return null;
-        }
-        // point to the first action in the list
-        $arrActions = reset($this->objActionArray);
-        return reset($arrActions)->Event;
+        return reset($this->objEventArray);
     }
 
     /**
@@ -241,16 +225,18 @@ class JsTimerBase extends Q\Project\Control\ControlBase
      */
     public function renderActionScripts()
     {
+        parent::renderActionScripts();
+
         $strToReturn = $this->callbackString() . " = ";
-        if (!count($this->objActionArray)) {
+        if (!count($this->objEventArray)) {
             return $strToReturn . 'null;';
         }
 
         $strToReturn .= 'function() {';
 
-        foreach (reset($this->objActionArray) as $objAction) {
-            /** @var Q\Action\ActionBase $objAction */
-            $strToReturn .= ' ' . $objAction->renderScript($this);
+        foreach ($this->objEventArray as $objEvent) {
+            $strToReturn .= ' ' . $objEvent->renderActions($this);
+
         }
         if ($this->ActionsMustTerminate) {
             $strToReturn .= ' return false;';

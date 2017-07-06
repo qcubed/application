@@ -2,9 +2,9 @@
 <?php $this->renderBegin(); ?>
 
 <div id="instructions">
-	<h1>Overriding QControl Attributes</h1>
+	<h1>Overriding Control Attributes</h1>
 
-	<p>All <strong>QControl</strong> classes have any number attributes which can be defined.  These are
+	<p>All <strong>Control</strong> classes have any number attributes which can be defined.  These are
 		either general attributes attributable to all controls (e.g. control name, font, color, width, etc.),
 		or they can also be specific attributes for specific controls (e.g. maxlength for textboxes,
 		rows for listboxes, etc.)</p>
@@ -25,15 +25,15 @@
 
 	<p>In theory, if you have a designer working on the design and a developer working on the display
 		logic, the designer should be able to make changes to the design in the HTML template file
-		without needing the intervention of the developer working on the <strong>\QCubed\Project\Control\FormBase</strong> object definition.</p>
+		without needing the intervention of the developer working on the <strong>Form</strong> object definition.</p>
 </div>
 
 <div id="demoZone">
 	<?php // We will override the ForeColor, FontBold and the FontSize.  Note how we can optionally
 	// add quotes around our value. 
 	?>
-	<p><?php $this->lblMessage->Render('ForeColor="#00ff00"', 'FontSize=18px', 'FontBold=true'); ?></p>
-	<p><?php $this->btnButton->Render(); ?></p>
+	<p><?php $this->lblMessage->render(['ForeColor'=>"#00ff00", 'FontSize'=>'18px', 'FontBold'=>true]); ?></p>
+	<p><?php $this->btnButton->render(); ?></p>
 </div>
 
 <?php $this->renderEnd(); ?>

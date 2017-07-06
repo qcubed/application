@@ -160,19 +160,15 @@
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Other Controls';
 			Examples::$Categories[$intIndex]['description'] = 'Other core controls';
-			self::AddCoreExampleFile($intIndex, '/other_controls/image.php Image and ImageButton');
-			self::AddCoreExampleFile($intIndex, '/other_controls/datetime.php Date and DateTime-based QControls');
-			self::AddCoreExampleFile($intIndex, '/other_controls/file_asset.php Combining Controls, Ex. 1: A Better Way to Upload Files');
-			self::AddCoreExampleFile($intIndex, '/image_browser/test_image_browser.php Combining Controls, Ex. 2: Browsing Image Files');
-			self::AddCoreExampleFile($intIndex, '/other_controls/image_file_asset.php Upload Control Just for Images');
+			self::AddCoreExampleFile($intIndex, '/other_controls/image.php Image and Image Buttons');
+			self::AddCoreExampleFile($intIndex, '/other_controls/datetime.php Date and DateTime-based Controls');
 			self::AddCoreExampleFile($intIndex, '/other_controls/timer_js.php JavaScript Timer');
-			self::AddCoreReferencedFile('/image_browser/test_image_browser.php', array('image_browser.tpl.php', 'imagebrowser.css'));
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Model Connectors, DataGrid Connectors, and the Drafts';
-			Examples::$Categories[$intIndex]['description'] = 'Combining the Code Generator with the \QCubed\Project\Control\FormBase Library';
-			self::AddCoreExampleFile($intIndex, '/other/formgen.php \QCubed\Project\Control\FormBase and CodeGen, a Winning Combination to RAD');
+			Examples::$Categories[$intIndex]['description'] = 'Combining the Code Generator with the Form Library';
+			self::AddCoreExampleFile($intIndex, '/other/formgen.php Forms and CodeGen, a Winning Combination to RAD');
 			self::AddCoreExampleFile($intIndex, '/other/model_connectors.php * Introduction to Model Connectors');
 			self::AddCoreExampleFile($intIndex, '/other/datagrid_connectors.php * Introduction to DataGrid Connectors');
 			self::AddCoreExampleFile($intIndex, '/other/form_drafts.php * Introduction to the Drafts');
@@ -180,31 +176,20 @@
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Beyond HTML';
-			Examples::$Categories[$intIndex]['description'] = 'Other libraries in QCubed, including support for Email and RSS';
-			self::AddCoreExampleFile($intIndex, '/communication/email.php Introduction to QEmailServer');
-			self::AddCoreExampleFile($intIndex, '/communication/rss.php * Introduction to QRssFeed');
-			self::AddCoreExampleFile($intIndex, '/other/parsing.php Introduction to parsing with QLexer and QRegex');
-			self::AddCoreExampleFile($intIndex, '/communication/crypto.php Introduction to \QCubed\Cryptography');
-			self::AddCoreExampleFile($intIndex, '/communication/i18n.php Introduction to QI18n (Internationalization)');
-			self::AddCoreExampleFile($intIndex, '/communication/advanced_intl.php Advanced Internationalization techniques');
-			self::AddCoreExampleFile($intIndex, '/communication/soap.php * Introduction to QSoapService');
-			self::AddCoreExampleFile($intIndex, '/other/timer.php * Measuring Performance using \QCubed\Timer');
-			self::AddCoreReferencedFile('/communication/rss.php', 'rss_feed.php');
-			self::AddCoreReferencedFile('/communication/i18n.php', array('en.po', 'es.po'));
-			self::AddCoreReferencedFile('/communication/soap.php', 'example_service.php');
-			self::AddCoreReferencedFile('/other/parsing.php', 'bb_parser.php');
-			self::AddCoreReferencedFile('/communication/advanced_intl.php', 'sample_translator.class.php');
-			
+			Examples::$Categories[$intIndex]['description'] = 'Other libraries in QCubed';
+			self::AddCoreExampleFile($intIndex, '/communication/crypto.php Introduction to Cryptography');
+			self::AddCoreExampleFile($intIndex, '/communication/i18n.php Introduction to I18n (Internationalization)');
+			self::AddCoreExampleFile($intIndex, '/other/timer.php * Measuring Performance using Timer');
+
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Other Tidbits';
 			Examples::$Categories[$intIndex]['description'] = 'Other random examples, samples and tutorials';
 			self::AddCoreExampleFile($intIndex, '/basic_qform/xss.php * Security: Preventing Cross-Site Scripting');
-			self::AddCoreExampleFile($intIndex, '/other/optimistic_locking.php * Optimistic Locking and QForms');
 			self::AddCoreExampleFile($intIndex, '/other/attribute_overriding.php Attribute Overriding');
 			self::AddCoreExampleFile($intIndex, '/other/alternate_template.php Specifying a Template Filepath');
-			self::AddCoreExampleFile($intIndex, '/other/single.php Single File QForms');
+			self::AddCoreExampleFile($intIndex, '/other/single.php Single File Forms');
 			self::AddCoreExampleFile($intIndex, '/other/form_state.php Working with FormState Handlers');
 			self::AddCoreExampleFile($intIndex, '/other/print.php PHP Print Command Shortcuts');
 			self::AddCoreExampleFile($intIndex, '/other/includes_outside.php Includes outside of the DocRoot for Security and Shared Installs');

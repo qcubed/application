@@ -536,7 +536,7 @@ abstract class FormBase extends ObjectBase
 
             $objClass->formInitialize();
 
-            if (defined('__DESIGN_MODE__') && __DESIGN_MODE__ == 1) {
+            if (defined('QCUBED_DESIGN_MODE') && QCUBED_DESIGN_MODE == 1) {
                 // Attach custom event to dialog to handle right click menu items sent by form
 
                 $dlg = new Q\ModelConnector\EditDlg ($objClass, 'qconnectoreditdlg');
@@ -1919,7 +1919,7 @@ abstract class FormBase extends ObjectBase
         }
 
         // Design mode event
-        if (defined('__DESIGN_MODE__') && __DESIGN_MODE__ == 1) {
+        if (defined('QCUBED_DESIGN_MODE') && QCUBED_DESIGN_MODE == 1) {
             // attach an event listener to the form to send context menu selections to the designer dialog for processing
             $strEndScript .= sprintf(
                 '$j("#%s").on("contextmenu", "[id]", 

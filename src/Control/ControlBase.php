@@ -214,7 +214,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     protected $strCustomAttributeArray = null;
     /** @var string|null Custom CSS style attributes for the control */
     protected $strCustomStyleArray = null;
-    /** @var array Array of events we are triggering actions on */
+    /** @var EventBase[] Array of events we are triggering actions on */
     protected $objEventArray = array();
     /** @var string|Q\Js\Closure|null The action parameter (typically small amount of data) for the Ajax or Server Callback */
     protected $mixActionParameter = null;
@@ -778,7 +778,7 @@ abstract class ControlBase extends Q\Project\HtmlAttributeManager
     {
         $this->objEventArray = array_filter($this->objEventArray,
             function($objEvent) use ($strEventName) {
-                return $this->objEvent->EventName != $strEventName;
+                return $objEvent->EventName != $strEventName;
             }
         );
     }
