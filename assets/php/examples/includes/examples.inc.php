@@ -197,11 +197,11 @@
 
 			$intIndex++;
 			Examples::$Categories[$intIndex] = array();
-			Examples::$Categories[$intIndex]['name'] = 'Plugin System';
+			Examples::$Categories[$intIndex]['name'] = 'Libraries';
 			Examples::$Categories[$intIndex]['description'] = 'Infrastructure that lets the community extend QCubed';
-			self::AddCoreExampleFile($intIndex, '/plugins/about.php Plugin Ecosystem: Introduction');
-			self::AddCoreExampleFile($intIndex, '/plugins/components.php Writing your own plugins, Part 1: components of a plugin');
-			self::AddCoreExampleFile($intIndex, '/plugins/packaging.php Writing your own plugins, Part 2: packaging a plugin');
+			self::AddCoreExampleFile($intIndex, '/plugins/about.php Library Ecosystem: Introduction');
+			self::AddCoreExampleFile($intIndex, '/plugins/components.php Writing Your Own Libraries, Part 1: Components of a Library');
+			self::AddCoreExampleFile($intIndex, '/plugins/packaging.php Writing Your Oown Libraries, Part 2: Packaging a Library');
 			//self::AddCoreExampleFile($intIndex, '/plugins/unattended.php Automatic Installation of Plugins');
 			//self::AddCoreReferencedFile('/plugins/components.php', '__CORE_FRAMEWORK__QPluginInterface.class.php');
 
@@ -501,13 +501,13 @@
 			$blnFound = false;
 
 			$strScript = \QCubed\Project\Application::instance()->context()->scriptName();
-
+/*
 			if (strpos($strScript, "plugin") !== false &&
 				strpos($strScript, "vendor") !== false) {
 				// a plugin
-				$strLink = \QCubed\Html::RenderLink(\QCubed\Html::MakeUrl(__DEVTOOLS_ASSETS__ . '/plugin_manager.php'), "Plugin Manager", ["class"=>"headerLink"]);
+				$strLink = \QCubed\Html::RenderLink(\QCubed\Html::MakeUrl(QCUBED_APP_TOOLS_URL . '/plugin_manager.php'), "Library Manager", ["class"=>"headerLink"]);
 				return $strLink;
-			}
+			}*/
 
 			foreach (Examples::$Categories as $objExampleCategory) {
 				if (!$blnFound) {
