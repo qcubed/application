@@ -2,7 +2,7 @@
 This is the application part of the QCubed framework, and includes forms, controls,
 actions, events and code to tie them all together.
 
-##Upgrade Notes
+## Upgrade Notes
 This version now uses namespacing. See the tools directory for tools to help you
 convert your current code base to the new names. Specifically, run the following command line script
 on your codebase, and it will convert about 99% of your code:
@@ -16,7 +16,7 @@ cd (vendor_dir)/qcubed/application/tools
 The application framework moving forward will focus on supporting html5 tags in its 
 control library only. There may be some other items in there to provide a way to support
 common data relationships (like radio and checkbox lists), but for the most part, we
-would like anything that isn't directly drawing a tag to be in a plugin.
+would like anything that isn't directly drawing a tag to be in a separate library.
 
 As such, the following files are no longer supported in the core, and are currently dead
 code. You will find them in the "dead" directory. 
@@ -49,6 +49,10 @@ have been developed either built-in to PHP or in libraries available in github.
 * QWriteBox.class.php
 
 Also, the JQuery UI framework has been put in its own directory to prepare
-for moving it to a plugin in a later version.
+for moving it to a separate library in a later version.
+
+## Install
+See the qcubed4 branch of the qcubed/app-starter repository for information on how to install v4 of QCubed quickly using Composer.
+
 
 
