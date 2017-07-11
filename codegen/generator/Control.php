@@ -74,14 +74,20 @@ TMPL;
 TMPL;
             $options = $objTable->Options;
         } else {
+            $strClass = $objTable->ClassName;
+
             if ($objColumn instanceof SqlColumn) {
-                $strPropName = ($objColumn->Reference && !$objColumn->Reference->IsType) ? $objColumn->Reference->PropertyName : $objColumn->PropertyName;
-                $strClass = $objTable->ClassName;
-            } elseif ($objColumn instanceof ManyToManyReference ||
+                if ($objColumn->Reference) {
+                    $strPropName = $objColumn->Reference->PropertyName; // works for type tables too
+                }
+                else {
+                    $strPropName = $objColumn->PropertyName;
+                }
+            }
+            elseif ($objColumn instanceof ManyToManyReference ||
                 $objColumn instanceof ReverseReference
             ) {
                 $strPropName = $objColumn->ObjectDescription;
-                $strClass = $objTable->ClassName;
             }
 
             $strRet .= <<<TMPL
