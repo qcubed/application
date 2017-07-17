@@ -39,20 +39,24 @@ define ('QCUBED_PROJECT_IMAGE_URL', QCUBED_PROJECT_ASSETS_URL . '/images');
 define ('QCUBED_CSS', QCUBED_CSS_URL . '/qcubed.css');
 //define ('QCUBED_CSS', QCUBED_PROJECT_CSS_URL . '/qcubed.css');
 
-// There are two ways to add jQuery JS files to QCubed. Either by absolute paths (Google CDN of
-// the jQuery library is awesome! It's the default option below) - or by using the jQuery
-// installation that's local to QCubed. You might want one for production and one for development.
+// There are multiple ways to add jQuery JS files to QCubed, all demonstrated below
 
-define ('QCUBED_JQUERY_JS', 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
-define ('QCUBED_JQUI_JS', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js');
+// Minified versions
+//define ('QCUBED_JQUERY_JS', 'https://code.jquery.com/jquery-1.12.4.min.js');
+//define ('QCUBED_JQUERY_JS', 'https://code.jquery.com/jquery-3.2.1.min.js');
+//define ('QCUBED_JQUI_JS', ' http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js');
+
 
 // The original, non-minified jQuery for debugging purposes.
-//define ('QCUBED_JQUERY', ' http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js');
-//define ('QCUBED_JQUI', ' http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js');
+//define ('QCUBED_JQUERY_JS', 'https://code.jquery.com/jquery-1.12.4.js');
+//define ('QCUBED_JQUERY_JS', 'https://code.jquery.com/jquery-3.2.1.js');
+//define ('QCUBED_JQUI_JS', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js');
 
-// The local versions
+// The local versions. Useful for doing development when you don't have internet connectivity
 //define ('QCUBED_JQUERY_JS', QCUBED_JS_URL . '/jquery.js');
-//define ('QCUBED_JQUI_JS', QCUBED_JS_URL . '/jquery-ui.js');
+define ('QCUBED_JQUERY_JS', QCUBED_JS_URL . '/jquery3.js');
+define ('QCUBED_JQUI_JS', QCUBED_JS_URL . '/jquery-ui.js');
+
 
 
 /** Specific files */
