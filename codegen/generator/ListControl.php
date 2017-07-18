@@ -304,10 +304,10 @@ TMPL;
             $strRet .= <<<TMPL
 if (!\$this->str{$strPropName}NullLabel) {
 	if (!\$this->{$strControlVarName}->Required) {
-		\$this->str{$strPropName}NullLabel = '- None -';
+		\$this->str{$strPropName}NullLabel = t('- None -');
 	}
 	elseif (!\$this->blnEditMode) {
-		\$this->str{$strPropName}NullLabel = '- Select One -';
+		\$this->str{$strPropName}NullLabel = t('- Select One -');
 	}
 }
 
@@ -316,7 +316,7 @@ TMPL;
             $strRet .= "\$this->{$strControlVarName}->removeAllItems();\n";
         }
         $strRet .= <<<TMPL
-\$this->{$strControlVarName}->addItem(t(\$this->str{$strPropName}NullLabel), null);
+\$this->{$strControlVarName}->addItem(\$this->str{$strPropName}NullLabel, null);
 
 TMPL;
 
