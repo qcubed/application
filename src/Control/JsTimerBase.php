@@ -76,6 +76,8 @@ class JsTimerBase extends Q\Project\Control\ControlBase
     ) {
         try {
             parent::__construct($objParentObject, $strTimerId);
+            $this->blnAutoRender = true;    // don't need to explicitly render a timer
+            $this->blnUseWrapper = false; // never use a wrapper!
         } catch (Caller $objExc) {
             $objExc->incrementOffset();
             throw $objExc;
@@ -120,12 +122,10 @@ class JsTimerBase extends Q\Project\Control\ControlBase
         if ($intTime != null && is_int($intTime)) {
             $this->intDeltaTime = $intTime;
         }
-        $event = $this->getEvent();
-        if (!$event) {
-            throw new Caller("Can't start the timer: add an Event/Action first!");
-        }
+        Application::executeJsFunction('qc.startTimer', $this->strControlId, $this->intDeltaTime, $this->blnPeriodic);
 
         // Is the timer periodic or runs only once?
+        /*
         if ($this->blnPeriodic) {
             // timer is periodic. We will set the interval
             $strJS = $this->tidString() . ' = window.setInterval("' . $this->callbackString() . '()", ' . $this->intDeltaTime . ');';
@@ -133,7 +133,7 @@ class JsTimerBase extends Q\Project\Control\ControlBase
             // timer is not periodic. We will set the timeout
             $strJS = $this->tidString() . ' = window.setTimeout("' . $this->callbackString() . '()", ' . $this->intDeltaTime . ');';
         }
-        Application::executeJavaScript($strJS);
+        Application::executeJavaScript($strJS);*/
         $this->intState = self::STARTED;
     }
 
@@ -142,19 +142,7 @@ class JsTimerBase extends Q\Project\Control\ControlBase
      */
     public function stop()
     {
-        $event = $this->getEvent();
-        if (!$event) {
-            throw new Caller('Can\'t stop the timer: no Event/Action present!');
-        }
-        // Is timer periodic or one-time?
-        if ($this->blnPeriodic) {
-            // Periodic timer. We should clear the interval we had set beforehand
-            $strJS = 'window.clearInterval(' . $this->tidString() . ');';
-        } else {
-            // One-time timer. We should clear the timeout we had set beforehand
-            $strJS = 'window.clearTimeout(' . $this->tidString() . ');';
-        }
-        Application::executeJavaScript($strJS);
+        Application::executeJsFunction('qc.stopTimer', $this->strControlId, $this->blnPeriodic);
         $this->intState = self::STOPPED;
     }
 
@@ -179,7 +167,6 @@ class JsTimerBase extends Q\Project\Control\ControlBase
         if ($this->intState === self::AUTO_START && $this->intDeltaTime != 0) {
             $this->start();
         }
-
     }
 
     /**
@@ -212,40 +199,6 @@ class JsTimerBase extends Q\Project\Control\ControlBase
     }
 
     /**
-     * @return null|
-     */
-    public function getEvent()
-    {
-        return reset($this->objEventArray);
-    }
-
-    /**
-     * Returns all action attributes
-     * @return string
-     */
-    public function renderActionScripts()
-    {
-        parent::renderActionScripts();
-
-        $strToReturn = $this->callbackString() . " = ";
-        if (!count($this->objEventArray)) {
-            return $strToReturn . 'null;';
-        }
-
-        $strToReturn .= 'function() {';
-
-        foreach ($this->objEventArray as $objEvent) {
-            $strToReturn .= ' ' . $objEvent->renderActions($this);
-
-        }
-        if ($this->ActionsMustTerminate) {
-            $strToReturn .= ' return false;';
-        }
-        $strToReturn .= ' }; ';
-        return $strToReturn;
-    }
-
-    /**
      * Returns all Javscript that needs to be executed after rendering of this control
      * (It overrides the GetEndScript of the parent to handle specific case of JsTimers)
      * @return string
@@ -261,6 +214,7 @@ class JsTimerBase extends Q\Project\Control\ControlBase
                 $this->intState = self::STOPPED;
             }
         }
+
         return parent::getEndScript();
     }
 
@@ -282,8 +236,6 @@ class JsTimerBase extends Q\Project\Control\ControlBase
                 return ($this->intState === self::STARTED);
             case 'RestartOnServerAction':
                 return $this->blnRestartOnServerAction;
-            case 'Rendered':
-                return true;
             default:
                 try {
                     return parent::__get($strName);
@@ -340,9 +292,6 @@ class JsTimerBase extends Q\Project\Control\ControlBase
                     throw $objExc;
                 }
                 break;
-            case "Rendered": //ensure that the control is marked as Rendered to get js updates
-                $this->blnRendered = true;
-                break;
             default:
                 try {
                     parent::__set($strName, $mixValue);
@@ -352,18 +301,6 @@ class JsTimerBase extends Q\Project\Control\ControlBase
                 }
                 break;
         }
-    }
-
-    /**
-     * Render function for the Control (must not be called becasue JsTimer is not for being rendered)
-     * @param bool $blnDisplayOutput useless in this case
-     *
-     * @return string|void
-     * @throws Caller
-     */
-    public function render($blnDisplayOutput = true)
-    {
-        throw new Caller('Do not render JsTimer!');
     }
 
     /**
@@ -378,23 +315,12 @@ class JsTimerBase extends Q\Project\Control\ControlBase
     }
 
     /**
-     * Remove the child controls (useless)
-     * Since JsTimer cannot have children, removing child controls does not yeild anything
-     * @param string $strControlId
-     * @param bool $blnRemoveFromForm
-     */
-    public function removeChildControl($strControlId, $blnRemoveFromForm)
-    {
-    }
-
-    /**
      * Get the HTML for the control (blank in this case becuase JsTimer cannot be rendered)
      * @return string
      */
     protected function getControlHtml()
     {
-        // no control html
-        return "";
+        return parent::renderTag('span');   // render invisible tag so we get a control id in javascript to attach events to
     }
 
     /**

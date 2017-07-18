@@ -123,7 +123,7 @@ abstract class EventBase extends ObjectBase
 
 
         if ($this->intDelay > 0) {
-            $strJs = sprintf(" qcubed.setTimeout('%s', \$j.proxy(function(){%s},this), %s);",
+            $strJs = sprintf(" qc.setTimeout('%s', \$j.proxy(function(){%s},this), %s);",
                 $objControl->ControlId,
                 _nl() . _indent(trim($strJs)) . _nl(),
                 $this->intDelay);

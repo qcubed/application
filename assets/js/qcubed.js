@@ -1,6 +1,8 @@
-var qcubed, qc;
+var $j, qcubed, qc;
 
-(function( $j ) {
+(function( $ ) {
+
+$j = $;
 
 $j.fn.extend({
     wait: function(time, type) {
@@ -285,8 +287,7 @@ qcubed = {
             $formElements = $form.find('input,select,textarea'),
             checkables = [],
             controls = [],
-            postData = {},
-            qc = this;
+            postData = {};
 
         // Notify controls we are about to post.
         $form.trigger("qposting", "Ajax");
@@ -387,8 +388,7 @@ qcubed = {
     postAjax: function(strForm, strControl, strEvent, mixParameter, strWaitIconControlId, blnAsync) {
         var objForm = $j('#' + strForm),
             strFormAction = objForm.attr("action"),
-            qFormParams = {},
-            qc = this;
+            qFormParams = {};
 
         if (qc.blockEvents) {
             return;
@@ -422,32 +422,23 @@ qcubed = {
                 qFormParams: qFormParams,
                 data: data,
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    var result = XMLHttpRequest.responseText,
-                        objErrorWindow;
+                    var result = XMLHttpRequest.responseText;
 
-                    qc.ajaxError = true;
-                    qc.blockEvents = false;
                     if (XMLHttpRequest.status !== 0 || (result && result.length > 0)) {
-                        if (result.substr(0, 15) === '<!DOCTYPE html>') {
-                            window.alert("An error occurred.\r\n\r\nThe error response will appear in a new popup.");
-                            objErrorWindow = window.open('about:blank', 'qcubed_error', 'menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=1000,height=700,left=50,top=50');
-                            objErrorWindow.focus();
-                            objErrorWindow.document.write(result);
-                            return false;
-                        } else {
-                            var resultText = $j('<div>').html(result);
-                            $j('<div id="Qcubed_AJAX_Error" />')
-                                .append('<h1 style="text-transform:capitalize">' + textStatus + '</h1>')
-                                .append('<p>' + errorThrown + '</p>')
-                                .append(resultText)
-                                .append('<button onclick="$j(this).parent().hide()">OK</button>')
-                                .appendTo('form');
-                            return false;
-                        }
+                        qc.displayAjaxError(result, textStatus, errorThrown);
+                        return false;
+                    } else {
+                        qc.displayAjaxError("Unknown ajax error", '', '');
+                        return false;
                     }
                 },
                 success: function (json) {
                     qc._prevUpdateTime = new Date().getTime();
+                    if ($j.type(json) === 'string') {
+                        // If server has a problem sending any ajax response, like when headers are already sent, we will get that error as a string here
+                        qc.displayAjaxError(json, '', '');
+                        return false;
+                    }
                     if (json.js) {
                         var deferreds = [];
                         // Load all javascript files before attempting to process the rest of the response, in case some things depend on the injected files
@@ -473,6 +464,27 @@ qcubed = {
                 }
             };
         }, blnAsync);
+    },
+    displayAjaxError: function(resultText, textStatus, errorThrown) {
+        var objErrorWindow;
+
+        qc.ajaxError = true;
+        qc.blockEvents = false;
+
+        if (resultText.substr(0, 15) === '<!DOCTYPE html>') {
+            window.alert("An error occurred.\r\n\r\nThe error response will appear in a new popup.");
+            objErrorWindow = window.open('about:blank', 'qcubed_error', 'menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=1000,height=700,left=50,top=50');
+            objErrorWindow.focus();
+            objErrorWindow.document.write(resultText);
+        } else {
+            resultText = $j('<div>').html(resultText);
+            $j('<div id="Qcubed_AJAX_Error" />')
+                .append('<h1 style="text-transform:capitalize">' + textStatus + '</h1>')
+                .append('<p>' + errorThrown + '</p>')
+                .append(resultText)
+                .append('<button onclick="$j(this).parent().hide()">OK</button>')
+                .appendTo('form');
+        }
     },
 
     /**
@@ -821,6 +833,32 @@ qcubed.clearTimeout = function(strTimerId) {
 qcubed.setTimeout = function(strTimerId, action, intDelay) {
     qcubed.clearTimeout(strTimerId);
     qcubed._objTimers[strTimerId] = setTimeout(action, intDelay);
+};
+
+qcubed.startTimer = function(strControlId, intDeltaTime, blnPeriodic) {
+    var strTimerId = strControlId + '_ct';
+    qc.stopTimer(strControlId, blnPeriodic);
+    if (blnPeriodic) {
+        qcubed._objTimers[strTimerId] = setInterval(function() {
+            $j('#' + strControlId).trigger('timerexpiredevent')
+        }, intDeltaTime);
+    } else {
+        qcubed._objTimers[strTimerId] = setTimeout(function() {
+            $j('#' + strControlId).trigger('timerexpiredevent')
+        }, intDeltaTime);
+    }
+};
+
+qcubed.stopTimer = function(strControlId, blnPeriodic) {
+    var strTimerId = strControlId + '_ct';
+    if (qcubed._objTimers[strTimerId]) {
+        if (blnPeriodic) {
+            clearInterval(qcubed._objTimers[strTimerId]);
+        } else {
+            clearTimeout(qcubed._objTimers[strTimerId]);
+        }
+        qcubed._objTimers[strTimerId] = null;
+    }
 };
 
 ///////////////////////////////

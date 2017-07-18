@@ -23,6 +23,7 @@
 		$this->renderBegin();
 		$this->btnRunTests->Render();
 		$this->lblRunning->Render();
+		$this->pnlOutput->Render();
 		$this->renderEnd();
 		?>
     </body>
