@@ -1,7 +1,6 @@
-// BEWARE: this clears the $ variable!
-var $j = jQuery.noConflict(),
-    qcubed,
-    qc;
+var qcubed, qc;
+
+(function( $j ) {
 
 $j.fn.extend({
     wait: function(time, type) {
@@ -17,42 +16,42 @@ $j.fn.extend({
     }
 });
 
-/**
- * Queued Ajax requests.
- * A new Ajax request won't be started until the previous queued
- * request has finished.
- * @param {function} a function that returns ajax options.
- * @param {boolean} blnAsync true to launch right away.
- */
-$j.ajaxQueue = function(o, blnAsync) {
-    if (typeof $j.ajaxq === "undefined" || blnAsync) {
-        $j.ajax(o()); // fallback in case ajaxq is not here
-    } else {
-        var p = $j.ajaxq("qcu.be", o);
-    }
-};
-$j.ajaxQueueIsRunning = function() {
-    if ($j.ajaxq) {
-        return $j.ajaxq.isRunning("qcu.be");
-    }
-    return false;
-}
-
 
 /**
  * @namespace qcubed
  */
 qcubed = {
     /**
+     * Queued Ajax requests.
+     * A new Ajax request won't be started until the previous queued
+     * request has finished.
+     * @param {function} o function that returns ajax options.
+     * @param {boolean} blnAsync true to launch right away.
+     */
+    ajaxQueue: function(o, blnAsync) {
+        if (typeof $j.ajaxq === "undefined" || blnAsync) {
+            $j.ajax(o()); // fallback in case ajaxq is not here
+        } else {
+            $j.ajaxq("qcu.be", o);
+        }
+    },
+    ajaxQueueIsRunning: function() {
+        if ($j.ajaxq) {
+            return $j.ajaxq.isRunning("qcu.be");
+        }
+        return false;
+    },
+
+    /**
      * @param {string} strControlId
      * @param {string} strProperty
      * @param {string|Array|Object} strNewValue
      */
     recordControlModification: function(strControlId, strProperty, strNewValue) {
-        if (!qcubed.controlModifications[strControlId]) {
-            qcubed.controlModifications[strControlId] = {};
+        if (!qc.controlModifications[strControlId]) {
+            qc.controlModifications[strControlId] = {};
         }
-        qcubed.controlModifications[strControlId][strProperty] = strNewValue;
+        qc.controlModifications[strControlId][strProperty] = strNewValue;
     },
     /**
      * Given a control, returns the correct index to use in the formObjsModified array.
@@ -60,9 +59,10 @@ qcubed = {
      * @private
      */
     _formObjChangeIndex: function (ctl) {
-        var id = $j(ctl).attr('id');
-        var strType = $j(ctl).prop("type");
-        var name = $j(ctl).attr("name");
+        var id = $j(ctl).attr('id'),
+            strType = $j(ctl).prop("type"),
+            name = $j(ctl).attr("name"),
+            indexOffset;
 
         if (((strType === 'checkbox') || (strType === 'radio')) &&
            id && ((indexOffset = id.lastIndexOf('_')) >= 0)) { // a member of a control list
@@ -89,10 +89,10 @@ qcubed = {
      * @param event
      */
     formObjChanged: function (event) {
-        var ctl = event.target;
-        var id = qc._formObjChangeIndex(ctl);
-        var strType = $j(ctl).prop("type");
-        var name = $j(ctl).attr("name");
+        var ctl = event.target,
+            id = qc._formObjChangeIndex(ctl),
+            strType = $j(ctl).prop("type"),
+            name = $j(ctl).attr("name");
 
         if (strType === 'radio' && name !== id) { // a radio button with a group name
             // since html does not submit a changed event on the deselected radio, we are going to invalidate all the controls in the group
@@ -100,21 +100,22 @@ qcubed = {
             if (group) {
                 group.each(function () {
                     id = $j(this).attr('id');
-                    qcubed.formObjsModified[id] = true;
+                    qc.formObjsModified[id] = true;
                 });
             }
         }
         else if (id) {
-            qcubed.formObjsModified[id] = true;
+            qc.formObjsModified[id] = true;
         }
     },
     /**
      * Initialize form related scripts
-     * @param strFormId
+     * @param {string} strFormId
      */
     initForm: function (strFormId) {
-        $j('#' + strFormId).on ('qformObjChanged', this.formObjChanged); // Allow any control, including hidden inputs, to trigger a change and post of its data.
-        $j('#' + strFormId).submit(function(event) {
+        var $form =  $j('#' + strFormId);
+        $form.on ('qformObjChanged', qc.formObjChanged); // Allow any control, including hidden inputs, to trigger a change and post of its data.
+        $form.submit(function(event) {
             if (!$j('#Qform__FormControl').val()) { // did postBack initiated the submit?
                 // if not, prevent implicit form submission. This can happen in the rare case we have a single field and no submit button.
                 event.preventDefault();
@@ -123,19 +124,23 @@ qcubed = {
     },
 
     /**
+     * Post the form. ServerActions go here.
+     *
      * @param {string} strForm The QForm Id, gets overwritten.
      * @param {string} strControl The Control Id.
      * @param {string} strEvent The Event.
      * @param {null|string|Array|Object} mixParameter
      */
     postBack: function(strForm, strControl, strEvent, mixParameter) {
-        if (qc.blockEvents) return;   // We are waiting for a response from the server
+        if (qc.blockEvents) {
+            return;  // We are waiting for a response from the server
+        }
 
         strForm = $j("#Qform__FormId").val();
         var $objForm = $j('#' + strForm);
 
-        var checkableControls = $j('#' + strForm).find('input[type="checkbox"], input[type="radio"]');
-        var checkableValues = this._checkableControlValues(strForm, $j.makeArray(checkableControls));
+        var checkableControls = $objForm.find('input[type="checkbox"], input[type="radio"]');
+        var checkableValues = qc._checkableControlValues(strForm, $j.makeArray(checkableControls));
 
         $j('#Qform__FormControl').val(strControl);
         $j('#Qform__FormEvent').val(strEvent);
@@ -147,8 +152,8 @@ qcubed = {
         if (mixParameter !== undefined) {
             $j('#Qform__FormParameter').val(JSON.stringify(mixParameter));
         }
-        if (!$j.isEmptyObject(qcubed.controlModifications)) {
-            $j('#Qform__FormUpdates').val(JSON.stringify(qcubed.controlModifications));
+        if (!$j.isEmptyObject(qc.controlModifications)) {
+            $j('#Qform__FormUpdates').val(JSON.stringify(qc.controlModifications));
         }
         if (!$j.isEmptyObject(checkableValues)) {
             $j('#Qform__FormCheckableControls').val(JSON.stringify(checkableValues));
@@ -156,14 +161,14 @@ qcubed = {
 
         // add hidden control for additional values given
         // Will be decoded and assigned to the $_POST var in PHP.
-        if (!$j.isEmptyObject(qcubed.additionalPostVars)) {
+        if (!$j.isEmptyObject(qc.additionalPostVars)) {
             var input = $j("<input>")
                 .attr("type", "hidden")
-                .attr("name", "Qform__AdditionalPostVars").val(JSON.stringify(qcubed.additionalPostVars));
+                .attr("name", "Qform__AdditionalPostVars").val(JSON.stringify(qc.additionalPostVars));
             $objForm.append(input);
         }
 
-        // have $j trigger the submit event (so it can catch all submit events)
+        // have $ trigger the submit event (so it can catch all submit events)
         $objForm.trigger("submit");
     },
     /**
@@ -175,7 +180,7 @@ qcubed = {
      * values and these will become nulls in PHP.
      */
     setAdditionalPostVar: function (name, val) {
-        qcubed.additionalPostVars[name] = val;
+        qc.additionalPostVars[name] = val;
     },
     /**
      * This function resolves the state of checkable controls into postable values.
@@ -204,14 +209,14 @@ qcubed = {
      * will be the value returned, and before the last underscore will be id that will be used as the key for the value.
      *
      * @param {string} strForm   Form Id
-     * @param {array} controls  Array of checkable controls. These must be checkable controls, it will not validate this.
+     * @param {Array} controls  Array of checkable controls. These must be checkable controls, it will not validate this.
      * @returns {object}  A hash of values keyed by control id
      * @private
      */
     _checkableControlValues: function(strForm, controls) {
         var values = {};
 
-        if (!controls || controls.length == 0) {
+        if (!controls || controls.length === 0) {
             return {};
         }
         $j.each(controls, function() {
@@ -222,7 +227,7 @@ qcubed = {
                 offset;
 
             if (id &&
-                (offset = id.lastIndexOf('_')) != -1) {
+                (offset = id.lastIndexOf('_')) !== -1) {
                 // A control group
                 index = id.substr(offset + 1);
                 id = id.substr(0, offset);
@@ -280,7 +285,8 @@ qcubed = {
             $formElements = $form.find('input,select,textarea'),
             checkables = [],
             controls = [],
-            postData = {};
+            postData = {},
+            qc = this;
 
         // Notify controls we are about to post.
         $form.trigger("qposting", "Ajax");
@@ -295,9 +301,9 @@ qcubed = {
                 objChangeIndex = qc._formObjChangeIndex($element);
 
 
-                if (!qcubed.inputSupport || // if not oninput support, then post all the controls, rather than just the modified ones
-                qcubed.ajaxError || // Ajax error would mean that formObjsModified is invalid. We need to submit everything.
-                (objChangeIndex && qcubed.formObjsModified[objChangeIndex]) ||
+                if (!qc.inputSupport || // if not oninput support, then post all the controls, rather than just the modified ones
+                qc.ajaxError || // Ajax error would mean that formObjsModified is invalid. We need to submit everything.
+                (objChangeIndex && qc.formObjsModified[objChangeIndex]) ||
                 blnQform) {  // all controls with Qform__ at the beginning of the id are always posted.
 
                 switch (strType) {
@@ -350,19 +356,19 @@ qcubed = {
         postData.Qform__FormEvent = strEvent;
         postData.Qform__FormCallType = "Ajax";
 
-        if (!$j.isEmptyObject(qcubed.controlModifications)) {
-            postData.Qform__FormUpdates = JSON.stringify(qcubed.controlModifications);
+        if (!$j.isEmptyObject(qc.controlModifications)) {
+            postData.Qform__FormUpdates = JSON.stringify(qc.controlModifications);
         }
-        postData.Qform__FormCheckableControls = qcubed._checkableControlValues(strForm, checkables);
+        postData.Qform__FormCheckableControls = qc._checkableControlValues(strForm, checkables);
 
-        if (!$j.isEmptyObject(qcubed.additionalPostVars)) {
-            postData.Qform__AdditionalPostVars = JSON.stringify(qcubed.additionalPostVars);
-            qcubed.additionalPostVars = {};
+        if (!$j.isEmptyObject(qc.additionalPostVars)) {
+            postData.Qform__AdditionalPostVars = JSON.stringify(qc.additionalPostVars);
+            qc.additionalPostVars = {};
         }
 
-        qcubed.ajaxError = false;
-        qcubed.formObjsModified = {};
-        qcubed.controlModifications = {};
+        qc.ajaxError = false;
+        qc.formObjsModified = {};
+        qc.controlModifications = {};
 
         return postData;
     },
@@ -381,9 +387,12 @@ qcubed = {
     postAjax: function(strForm, strControl, strEvent, mixParameter, strWaitIconControlId, blnAsync) {
         var objForm = $j('#' + strForm),
             strFormAction = objForm.attr("action"),
-            qFormParams = {};
+            qFormParams = {},
+            qc = this;
 
-        if (qc.blockEvents) return;
+        if (qc.blockEvents) {
+            return;
+        }
 
         qFormParams.form = strForm;
         qFormParams.control = strControl;
@@ -392,15 +401,15 @@ qcubed = {
         qFormParams.waitIcon = strWaitIconControlId;
 
         if (strWaitIconControlId) {
-            this.objAjaxWaitIcon = qcubed.getWrapper(strWaitIconControlId);
-            if (this.objAjaxWaitIcon) {
-                this.objAjaxWaitIcon.style.display = 'inline';
+            qc.objAjaxWaitIcon = qc.getWrapper(strWaitIconControlId);
+            if (qc.objAjaxWaitIcon) {
+                qc.objAjaxWaitIcon.style.display = 'inline';
             }
         }
 
         // Use a modified ajax queue so ajax requests happen synchronously
-        $j.ajaxQueue(function() {
-            var data = qcubed.getAjaxData(
+        qc.ajaxQueue(function() {
+            var data = qc.getAjaxData(
                 qFormParams.form,
                 qFormParams.control,
                 qFormParams.event,
@@ -414,21 +423,20 @@ qcubed = {
                 data: data,
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     var result = XMLHttpRequest.responseText,
-                        objErrorWindow,
-                        $dialog;
+                        objErrorWindow;
 
-                    qcubed.ajaxError = true;
-                    qcubed.blockEvents = false;
+                    qc.ajaxError = true;
+                    qc.blockEvents = false;
                     if (XMLHttpRequest.status !== 0 || (result && result.length > 0)) {
                         if (result.substr(0, 15) === '<!DOCTYPE html>') {
-                            alert("An error occurred.\r\n\r\nThe error response will appear in a new popup.");
+                            window.alert("An error occurred.\r\n\r\nThe error response will appear in a new popup.");
                             objErrorWindow = window.open('about:blank', 'qcubed_error', 'menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=1000,height=700,left=50,top=50');
                             objErrorWindow.focus();
                             objErrorWindow.document.write(result);
                             return false;
                         } else {
                             var resultText = $j('<div>').html(result);
-                            $dialog = $j('<div id="Qcubed_AJAX_Error" />')
+                            $j('<div id="Qcubed_AJAX_Error" />')
                                 .append('<h1 style="text-transform:capitalize">' + textStatus + '</h1>')
                                 .append('<p>' + errorThrown + '</p>')
                                 .append(resultText)
@@ -439,28 +447,28 @@ qcubed = {
                     }
                 },
                 success: function (json) {
-                    qcubed._prevUpdateTime = new Date().getTime();
+                    qc._prevUpdateTime = new Date().getTime();
                     if (json.js) {
                         var deferreds = [];
                         // Load all javascript files before attempting to process the rest of the response, in case some things depend on the injected files
                         $j.each(json.js, function (i, v) {
-                            deferreds.push(qcubed.loadJavaScriptFile(v));
+                            deferreds.push(qc.loadJavaScriptFile(v));
                         });
-                        qcubed.processImmediateAjaxResponse(json, qFormParams); // go ahead and begin processing things that will not depend on the javascript files to allow parallel processing
+                        qc.processImmediateAjaxResponse(json, qFormParams); // go ahead and begin processing things that will not depend on the javascript files to allow parallel processing
                         $j.when.apply($j, deferreds).then(
                             function () {
-                                qcubed.processDeferredAjaxResponse(json);
-                                qcubed.blockEvents = false;
+                                qc.processDeferredAjaxResponse(json);
+                                qc.blockEvents = false;
                             }, // success
                             function () {
-                                console.log('Failed to load a file');
-                                qcubed.blockEvents = false;
+                                window.console.log('Failed to load a file');
+                                qc.blockEvents = false;
                             } // failed to load a file. What to do?
                         );
                     } else {
-                        qcubed.processImmediateAjaxResponse(json, qFormParams);
-                        qcubed.processDeferredAjaxResponse(json);
-                        qcubed.blockEvents = false;
+                        qc.processImmediateAjaxResponse(json, qFormParams);
+                        qc.processDeferredAjaxResponse(json);
+                        qc.blockEvents = false;
                     }
                 }
             };
@@ -471,12 +479,11 @@ qcubed = {
      * Start me up.
      */
     initialize: function() {
-
         ////////////////////////////////
         // Browser-related functionality
         ////////////////////////////////
 
-        this.loadJavaScriptFile = function(strScript, objCallback) {
+        qc.loadJavaScriptFile = function(strScript, objCallback) {
             return $j.ajax({
                 url: strScript,
                 success: objCallback,
@@ -485,7 +492,7 @@ qcubed = {
             });
         };
 
-        this.loadStyleSheetFile = function(strStyleSheetFile, strMediaType) {
+        qc.loadStyleSheetFile = function(strStyleSheetFile, strMediaType) {
             if (strMediaType){
                 strMediaType = " media="+strMediaType;
             }
@@ -496,15 +503,15 @@ qcubed = {
         // QForm-related functionality
         /////////////////////////////
 
-        this.wrappers = [];
+        qc.wrappers = [];
 
         $j(window).on ("storage", function (o) {
-            if (o.originalEvent.key == "qcubed.broadcast") {
-                qcubed.updateForm();
+            if (o.originalEvent.key === "qcubed.broadcast") {
+                qc.updateForm();
             }
         });
 
-        this.inputSupport = 'oninput' in document;
+        qc.inputSupport = 'oninput' in document;
 
         // Detect browsers that do not correctly support the oninput event, even though they say they do.
         // IE 9 in particular has a major bug
@@ -514,13 +521,13 @@ qcubed = {
             var intOffset2 = ua.indexOf ('.', intIeOffset + 5);
             var strVersion = ua.substr (intIeOffset + 5, intOffset2 - intIeOffset - 5);
             if (strVersion < 10) {
-                this.inputSupport = false;
+                qc.inputSupport = false;
             }
         }
 
         $j( document ).ajaxComplete(function( event, request, settings ) {
-            if (!$j.ajaxQueueIsRunning()) {
-                qcubed.processFinalCommands();
+            if (!qc.ajaxQueueIsRunning()) {
+                qc.processFinalCommands();
             }
         });
 
@@ -528,59 +535,61 @@ qcubed = {
         return this;
     },
     processImmediateAjaxResponse: function(json, qFormParams) {
-        if (json.controls) $j.each(json.controls, function() {
-            var strControlId = '#' + this.id,
-                control = $j(strControlId),
-                wrapper = $j(strControlId + '_ctl');
+        if (json.controls) {
+            $j.each(json.controls, function() {
+                var strControlId = '#' + this.id,
+                    $control = $j(strControlId),
+                    $wrapper = $j(strControlId + '_ctl');
 
-            if (this.value !== undefined) {
-                control.val(this.value);
-            }
-
-            if (this.attributes !== undefined) {
-                control.attr (this.attributes);
-            }
-
-            if (this.html !== undefined) {
-                if (wrapper.length) {
-                    // Control's wrapper was found, so fill it in
-                    wrapper.html(this.html);
+                if (this.value !== undefined) {
+                    $control.val(this.value);
                 }
-                else if (control.length) {
-                    // control was found without a wrapper, replace it in the same position it was in.
-                    // remove related controls (error, name ...) for wrapper-less controls
-                    var relSelector = "[data-qrel='" + strControlId + "']",
-                        relItems = $j(relSelector),
-                        $relParent;
 
-                    if (relItems && relItems.length) {
-                        // if the control is wrapped in a related control, we move the control outside the related controls
-                        // before deleting the related controls
-                        $relParent = control.parents(relSelector).last();
-                        if ($relParent.length) {
-                            control.insertBefore($relParent);
-                        }
-                        relItems.remove();
+                if (this.attributes !== undefined) {
+                    $control.attr (this.attributes);
+                }
+
+                if (this.html !== undefined) {
+                    if ($wrapper.length) {
+                        // Control's wrapper was found, so fill it in
+                        $wrapper.html(this.html);
                     }
+                    else if ($control.length) {
+                        // control was found without a wrapper, replace it in the same position it was in.
+                        // remove related controls (error, name ...) for wrapper-less controls
+                        var relSelector = "[data-qrel='" + strControlId + "']",
+                            relItems = $j(relSelector),
+                            $relParent;
 
-                    control.before(this.html).remove();
-                }
-                else {
-                    // control is being injected at the top level, so put it at the end of the form.
-                    var strForm = $j("#Qform__FormId").val();
-                    var $objForm = $j('#' + strForm);
+                        if (relItems && relItems.length) {
+                            // if the control is wrapped in a related control, we move the control outside the related controls
+                            // before deleting the related controls
+                            $relParent = $control.parents(relSelector).last();
+                            if ($relParent.length) {
+                                $control.insertBefore($relParent);
+                            }
+                            relItems.remove();
+                        }
 
-                    $objForm.append(this.html);
+                        $control.before(this.html).remove();
+                    }
+                    else {
+                        // control is being injected at the top level, so put it at the end of the form.
+                        var strForm = $j("#Qform__FormId").val();
+                        var $objForm = $j('#' + strForm);
+
+                        $objForm.append(this.html);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         if (json.regc) {
-            qcubed.registerControlArray (json.regc);
+            qc.registerControlArray (json.regc);
         }
 
         if (json.watcher && qFormParams.control) {
-            qcubed.broadcastChange();
+            qc.broadcastChange();
         }
         if (json.ss) {
             $j.each(json.ss, function (i,v) {
@@ -589,7 +598,7 @@ qcubed = {
         }
         if (json.alert) {
             $j.each(json.alert, function (i,v) {
-                alert(v);
+                window.alert(v);
             });
         }
     },
@@ -597,11 +606,11 @@ qcubed = {
         if (json.commands) { // commands
             $j.each(json.commands, function (index, command) {
                 if (command.final &&
-                    $j.ajaxQueueIsRunning()) {
+                    qc.ajaxQueueIsRunning()) {
 
-                    qcubed.enqueueFinalCommand(command);
+                    qc.enqueueFinalCommand(command);
                 } else {
-                    qcubed.processCommand(command);
+                    qc.processCommand(command);
                 }
             });
         }
@@ -609,25 +618,27 @@ qcubed = {
             window.close();
         }
         if (json.loc) {
-            if (json.loc == 'reload') {
+            if (json.loc === 'reload') {
                 window.location.reload(true);
             } else {
                 document.location = json.loc;
             }
         }
 
-        if (qcubed.objAjaxWaitIcon) {
-            $j(qcubed.objAjaxWaitIcon).hide();
+        if (qc.objAjaxWaitIcon) {
+            $j(qc.objAjaxWaitIcon).hide();
         }
     },
     processCommand: function(command) {
+        var params,
+            objs;
+
         if (command.script) {
             /** @todo eval is evil, do no evil */
             eval (command.script);
         }
         else if (command.selector) {
-            var params = qc.unpackArray(command.params);
-            var objs;
+            params = qc.unpackArray(command.params);
 
             if (typeof command.selector === 'string') {
                 objs = $j(command.selector);
@@ -644,10 +655,10 @@ qcubed = {
             });
         }
         else if (command.func) {
-            var params = qc.unpackArray(command.params);
+            params = qc.unpackArray(command.params);
 
             // Find the function by name. Walk an object list in the process.
-            var objs = command.func.split(".");
+            objs = command.func.split(".");
             var obj = window;
             var ctx = null;
 
@@ -661,12 +672,12 @@ qcubed = {
 
     },
     enqueueFinalCommand: function(command) {
-        qcubed.finalCommands.push(command);
+        qc.finalCommands.push(command);
     },
     processFinalCommands: function() {
-        while(qcubed.finalCommands.length) {
-            var command = qcubed.finalCommands.pop();
-            qcubed.processCommand(command);
+        while(qc.finalCommands.length) {
+            var command = qc.finalCommands.pop();
+            qc.processCommand(command);
         }
     },
     /**
@@ -682,21 +693,21 @@ qcubed = {
         var newParams = [];
 
         $j.each(params, function (index, item){
-            if ($j.type(item) == 'object') {
+            if ($j.type(item) === 'object') {
                 if (item.qObjType) {
-                    item = qcubed.unpackObj(item);  // top level special object
+                    item = qc.unpackObj(item);  // top level special object
                 }
                 else {
                     // look for special objects inside top level objects.
                     var newItem = {};
                     $j.each (item, function (key, obj) {
-                        newItem[key] = qcubed.unpackObj(obj);
+                        newItem[key] = qc.unpackObj(obj);
                     });
                     item = newItem;
                 }
             }
-            else if ($j.type(item) == 'array') {
-                item = qcubed.unpackArray (item);
+            else if ($j.type(item) === 'array') {
+                item = qc.unpackArray (item);
             }
             newParams.push(item);
         });
@@ -709,7 +720,7 @@ qcubed = {
      * @returns {*}
      */
     unpackObj: function (obj) {
-        if ($j.type(obj) == 'object' &&
+        if ($j.type(obj) === 'object' &&
                 obj.qObjType) {
 
             switch (obj.qObjType) {
@@ -728,7 +739,6 @@ qcubed = {
 
                 case 'qDateTime':
                     return new Date(obj.year, obj.month, obj.day, obj.hour, obj.minute, obj.second);
-                    break;
 
                 case 'qVarName':
                     // Find the variable value starting at the window context.
@@ -762,15 +772,15 @@ qcubed = {
                     return func.apply(target, params);
             }
         }
-        else if ($j.type(obj) == 'object') {
+        else if ($j.type(obj) === 'object') {
             var newItem = {};
             $j.each (obj, function (key, obj2) {
-                newItem[key] = qcubed.unpackObj(obj2);
+                newItem[key] = qc.unpackObj(obj2);
             });
             return newItem;
         }
-        else if ($j.type(obj) == 'array') {
-            return qcubed.unpackArray(obj);
+        else if ($j.type(obj) === 'array') {
+            return qc.unpackArray(obj);
         }
         return obj; // no change
     },
@@ -819,7 +829,7 @@ qcubed.setTimeout = function(strTimerId, action, intDelay) {
 qcubed._prevUpdateTime = 0;
 qcubed.minUpdateInterval = 1000; // milliseconds to limit broadcast updates. Feel free to change this.
 qcubed.broadcastChange = function () {
-    if ('localStorage' in window && window['localStorage'] !== null) {
+    if ('localStorage' in window && window.localStorage !== null) {
         var newTime = new Date().getTime();
         localStorage.setItem("qcubed.broadcast", newTime); // must change value to induce storage event in other windows
     }
@@ -834,7 +844,7 @@ qcubed.updateForm = function() {
     if (newTime - qcubed._prevUpdateTime >= qcubed.minUpdateInterval) {
         //refresh immediately
         var strForm = $j('#Qform__FormId').val();
-        qcubed.postAjax (strForm, '', '', '', '');
+        qcubed.postAjax (strForm, '', '', '', '', false);
         qcubed.clearTimeout ('qcubed.update');
     } else if (!qcubed._objTimers['qcubed.update']) {
         // delay to let multiple fast actions only trigger periodic refreshes
@@ -848,32 +858,32 @@ qcubed.updateForm = function() {
 
 qcubed.draggable = function (parentId, draggableId) {
     // we are working around some jQuery UI bugs here..
-    jQuery('#' + parentId).on("dragstart", function () {
-        var c = jQuery(this);
+    $j('#' + parentId).on("dragstart", function () {
+        var c = $j(this);
         c.data ("originalPosition", c.position());
     }).on("dragstop", function () {
-        var c = jQuery(this);
-        qcubed.recordControlModification(draggableId, "_DragData", {originalPosition: {left: c.data("originalPosition").left, top: c.data("originalPosition").top}, position: {left: c.position().left, top: c.position().top}});
+        var c = $j(this);
+        qc.recordControlModification(draggableId, "_DragData", {originalPosition: {left: c.data("originalPosition").left, top: c.data("originalPosition").top}, position: {left: c.position().left, top: c.position().top}});
     });
 };
 
 qcubed.droppable = function (parentId, droppableId) {
-    jQuery('#' + parentId).on("drop", function (event, ui) {
-        qcubed.recordControlModification(droppableId, "_DroppedId", ui.draggable.attr("id"));
-    })
+    $j('#' + parentId).on("drop", function (event, ui) {
+        qc.recordControlModification(droppableId, "_DroppedId", ui.draggable.attr("id"));
+    });
 };
 
 qcubed.resizable = function (parentId, resizeableId) {
     $j('#' + parentId).on("resizestart", function () {
-        var c = jQuery(this);
+        var c = $j(this);
         c.data ("oW", c.width());
         c.data ("oH", c.height());
     })
     .on("resizestop", function () {
-        var c = jQuery(this);
-        qcubed.recordControlModification(resizeableId, "_ResizeData", {originalSize: {width: c.data("oW"), height: c.data("oH")} , size:{width: c.width(), height: c.height()}});
+        var c = $j(this);
+        qc.recordControlModification(resizeableId, "_ResizeData", {originalSize: {width: c.data("oW"), height: c.data("oH")} , size:{width: c.width(), height: c.height()}});
     });
-}
+};
 
 /////////////////////////////////////
 // JQueryUI Support
@@ -882,7 +892,7 @@ qcubed.resizable = function (parentId, resizeableId) {
 qcubed.dialog = function(controlId) {
     $j('#' + controlId).on ("keydown", "input,select", function(event) {
         // makes sure a return key fires the default button if there is one
-        if (event.which == 13) {
+        if (event.which === 13) {
             var b = $j(this).closest("[role=\'dialog\']").find("button[type=\'submit\']");
             if (b && b[0]) {
                 b[0].click();
@@ -925,9 +935,9 @@ qcubed.selectable = function(controlId) {
 qcubed.slider = function(controlId) {
     $j('#' + controlId).on("slidechange", function (event, ui) {
         if (ui.values && ui.values.length) {
-            qcubed.recordControlModification(controlId, "_Values", ui.values[0] + ',' +  ui.values[1]);
+            qc.recordControlModification(controlId, "_Values", ui.values[0] + ',' +  ui.values[1]);
         } else {
-            qcubed.recordControlModification(controlId, "_Value", ui.value);
+            qc.recordControlModification(controlId, "_Value", ui.value);
         }
     });
 };
@@ -936,7 +946,7 @@ qcubed.tabs = function(controlId) {
     $j('#' + controlId).on("tabsactivate", function(event, ui) {
         var i = $j(this).tabs( "option", "active" );
         var id = ui.newPanel ? ui.newPanel.attr("id") : null;
-        qcubed.recordControlModification(controlId, "_active", [i,id]);
+        qc.recordControlModification(controlId, "_active", [i,id]);
     });
 };
 
@@ -952,9 +962,9 @@ qcubed.dialog = function(controlId) {
     $j('#' + controlId).on("tabsactivate", function(event, ui) {
         var i = $j(this).tabs( "option", "active" );
         var id = ui.newPanel ? ui.newPanel.attr("id") : null;
-        qcubed.recordControlModification(controlId, "_active", [i,id]);
+        qc.recordControlModification(controlId, "_active", [i,id]);
     });
-}
+};
 
 /////////////////////////////////
 // Controls-related functionality
@@ -969,12 +979,12 @@ qcubed.getControl = function(mixControl) {
 };
 
 qcubed.getWrapper = function(mixControl) {
-    var objControl = qcubed.getControl(mixControl);
+    var objControl = qc.getControl(mixControl);
 
     if (!objControl) {
         //maybe it doesn't have a child control, just the wrapper
         if (typeof mixControl === 'string') {
-            return this.getControl(mixControl + "_ctl");
+            return qc.getControl(mixControl + "_ctl");
         }
         return null;
     } else if (objControl.wrapper) {
@@ -1037,14 +1047,14 @@ qcubed.registerControl = function(mixControl) {
     // detect changes to objects before any changes trigger other events
     if (objControl.type === 'checkbox' || objControl.type === 'radio') {
         // clicks are equivalent to changes for checkboxes and radio buttons, but some browsers send change way after a click. We need to capture the click first.
-        $j(objControl).on ('click', this.formObjChanged);
+        $j(objControl).on ('click', qc.formObjChanged);
     }
-    $j(objControl).on ('change input', this.formObjChanged);
-    $j(objControl).on ('change input', 'input, select, textarea', this.formObjChanged);   // make sure we get to bubbled events before later attached handlers
+    $j(objControl).on ('change input', qc.formObjChanged);
+    $j(objControl).on ('change input', 'input, select, textarea', qc.formObjChanged);   // make sure we get to bubbled events before later attached handlers
 
 
     // Link the Wrapper and the Control together
-    objWrapper = this.getControl(objControl.id + "_ctl");
+    objWrapper = qc.getControl(objControl.id + "_ctl");
     if (!objWrapper) {
         objWrapper = objControl; //wrapper-less control
     } else {
@@ -1062,9 +1072,9 @@ qcubed.registerControl = function(mixControl) {
     // Like: objWrapper.something = xyz;
 
     /**
-     * This function was originally intended to be used by javascript to manipulate QControl objects and have the result
+     * This function was originally intended to be used by javascript to manipulate Control objects and have the result
      * reported back to the PHP side. Modern jQuery objects now have events that can be hooked to catch changes to
-     * objects, and using those events is probably a better approach in most cases. Various jQuery UI base QControls
+     * objects, and using those events is probably a better approach in most cases. Various jQuery UI base Controls
      * use this method. In any case, you can use this as a model for how to use the recordControlModification function
      * to send results to PHP objects.
      *
@@ -1197,8 +1207,9 @@ qcubed.registerControl = function(mixControl) {
             } else {
                 this.updateStyle(strDisplay, false);
             }
-        } else
+        } else {
             this.updateStyle(strDisplay, (this.style.display === "none"));
+        }
     };
 
     objWrapper.toggleEnabled = function(strEnableOrDisable) {
@@ -1259,6 +1270,8 @@ qcubed.registerControlArray = function(mixControlArray) {
         this.registerControl(mixControlArray[intIndex]);
     }
 };
+
+})( jQuery );
 
 ////////////////////////////////
 // QCubed Shortcuts and Initialize

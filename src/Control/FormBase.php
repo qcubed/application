@@ -1514,10 +1514,24 @@ abstract class FormBase extends ObjectBase
 
         // Include styles that need to be included
         foreach ($strStyleSheetArray as $strScript) {
-            if ($blnInHead) {
-                $strToReturn .= '<link href="' . $this->getCssFileUri($strScript) . '" rel="stylesheet" />';
+            if (is_array($strScript)) { // use CORS options
+                if ($blnInHead) {
+                    $href = $strScript["file"];
+                    unset($strScript["file"]);
+                    $attributes = ["href"=>$this->getCssFileUri($href),
+                            "rel"=>"stylesheet"];
+                    $attributes = array_merge($attributes, $strScript); // should have integrity and crossorigin defined
+                    $strToReturn .= Html::renderTag("link", $attributes);
+                } else {
+                    // for now it appears @import ignores CORS restrictions
+                    $strToReturn .= '<style type="text/css" media="all">@import "' . $this->getCssFileUri($strScript["file"]) . '"</style>';
+                }
             } else {
-                $strToReturn .= '<style type="text/css" media="all">@import "' . $this->getCssFileUri($strScript) . '"</style>';
+                if ($blnInHead) {
+                    $strToReturn .= '<link href="' . $this->getCssFileUri($strScript) . '" rel="stylesheet" />';
+                } else {
+                    $strToReturn .= '<style type="text/css" media="all">@import "' . $this->getCssFileUri($strScript) . '"</style>';
+                }
             }
             $strToReturn .= "\n";
         }
@@ -1944,7 +1958,7 @@ abstract class FormBase extends ObjectBase
 
 
         // Create Final EndScript Script
-        $strEndScript = sprintf('<script type="text/javascript">$j(document).ready(function() { %s; });</script>',
+        $strEndScript = sprintf('<script type="text/javascript">jQuery(document).ready(function($j) { %s; });</script>',
             $strEndScript);
 
 
