@@ -8,7 +8,7 @@ convert your current code base to the new names. Specifically, run the following
 on your codebase, and it will convert about 99% of your code:
 
 ```php
-cd (vendor_dir)/qcubed/application/tools
+cd (vendor_dir)/qcubed/application/tools/v4_converter
 ./run_was.php -R all.regex.php (your source dir)
 ```
 
