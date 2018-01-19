@@ -1213,11 +1213,11 @@ abstract class FormBase extends ObjectBase
                 /**
                  * To transition to actions that just take a $params array and nothing else, we use reflection
                  */
-                $ref = new \ReflectionClass(get_class($f[0]));
+                $ref = new \ReflectionClass($f[0]);
                 $argCount = $ref->getMethod($f[1])->getNumberOfParameters();
 
                 if ($argCount > 1) {
-                    $f($this->strFormId, $strControlId, $objMethodParam->Param);
+                    $f($this, $strControlId, $objMethodParam->Param);
                 } else {
                     $f($objMethodParam);
                 }
@@ -1235,7 +1235,7 @@ abstract class FormBase extends ObjectBase
             $argCount = $ref->getMethod($strMethodName)->getNumberOfParameters();
 
             if ($argCount > 1) {
-                $this->$strMethodName($this->strFormId, $strControlId, $objMethodParam->Param, $objMethodParam);
+                $this->$strMethodName($this, $strControlId, $objMethodParam->Param, $objMethodParam);
             } else {
                 $this->$strMethodName($objMethodParam);
             }
@@ -2123,6 +2123,10 @@ abstract class FormBase extends ObjectBase
                 }
         }
     }
+    
+    public function __toString() {
+		return (string) $this->strFormId;
+	}
 
     /**
      * A helper function for buffering templates
