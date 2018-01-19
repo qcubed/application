@@ -67,7 +67,7 @@ class DatepickerBase extends DatepickerGen
         $strId = $this->getJqControlId();
         $strJS = sprintf('qcubed.recordControlModification("%s", "_Text", dateText); $j("#%s").trigger("QDatepicker_Select2")',
             $strId, $strId);
-        return $strJS;
+        return new \QCubed\Js\Closure($strJS, array('dateText','inst'));
     }
 
     /////////////////////////
