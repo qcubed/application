@@ -35,8 +35,8 @@
   },
   "require": {
       "php": ">=5.5.0",
-    "qcubed/i18n": "dev-master",
     "qcubed/common":"dev-master",
+    "qcubed/i18n": "dev-master",
     "qcubed/orm":"dev-master",
     "qcubed/composer": "dev-qcubed4",
     "qcubed/cache": "dev-master"
