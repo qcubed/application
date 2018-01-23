@@ -7,7 +7,7 @@ php:
 
 install:
     - composer config --global github-protocols 'https'
-    - composer install
+    - composer install --prefer-dist --no-interaction
     - pwd
     - cp -R -t project install/project/*
     - cp install/qcubed.inc.php .
