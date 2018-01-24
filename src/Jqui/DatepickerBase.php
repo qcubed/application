@@ -56,7 +56,7 @@ class DatepickerBase extends DatepickerGen
     {
         parent::__construct($objParentObject, $strControlId);
 
-        parent::__set('OnSelect', $this->OnSelectJs());    // setup a way to detect a selection
+        parent::__set('OnSelect', new \QCubed\Js\Closure($this->OnSelectJs(), array('dateText','inst')));    // setup a way to detect a selection
     }
 
     /**
@@ -187,8 +187,9 @@ class DatepickerBase extends DatepickerGen
             case 'OnSelect':
                 // Since we are using the OnSelect event already, and Datepicker doesn't allow binding, so there can be
                 // only one event, we will make sure our js is part of any new OnSelect js.
-                $mixValue = $this->OnSelectJs() . ';' . $mixValue;
-                parent::__set('OnSelect', $mixValue);
+                $strJS = $this->OnSelectJs() . ';' . $mixValue;
+                $objClosure = new \QCubed\Js\Closure($strJS, array('dateText','inst'));
+                parent::__set('OnSelect', $objClosure);
                 break;
 
             default:

@@ -750,7 +750,27 @@ qcubed = {
                     break;
 
                 case 'qDateTime':
-                    return new Date(obj.year, obj.month, obj.day, obj.hour, obj.minute, obj.second);
+                    if (obj.year === undefined) {
+                        obj.year = 0
+                    }
+                    if (obj.month === undefined) {
+                        obj.month = 0
+                    }
+                    if (obj.day === undefined) {
+                        obj.day = 1
+                    }
+                    if (obj.hour === undefined) {
+                        obj.hour = 0
+                    }
+                    if (obj.minute === undefined) {
+                        obj.minute = 0
+                    }
+                    if (obj.second === undefined) {
+                        obj.second = 0
+                    }
+
+                    var d = new Date(obj.year, obj.month, obj.day, obj.hour, obj.minute, obj.second);
+                    return d;
 
                 case 'qVarName':
                     // Find the variable value starting at the window context.
