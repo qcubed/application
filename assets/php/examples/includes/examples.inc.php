@@ -160,7 +160,8 @@
 			Examples::$Categories[$intIndex] = array();
 			Examples::$Categories[$intIndex]['name'] = 'Other Controls';
 			Examples::$Categories[$intIndex]['description'] = 'Other core controls';
-			self::AddCoreExampleFile($intIndex, '/other_controls/image.php Image and Image Buttons');
+            self::AddCoreExampleFile($intIndex, '/other_controls/image.php Image and Image Buttons');
+            self::AddCoreExampleFile($intIndex, '/other_controls/file_control.php Handling File Uploads');
 			self::AddCoreExampleFile($intIndex, '/other_controls/datetime.php Date and DateTime-based Controls');
 			self::AddCoreExampleFile($intIndex, '/other_controls/timer_js.php JavaScript Timer');
 
