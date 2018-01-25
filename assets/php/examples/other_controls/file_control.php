@@ -40,6 +40,8 @@ class ExampleForm extends FormBase
 
         $imageDir = dirname(__DIR__ ) . "/images/files";
 
+        Folder::makeDirectory($imageDir, 0700);
+
         // Our strategy here is just for managing the demo on a shared server. We allow the directory to fill with 100
         // files at most, and then clear it out.
         if (Folder::countItems($imageDir) > 100) {
