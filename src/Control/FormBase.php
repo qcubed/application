@@ -1213,7 +1213,7 @@ abstract class FormBase extends ObjectBase
                 /**
                  * To transition to actions that just take a $params array and nothing else, we use reflection
                  */
-                $ref = new \ReflectionClass(get_class($f[0]));
+                $ref = new \ReflectionClass($f[0]);
                 $argCount = $ref->getMethod($f[1])->getNumberOfParameters();
 
                 if ($argCount > 1) {
