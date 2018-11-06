@@ -209,8 +209,8 @@ class SortableGen extends QCubed\Control\Panel
     protected $mixHelper = null;
     /** @var mixed */
     protected $mixItems = null;
-    /** @var integer */
-    protected $intOpacity = null;
+    /** @var float */
+    protected $fltOpacity = null;
     /** @var string */
     protected $strPlaceholder = null;
     /** @var mixed */
@@ -464,7 +464,7 @@ class SortableGen extends QCubed\Control\Panel
             case 'Handle': return $this->mixHandle;
             case 'Helper': return $this->mixHelper;
             case 'Items': return $this->mixItems;
-            case 'Opacity': return $this->intOpacity;
+            case 'Opacity': return $this->fltOpacity;
             case 'Placeholder': return $this->strPlaceholder;
             case 'Revert': return $this->mixRevert;
             case 'Scroll': return $this->blnScroll;
@@ -622,8 +622,8 @@ class SortableGen extends QCubed\Control\Panel
 
             case 'Opacity':
                 try {
-                    $this->intOpacity = Type::Cast($mixValue, Type::INTEGER);
-                    $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'opacity', $this->intOpacity);
+                    $this->fltOpacity = Type::Cast($mixValue, Type::FLOAT);
+                    $this->addAttributeScript($this->getJqSetupFunction(), 'option', 'opacity', $this->fltOpacity);
                     break;
                 } catch (InvalidCast $objExc) {
                     $objExc->incrementOffset();
